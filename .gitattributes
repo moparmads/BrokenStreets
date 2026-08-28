@@ -1,0 +1,28 @@
+# Normalize source and documentation as text.
+* text=auto
+*.h text eol=lf
+*.hpp text eol=lf
+*.cpp text eol=lf
+*.c text eol=lf
+*.cs text eol=lf
+*.ini text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Unreal binary assets belong in Git LFS and should be locked before editing.
+*.uasset filter=lfs diff=lfs merge=lfs -text lockable
+*.umap filter=lfs diff=lfs merge=lfs -text lockable
+*.locres filter=lfs diff=lfs merge=lfs -text lockable
+
+# Binary media that may legitimately ship from Content/Movies or Audio.
+*.bk2 filter=lfs diff=lfs merge=lfs -text lockable
+*.bik filter=lfs diff=lfs merge=lfs -text lockable
+*.mp4 filter=lfs diff=lfs merge=lfs -text lockable
+*.mov filter=lfs diff=lfs merge=lfs -text lockable
+*.wav filter=lfs diff=lfs merge=lfs -text lockable
+*.flac filter=lfs diff=lfs merge=lfs -text lockable
+

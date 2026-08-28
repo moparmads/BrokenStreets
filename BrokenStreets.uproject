@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{F773CF69-41DC-4157-9C1E-E2B13467E462}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "BrokenStreets",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}

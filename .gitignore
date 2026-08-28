@@ -1,0 +1,42 @@
+# Broken Streets — Unreal Engine generated files
+
+# Visual Studio / IDE user state
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.VC.db
+*.VC.opendb
+
+# Generated project/solution files
+*.sln
+*.slnx
+*.xcodeproj
+*.xcworkspace
+
+# Unreal build products and caches
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Plugins/*/Binaries/
+Plugins/*/Intermediate/
+
+# Local developer-only content
+Content/Developers/
+
+# Temporary files and logs
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
