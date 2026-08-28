@@ -2,13 +2,13 @@
 
 **Actualizat:** 28 august 2026
 **Milestone curent:** Fundație recuperabilă
-**Branch activ:** `docs/BS-008-project-memory`
+**Branch activ:** `main`
 
 ## Rezumat
 
-- Ultimul task complet: `BS-007A` — clean clone, solution generation, build și Editor initialization din copia remote.
-- Task activ: `BS-008` — memoria proiectului și workflow-ul Codex.
-- Următorul task de implementare după fundație: `BS-009` — acțiuni repetabile Build/Test/Validate/Cook.
+- Ultimul task complet: `BS-008` — memoria proiectului, arhitectura, roadmapul și workflow-ul Codex.
+- Task activ: niciunul.
+- Următorul task: `BS-009` — acțiuni repetabile Build/Test/Validate/Cook.
 
 ## Ce există efectiv
 
@@ -21,15 +21,17 @@
 - fără TestGym, teste automate, multiplayer, save ori sisteme de joc;
 - harta implicită este încă template-ul Engine `/Engine/Maps/Templates/OpenWorld`.
 
-## Ultimul baseline verificat
+## Baseline-uri verificate
 
-- Commit: `f1b5648` — `chore: initialize Broken Streets Unreal project`
+- Runtime baseline: `f1b5648` — `chore: initialize Broken Streets Unreal project`.
 - Build manual: reușit, `1 succeeded, 0 failed`, la 28 august 2026.
-- GitHub: `main` local și `origin/main` identice la commitul de mai sus.
 - BS-007A clean clone: `main` clonat într-un folder temporar separat; Git LFS pull și status clean.
 - Solution generation: reușită prin `UnrealVersionSelector.exe` din Epic Games Launcher.
 - Clean-clone build: `Result: Succeeded`, 7/7 actions, 38,87 secunde, MSVC 14.50 + Windows SDK 10.0.22621.0.
 - Headless Editor initialization: engine inițializat, template map încărcat și Map Check `0 Error(s), 0 Warning(s)`. Procesul de primă pornire a continuat mentenanța DDC după comanda Quit și a fost oprit controlat după ce criteriul de încărcare trecuse; shutdown automation se standardizează în BS-009.
+- Project-memory candidate: `b3115494e0568342278fa18a2f89f5f9aa386332`, tree `8339f1a6151eb4158b257dfbea5854ada639e3e4`.
+- BS-008: 36 fișiere/4.118 linii de documentație, 0 linkuri locale rupte, `AGENTS.md` 13.688 bytes, Git și Git LFS fsck PASS, fără schimbări C++/Config/Content.
+- GitHub: branch-ul BS-008 și `main` au fost împinse; la închidere, `main` local și `origin/main` sunt verificate identice.
 
 ## Abateri și lucruri deschise
 

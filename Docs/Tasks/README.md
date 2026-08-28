@@ -47,4 +47,4 @@ Cod scris nu înseamnă `Done`.
 
 | Task | Titlu | Status | Branch |
 |---|---|---|---|
-| BS-008 | Project memory and agent workflow | In Progress | `docs/BS-008-project-memory` |
+| BS-008 | Project memory and agent workflow | Done | `main` |

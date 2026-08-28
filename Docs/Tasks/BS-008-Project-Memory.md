@@ -1,8 +1,8 @@
 # BS-008 — Project memory and agent workflow
 
-**Status:** In Progress
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `docs/BS-008-project-memory`
+**Branch:** `main` (integrat din `docs/BS-008-project-memory`)
 **Base commit:** `f1b5648`
 **Roadmap milestone:** M1B
 
@@ -69,6 +69,21 @@ Documentație only; N/A pentru runtime. Regulile rezultate sunt constraints pent
 - Git status/diff check;
 - BS-007A clean clone/build/Editor initialization evidence trecut pe baseline `f1b5648`;
 - no Unreal build required deoarece nu se schimbă C++/Config/Content.
+
+## Completion evidence
+
+- Candidate commit: `b3115494e0568342278fa18a2f89f5f9aa386332`.
+- Verified tree: `8339f1a6151eb4158b257dfbea5854ada639e3e4`.
+- Scope: 36 fișiere noi, 4.118 linii, exclusiv `AGENTS.md`, `README.md` și `Docs/**`.
+- Link/file audit: 0 linkuri locale rupte; toate fișierele obligatorii există.
+- `AGENTS.md`: 13.688 bytes, sub limita implicită de 32 KiB.
+- Terminology/source-of-truth/decision/dependency audit: PASS după corecțiile independente.
+- `git diff --cached --check`, `git fsck --no-dangling` și `git lfs fsck --pointers HEAD`: PASS.
+- Secrets/generated/runtime scope audit: PASS; nicio schimbare C++, Config, Content, `.uproject` sau plugin.
+- Runtime build: `N/A` pentru BS-008; baseline-ul `f1b5648` are clean-clone build și Editor initialization PASS prin BS-007A.
+- Remote: branch-ul task-ului și `main` împinse; `main` local și `origin/main` verificate identice la închidere.
+- Manual Unreal/Visual Studio acceptance: `N/A`, documentație only.
+- Next task: `BS-009`.
 
 ## Risks and rollback
 
