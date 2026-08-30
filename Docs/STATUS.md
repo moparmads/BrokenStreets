@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-012-testgym-network`
 
 ## Summary
 
 - Last completed task: `BS-011` — project-owned TestGym core map.
-- Active task: none; the repository is on clean `main` after BS-011 closure.
-- Next task: `BS-012` — `L_TestGym_Network`.
+- Active task: `BS-012` — prepare and verify `L_TestGym_Network`; the binary network map does not exist yet.
+- Next task after BS-012: `BS-013` — `L_Benchmark_Street` placeholder.
 
 ## What actually exists
 

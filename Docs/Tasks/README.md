@@ -52,3 +52,4 @@ Before code:
 | [BS-010](BS-010-Automation-Smoke-Test.md) | First Automation smoke test and canonical English migration | Done | `main` |
 | [BS-010A](BS-010A-Independent-Repository-Backup.md) | Independent repository and Git LFS backup | Done | `main` |
 | [BS-011](BS-011-TestGym-Core.md) | Project-owned TestGym core map | Done | `main` |
+| [BS-012](BS-012-TestGym-Network.md) | Network TestGym fixture | In Progress | `feature/BS-012-testgym-network` |
