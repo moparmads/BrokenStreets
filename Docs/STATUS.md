@@ -1,13 +1,13 @@
 # Project status
 
-**Updated:** August 30, 2026
+**Updated:** August 31, 2026
 **Current milestone:** Recoverable foundation
 **Active branch:** `feature/BS-013B-pc-renderer-baseline`
 
 ## Summary
 
 - Last completed task: `BS-013A` — Source Art 3-2-1 backup and verified restore.
-- Active implementation task: `BS-013B` — PC configuration and renderer baseline.
+- Active verification task: `BS-013B` — PC configuration and renderer baseline; automated gates passed and creator visual acceptance is pending.
 - Next task after the active work: `BS-007B`.
 
 ## What actually exists
@@ -25,7 +25,9 @@
 - no Broken Streets gameplay code;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
-- the default map is still the Engine template `/Engine/Maps/Templates/OpenWorld`.
+- Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
+- the explicit PC test renderer is Win64 DX12/SM6 with Software Lumen, Virtual Shadow Maps, Nanite support, TSR, Substrate Blendable GBuffer, and project hardware ray tracing disabled;
+- the reproducible `BS-PC-Recommended-P0` test preset is 1920×1080 High, 100% screen percentage, VSync Off, Dynamic Resolution Off, and uncapped.
 
 ## Verified baselines
 
@@ -59,10 +61,13 @@
 - BS-013 was integrated into `main` by merge commit `f956ee6b43e61112351bd94e03a235b6f270eca5`. Local and GitHub `main` matched; the remote pointer referenced LFS OID `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`; Git LFS fsck passed with no pending object. Recovery generation `20260830T185341Z-37436-48a79bbe` captured 17 refs and 3 LFS objects on `E:`. Offline restore `BS-013-f956ee6` recovered the exact merge without GitHub; the restored Benchmark/Core/Network map hashes were `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`, `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`, and `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; restored Build passed in 28.42 seconds and Automation passed 1/1. Lock `49918635` was released only after push and recovery verification; no remote LFS lock remained.
 - BS-013A candidate `05bfb593011bdfcb0ed37fe885a86f4d5ba8c7a5`, tree `1b793f1fff7049fd059b51356c167f8ad2466c23`: 10 changed PowerShell scripts parsed; Source Art self-test passed Unicode/binary/deduplication/multi-generation/locked-file/pointer/same-drive/existing-destination/corruption checks; repository/LFS self-test restored 3 refs + 1 LFS payload without GitHub; runner self-test passed 6/6. Local empty-source generation and restore passed; the 19:30 task is Ready and its direct run returned 0. Offline checkpoint `20260830T195222Z-35276-c790aa50` combined repository generation `20260830T195220Z-20964-5d4c696c` (18 refs, 3 LFS objects, exact candidate commit) and Source Art generation `20260830T195222Z-13368-c36825e2` (0 files because real Source Art is still empty). Complete restore `E:/BrokenStreets_OfflineRecoveryTests/BS-013A-05bfb59` used no GitHub, recovered the candidate branch, passed Git/LFS fsck, built in 28.49 seconds, and passed Automation 1/1. The unencrypted external drive had 931.38 GiB free; final creator acceptance is recorded in the integration entry below.
 - BS-013A was integrated into `main` by merge commit `272993dbb53dfa97481fa7463c8d9cf1d22cd9f9`. Final offline checkpoint `20260830T195922Z-38792-110472d5` captured that exact commit through repository generation `20260830T195920Z-37620-1d6ff86e` (19 refs, 3 LFS objects) and Source Art generation `20260830T195921Z-39652-781d3033` (0 files). Complete restore `E:/BrokenStreets_OfflineRecoveryTests/BS-013A-main-272993d` used no GitHub; restored/local/GitHub `main` matched, the restored origin was local on `E:`, and the external store had zero staging folders. Madalin Gavrila then safely removed the LaCie drive and confirmed separate physical storage, completing the first 3-2-1 checkpoint.
+- BS-013B automated candidate `b646af33b1676088adae9dbb320f01c4a9ba9d27`, tree `d0984c6f083280a62bc5d292b156b462b45cddde`: renderer audit passed 52/52; audit self-test passed 5/5; evolving CSV parser and runner self-tests passed; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`; Build, Automation, Data Validation, and Cook passed; exact-map Map Check reported 0 errors and 0 warnings; Win64 Development Build/Cook/Stage/Package/Archive completed with UAT exit 0 and Cook 0 errors/0 warnings.
+- BS-013B provisional renderer evidence: three fresh packaged DX12/SM6 runs retained 3,000 post-warm-up frames each. Median-run frame mean/p50/p95/p99/max were 5.5224/5.3757/8.6581/9.1303/9.6906 ms. The worst limiting-pipeline p95 was render-thread 11.8720 ms, below the fixture-only 13.33 ms informational target; all runs had zero stable frames above 50 or 100 ms. The high-end, stationary, one-player greybox result is not a Manhattan or hardware promise. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P1.md`.
+- BS-013B creator compilation and packaged visual/traversal acceptance are pending. The automated Engine logs show controlled status-0 shutdown, but the outer unattended observer still returned unexplained code `777003`; BS-013B cannot become Done until the normal creator checkpoint passes.
 
 ## Deviations and open items
 
-- `Config/DefaultEngine.ini` currently has `r.RayTracing=True`; the roadmap assumed Ray Tracing Off. Do not change it before an explicit configuration/benchmark task.
+- The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.
 - The external recovery drive is plaintext by creator choice; physical custody is required. Its first verified checkpoint is safely disconnected and stored separately.

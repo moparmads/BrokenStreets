@@ -110,16 +110,18 @@ Close the Editor and perform a full build for:
 - An upgrade uses a separate branch, backup, clean build/cook, migration tests, asset validation, and before/after benchmarks.
 - Never save assets converted by a new version over the stable branch.
 
-## Configuration baseline requiring an explicit task
+## PC renderer configuration baseline
 
-The wizard enabled options that are not yet product decisions:
+BS-013B replaced wizard defaults with the accepted reversible test path:
 
-- Ray Tracing;
-- Substrate;
-- Android File Server configuration in a PC-only project;
-- the default map in Engine content.
+- project-owned Editor/game/server startup map;
+- Win64 DX12/SM6;
+- Software Lumen, Virtual Shadow Maps, Nanite support, TSR, and Substrate Blendable GBuffer;
+- project hardware ray tracing disabled;
+- Android File Server explicitly disabled with no generated token;
+- `BS-PC-Recommended-P0` at 1920×1080 High, 100% screen percentage, VSync Off, and Dynamic Resolution Off.
 
-BS-011 creates the project-owned map. BS-013B owns PC-only configuration cleanup and the test renderer/scalability baseline, with an ADR and verification. Local tokens or configuration secrets are never copied into documentation.
+Run `Tools\BS-RendererBaseline.cmd Audit` after configuration changes. Run `Tools\BS-RendererBaseline.cmd All` only for an intentional clean candidate that must be audited, packaged, and captured. A renderer or preset change invalidates prior evidence until Build/Test/Validate/Cook, exact-map package, and performance gates are repeated.
 
 ## Build evidence
 

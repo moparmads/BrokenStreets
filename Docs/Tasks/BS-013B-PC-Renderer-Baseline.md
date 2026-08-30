@@ -1,6 +1,6 @@
 # BS-013B — PC Configuration and Renderer Baseline
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-013B-pc-renderer-baseline`
 **Base commit:** `7daaa19e26846d511a712b16c34482e35956c049`
@@ -106,7 +106,17 @@ N/A. No save format or gameplay state exists. First-run local graphics settings 
 
 ## Manual acceptance
 
-Exact steps and the packaged launcher path are filled after the verified candidate exists. Madalin will compile the exact candidate in Visual Studio, launch the prepared packaged checkpoint, confirm the expected benchmark image and responsiveness, close it normally, and return the complete log or a screenshot only if the expected result differs.
+The automated candidate is complete. Madalin performs only these steps:
+
+1. Keep Unreal Editor closed.
+2. Open `F:\BrokenStreets\BrokenStreets.sln` in Visual Studio.
+3. Select `Development Editor` and `Win64`, then choose **Build > Build Solution**. Expected result: `Build: 1 succeeded, 0 failed` with no new project warning.
+4. Close Visual Studio after the build.
+5. Open PowerShell in `F:\BrokenStreets` and run `.\Tools\BS-RendererBaseline.cmd Visual`. Do not edit Project Settings.
+6. Click the packaged game window, look around with the mouse, and move with `W A S D`. Expected result: the Benchmark Street greybox opens at 1920×1080, the floor/sky and four large block masses are visible, input is responsive, and no crash or obvious rendering defect appears.
+7. Close the game once with `Alt+F4`. If the result matches, reply that it passed. If it differs, keep the message window open and send one screenshot; do not change settings.
+
+Prepared package: `Saved/Packages/BS-013B/b646af3-20260830T210716Z/Windows/`.
 
 ## Risks and rollback
 
@@ -127,7 +137,7 @@ Exact steps and the packaged launcher path are filled after the verified candida
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `b646af33b1676088adae9dbb320f01c4a9ba9d27` | tree `d0984c6f083280a62bc5d292b156b462b45cddde`; Config `67fc0de9d562f5bb87d8ca549c6ce18404161649`; Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb`; Source `1b7850b3b6330e9fece6a41b8b35f34d7f9e3ec1` | parser PASS; audit 52/52; audit self-test 5/5; runner self-test 6/6; `BS.cmd All` `PASS_WITH_SKIPS`; Map Check 0/0; UAT/package PASS; three 3,000-stable-frame captures PASS | Automated PASS; owner visual pending | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
