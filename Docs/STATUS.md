@@ -2,12 +2,12 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `feature/BS-012-testgym-network`
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-011` — project-owned TestGym core map.
-- Active task: `BS-012` — automated and creator acceptance passed; integration, backup/restore audit, and LFS lock release are in progress.
+- Last completed task: `BS-012` — network TestGym fixture.
+- Active task: none; the recoverable BS-012 baseline is closed on `main`.
 - Next task after BS-012: `BS-013` — `L_Benchmark_Street` placeholder.
 
 ## What actually exists
@@ -49,6 +49,8 @@
 - BS-011 recovery checkpoint: clean generation `20260830T115256Z-29716-852e443d` captured 13 refs and 1 LFS object under `E:/BrokenStreets_RepositoryBackup`. Isolated restore `BS-011-e21c78a` verified all 13 refs and the LFS object without GitHub; the restored map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`.
 - BS-012 automated candidate `d475fce9d92bbd382a4ff89e7745e6fd765f1169`, tree `4de4d828a2145544cd7f8117c78df214a2db2d57`: the 55,593-byte network map is stored through Git LFS as OID `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`, while the Core map remains byte-identical. Runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Build and Automation passed; Data Validation validated 2/2 project assets with 0 invalid/unable/missing/warnings/errors; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings; exact-map UAT packaging completed with exit 0. One packaged listen host and three clients loaded `L_TestGym_Network`, all three clients joined, all four processes remained alive for 10 seconds, and the failure scan was clear. Local evidence: `Saved/Automation/BS-009/20260830T123125Z-38300-bd6b5a5a/run.json`, `Saved/Verification/BS-012/d475fce/MapCheck/Unreal.log`, and `Saved/Verification/BS-012/d475fce/Loopback-Attempt2`.
 - BS-012 creator acceptance passed on August 30, 2026: Madalin Gavrila observed one host and three responsive client windows on the expected TestGym for longer than 10 seconds, supplied a screenshot, and closed all four normally. Retained logs show exactly three accepted connections and joins, exact-map load in every process, normal exit markers, and no failure marker or remaining process. A verbose replication audit under `Saved/Verification/BS-012/d475fce/PawnAudit-Attempt2-VerboseNet` found four distinct replicated Engine `DefaultPawn` objects on the host and every client. The temporary pawn mesh is owner-no-see; camera framing, not a missing pawn, explains views containing only two remote spheres.
+- BS-012 was integrated into `main` by merge commit `82ad55d336091f41385136465b3bcc3800d4bfdb`. Local and GitHub `main` matched exactly; the remote network-map pointer referenced LFS OID `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; Git LFS fsck and no-pending-object audit passed; and lock `49918506` was released only after integration and recovery verification.
+- BS-012 recovery checkpoint: clean generation `20260830T131034Z-39496-dc415d1a` captured 15 refs and 2 LFS objects under `E:/BrokenStreets_RepositoryBackup`. Offline restore `BS-012-82ad55d` recovered the exact merge without GitHub and verified both LFS objects. The restored Core map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; the restored Network map was 55,593 bytes with SHA-256 `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; restored Development Editor Build and Automation both passed.
 
 ## Deviations and open items
 
