@@ -1,6 +1,6 @@
 # BS-010A — Independent Repository and Git LFS Backup
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-010A-independent-backup`
 **Base commit:** `cfd2edffc70bb9a22fd39041f9fe91a2b038da69`
@@ -105,6 +105,8 @@ No Unreal Editor or Visual Studio action is required.
 
 The scheduled task is already registered, enabled, and proven by one direct Task Scheduler run with result code 0. Creator acceptance proves the normal checkpoint command and presentation at the handoff boundary.
 
+Creator acceptance was completed on August 30, 2026. Madalin Gavrila ran the normal checkpoint command from `F:\BrokenStreets`; generation `20260830T104652Z-28620-93aa2606` was published under the approved `E:` backup root. Its manifest records a clean source at `a9f57e601cb14491f34f66e22ea83fbc4745a666`, origin refresh `PASS`, 11 captured refs, 0 current LFS objects, and the approved retention/capacity policy. `LATEST.json` points to the same generation and source commit.
+
 ## Risks and rollback
 
 - **Base:** `cfd2edffc70bb9a22fd39041f9fe91a2b038da69`.
@@ -125,9 +127,10 @@ The scheduled task is already registered, enabled, and proven by one direct Task
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | August 30, 2026 | `f15227f2da9507582da1f9bedc358b8485691ea4` | tree `4b84d24edf2abc954c84b350f7c4d74a35bb4af7`; tooling/docs only; no C++/Config/Content/`.uproject`/plugin changes | parser checks; existing runner self-test; backup self-test; same-volume safety rejection; generation `20260830T103932Z-20076-8eb088fc`; offline restore `BS-010A-f15227f`; restored Build/Test summaries under the restore `Saved/Automation/BS-009/`; scheduled-task direct run | PASS — runner 5/5; synthetic restore 3 refs + 1 LFS object; real generation 10 refs + 0 current LFS objects, clean source, origin refresh PASS; offline restore 10 refs, 0 LFS, no network; restored Build 27.965s; restored Test 1/1 passed; scheduled task enabled/Ready, last result 0, next run 19:00 | Codex |
+| August 30, 2026 | `a9f57e601cb14491f34f66e22ea83fbc4745a666` | evidence/docs-only commit over the unchanged verified tooling tree | creator command `Tools/BS-Backup.cmd`; generation `20260830T104652Z-28620-93aa2606`; manifest and `LATEST.json` audit | PASS — clean source; origin refresh PASS; 11 refs; 0 current LFS objects; approved owner, retention, capacity, schedule, encryption, and off-site policy recorded | Madalin Gavrila / Codex manifest audit |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-Automated implementation and verification are complete. Creator manual checkpoint acceptance remains required before `Done` and merge into `main`.
+Automated verification and creator acceptance are complete. BS-010A is ready for integration into `main`; the integrated commit and final clean `main` backup are recorded during closure.
