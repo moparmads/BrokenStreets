@@ -91,3 +91,70 @@ Exit-code contract:
 - `21`: the process returned 0, but authoritative UE markers indicate an invalid or incomplete result;
 - `70`: internal error or a process that could not start;
 - `124`: timeout; only the process group launched by the runner is terminated and verified.
+
+## Independent repository backup
+
+BS-010A adds a second entry point that protects committed Git history and Git LFS payloads on the separately approved `E:` physical disk:
+
+```powershell
+.\Tools\BS-Backup.cmd
+```
+
+The normal manual command requires a clean working tree. Save and commit the intended checkpoint first; uncommitted files are never represented by a repository backup. `-AllowDirty` is reserved for the daily scheduled task, where the manifest records that uncommitted files were excluded.
+
+Every successful run publishes an immutable directory under:
+
+```text
+E:\BrokenStreets_RepositoryBackup\
+├── Generations\<run-id>\
+│   ├── repository.bundle
+│   ├── refs.txt
+│   ├── lfs-objects.tsv
+│   ├── manifest.json
+│   └── checksums.sha256
+├── LfsObjects\
+├── Logs\
+├── LATEST.json
+└── LATEST.previous.json
+```
+
+The bundle contains all captured Git refs and tags. Git LFS payloads are verified by their SHA-256 OID and copied once into the shared content-addressed store. The tool retains 30 Git generations and never deletes LFS objects automatically. It warns below 100 GiB free and fails below the 10 GiB hard reserve.
+
+The scheduled task does not inherit the interactive Codex PATH. `RepositoryBackupConfig.json` therefore pins the verified local Git executable that includes Git LFS, while interactive runs retain a PATH fallback. If the Codex runtime is relocated, update and reverify that path before the next scheduled backup.
+
+Preview safety checks without writing:
+
+```powershell
+.\Tools\BS-Backup.cmd -PlanOnly
+```
+
+After changing backup or restore tooling, run its non-empty Git LFS regression test. It creates isolated fixtures on `F:` and `E:`, restores three refs plus one LFS payload without GitHub, and removes only its own verified temporary folders after success:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Backup\Tests\Backup.SelfTest.ps1
+```
+
+Inspect the daily 19:00 scheduled task:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Backup\Register-RepositoryBackupTask.ps1 -Action Inspect
+```
+
+## Offline repository restore
+
+Restoration never writes into the main project and never contacts GitHub. Always choose a new destination:
+
+```powershell
+.\Tools\BS-Restore.cmd -DestinationRoot E:\BrokenStreets_RepositoryBackup\RestoreTests\<new-test-name>
+```
+
+The restore verifies the latest pointer, every listed checksum, the bundle, every captured ref, every LFS pointer/payload, Git object integrity, and a clean `main` working copy. It creates both a complete bare repository and `WorkingCopy`. The restored working copy's `origin` points to that local bare repository, not GitHub.
+
+After a recovery, run from the restored `WorkingCopy`:
+
+```powershell
+.\Tools\BS.cmd Build
+.\Tools\BS.cmd Test
+```
+
+Do not delete a failed generation or restore folder before its logs are reviewed. Backup data and restore drills are outside the game repository and are never committed.

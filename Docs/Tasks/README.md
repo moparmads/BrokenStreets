@@ -50,3 +50,4 @@ Before code:
 | BS-008 | Project memory and agent workflow | Done | `main` |
 | [BS-009](BS-009-Build-Automation.md) | Build/Test/Validate/Cook automation | Done | `main` |
 | [BS-010](BS-010-Automation-Smoke-Test.md) | First Automation smoke test and canonical English migration | Done | `main` |
+| [BS-010A](BS-010A-Independent-Repository-Backup.md) | Independent repository and Git LFS backup | Done | `feature/BS-010A-independent-backup` (integration pending) |

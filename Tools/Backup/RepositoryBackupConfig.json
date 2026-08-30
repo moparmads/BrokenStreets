@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "repositoryRoot": "F:\\BrokenStreets",
+  "backupRoot": "E:\\BrokenStreets_RepositoryBackup",
+  "gitExecutable": "C:\\Users\\madal\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd\\git.exe",
+  "defaultBranch": "main",
+  "originRemote": "origin",
+  "refreshOrigin": true,
+  "retentionGenerationCount": 30,
+  "warningFreeSpaceGiB": 100,
+  "hardMinimumFreeSpaceGiB": 10,
+  "scheduledTaskName": "BrokenStreets Repository Backup",
+  "scheduleLocalTime": "19:00",
+  "owner": "Madalin Gavrila",
+  "encryptionPolicy": "No additional encryption approved for the local independent copy",
+  "offsitePolicy": "Deferred to BS-013A Source Art 3-2-1 backup"
+}
