@@ -1,8 +1,8 @@
-# Standardul instrucțiunilor Unreal Editor
+# Unreal Editor Instruction Standard
 
-Orice pas manual pentru Madalin respectă acest format. UI labels sunt scrise exact în engleză; explicația este în română.
+Every manual step for Madalin follows this format. UI labels are written exactly in English; explanations to the creator are in Romanian.
 
-## Header obligatoriu
+## Required header
 
 ```text
 Goal:
@@ -14,17 +14,17 @@ Files/assets that will be created or modified:
 Do not touch:
 ```
 
-## Reguli
+## Rules
 
-- o singură acțiune per pas;
-- meniu/tab/button/field exact;
-- valoarea exactă, inclusiv spelling/case;
-- calea exactă unde se salvează asset-ul;
-- ce trebuie să apară după pas;
-- checkpoint înainte de o operație ireversibilă ori bulk;
-- alternative numai dacă UI-ul chiar diferă;
-- nu cere „configurează”, „setează corect” ori „creează Blueprint-ul necesar” fără pașii compleți;
-- nu cere creatorului să creeze noduri de gameplay autoritativ ca workaround.
+- one action per step;
+- exact menu, tab, button, and field;
+- exact value, including spelling and case;
+- exact asset save path;
+- expected result after each step;
+- checkpoint before an irreversible or bulk operation;
+- alternatives only when the UI genuinely differs;
+- never say “configure,” “set it correctly,” or “create the required Blueprint” without complete steps;
+- never ask the creator to build authoritative gameplay nodes as a workaround.
 
 ## Format
 
@@ -41,7 +41,7 @@ FAIL if: ...
 If FAIL: stop; attach [screenshot/log/path]. Do not continue.
 ```
 
-## Handoff final
+## Final handoff
 
 ```text
 PASS criteria:
@@ -49,30 +49,30 @@ PASS criteria:
 2. ...
 
 If PASS, send:
-- confirmation / screenshot / log requested.
+- requested confirmation, screenshot, or log.
 
 If FAIL, send:
-- full Output Log section from ... to ...;
+- complete Output Log section from ... to ...;
 - screenshot of ...;
-- do not save/close/change ... until Codex replies.
+- do not save, close, or change ... until Codex replies.
 
 Rollback:
 - exact safe action or commit; never vague deletion.
 ```
 
-## Asset naming și location
+## Asset naming and location
 
-Instrucțiunea include întotdeauna:
+Instructions always include:
 
-- asset class/template;
-- name cu prefix;
-- path sub `/Game/BS/...`;
-- parent/class/data source;
-- properties ce rămân default;
+- asset class or template;
+- prefixed name;
+- path under `/Game/BS/...`;
+- parent, class, or data source;
+- properties that remain at default;
 - Save All checkpoint;
-- Data Validation ori testul relevant.
+- Data Validation or relevant test.
 
-## Exemplu acceptabil
+## Acceptable example
 
 ```text
 1. In Unreal Editor, click File > New Level.
@@ -85,4 +85,4 @@ Instrucțiunea include întotdeauna:
    Expected: Content Browser shows L_TestGym_Core in that folder.
 ```
 
-Exemplul nu autorizează crearea hărții până când task-ul relevant este activ.
+The example does not authorize creating the map before the relevant task is active.

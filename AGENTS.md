@@ -1,177 +1,178 @@
-# Broken Streets — Instrucțiuni pentru agenți
+# Broken Streets — Agent Instructions
 
-Acest fișier este contractul operațional al repository-ului. Se aplică întregului proiect. Un `AGENTS.md` ori `AGENTS.override.md` mai apropiat de un subdirector poate adăuga reguli locale, dar nu poate încălca deciziile de produs, siguranța datelor sau limitele de autoritate de aici.
+This file is the repository's operating contract. It applies to the entire project. A closer `AGENTS.md` or `AGENTS.override.md` may add local rules, but it may not violate the product decisions, data-safety rules, or authority boundaries defined here.
 
-## 1. Misiunea proiectului
+## 1. Project mission
 
-- Broken Streets este un life/crime sandbox original realizat în Unreal Engine 5.8.2 pentru Windows PC și Steam.
-- Jocul funcționează solo și în co-op privat pentru creator plus maximum trei prieteni, prin listen server pe PC-ul host-ului.
-- Fantezia centrală este ascensiunea financiară într-un Manhattan fictiv: joburi legale și ilegale, reacția mediului, economie credibilă și cumpărarea continuă de bunuri mai bune.
-- Creatorul produce asset-urile 3D și poate opera Unreal Editor, dar nu scrie cod. Codex scrie și modifică practic tot C++, configul, testele și documentația.
-- Stabilitatea, corectitudinea multiplayer și performanța pentru patru jucători separați au prioritate față de amploarea conținutului și efectele cosmetice.
+- Broken Streets is an original life/crime sandbox built in Unreal Engine 5.8.2 for Windows PC and Steam.
+- The game supports full solo play and private co-op for the creator plus up to three friends, using a listen server on the host player's PC.
+- The central fantasy is financial ascent in a fictional Manhattan: legal and illegal jobs, environmental reactions, a credible economy, and the continuous pursuit of better possessions.
+- The creator produces the 3D assets and can operate Unreal Editor, but does not write code. Codex writes and modifies virtually all C++, configuration, tests, and documentation.
+- Stability, multiplayer correctness, and performance for four players in separate areas take priority over content breadth and cosmetic effects.
 
-## 2. Înainte de orice schimbare
+## 2. Before any change
 
-1. Rulează `git status` și păstrează toate modificările existente ale utilizatorului.
-2. Citește `Docs/INDEX.md`, `Docs/STATUS.md` și task packet-ul relevant.
-3. Pentru gameplay ori arhitectură, citește obligatoriu:
+1. Run `git status` and preserve every existing user change.
+2. Read `Docs/INDEX.md`, `Docs/STATUS.md`, and the relevant task packet.
+3. For gameplay or architecture work, also read:
    - `Docs/VISION.md`;
    - `Docs/DECISIONS.md`;
    - `Docs/ARCHITECTURE.md`;
    - `Docs/SYSTEM_OWNERSHIP.md`;
-   - documentul sistemului din `Docs/Systems/`, dacă există;
-   - ADR-urile relevante din `Docs/Decisions/`.
-4. Identifică ID-ul task-ului `BS-###`, rezultatul observabil, fișierele permise, dependențele și verificarea înainte de implementare.
-5. Dacă lipsește o decizie care schimbă experiența, autoritatea, persistența, compatibilitatea save-ului, performanța ori scope-ul, prezintă creatorului o recomandare scurtă cu alternative și așteaptă alegerea. Nu bloca lucrul pentru valori de tuning reversibile.
+   - the relevant document under `Docs/Systems/`, if one exists;
+   - the relevant ADRs under `Docs/Decisions/`.
+4. Identify the `BS-###` task ID, observable outcome, allowed files, dependencies, and verification plan before implementation.
+5. If a missing decision would change the player experience, authority, persistence, save compatibility, performance, or scope, present the creator with a short recommendation and alternatives, then wait for the choice. Do not block work on reversible tuning values.
 
-## 3. Sursele de adevăr
+## 3. Sources of truth
 
-Nu amesteca trei întrebări diferite:
+Do not mix these three separate questions:
 
-- **Ce este autorizat acum:** cererea explicită curentă a creatorului, apoi task packet-ul activ. Dacă cererea schimbă produsul ori arhitectura, actualizează și sursele canonice în același task.
-- **Ce există efectiv:** repository-ul la commitul indicat și dovezile reproductibile de build/test au prioritate; `Docs/STATUS.md` trebuie să le rezume. Dacă STATUS diferă de cod, config, content sau dovadă, raportează conflictul și corectează STATUS. Un roadmap ori un document de design nu dovedește implementarea.
-- **Ce trebuie construit:** `Docs/DECISIONS.md` pentru decizii confirmate → ADR-uri `Accepted` → documentul sistemului → `Docs/ARCHITECTURE.md` și `Docs/SYSTEM_OWNERSHIP.md` → `Docs/ROADMAP.md` → valori provizorii, propuneri și exemple.
+- **What is authorized now:** the creator's current explicit request, followed by the active task packet. If the request changes the product or architecture, update the canonical sources in the same task.
+- **What actually exists:** the repository at the referenced commit and reproducible build/test evidence take priority; `Docs/STATUS.md` must summarize them. If STATUS differs from code, configuration, content, or evidence, report the conflict and correct STATUS. A roadmap or design document does not prove implementation.
+- **What must be built:** confirmed decisions in `Docs/DECISIONS.md` → `Accepted` ADRs → the system document → `Docs/ARCHITECTURE.md` and `Docs/SYSTEM_OWNERSHIP.md` → `Docs/ROADMAP.md` → provisional values, proposals, and examples.
 
-Nu transforma automat o intrare `PROPUS — NECESITĂ APROBARE`, `PROVIZORIU`, `DEFAULT` ori `DEFERRED` într-o decizie confirmată. Nu trata nici codul accidental ca decizie de produs. Raportează orice conflict și actualizează toate documentele afectate în același task.
+Never promote an entry marked `PROPOSED — APPROVAL REQUIRED`, `PROVISIONAL`, `DEFAULT`, or `DEFERRED` into a confirmed decision automatically. Do not treat accidental code as a product decision. Report conflicts and update every affected document in the same task.
 
-## 4. Colaborarea cu creatorul
+## 4. Collaboration with the creator
 
-- Nu cere creatorului să scrie, completeze, mute sau repare C++.
-- Nu oferi fragmente pe care creatorul trebuie să le integreze manual dacă ai acces la repository; modifică fișierele direct.
-- Pentru orice operație în Unreal Editor, oferă pași numerotați exacți: meniul, butonul, câmpul, valoarea, locul salvării și rezultatul așteptat.
-- Separă clar pașii obligatorii de cei opționali și spune când Editorul trebuie închis.
-- Creatorul preferă să compileze și să facă acceptance playtest. Codex pregătește schimbarea, testele și instrucțiunile, apoi repară pe baza logului complet.
-- Nu declara un task de cod `Done` înainte de confirmarea build-ului și a testului manual cerut, chiar dacă verificările locale au trecut.
-- Pune numai întrebări care pot schimba rezultatul. Pentru fiecare, oferă recomandarea implicită și efectul alternativelor.
-- Comunică cu creatorul în română. Numele claselor, simbolurile C++, asset names și commit messages rămân în engleză.
+- Never ask the creator to write, complete, move, or repair C++.
+- Do not provide snippets that the creator must integrate manually when repository access is available; edit the files directly.
+- For every Unreal Editor operation, provide exact numbered steps: menu, button, field, value, save location, and expected result.
+- Clearly separate required and optional steps, and state when the Editor must be closed.
+- The creator prefers to compile and perform acceptance playtests. Codex prepares the change, tests, and instructions, then repairs issues from the complete log.
+- Do not mark a code task `Done` before the required build and manual test are confirmed, even when local checks pass.
+- Ask only questions that can change the result. For each question, provide the recommended default and the effect of alternatives.
+- Communicate with the creator in Romanian unless the creator requests another language.
+- **English is the canonical language for the game and repository.** Documentation, task packets, source/tool comments, logs, runner messages, test names, asset names, identifiers, and commit messages must be written in English.
 
-## 5. Limita C++ / Blueprint
+## 5. C++ / Blueprint boundary
 
-### C++ deține obligatoriu
+### C++ must own
 
-- autoritatea serverului, validarea inputului și RPC-urilor;
-- stare persistentă ori replicată;
-- profile, save/load, versiuni, migrări și recovery;
-- bani, tranzacții, inventar, ownership și item instances;
-- job runtime, legality, heat, police, factions, health și combat;
-- vehicule, fuel, keys, cargo și recordurile persistente;
-- AI sensibil la performanță, schedulere și simulation LOD;
-- validatoare, debug contracts și teste automate.
+- server authority and input/RPC validation;
+- persistent or replicated state;
+- profiles, save/load, versions, migrations, and recovery;
+- money, transactions, inventory, ownership, and item instances;
+- job runtime, legality, heat, police, factions, health, and combat;
+- vehicles, fuel, keys, cargo, and persistent records;
+- performance-sensitive AI, schedulers, and simulation LOD;
+- validators, debug contracts, and automated tests.
 
-### Blueprint și Editor pot conține
+### Blueprint and Editor may contain
 
-- Animation Blueprint, montages, Control Rig și IK;
-- layout UMG/Common UI și animații de prezentare;
-- materiale, Niagara, sunet, VFX, Sequencer și cinematics;
-- Data Assets, Data Tables, Curves, Gameplay Tags și valori de tuning;
-- configurarea mesh-urilor și componentelor vizuale;
-- StateTree compus în Editor cu task-uri C++ pentru logica importantă;
-- hărți, Data Layers, Level Instances și child Blueprints subțiri de configurare.
+- Animation Blueprints, montages, Control Rig, and IK;
+- UMG/Common UI layout and presentation animation;
+- materials, Niagara, sound, VFX, Sequencer, and cinematics;
+- Data Assets, Data Tables, Curves, Gameplay Tags, and tuning values;
+- mesh and visual-component configuration;
+- StateTrees composed in Editor with C++ tasks for important logic;
+- maps, Data Layers, Level Instances, and thin configuration-only child Blueprints.
 
-### Interzis implicit în Blueprint
+### Forbidden in Blueprint by default
 
-- solduri, formule economice, save ori migrări;
-- RPC-uri autoritative și validarea lor;
-- state machine mare de job/poliție/combat;
-- Tick permanent, scanări globale și `Get All Actors` repetat;
-- hard references către cataloage mari;
-- aceeași regulă de gameplay duplicată în mai multe asset-uri.
+- balances, economy formulas, saves, or migrations;
+- authoritative RPCs and their validation;
+- large job/police/combat state machines;
+- permanent Tick, repeated global scans, or repeated `Get All Actors`;
+- hard references to large catalogs;
+- the same gameplay rule duplicated across several assets.
 
-Dacă un Blueprint necesită multe ramuri, bucle, networking sau stare persistentă, mută logica în C++ și expune numai configurarea necesară.
+If a Blueprint requires many branches, loops, networking, or persistent state, move the logic to C++ and expose only the necessary configuration.
 
-## 6. Reguli de arhitectură
+## 6. Architecture rules
 
-- Un singur owner poate modifica adevărul fiecărui domeniu. Alte sisteme trimit comenzi și consumă evenimente/read models.
-- UI prezintă stare și emite intenții; nu mută bani, iteme ori mission state direct.
-- Save serializează stare furnizată de owners; nu calculează gameplay.
-- Un Actor runtime nu este recordul persistent. Folosește separarea `Definition → Instance Record → Runtime Representation → Save Delta`.
-- Folosește ID-uri stabile și tipizate pentru entități persistente. Nu folosi pointeri, nume de Actor sau poziții ca identitate durabilă.
-- Banii sunt întregi în cenți; operațiile economice sunt idempotente și au `TransactionId`.
-- Stările și cataloagele sunt data-driven. Evită magic numbers și string-uri libere când există tip, tag, enum sau setting.
-- Păstrează modulele compilate puține la început. Folderele reprezintă ownership logic; un modul nou necesită o graniță și o dependență justificată.
-- Nu adăuga plugin, SDK, serviciu extern ori engine fork fără problemă demonstrată, audit de licență și aprobarea creatorului.
-- Nu edita Engine Source pentru o problemă ce poate fi rezolvată în proiect.
+- A single owner may modify the truth of each domain. Other systems send commands and consume events/read models.
+- UI presents state and emits intent; it does not move money, items, or mission state directly.
+- Save serializes state supplied by owners; it does not calculate gameplay.
+- A runtime Actor is not its persistent record. Use the separation `Definition → Instance Record → Runtime Representation → Save Delta`.
+- Use stable, typed IDs for persistent entities. Do not use pointers, Actor names, or positions as durable identity.
+- Money is stored as integer cents; economic operations are idempotent and carry a `TransactionId`.
+- State machines and catalogs are data-driven. Avoid magic numbers and free-form strings when a type, tag, enum, or setting exists.
+- Keep compiled modules few at the start. Folders represent logical ownership; a new module requires a justified boundary and dependency.
+- Do not add a plugin, SDK, external service, or engine fork without a demonstrated problem, license audit, and creator approval.
+- Do not edit Engine Source for a problem that can be solved in the project.
 
-## 7. Multiplayer și securitatea stării
+## 7. Multiplayer and state security
 
-- Proiectează fiecare sistem gameplay pentru autoritatea părții server a listen serverului din prima implementare.
-- `Host` înseamnă jucătorul/PC-ul care rulează listen serverul; nu este numele unei autorități de cod. Partea server este autoritatea runtime.
-- Fiecare client trimite intenții; partea server validează identitatea, permisiunea, distanța, starea, rate limit-ul și rezultatul. Clientul local al host-ului parcurge aceleași comenzi și validări ca un client remote; nu primește o scurtătură de gameplay.
-- Nu folosi multicast ca depozit de adevăr. Starea durabilă trebuie să poată fi reconstruită pentru late join și reconnect.
-- Replică minimul necesar, owner-only când este personal, prin snapshot inițial plus delte controlate.
-- Documentează pentru fiecare sistem: owner, RPC-uri, relevancy, late join, reconnect, failure și payload/bandwidth.
-- Testează separat jucătorii aflați împreună și patru bule îndepărtate.
-- Fără backend autoritar, trișarea intenționată a save-ului este acceptată; prevenim coruperea și duplicarea accidentală, fără a pretinde consistență distribuită perfectă.
-- Nu avea încredere într-un sold, item, payout, damage ori job result furnizat de client.
+- Design every gameplay system for the listen server's server-side authority from its first implementation.
+- `Host` means the player/PC running the listen server; it is not the name of a code authority. The server side is the runtime authority.
+- Every client sends intent; the server side validates identity, permission, distance, state, rate limit, and result. The host's local client follows the same commands and validation as a remote client and receives no gameplay shortcut.
+- Do not use multicast as a truth store. Durable state must be reconstructible for late join and reconnect.
+- Replicate only what is necessary, owner-only when personal, through an initial snapshot plus controlled deltas.
+- Document each system's owner, RPCs, relevancy, late join, reconnect, failure behavior, and payload/bandwidth.
+- Test players together and four distant simulation bubbles separately.
+- Without an authoritative backend, intentional save editing is accepted; prevent corruption and accidental duplication without pretending to provide perfect distributed consistency.
+- Never trust a client-provided balance, item, payout, damage value, or job result.
 
-## 8. Persistență
+## 8. Persistence
 
-- Orice format persistent are `SchemaVersion`, ID-uri stabile, validare și cale de migrare.
-- Nu schimba semantic un câmp salvat fără migrare ori reset explicit aprobat.
-- Capturează snapshot-uri coerente pe game thread; serializarea/I/O poate deveni asincronă numai cu ownership și lifetime sigure.
-- Scrierile finale folosesc generații, checksum și un fișier temporar pe același volum cu destinația. Ordinea invariantă este: capture coerent → serialize în temp → flush → read-back/checksum → replace local atomic → actualizare manifest numai după validare.
-- Ultima generație validă rămâne recuperabilă până când noua generație și manifestul sunt confirmate. La startup, temp-urile neconfirmate nu devin adevăr; se alege cea mai nouă generație committed care trece schema/checksum, apoi se raportează fallback-ul.
-- Schimbările economice critice sunt journaled și idempotente; reconnect-ul nu poate aplica reward-ul de două ori.
-- `CharacterActiveTime`, nu ceasul sistemului ori ora lumii host-ului, controlează progresul personal activ.
+- Every persistent format has a `SchemaVersion`, stable IDs, validation, and a migration path.
+- Do not change the semantics of a saved field without a migration or an explicitly approved reset.
+- Capture coherent snapshots on the game thread; serialization/I/O may become asynchronous only with safe ownership and lifetime.
+- Final writes use generations, a checksum, and a temporary file on the same volume as the destination. The invariant order is: coherent capture → serialize to temp → flush → read-back/checksum → local atomic replace → update manifest only after validation.
+- Keep the last valid generation recoverable until the new generation and manifest are confirmed. At startup, unconfirmed temporary files do not become truth; select the newest committed generation that passes schema/checksum validation and report any fallback.
+- Critical economy changes are journaled and idempotent; reconnect cannot apply a reward twice.
+- `CharacterActiveTime`, not system time or the host world's clock, controls personal active progression.
 
-## 9. Performanță
+## 9. Performance
 
-- Ținta provizorie recomandată este 1080p/60 FPS; Minimum/Low urmărește 1080p/30 stabil până când hardware-ul-etalon este măsurat.
-- Host-ul trebuie să susțină patru zone active fără tether. Optimizează CPU, memorie, streaming și bandwidth, nu doar GPU-ul local.
-- Preferă evenimente, schedulere și update rates explicite. Orice Tick nou trebuie justificat, măsurat și dezactivat când nu este necesar.
-- Fără scanări globale repetate, sync-load în gameplay, hard references la cataloage, RPC reliable per frame sau Actor complet pentru simularea îndepărtată.
-- Folosește nivelurile `Full`, `Reduced`, `Representation`, `Statistical` și păstrează StableId la promovare/demovare.
-- Nu afirma că o schimbare este „optimizată” fără scenariu, build, hardware și măsurători before/after.
-- Nu sacrifica entități gameplay pe Low; pot fi reduse numai densitatea și efectele cosmetice.
+- The recommended provisional target is 1080p/60 FPS; Minimum/Low targets stable 1080p/30 until reference hardware is measured.
+- The host must support four active areas without a tether. Optimize CPU, memory, streaming, and bandwidth, not only the local GPU.
+- Prefer events, schedulers, and explicit update rates. Every new Tick must be justified, measured, and disabled when unnecessary.
+- No repeated global scans, synchronous gameplay loads, hard catalog references, reliable RPCs every frame, or full Actors for distant simulation.
+- Use the `Full`, `Reduced`, `Representation`, and `Statistical` levels, preserving StableId across promotion/demotion.
+- Do not call a change “optimized” without a scenario, build, hardware specification, and before/after measurements.
+- Low settings must not remove gameplay entities; only ambient density and cosmetic effects may be reduced.
 
-## 10. Testare și Definition of Done
+## 10. Testing and Definition of Done
 
-Urmează `Docs/Testing/TEST_STRATEGY.md` și `Docs/Workflows/DEFINITION_OF_DONE.md`.
+Follow `Docs/Testing/TEST_STRATEGY.md` and `Docs/Workflows/DEFINITION_OF_DONE.md`.
 
-Minimum pentru o schimbare relevantă:
+Minimum verification for a relevant change:
 
-- build `Development Editor | Win64`;
-- testele unit/automation/functional țintite;
-- solo și host/client pentru cod replicat;
-- late join, reconnect și save/reload când sistemul le atinge;
-- Data Validation pentru asset-uri ori date;
-- packaged build și profiling la gate-urile roadmapului;
-- zero warning-uri sau log spam noi explicabile prin schimbare;
-- documentația și statusul actualizate;
-- acceptance playtest al creatorului, cu pași exacți.
+- `Development Editor | Win64` build;
+- targeted unit/automation/functional tests;
+- solo and host/client for replicated code;
+- late join, reconnect, and save/reload when affected;
+- Data Validation for assets or data;
+- packaged build and profiling at roadmap gates;
+- zero new unexplained warnings or log spam;
+- synchronized documentation and status;
+- creator acceptance playtest with exact steps.
 
-Un test omis trebuie declarat cu motiv și risc. PIE singur nu dovedește networking Steam, cook, packaging sau recovery.
+Every skipped test must state its reason and risk. PIE alone does not prove Steam networking, cooking, packaging, or recovery.
 
-## 11. Git și protecția datelor
+## 11. Git and data protection
 
-- Nu șterge, reseta, suprascrie sau reformata modificările utilizatorului fără autorizare explicită.
-- Un task coerent folosește un branch `feature/BS-###-*`, `fix/BS-###-*` sau `docs/BS-###-*`.
-- Commiturile sunt mici, atomice și descriu rezultatul. `main` trebuie să compileze.
-- Nu comite `.vs/`, `Binaries/`, `DerivedDataCache/`, `Intermediate/`, `Saved/` ori soluții regenerate.
-- `.uasset` și `.umap` intră prin Git LFS. Înainte de editare verifică ownerul și obține lock; dacă lock-ul eșuează ori aparține altcuiva, oprește editarea. Verifică pointerul staged, obiectele ce urmează să fie împinse și eliberează lock-ul numai după merge/push verificat.
-- `F:/BrokenStreets_SourceArt` nu intră în repository-ul jocului; are backup separat.
-- Nu comite secrete, tokenuri, date personale inutile, build-uri distribuite ori material de referință extras din alte jocuri.
-- Înainte de commit: inspectează `git status --short --branch`, `git diff HEAD`, `git diff --cached --name-status`, `git diff --cached --check` și `git lfs status`; un `git diff` gol nu dovedește că staging-ul este gol.
-- Pentru cod/config/content, dovada finală se leagă de commitul candidat ori de tree-ul exact verificat. Orice schimbare ulterioară în C++, Config, Content, `.uproject`, pluginuri sau build scripts invalidează dovada și cere reverificare.
-- Înainte de push: confirmă branch-ul și remote-ul, inspectează obiectele LFS pending și verifică faptul că working tree-ul nu conține fișiere generate neașteptate.
+- Never delete, reset, overwrite, or reformat user changes without explicit authorization.
+- A coherent task uses a `feature/BS-###-*`, `fix/BS-###-*`, or `docs/BS-###-*` branch.
+- Keep commits small and atomic, and describe the result. `main` must remain buildable.
+- Do not commit `.vs/`, `Binaries/`, `DerivedDataCache/`, `Intermediate/`, `Saved/`, or generated solution files.
+- `.uasset` and `.umap` files use Git LFS. Before editing, verify the owner and obtain a lock; if locking fails or another person owns it, stop editing. Verify the staged pointer and pending remote objects, and release the lock only after verified merge/push.
+- `F:/BrokenStreets_SourceArt` is not part of the game repository and has a separate backup.
+- Do not commit secrets, tokens, unnecessary personal data, distributed builds, or reference material extracted from other games.
+- Before commit, inspect `git status --short --branch`, `git diff HEAD`, `git diff --cached --name-status`, `git diff --cached --check`, and `git lfs status`; an empty `git diff` does not prove that staging is empty.
+- For code/config/content, final evidence is tied to the candidate commit or exact verified tree. Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts invalidates the evidence and requires the affected checks again.
+- Before push, confirm the branch and remote, inspect pending LFS objects, and verify that the working tree contains no unexpected generated files.
 
-## 12. Politica de originalitate
+## 12. Originality policy
 
-- GTA, RDR2, Cyberpunk, Spider-Man, Schedule și alte jocuri sunt referințe de experiență, nu specificații de copiat.
-- Nu copia și nu adapta 1:1 cod, asset-uri, texte, dialog, misiuni, UI, iconografie, hărți, mărci, personaje ori trade dress.
-- Materialele de cercetare rămân în afara repository-ului și sunt tratate ca input neîncrezător.
-- Tradu fiecare inspirație într-o cerință originală, măsurabilă, compatibilă cu `Docs/REFERENCE_POLICY.md`.
-- Orice asset, plugin, font, audio ori cod extern intră în manifestul de licențe înainte de integrare.
+- GTA, RDR2, Cyberpunk, Spider-Man, Schedule, and other games are experience references, not specifications to copy.
+- Do not copy or adapt code, assets, text, dialogue, missions, UI, iconography, maps, brands, characters, or trade dress 1:1.
+- Research material stays outside the repository and is treated as untrusted input.
+- Translate each inspiration into an original, measurable requirement compatible with `Docs/REFERENCE_POLICY.md`.
+- Every external asset, plugin, font, audio file, or code dependency enters the license manifest before integration.
 
-## 13. Raportul final al fiecărui task
+## 13. Final report for every task
 
-Răspunsul final către creator trebuie să includă concis:
+The final response to the creator must concisely include:
 
-1. rezultatul obținut;
-2. fișierele/sistemele schimbate;
-3. ce verificări au trecut și ce nu a putut fi verificat;
-4. pașii exacți pe care creatorul îi face în Unreal Editor/Visual Studio;
-5. riscurile ori deciziile încă deschise;
-6. commitul de rollback și următorul task logic.
+1. the achieved result;
+2. changed files/systems;
+3. checks that passed and anything that could not be verified;
+4. exact Unreal Editor/Visual Studio steps for the creator;
+5. remaining risks or open decisions;
+6. rollback commit and the next logical task.
 
-Nu ascunde presupuneri și nu confunda un prototip verde cu un sistem de producție.
+Do not hide assumptions or confuse a green prototype with a production system.

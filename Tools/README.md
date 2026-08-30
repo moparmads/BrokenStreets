@@ -1,91 +1,93 @@
-# Broken Streets — comenzi de proiect
+# Broken Streets local automation
 
-BS-009 oferă un singur punct de intrare pentru verificările locale. Runnerul este compatibil cu Windows PowerShell 5.1, nu instalează nimic și nu modifică Unreal Engine.
+BS-009 provides one entry point for local project checks. The runner supports Windows PowerShell 5.1, installs nothing, and does not modify Unreal Engine.
 
-## Comanda normală
+## Normal command
 
-1. Închide Unreal Editor.
-2. Deschide PowerShell în `F:\BrokenStreets`.
-3. Rulează:
+1. Close Unreal Editor.
+2. Open PowerShell in `F:\BrokenStreets`.
+3. Run:
 
 ```powershell
 .\Tools\BS.cmd All
 ```
 
-La final trebuie să apară `Rezultat final: PASS_WITH_SKIPS` până când BS-010 adaugă primul test și BS-011 adaugă primele asset-uri. `Test` și `Validate` își declară explicit lipsa temporară de conținut, iar Cook poate raporta separat numai omisiuni Engine clasificate; nimic din acestea nu este mascat ca PASS simplu.
+Do not launch `BS.cmd` by double-clicking it: the temporary window closes when the run ends and hides the result. Run it from an already-open terminal.
 
-## Acțiuni
+After BS-010, `Test` must discover and pass exactly the first Broken Streets smoke test. The complete `All` gate may still finish as `PASS_WITH_SKIPS` while BS-011 has not created project-owned assets and Cook reports only explicitly classified Engine omissions. A controlled skip is never hidden as a plain PASS.
 
-| Acțiune | Ce verifică/produce |
+## Actions
+
+| Action | What it verifies or produces |
 |---|---|
-| `Doctor` | proiectul, UE 5.8.2 CL 56702186, .NET inclus, Win64 SDK 10.0.22621.0, VS 18/MSVC 14.50, procesele, permisiunile UBT și spațiul liber |
-| `Generate` | regenerează `.sln` și `.slnx` |
-| `Build` | compilează `BrokenStreetsEditor Win64 Development` |
-| `Test` | compilează mai întâi, apoi rulează numai testele `BrokenStreets`; momentan `SKIPPED_NO_TESTS` |
-| `Validate` | compilează mai întâi, apoi verifică asset-urile project-owned; momentan `SKIPPED_NO_ASSETS` |
-| `Cook` | compilează mai întâi, apoi face cook local pentru `Windows`, fără stage/package |
-| `All` | Doctor → Generate → Build → Test → Validate → Cook, fail-fast |
+| `Doctor` | project files, UE 5.8.2 CL 56702186, bundled .NET, Win64 SDK 10.0.22621.0, VS 18/MSVC 14.50, running processes, UBT permissions, and free space |
+| `Generate` | regenerates `.sln` and `.slnx` |
+| `Build` | compiles `BrokenStreetsEditor Win64 Development` |
+| `Test` | builds first, then runs only `BrokenStreets` Automation tests; zero matching tests is a failure |
+| `Validate` | builds first, then validates project-owned assets; `SKIPPED_NO_ASSETS` is expected until BS-011 |
+| `Cook` | builds first, then performs a local `Windows` cook without staging or packaging |
+| `All` | runs Doctor, Generate, Build, Test, Validate, and Cook in that order |
 
-Exemplu pentru o singură verificare:
+Example for one check:
 
 ```powershell
-.\Tools\BS.cmd Build
+.\Tools\BS.cmd Test
 ```
 
-Previzualizare fără să lanseze Unreal:
+Preview commands without launching Unreal:
 
 ```powershell
 .\Tools\BS.cmd All -PlanOnly
 ```
 
-## Engine discovery
+## Engine discovery and execution safety
 
-Ordinea este:
+Engine discovery uses this order:
 
-1. parametrul opțional `-EngineRoot`;
-2. variabila locală `BROKENSTREETS_UE_ROOT`;
-3. EngineAssociation înregistrat local;
-4. manifestele Epic Games Launcher.
+1. optional `-EngineRoot` argument;
+2. local `BROKENSTREETS_UE_ROOT` environment variable;
+3. locally registered `EngineAssociation`;
+4. Epic Games Launcher manifests.
 
-Runnerul acceptă numai versiunea fixată în `Tools/Build/RunnerConfig.json`. O cale explicită greșită produce fail; nu selectează silențios alt engine.
+The runner accepts only the version pinned in `Tools/Build/RunnerConfig.json`. An incorrect explicit path fails instead of silently selecting another engine.
 
-Automatizarea lansează `UnrealBuildTool.dll` prin runtime-ul DotNet inclus de engine, nu executabilul apphost `UnrealBuildTool.exe`. Astfel evită ruta secundară care a afișat excepția generică `.NET 0xe0434352` în Visual Studio, în timp ce build-ul real era reușit.
+Automation launches `UnrealBuildTool.dll` through the engine's bundled DotNet runtime, not the `UnrealBuildTool.exe` apphost. This avoids the secondary launch path that previously displayed the generic `.NET 0xe0434352` exception in Visual Studio even though the real build succeeded.
 
-În UE 5.8, `Packages Skipped by Platform` poate include pachete exclusiv pentru Editor. Runnerul le raportează ca `PASS_WITH_SKIPS` numai dacă procesul nativ a ieșit cu 0, footer-ul Unreal confirmă `0 error(s)`, outputul Cook există, fiecare omisiune corespunde unui motiv permis, numărul clasificat este exact cel raportat de UE și toate pachetele sunt Engine-owned. Orice omisiune necunoscută sau project-owned, cod nativ nenul, footer cu erori ori output incomplet rămâne fail.
+In UE 5.8, `Packages Skipped by Platform` may contain Editor-only packages. The runner reports these as `PASS_WITH_SKIPS` only when the native process exits with 0, the Unreal footer confirms `0 error(s)`, Cook output exists, every omission matches an allowed reason, the classified count exactly matches UE's reported count, and every omitted package is Engine-owned. Any unknown or project-owned omission, nonzero native code, error footer, or incomplete output remains a failure.
 
-Fiecare proces extern este izolat imediat într-un Windows Job Object cu `KILL_ON_JOB_CLOSE`. La timeout, runnerul folosește și un snapshot PID plus `taskkill /T` ca verificare/fallback, apoi confirmă că job-ul nu mai conține procese active. Aceeași curățare este verificată după un cod nativ nenul. Astfel, un proces copil rămas fără părintele intermediar nu poate continua în fundal.
+Every external process is immediately contained in a Windows Job Object with `KILL_ON_JOB_CLOSE`. On timeout, the runner also uses a PID snapshot and `taskkill /T` as a verification fallback, then confirms that the job has no active processes. The same cleanup is verified after a nonzero native exit. A child process therefore cannot remain running after its intermediate parent exits.
 
-Self-testul runnerului, destinat verificării după modificări în `Tools/`, se rulează cu:
+Run the runner self-test after changing anything under `Tools/`:
 
 ```powershell
-.\Tools\Tests\Runner.SelfTest.ps1
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Tests\Runner.SelfTest.ps1
 ```
 
-El verifică argumentele native, propagarea exactă a codului de ieșire, timeout-ul `124`, oprirea unui proces nepot orfan și scrierea atomică UTF-8 a `run.json`.
+It verifies native argument handling, exact exit-code propagation, timeout code `124`, termination of an orphaned grandchild process, and atomic UTF-8 writing of `run.json`.
 
-## Loguri și erori
+## Logs and exit codes
 
-Fiecare rulare creează:
+Each run creates:
 
 ```text
 Saved/Automation/BS-009/<run-id>/
 ├── run.json
 ├── runner.log
 └── Steps/
-    └── NN-Action/
+    └── <number>-<step>/
         ├── command.txt
         ├── stdout.log
         ├── stderr.log
         ├── combined.log
-        └── Unreal.log / TestReport (unde se aplică)
+        └── Unreal.log / TestReport (when applicable)
 ```
 
-`Saved/` este ignorat de Git. La fail, trimite captura cu rezultatul și calea `Log:` ori `Sumar:` afișată; Codex poate identifica exact etapa și codul.
+`Saved/` is ignored by Git. On failure, provide the final result and the displayed `Log:` or `Summary:` path so Codex can identify the exact step and code.
 
-Codurile runnerului:
+Exit-code contract:
 
-- cod nativ nenul: păstrat nemodificat;
-- `20`: preflight/Doctor;
-- `21`: procesul a întors 0, dar markerii reali UE arată rezultat invalid sau incomplet;
-- `70`: eroare internă ori proces care nu poate porni;
-- `124`: timeout; este oprit și verificat numai grupul de procese lansat de runner.
+- nonzero native code: preserved unchanged;
+- `2`: preflight or invalid invocation;
+- `21`: the process returned 0, but authoritative UE markers indicate an invalid or incomplete result;
+- `70`: internal error or a process that could not start;
+- `124`: timeout; only the process group launched by the runner is terminated and verified.

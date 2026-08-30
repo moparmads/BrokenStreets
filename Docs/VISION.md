@@ -1,76 +1,76 @@
-# Viziunea Broken Streets
+# Broken Streets Vision
 
-## Promisiunea centrală
+## Central promise
 
-Broken Streets este un life/crime sandbox original despre ascensiunea financiară într-un Manhattan fictiv, dens și credibil. Jucătorul începe fără bani, vehicul sau locuință, își alege singur activitățile legale ori ilegale și transformă câștigurile în mobilitate, statut, confort, siguranță și oportunități mai mari.
+Broken Streets is an original life/crime sandbox about financial ascent in a dense, credible fictional Manhattan. The player starts without money, a vehicle, or a home; chooses legal or illegal activities; and converts earnings into mobility, status, comfort, safety, and larger opportunities.
 
-Nu există o campanie obligatorie ori un final unic. Fiecare personaj își construiește propria poveste prin sisteme, relații și consecințe. Tutorialul este obligatoriu; firele narative prin NPC-uri sunt opționale.
+There is no mandatory campaign or single ending. Each character builds a personal story through systems, relationships, and consequences. The tutorial is mandatory; NPC storylines are optional.
 
-## Ce trebuie să simtă jucătorul
+## What the player should feel
 
-1. **Am pornit de jos.** Primii bani și primul obiect util contează.
-2. **Alegerea mea are consecințe.** Activitatea legală, ilegală, reputația și statutul modifică reacția lumii.
-3. **Următoarea achiziție merită.** Mașinile, hainele, bijuteriile, locuințele și echipamentele nu sunt numai colecție; schimbă accesul, capacitatea, riscul sau confortul.
-4. **Pot trăi aceeași viață singur ori cu prietenii.** Nicio activitate importantă nu cere obligatoriu co-op.
-5. **Personajul este al meu.** Banii, inventarul, bunurile, reputația și progresul portabil călătoresc în sesiunile prietenilor în limitele modelului local fără backend.
-6. **Orașul pare viu fără să-mi distrugă PC-ul.** Realismul complet există aproape de jucător și când produce o alegere; restul este reprezentat eficient.
+1. **I started at the bottom.** The first money and first useful possession matter.
+2. **My choices have consequences.** Legal or illegal activity, reputation, and status change how the world reacts.
+3. **The next purchase is worth it.** Vehicles, clothing, jewelry, homes, and equipment do more than fill a collection; they change access, capacity, risk, or comfort.
+4. **I can live the same life alone or with friends.** No major activity requires co-op.
+5. **The character is mine.** Money, inventory, possessions, reputation, and portable progress travel into friends' sessions within the local, backend-free model.
+6. **The city feels alive without destroying my PC.** Full realism exists near the player and where it creates a choice; the rest is represented efficiently.
 
-## Bucla principală
+## Core loop
 
 ```text
-pornești fără nimic
-  → găsești o oportunitate
-  → alegi legal / ilegal / mixt
-  → o execuți solo sau inviți prieteni
-  → lumea reacționează la acțiune, risc și statut
-  → primești bani, reputație, obiecte ori consecințe
-  → cumperi ceva care schimbă viața personajului
-  → noul bun deschide oportunități și aspirații mai mari
-  → progresul personajului continuă în alte sesiuni private
+start with nothing
+  → find an opportunity
+  → choose legal / illegal / mixed
+  → execute alone or invite friends
+  → the world reacts to the action, risk, and status
+  → receive money, reputation, items, or consequences
+  → buy something that changes the character's life
+  → the new possession opens larger opportunities and aspirations
+  → character progress continues in other private sessions
 ```
 
-## Pilonii produsului
+## Product pillars
 
-### 1. Ascensiune financiară fără capăt artificial
+### 1. Financial ascent without an artificial end
 
-Economia păstrează raporturi credibile, dar comprimă timpul mort. Cel mai ieftin vehicul poate fi atins în 30–60 de minute; o mașină decentă poate cere aproximativ patru ore; luxul, proprietățile și colecțiile premium creează obiective de zeci sau sute de ore. Catalogul se extinde fără ca jucătorul să poată deține rapid totul.
+The economy keeps credible ratios while compressing dead time. The cheapest vehicle may be attainable within 30–60 minutes; a decent car may require about four hours; luxury, properties, and premium collections create goals lasting tens or hundreds of hours. The catalog expands without allowing the player to quickly own everything.
 
-### 2. Legalitate care produce reacții
+### 2. Legality that causes reactions
 
-Acțiunile, itemele și zonele pot fi legale ori ilegale. Heat-ul și cazierul sunt individuale. Poliția și familiile mafiote reacționează la comportamentul concret, nu la omnisciență. Nu construim criminalistică completă, martori persistenți sau dovezi ADN pentru a simula profunzime inutilă.
+Actions, items, and areas may be legal or illegal. Heat and criminal record are individual. Police and organized-crime families react to concrete behavior, not omniscience. We do not build complete forensics, permanently simulated witnesses, or DNA evidence merely to imitate depth.
 
-### 3. Co-op privat fără obligații
+### 3. Private co-op without obligation
 
-Jocul suportă maximum patru jucători în total: un host și trei clienți. Fiecare poate face alt job sau sta în alt cartier/interior, fără tether. Grupul cooperează, dar banii, inventarul, reputația și progresul fiecărui personaj rămân individuale; transferurile voluntare sunt posibile.
+The game supports at most four total players: one host and three clients. Each may do a different job or occupy another district or interior without a tether. The group cooperates, while every character's money, inventory, reputation, and progression remain individual; voluntary transfers are allowed.
 
-### 4. Viață aspirațională
+### 4. Aspirational life
 
-Obiectele scumpe sunt motorul progresului. Vehiculele schimbă mobilitatea și cargo, hainele/bijuteriile modifică statutul și percepția, locuințele oferă storage și personalizare, iar echipamentele deschid activități mai eficiente ori riscante.
+Expensive possessions drive progression. Vehicles change mobility and cargo capacity, clothing and jewelry affect status and perception, homes provide storage and customization, and equipment unlocks more efficient or risky activities.
 
-### 5. Realism selectiv
+### 5. Selective realism
 
-Realism profund: bani în cenți, ownership, cargo, combustibil, damage pe zone, armură, chirie, datorii, foame, sete, somn, igienă, toaletă, injury, spital și închisoare.
+Deep realism: money in cents, ownership, cargo, fuel, location-based damage, armor, rent, debt, hunger, thirst, sleep, hygiene, bladder, injuries, hospital, and prison.
 
-Realism comprimat: condus arcade-realist, nevoi cu update rar, tratament moderat, timp economic numai cât personajul este activ, NPC-uri ambientale fără viață persistentă completă și consecințe suficient de scurte încât jocul să rămână distractiv.
+Compressed realism: arcade-realistic driving, infrequently updated needs, moderate treatment, economic time only while the character is active, ambient NPCs without fully persistent lives, and consequences short enough to preserve fun.
 
-### 6. Optimizare ca funcție de produs
+### 6. Optimization as a product feature
 
-Ținta provizorie este 1080p/60 FPS pe configurația recomandată și 1080p/30 stabil pe Minimum/Low până la benchmark. Host-ul trebuie să susțină patru bule separate. Presetul Low poate reduce populația și efectele cosmetice, dar nu schimbă gameplay-ul.
+The provisional target is 1080p/60 FPS on the Recommended configuration and stable 1080p/30 on Minimum/Low until benchmarks exist. The host must support four separated simulation bubbles. Low may reduce population density and cosmetic effects, but never gameplay.
 
-## Lumea
+## World
 
-- Scope final: insula Manhattan reinterpretată, nu reconstrucție 1:1.
-- Nume, firme, landmark-uri și clădiri originale/fictive.
-- Exterior continuu; magazinele importante fără loading vizibil.
-- Apartamentele și spațiile private pot fi instanțe izolate cu tranziție mascată.
-- Harta finală urmărește provizoriu 10–15 minute cu mașina și aproximativ o oră de sprint, validate prin greybox.
-- Soare, nori, ploaie și furtuni; fără anotimpuri/zăpadă inițial.
-- Fără metrou, canalizare, avioane, bărci sau rețea completă de acoperișuri în v1.
+- Final scope: a reinterpreted Manhattan island, not a 1:1 reconstruction.
+- Original or fictional names, companies, landmarks, and buildings.
+- Continuous exterior; important shops without visible loading.
+- Apartments and private spaces may use isolated instances with masked transitions.
+- The final map provisionally targets 10–15 minutes by car and about one hour of sprinting, validated through greybox.
+- Sun, clouds, rain, and storms; no initial seasons or snow.
+- No subway, sewer, aircraft, boats, or complete rooftop network in v1.
 
-## Ton și public
+## Tone and audience
 
-Publicul este 18+. Tonul combină situații serioase cu umor și satiră, fără a copia scrierea sau identitatea altor jocuri. Sunt excluse temele de abuz sexual extrem și alte categorii stabilite în registrul deciziilor. Înaintea producției narative mature va exista o politică editorială explicită.
+The audience is 18+. Tone combines serious situations with humor and satire without copying another game's writing or identity. Extreme sexual-abuse themes and other categories defined in the decision register are excluded. An explicit editorial policy is required before mature narrative production.
 
-## Regula de succes
+## Success rule
 
-Broken Streets reușește dacă bucla `muncă/risc → bani → achiziție → oportunitate nouă` este distractivă într-o zonă mică, la 1/2/4 jucători și pe hardware-ul țintă. Manhattan-ul complet și mii de asset-uri multiplică o buclă deja sănătoasă; nu o pot înlocui.
+Broken Streets succeeds when the `work/risk → money → purchase → new opportunity` loop is fun in a small area, with one, two, and four players, on target hardware. Complete Manhattan and thousands of assets multiply an already healthy loop; they cannot replace it.

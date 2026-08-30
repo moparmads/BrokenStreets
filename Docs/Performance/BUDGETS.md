@@ -1,80 +1,80 @@
-# Bugete de performanță
+# Performance budgets
 
-**Status:** provisional până la `L_Benchmark_Street` și PC-etalon.
-**Regulă:** `TBD` este mai corect decât un număr inventat. Valorile se îngheață prin task/ADR după măsurare.
+**Status:** provisional until `L_Benchmark_Street` and reference PCs exist.
+**Rule:** `TBD` is more accurate than an invented number. Values are frozen through a task or ADR after measurement.
 
-## 1. Profiluri țintă
+## 1. Target profiles
 
-| Profil | Țintă provizorie | Condiții |
+| Profile | Provisional target | Conditions |
 |---|---|---|
-| Minimum/Low | 1080p, 30 FPS stabil | SSD, 16 GB RAM, upscaling permis, fără Frame Generation necesar |
-| Recommended | 1080p, 60 FPS stabil | 32 GB RAM recomandat; hardware exact TBD |
-| Host Recommended | aceeași calitate cu rezervă CPU/RAM | 1 host + 3 clienți în patru bule |
-| Ultra | realism vizual pentru hardware puternic | nu schimbă gameplay-ul; RT poate fi opțional după ADR |
+| Minimum/Low | stable 1080p, 30 FPS | SSD, 16 GB RAM, upscaling allowed, no required Frame Generation |
+| Recommended | stable 1080p, 60 FPS | 32 GB RAM recommended; exact hardware TBD |
+| Host Recommended | same quality with CPU/RAM reserve | one host plus three clients in four bubbles |
+| Ultra | visual realism for powerful hardware | does not change gameplay; RT may become optional after ADR |
 
 ## 2. Frame budgets
 
-| Target | Frame interval | Working p95 target cu ~20% rezervă | Status |
+| Target | Frame interval | Working p95 target with ~20% reserve | Status |
 |---|---:|---:|---|
-| 60 FPS | 16,67 ms | 13,33 ms pentru pipeline-ul limitativ în scenariul normal | Provisional |
-| 30 FPS | 33,33 ms | 26,67 ms | Provisional |
+| 60 FPS | 16.67 ms | 13.33 ms for the limiting pipeline in the normal scenario | Provisional |
+| 30 FPS | 33.33 ms | 26.67 ms | Provisional |
 
-GT, RT și GPU se raportează separat; FPS-ul este limitat de cel mai lent. p50/p95/p99/max și hitches sunt necesare; media singură nu este suficientă.
+Report GT, RT, and GPU separately; the slowest limits FPS. p50/p95/p99/max and hitches are required; an average alone is insufficient.
 
-## 3. Hitch budgets provizorii
+## 3. Provisional hitch budgets
 
-- fără hitch-uri repetate peste 50 ms în traversare normală;
-- fără hitch peste 100 ms la intrarea normală într-o celulă după warm-up;
-- loading/interior transition targets rămân provisional până la hardware-etalon;
-- shader/PSO/asset streaming hitches sunt clasificate separat.
+- no repeated hitches above 50 ms during normal traversal;
+- no hitch above 100 ms during normal post-warm-up cell entry;
+- loading and interior-transition targets remain provisional until reference hardware exists;
+- shader, PSO, and asset-streaming hitches are classified separately.
 
 ## 4. Runtime invariants
 
-- niciun RPC reliable per frame;
-- niciun global actor scan repetat în gameplay;
-- niciun sync-load în hot path normal;
-- niciun hard reference global ce încarcă întregul catalog;
-- economie/ownership/save/job transitions event-driven;
-- needs/rare systems nu rulează per frame;
-- traffic/crowd îndepărtat nu păstrează Actor/fizică completă;
-- UI folosește events/invalidation, nu Blueprint polling;
-- Tick este disabled by default și are owner/frequency/budget/evidence când este necesar.
+- no reliable RPC every frame;
+- no repeated global Actor scan in gameplay;
+- no synchronous load in a normal hot path;
+- no global hard reference that loads an entire catalog;
+- economy, ownership, save, and job transitions are event-driven;
+- needs and other infrequent systems do not run every frame;
+- distant traffic or crowds do not retain full Actors and physics;
+- UI uses events and invalidation, not Blueprint polling;
+- Tick is disabled by default and has an owner, frequency, budget, and evidence when required.
 
-## 5. Bugete ce trebuie măsurate
+## 5. Budgets to measure
 
-| Arie | Metrică | Low | Recommended/Host | Freeze gate |
+| Area | Metric | Low | Recommended/Host | Freeze gate |
 |---|---|---:|---:|---|
 | CPU | GT/RT p95/p99 | TBD | TBD | Benchmark Street/four bubbles |
-| GPU | GPU p95/p99 | TBD | TBD | Representative art benchmark |
+| GPU | GPU p95/p99 | TBD | TBD | representative art benchmark |
 | Memory | process working set | TBD | TBD | four-bubble soak |
 | VRAM | peak/resident/evictions | TBD | TBD | renderer ADR |
-| Streaming | loaded cells, IO, load/unload time | TBD | TBD | WP spike |
+| Streaming | loaded cells, I/O, load/unload time | TBD | TBD | WP spike |
 | Network | bandwidth/client/total | TBD | TBD | replication spike |
 | Network | initial snapshot/late join | TBD | TBD | replicated feature gate |
 | Actors | full/reduced/representation counts | TBD | TBD | population/traffic benchmark |
 | AI | active/reduced/statistical | TBD | TBD | AI/Police gate |
 | Physics | bodies/vehicles/collision cost | TBD | TBD | vehicle/combat gate |
-| Save | snapshot size/capture/serialize/write | TBD | TBD | 10k record test |
-| Content | material slots/texture/mesh/LOD | per category TBD | per category TBD | representative asset kit |
+| Save | snapshot size/capture/serialize/write | TBD | TBD | 10k-record test |
+| Content | material slots/texture/mesh/LOD | per-category TBD | per-category TBD | representative asset kit |
 
 ## 6. Scalability contract
 
-Low poate reduce:
+Low may reduce:
 
-- ambient crowd/traffic density;
-- shadow/reflection/lighting quality;
-- cosmetic props/VFX/decals/distance;
-- animation/update quality pentru entități ambientale.
+- ambient crowd and traffic density;
+- shadow, reflection, and lighting quality;
+- cosmetic props, VFX, decals, and draw distance;
+- animation and update quality for ambient entities.
 
-Low nu poate elimina ori schimba:
+Low may not remove or change:
 
-- police/AI relevant;
-- witnesses/detectors folosiți de gameplay;
-- objectives, loot, interactables și collisions importante;
-- visibility esențială pentru stealth/combat;
-- job outcomes, economy, save ori simulation rules.
+- relevant police or AI;
+- witnesses or detectors used by gameplay;
+- objectives, loot, interactables, and important collision;
+- visibility essential to stealth or combat;
+- job outcomes, economy, save, or simulation rules.
 
-## 7. Raport before/after
+## 7. Before/after report
 
 ```text
 Scenario/version:
@@ -95,4 +95,4 @@ PASS/FAIL and fallback:
 Trace path:
 ```
 
-O schimbare nu este numită „optimizare” fără acest context minim.
+A change is not called an “optimization” without this minimum context.

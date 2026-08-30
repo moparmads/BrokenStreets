@@ -427,7 +427,7 @@ while ($true) {
 
     Invoke-SelfTestCase -Name 'run.json is atomic UTF-8 and round-trips data' -Body {
         [void](New-SelfTestCaseContext -Name 'JsonSummary')
-        $specialText = 'quotes " and slash \ and Unicode ăîșțâ λ'
+        $specialText = 'quotes " and slash \ and Unicode éß漢字 λ'
         [void](Add-BsStepRecord -Name 'JsonProbe' -Status 'PASS' -Diagnostic 'JSON_OK' `
             -ToolExitCode 0 -RunnerExitCode 0 -ExitSource 'None' -DurationSeconds 1.25 `
             -ProcessId 1234 -TimedOut $false -LogPath 'C:\Path With Space\probe.log' `

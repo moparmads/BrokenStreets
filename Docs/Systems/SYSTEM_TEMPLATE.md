@@ -1,119 +1,119 @@
 # [System Name]
 
 **Status:** Proposed
-**Owner de produs:** Madalin Gavrila
-**System owner runtime:** [domain]
-**Task activ:** BS-###
-**Ultimul commit/gate verificat:** none
+**Product owner:** Madalin Gavrila
+**Runtime system owner:** [domain]
+**Active task:** BS-###
+**Last verified commit/gate:** none
 
-## 1. Scop
+## 1. Purpose
 
-Ce rezultat observabil produce sistemul pentru jucător și de ce există acum?
+What observable player result does the system produce, and why does it exist now?
 
 ## 2. Non-goals
 
-Ce nu rezolvă această versiune? Leagă `Docs/NON_GOALS.md` și milestone-ul viitor.
+What does this version not solve? Link `Docs/NON_GOALS.md` and the future milestone.
 
-## 3. Decizii și open questions
+## 3. Decisions and open questions
 
-- Decizii confirmate din `Docs/DECISIONS.md`:
-- ADR-uri relevante:
-- `DEFAULT` reversibile:
-- Întrebări ce necesită Decision Packet:
+- Confirmed decisions from `Docs/DECISIONS.md`:
+- Relevant ADRs:
+- Reversible `DEFAULT` values:
+- Questions requiring a Decision Packet:
 
-## 4. Comportamente și exemple
+## 4. Behaviors and examples
 
-Descrie reguli observabile și 3–5 exemple concrete, inclusiv un failure case.
+Describe observable rules and three to five concrete examples, including a failure case.
 
-## 5. Ownership și invariante
+## 5. Ownership and invariants
 
-| Dimensiune | Owner / regulă |
+| Dimension | Owner / rule |
 |---|---|
 | Storage owner | |
 | Runtime mutation authority | |
 | Persistent fragment owner | |
 | Replication audience | |
 
-Invariante ce nu pot fi încălcate:
+Invariants that may never be violated:
 
 - ...
 
-## 6. Stări și tranziții
+## 6. States and transitions
 
-Enumeră stările, evenimentul/comanda care schimbă starea, precondițiile și rezultatul. Fără tranziții implicite ascunse în UI/Blueprint.
+List states, the event or command that changes each state, preconditions, and result. No implicit transition may be hidden in UI or Blueprint.
 
-## 7. Data model și identitate
+## 7. Data model and identity
 
 - immutable `DefinitionId`:
 - `InstanceId`/typed IDs:
-- cardinalitate maximă:
-- fields publice/private/server-only:
-- Gameplay Tags de clasificare:
+- maximum cardinality:
+- public/private/server-only fields:
+- classification Gameplay Tags:
 - soft references/assets:
 - rename/deprecation/redirect policy:
 
-Nu salva `UObject`/Actor pointers și nu folosi Gameplay Tags ca instance identity.
+Never save `UObject` or Actor pointers, and never use Gameplay Tags as instance identity.
 
-## 8. Commands, events și API
+## 8. Commands, events, and API
 
-| Nume | Caller | Validator/owner | Input bounds | Result/event | Idempotency/revision |
+| Name | Caller | Validator/owner | Input bounds | Result/event | Idempotency/revision |
 |---|---|---|---|---|---|
 | | | | | | |
 
-Evenimentele notifică; ownerul mută adevărul. O comandă de rețea are rate limit și rezultat explicit.
+Events notify; the owner mutates truth. A network command has a rate limit and explicit result.
 
 ## 9. Multiplayer
 
-- server/client responsibility;
+- server/client responsibilities;
 - RPC validation;
 - owner-only/public/relevant data;
 - snapshot/delta/FastArray policy;
 - late join;
 - reconnect;
-- disconnect mid-command;
-- 1 host + 3 clients separated;
+- disconnect during a command;
+- one host plus three separated clients;
 - latency/loss behavior;
 - bandwidth/payload caps.
 
-## 10. Persistență și migrare
+## 10. Persistence and migration
 
 - store: Portable Profile / Host World / SessionCommitJournal / none;
 - fragment `SchemaVersion`;
-- capture boundary și game-thread ownership;
-- async I/O snapshot rule;
+- capture boundary and game-thread ownership;
+- asynchronous I/O snapshot rule;
 - migration/golden files;
 - corrupt/stale/conflict behavior;
 - transaction/recovery receipts.
 
-## 11. Performance și simulation LOD
+## 11. Performance and simulation LOD
 
-- update model: event / engine movement / scheduled Hz / tick justified;
-- CPU, memory, bandwidth și loaded asset budgets;
+- update model: event / engine movement / scheduled Hz / justified Tick;
+- CPU, memory, bandwidth, and loaded-asset budgets;
 - Full/Reduced/Representation/Statistical behavior;
 - spawn/despawn/pooling policy;
-- benchmark scenario și before/after evidence.
+- benchmark scenario and before/after evidence.
 
 ## 12. C++ / Blueprint / Editor surface
 
 - C++ classes/components/services:
 - Data Assets/Tables/Curves/Tags:
 - Blueprint child/configuration only:
-- exact Editor setup required:
+- exact required Editor setup:
 - validation rules:
 
-## 13. Failure, exploit și recovery
+## 13. Failure, exploit, and recovery
 
-Include duplicate request, stale revision, invalid IDs, permission denial, disconnect, host crash, partial transaction, unload/reload și corrupt data după relevanță.
+Include duplicate request, stale revision, invalid IDs, permission denial, disconnect, host crash, partial transaction, unload/reload, and corrupt data where relevant.
 
-## 14. Debug și observabilitate
+## 14. Debug and observability
 
-- log category și required context IDs;
+- log category and required context IDs;
 - debug overlay/commands;
 - metrics/trace counters;
 - recovery report;
 - Shipping exposure restrictions.
 
-## 15. Teste automate
+## 15. Automated tests
 
 ### Unit/automation
 
@@ -122,8 +122,8 @@ Include duplicate request, stale revision, invalid IDs, permission denial, disco
 ### Functional/network
 
 - solo;
-- 1 host + 1 client;
-- 1 host + 3 clients;
+- one host plus one client;
+- one host plus three clients;
 - together/separated;
 - late join/reconnect;
 - latency/loss.
@@ -132,20 +132,20 @@ Include duplicate request, stale revision, invalid IDs, permission denial, disco
 
 - ...
 
-## 16. Acceptance manual exact
+## 16. Exact manual acceptance
 
-Scrie pașii în formatul `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md`, cu PASS/FAIL și log/captură cerută.
+Write steps in the format from `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md`, with PASS/FAIL criteria and required log or screenshot.
 
-## 17. Rollout, rollback și compatibilitate
+## 17. Rollout, rollback, and compatibility
 
 - feature flag/default state;
 - base commit;
 - rollback commit/revert plan;
 - save/content/network compatibility;
-- fallback dacă gate-ul eșuează.
+- fallback if the gate fails.
 
-## 18. Evidence și istoric
+## 18. Evidence and history
 
-| Data | Task/commit | Build/test/trace | Rezultat | Aprobat de |
+| Date | Task/commit | Build/test/trace | Result | Approved by |
 |---|---|---|---|---|
 | | | | | |

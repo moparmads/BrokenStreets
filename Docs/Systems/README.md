@@ -1,39 +1,39 @@
-# Catalogul sistemelor
+# System catalog
 
-Nu există încă system design documents implementate. Proiectul este baseline C++ gol.
+No implemented system-design documents exist yet. The project is still an empty C++ baseline.
 
-Un document de sistem se creează just-in-time din `SYSTEM_TEMPLATE.md` când task-ul său devine `Ready`. Nu creăm placeholder-e pentru toate sistemele viitoare deoarece ar produce drift și falsa impresie că designul ori codul există.
+Create a system document just in time from `SYSTEM_TEMPLATE.md` when its task becomes `Ready`. Do not create placeholders for every future system; they would drift and falsely imply that design or code exists.
 
-## Statusuri permise
+## Allowed statuses
 
-- `Proposed` — design neaprobat ori netestat;
-- `Ready` — deciziile/dependențele/acceptarea sunt suficiente pentru cod;
-- `In Progress` — task activ;
-- `Needs Owner Verification` — codul este pregătit, creatorul trebuie să compileze/testeze;
-- `Implemented` — gate-ul sistemului a trecut;
-- `Deprecated` — nu mai trebuie folosit;
-- `Superseded` — înlocuit de documentul indicat.
+- `Proposed` — unapproved or untested design;
+- `Ready` — decisions, dependencies, and acceptance are sufficient for code;
+- `In Progress` — active task;
+- `Needs Owner Verification` — code is ready and the creator must compile/test;
+- `Implemented` — the system gate passed;
+- `Deprecated` — must no longer be used;
+- `Superseded` — replaced by the referenced document.
 
-## Convenție de nume
+## Naming convention
 
-Un document per owner/coherent domain, de exemplu:
+Use one document per owner/coherent domain, for example:
 
 - `Core.md`
 - `PortableProfile.md`
 - `OnlineSession.md`
 - `Interaction.md`
-- `ItemsInventoryOwnership.md` numai dacă granițele rămân explicit separate în interior;
+- `ItemsInventoryOwnership.md` only if its internal boundaries remain explicitly separate;
 - `Economy.md`
 - `Jobs.md`
-- `LegalityPolice.md` numai dacă nu ascunde doi owners;
+- `LegalityPolice.md` only if it does not hide two owners;
 - `Vehicles.md`
 
-Numele se alege după ownership, nu după un feature UI.
+Choose the name by ownership, not by a UI feature.
 
-## Index activ
+## Active index
 
-| Sistem | Document | Status | Ultimul gate verificat |
+| System | Document | Status | Last verified gate |
 |---|---|---|---|
-| — | — | niciun sistem proiectat/implementat încă | — |
+| — | — | no system designed or implemented yet | — |
 
-La adăugarea unui system doc, actualizează acest tabel și `Docs/STATUS.md` în același task.
+When adding a system document, update this table and `Docs/STATUS.md` in the same task.

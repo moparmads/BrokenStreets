@@ -171,7 +171,7 @@ function Read-BsTextFileWithRetry {
         Start-Sleep -Milliseconds 250
     } while ($stopwatch.ElapsedMilliseconds -lt $TimeoutMilliseconds)
 
-    throw "Fișierul de output nu a devenit disponibil în ${TimeoutMilliseconds}ms: $Path"
+    throw "Output file did not become available within ${TimeoutMilliseconds}ms: $Path"
 }
 
 function Write-BsMessage {
@@ -600,7 +600,7 @@ function Stop-BsProcessTree {
 
     try {
         if ($rootExitedBeforeTaskKill) {
-            throw 'Procesul rădăcină a ieșit înainte de taskkill; arborele nu mai poate fi confirmat.'
+            throw 'The root process exited before taskkill; complete process-tree termination can no longer be confirmed.'
         }
         $killInfo = New-Object System.Diagnostics.ProcessStartInfo
         $killInfo.FileName = $taskKillPath
@@ -730,7 +730,7 @@ function Get-BsEngineCandidate {
 
         foreach ($requiredPath in @($buildVersionPath, $ubtDll, $editorCmd)) {
             if (-not (Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
-                throw "Lipsește fișierul obligatoriu: $requiredPath"
+                throw "Required file is missing: $requiredPath"
             }
         }
 
@@ -754,11 +754,11 @@ function Get-BsEngineCandidate {
         $dotnet = $dotnetCandidates | Sort-Object Version -Descending | Select-Object -First 1
 
         if ($null -eq $dotnet) {
-            throw "Nu există runtime-ul DotNet win-x64 inclus de engine în $dotnetSearchRoot"
+            throw "The engine does not contain a bundled win-x64 DotNet runtime under $dotnetSearchRoot"
         }
         $ubtRuntimeConfig = Join-Path $fullRoot 'Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.runtimeconfig.json'
         if (-not (Test-Path -LiteralPath $ubtRuntimeConfig -PathType Leaf)) {
-            throw "Lipsește runtime config-ul UnrealBuildTool: $ubtRuntimeConfig"
+            throw "UnrealBuildTool runtime configuration is missing: $ubtRuntimeConfig"
         }
 
         $version = Get-Content -LiteralPath $buildVersionPath -Raw | ConvertFrom-Json
@@ -767,11 +767,11 @@ function Get-BsEngineCandidate {
         $expectedVersion = '{0}.{1}.{2}' -f $expected.major, $expected.minor, $expected.patch
 
         if ($actualVersion -ne $expectedVersion) {
-            throw "Engine $actualVersion găsit; proiectul cere exact $expectedVersion"
+            throw "Engine $actualVersion was found; the project requires exactly $expectedVersion"
         }
 
         if ([Int64]$version.Changelist -ne [Int64]$expected.changelist) {
-            throw "Engine changelist $($version.Changelist) găsit; proiectul cere exact $($expected.changelist)"
+            throw "Engine changelist $($version.Changelist) was found; the project requires exactly $($expected.changelist)"
         }
 
         return [pscustomobject][ordered]@{
@@ -871,10 +871,10 @@ function Resolve-BsEngine {
 
     $validCandidates = @($validByPath.Values)
     if ($validCandidates.Count -eq 0) {
-        throw 'UE 5.8.2 CL 56702186 nu a fost găsit. Folosește -EngineRoot sau setează BROKENSTREETS_UE_ROOT.'
+        throw 'UE 5.8.2 CL 56702186 was not found. Use -EngineRoot or set BROKENSTREETS_UE_ROOT.'
     }
     if ($validCandidates.Count -gt 1) {
-        throw 'Au fost găsite mai multe instalări UE 5.8.2 valide. Alege explicit una cu -EngineRoot.'
+        throw 'Multiple valid UE 5.8.2 installations were found. Select one explicitly with -EngineRoot.'
     }
 
     return $validCandidates[0]
@@ -887,17 +887,17 @@ function Initialize-BsContext {
     $projectRoot = [System.IO.Path]::GetFullPath((Join-Path $toolsRoot '..'))
     $configPath = Join-Path $toolsRoot 'Build\RunnerConfig.json'
     if (-not (Test-Path -LiteralPath $configPath -PathType Leaf)) {
-        throw "Lipsește configurația runnerului: $configPath"
+        throw "Runner configuration is missing: $configPath"
     }
 
     $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
     if ([int]$config.schemaVersion -ne 1) {
-        throw "Schema RunnerConfig.json nesuportată: $($config.schemaVersion)"
+        throw "Unsupported RunnerConfig.json schema: $($config.schemaVersion)"
     }
 
     $projectFile = Join-Path $projectRoot ([string]$config.projectFile)
     if (-not (Test-Path -LiteralPath $projectFile -PathType Leaf)) {
-        throw "Lipsește proiectul Unreal: $projectFile"
+        throw "Unreal project is missing: $projectFile"
     }
 
     $projectDescriptor = Get-Content -LiteralPath $projectFile -Raw | ConvertFrom-Json
@@ -914,7 +914,7 @@ function Initialize-BsContext {
         )
     }
     catch {
-        throw 'Altă rulare Broken Streets automation folosește deja proiectul. Așteaptă să se termine.'
+        throw 'Another Broken Streets automation run is already using the project. Wait for it to finish.'
     }
 
     $runId = '{0}-{1}-{2}' -f [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ'), $PID,
@@ -982,7 +982,7 @@ function Get-BsTimeoutSeconds {
 
     $property = $script:Context.Config.timeoutsSeconds.PSObject.Properties[$StepName]
     if ($null -eq $property) {
-        throw "Nu există timeout configurat pentru $StepName"
+        throw "No timeout is configured for $StepName"
     }
     return [int]$property.Value
 }
@@ -1046,7 +1046,7 @@ function Invoke-BsProcess {
     }
 
     if (-not (Test-Path -LiteralPath $FilePath -PathType Leaf)) {
-        $message = "Executabilul nu există: $FilePath"
+        $message = "Executable does not exist: $FilePath"
         Write-BsTextFile -Path $stdoutPath -Content ''
         Write-BsTextFile -Path $stderrPath -Content ($message + [Environment]::NewLine)
         Write-BsTextFile -Path $combinedLogPath -Content ($message + [Environment]::NewLine)
@@ -1119,7 +1119,7 @@ function Invoke-BsProcess {
         $process = New-Object System.Diagnostics.Process
         $process.StartInfo = $startInfo
         if (-not $process.Start()) {
-            throw "Procesul nu a putut fi pornit: $FilePath"
+            throw "Process could not be started: $FilePath"
         }
         $processStarted = $true
         $processId = $process.Id
@@ -1140,7 +1140,7 @@ function Invoke-BsProcess {
             $waitMilliseconds = [int][Math]::Min(1000, $remainingMilliseconds)
             $finished = $process.WaitForExit($waitMilliseconds)
             if ((-not $finished) -and ($stopwatch.Elapsed.TotalSeconds -ge $nextProgressSecond)) {
-                Write-BsMessage -Level 'INFO' -Message ('{0} rulează de {1:N0}s...' -f $StepName, $stopwatch.Elapsed.TotalSeconds)
+                Write-BsMessage -Level 'INFO' -Message ('{0} has been running for {1:N0}s...' -f $StepName, $stopwatch.Elapsed.TotalSeconds)
                 $nextProgressSecond += 30
             }
         }
@@ -1172,7 +1172,7 @@ function Invoke-BsProcess {
             if ($jobAssigned) {
                 $jobTermination = Stop-BsProcessJob -JobHandle $jobHandle -ExitCode 125
                 if (-not $jobTermination.Confirmed) {
-                    $containmentError = 'Curățarea job-ului Windows nu a putut fi confirmată după încheierea procesului.'
+                    $containmentError = 'Windows Job cleanup could not be confirmed after the process exited.'
                 }
             }
         }
@@ -1182,7 +1182,7 @@ function Invoke-BsProcess {
                 $toolExitCode = [int]$process.ExitCode
             }
             else {
-                $exitCodeReadError = 'Procesul nu era oprit la citirea codului nativ.'
+                $exitCodeReadError = 'The process was still running when its native exit code was read.'
             }
         }
         catch {
@@ -1205,11 +1205,11 @@ function Invoke-BsProcess {
 
         try {
             if (($null -eq $stdoutTask) -or (-not $stdoutTask.Wait(15000))) {
-                throw 'Citirea stdout nu s-a încheiat în 15 secunde.'
+                throw 'Reading stdout did not finish within 15 seconds.'
             }
             $stdout = [string]$stdoutTask.Result
             if (($null -eq $stderrTask) -or (-not $stderrTask.Wait(15000))) {
-                throw 'Citirea stderr nu s-a încheiat în 15 secunde.'
+                throw 'Reading stderr did not finish within 15 seconds.'
             }
             $stderr = [string]$stderrTask.Result
         }
@@ -1414,7 +1414,7 @@ function Show-BsFailureTail {
     param([string]$Path)
 
     if ((-not [string]::IsNullOrWhiteSpace($Path)) -and (Test-Path -LiteralPath $Path -PathType Leaf)) {
-        Write-Host 'Ultimele linii relevante:' -ForegroundColor DarkGray
+        Write-Host 'Relevant log tail:' -ForegroundColor DarkGray
         Get-Content -LiteralPath $Path -Tail 12 | ForEach-Object {
             if (-not [string]::IsNullOrWhiteSpace($_)) {
                 Write-Host ('  ' + $_) -ForegroundColor DarkGray
@@ -1434,10 +1434,10 @@ function Invoke-BsExternalStep {
     )
 
     if ($PlanOnly) {
-        Write-BsMessage -Level 'PLAN' -Message "$Name — comandă pregătită, fără lansare."
+        Write-BsMessage -Level 'PLAN' -Message "$Name — command prepared without launching it."
     }
     else {
-        Write-BsMessage -Level 'RUN' -Message ('{0} — timeout {1:N0} minute.' -f $Name, ($StepTimeoutSeconds / 60.0))
+        Write-BsMessage -Level 'RUN' -Message ('{0} — timeout {1:N0} minutes.' -f $Name, ($StepTimeoutSeconds / 60.0))
     }
 
     $raw = Invoke-BsProcess -StepName $Name -FilePath $FilePath -ArgumentList $ArgumentList `
@@ -1471,10 +1471,10 @@ function Invoke-BsExternalStep {
                 jobQueryError = $raw.JobQueryError
             }
         if ($raw.TreeTerminated) {
-            Write-BsMessage -Level 'FAIL' -Message "$Name a depășit timeout-ul; oprirea întregului arbore de procese a fost confirmată."
+            Write-BsMessage -Level 'FAIL' -Message "$Name timed out; termination of the complete process tree was confirmed."
         }
         else {
-            Write-BsMessage -Level 'FAIL' -Message "$Name a depășit timeout-ul; oprirea completă a arborelui nu a putut fi confirmată."
+            Write-BsMessage -Level 'FAIL' -Message "$Name timed out; complete process-tree termination could not be confirmed."
         }
         Write-BsMessage -Level 'INFO' -Message "Log: $($raw.CombinedLogPath)"
         return $record
@@ -1502,7 +1502,7 @@ function Invoke-BsExternalStep {
                 jobQueryError = $raw.JobQueryError
                 containmentError = $raw.ContainmentError
             }
-        Write-BsMessage -Level 'FAIL' -Message "$Name s-a încheiat, dar izolarea proceselor copil nu a putut fi confirmată."
+        Write-BsMessage -Level 'FAIL' -Message "$Name exited, but child-process containment could not be confirmed."
         Write-BsMessage -Level 'INFO' -Message "Log: $($raw.CombinedLogPath)"
         return $record
     }
@@ -1512,7 +1512,7 @@ function Invoke-BsExternalStep {
             -ToolExitCode $null -RunnerExitCode $script:ExitInternal -ExitSource 'Runner' `
             -DurationSeconds $raw.DurationSeconds -ProcessId $raw.ProcessId -TimedOut $false `
             -LogPath $raw.CombinedLogPath -Metrics @{ exitCodeReadError = $raw.ExitCodeReadError }
-        Write-BsMessage -Level 'FAIL' -Message "$Name s-a încheiat, dar codul nativ nu a putut fi citit."
+        Write-BsMessage -Level 'FAIL' -Message "$Name exited, but its native exit code could not be read."
         Write-BsMessage -Level 'INFO' -Message "Log: $($raw.CombinedLogPath)"
         return $record
     }
@@ -1535,7 +1535,7 @@ function Invoke-BsExternalStep {
             -ToolExitCode $raw.ToolExitCode -RunnerExitCode ([int]$raw.ToolExitCode) -ExitSource 'Tool' `
             -DurationSeconds $raw.DurationSeconds -ProcessId $raw.ProcessId -TimedOut $false `
             -LogPath $raw.CombinedLogPath -Metrics $failureCleanupMetrics
-        Write-BsMessage -Level 'FAIL' -Message "$Name a întors codul nativ $($raw.ToolExitCode)."
+        Write-BsMessage -Level 'FAIL' -Message "$Name returned native exit code $($raw.ToolExitCode)."
         Show-BsFailureTail -Path $raw.CombinedLogPath
         Write-BsMessage -Level 'INFO' -Message "Log: $($raw.CombinedLogPath)"
         return $record
@@ -1552,7 +1552,7 @@ function Invoke-BsExternalStep {
         -TimedOut $false -LogPath $raw.CombinedLogPath -Metrics $analysis.Metrics
 
     if ([int]$analysis.RunnerExitCode -ne 0) {
-        Write-BsMessage -Level 'FAIL' -Message "$Name a eșuat verificarea semantică: $($analysis.Diagnostic)."
+        Write-BsMessage -Level 'FAIL' -Message "$Name failed semantic verification: $($analysis.Diagnostic)."
         Show-BsFailureTail -Path $raw.CombinedLogPath
         Write-BsMessage -Level 'INFO' -Message "Log: $($raw.CombinedLogPath)"
     }
@@ -1560,10 +1560,10 @@ function Invoke-BsExternalStep {
         Write-BsMessage -Level 'SKIP' -Message "$Name — $($analysis.Diagnostic)."
     }
     elseif ($analysis.Status -eq 'PASS_WITH_WARNINGS') {
-        Write-BsMessage -Level 'WARN' -Message "$Name — PASS cu warning-uri. Log: $($raw.CombinedLogPath)"
+        Write-BsMessage -Level 'WARN' -Message "$Name — PASS with warnings. Log: $($raw.CombinedLogPath)"
     }
     elseif ($analysis.Status -eq 'PASS_WITH_SKIPS') {
-        Write-BsMessage -Level 'SKIP' -Message "$Name — PASS cu elemente omise controlat. Log: $($raw.CombinedLogPath)"
+        Write-BsMessage -Level 'SKIP' -Message "$Name — PASS with controlled omissions. Log: $($raw.CombinedLogPath)"
     }
     else {
         Write-BsMessage -Level 'PASS' -Message ('{0} — {1:N2}s.' -f $Name, $raw.DurationSeconds)
@@ -1610,10 +1610,10 @@ function Invoke-BsDoctor {
         (Join-Path $script:Context.ProjectRoot 'Source\BrokenStreets\BrokenStreets.Build.cs')
     )) {
         if (Test-Path -LiteralPath $requiredPath -PathType Leaf) {
-            Add-DoctorCheck -State 'PASS' -Text "Există: $requiredPath"
+            Add-DoctorCheck -State 'PASS' -Text "Exists: $requiredPath"
         }
         else {
-            Add-DoctorCheck -State 'FAIL' -Text "Lipsește: $requiredPath"
+            Add-DoctorCheck -State 'FAIL' -Text "Missing: $requiredPath"
         }
     }
 
@@ -1641,7 +1641,7 @@ function Invoke-BsDoctor {
     $driveRoot = [System.IO.Path]::GetPathRoot($script:Context.ProjectRoot)
     $driveInfo = New-Object System.IO.DriveInfo($driveRoot)
     if (-not $driveInfo.IsReady) {
-        Add-DoctorCheck -State 'FAIL' -Text "Unitatea $driveRoot nu este pregătită."
+        Add-DoctorCheck -State 'FAIL' -Text "Drive $driveRoot is not ready."
         $freeGb = 0.0
     }
     else {
@@ -1649,23 +1649,23 @@ function Invoke-BsDoctor {
     }
     $minimumGb = [double]$script:Context.Config.minimumFreeDiskGb
     if ($freeGb -ge $minimumGb) {
-        Add-DoctorCheck -State 'PASS' -Text ("Spațiu liber: {0:N2} GB (minim {1:N0} GB)." -f $freeGb, $minimumGb)
+        Add-DoctorCheck -State 'PASS' -Text ("Free space: {0:N2} GB (minimum {1:N0} GB)." -f $freeGb, $minimumGb)
     }
     else {
-        Add-DoctorCheck -State 'FAIL' -Text ("Spațiu liber insuficient: {0:N2} GB; minim {1:N0} GB." -f $freeGb, $minimumGb)
+        Add-DoctorCheck -State 'FAIL' -Text ("Insufficient free space: {0:N2} GB; minimum {1:N0} GB." -f $freeGb, $minimumGb)
     }
 
     $editorProcesses = @(Get-Process -Name 'UnrealEditor*' -ErrorAction SilentlyContinue)
     if ($editorProcesses.Count -gt 0) {
         if ($Action -eq 'Doctor') {
-            Add-DoctorCheck -State 'WARN' -Text 'Unreal Editor rulează; închide-l înainte de Generate/Build/Test/Validate/Cook.'
+            Add-DoctorCheck -State 'WARN' -Text 'Unreal Editor is running; close it before Generate/Build/Test/Validate/Cook.'
         }
         else {
-            Add-DoctorCheck -State 'FAIL' -Text 'Unreal Editor rulează. Închide-l înainte de acțiunea cerută.'
+            Add-DoctorCheck -State 'FAIL' -Text 'Unreal Editor is running. Close it before the requested action.'
         }
     }
     else {
-        Add-DoctorCheck -State 'PASS' -Text 'Unreal Editor este închis.'
+        Add-DoctorCheck -State 'PASS' -Text 'Unreal Editor is closed.'
     }
 
     if (($failures.Count -eq 0) -and (-not $PlanOnly)) {
@@ -1682,10 +1682,10 @@ function Invoke-BsDoctor {
             ([int]$dotnetProbe.ToolExitCode -eq 0) -and
             ($dotnetProbe.CombinedOutput -match '(?m)^\s*(\d+\.\d+\.\d+(?:[-+][^\s]+)?)\s*$')) {
             $dotNetVersion = $Matches[1]
-            Add-DoctorCheck -State 'PASS' -Text "Bundled .NET rulează: $dotNetVersion"
+            Add-DoctorCheck -State 'PASS' -Text "Bundled .NET runs: $dotNetVersion"
         }
         else {
-            Add-DoctorCheck -State 'FAIL' -Text "Bundled .NET nu a trecut proba. Log: $($dotnetProbe.CombinedLogPath)"
+            Add-DoctorCheck -State 'FAIL' -Text "Bundled .NET failed its probe. Log: $($dotnetProbe.CombinedLogPath)"
         }
 
         if ($null -ne $dotNetVersion) {
@@ -1729,20 +1729,20 @@ function Invoke-BsDoctor {
                 $expectedSdk = [string]$script:Context.Config.expectedWindowsSdk
                 if (($sdkMatch.Groups[1].Value -eq $expectedSdk) -and
                     ($windowsSdkVersion -eq $expectedSdk)) {
-                    Add-DoctorCheck -State 'PASS' -Text "UnrealBuildTool confirmă Win64 SDK $windowsSdkVersion"
+                    Add-DoctorCheck -State 'PASS' -Text "UnrealBuildTool confirms Win64 SDK $windowsSdkVersion"
                 }
                 else {
-                    Add-DoctorCheck -State 'FAIL' -Text "Win64 SDK detectat este $windowsSdkVersion; BS-009 cere $expectedSdk."
+                    Add-DoctorCheck -State 'FAIL' -Text "Detected Win64 SDK is $windowsSdkVersion; RunnerConfig requires $expectedSdk."
                 }
             }
             else {
-                Add-DoctorCheck -State 'FAIL' -Text "UnrealBuildTool nu a confirmat platforma Win64. Log: $($ubtProbe.CombinedLogPath)"
+                Add-DoctorCheck -State 'FAIL' -Text "UnrealBuildTool did not confirm the Win64 platform. Log: $($ubtProbe.CombinedLogPath)"
             }
         }
 
         $vswherePath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
         if (-not (Test-Path -LiteralPath $vswherePath -PathType Leaf)) {
-            Add-DoctorCheck -State 'FAIL' -Text "Lipsește Visual Studio Installer discovery tool: $vswherePath"
+            Add-DoctorCheck -State 'FAIL' -Text "Visual Studio Installer discovery tool is missing: $vswherePath"
         }
         else {
             $vswhereArguments = @(
@@ -1785,11 +1785,11 @@ function Invoke-BsDoctor {
             }
 
             if ($null -eq $visualStudio) {
-                Add-DoctorCheck -State 'FAIL' -Text "Visual Studio cu toolchain C++ compatibil nu a fost detectat. Log: $($vswhereProbe.CombinedLogPath)"
+                Add-DoctorCheck -State 'FAIL' -Text "Visual Studio with a compatible C++ toolchain was not detected. Log: $($vswhereProbe.CombinedLogPath)"
             }
             else {
                 $visualStudioVersion = [string]$visualStudio.installationVersion
-                Add-DoctorCheck -State 'PASS' -Text "Visual Studio C++ detectat: $visualStudioVersion"
+                Add-DoctorCheck -State 'PASS' -Text "Visual Studio C++ detected: $visualStudioVersion"
 
                 $msvcRoot = Join-Path ([string]$visualStudio.installationPath) 'VC\Tools\MSVC'
                 $expectedMsvcFamily = [string]$script:Context.Config.expectedMsvcFamily
@@ -1818,7 +1818,7 @@ function Invoke-BsDoctor {
                 }
 
                 if ($null -eq $compilerPath) {
-                    Add-DoctorCheck -State 'FAIL' -Text "Lipsește MSVC $expectedMsvcFamily x64 cerut de UE 5.8.2."
+                    Add-DoctorCheck -State 'FAIL' -Text "The MSVC $expectedMsvcFamily x64 toolset required by UE 5.8.2 is missing."
                 }
                 else {
                     $toolsetRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $compilerPath)))
@@ -1826,7 +1826,7 @@ function Invoke-BsDoctor {
                     $runtimeLibraryPath = Join-Path $toolsetRoot 'lib\x64\libcpmt.lib'
                     if ((-not (Test-Path -LiteralPath $linkerPath -PathType Leaf)) -or
                         (-not (Test-Path -LiteralPath $runtimeLibraryPath -PathType Leaf))) {
-                        Add-DoctorCheck -State 'FAIL' -Text "Toolset-ul MSVC $msvcToolsetVersion nu conține linkerul sau runtime-ul x64."
+                        Add-DoctorCheck -State 'FAIL' -Text "MSVC toolset $msvcToolsetVersion does not contain the x64 linker or runtime library."
                     }
                     $compilerProbe = Invoke-BsProcess -StepName 'Doctor-Msvc' `
                         -FilePath $compilerPath -ArgumentList @('/?') `
@@ -1834,20 +1834,20 @@ function Invoke-BsDoctor {
                         -ExplicitStepDirectory (Join-Path $probeRoot '04-Msvc') -ForceExecution
                     if ($compilerProbe.Started -and (-not $compilerProbe.TimedOut) -and
                         ([int]$compilerProbe.ToolExitCode -eq 0)) {
-                        Add-DoctorCheck -State 'PASS' -Text "MSVC x64 rulează: toolset $msvcToolsetVersion"
+                        Add-DoctorCheck -State 'PASS' -Text "MSVC x64 runs: toolset $msvcToolsetVersion"
                     }
                     else {
-                        Add-DoctorCheck -State 'FAIL' -Text "MSVC x64 nu a trecut proba. Log: $($compilerProbe.CombinedLogPath)"
+                        Add-DoctorCheck -State 'FAIL' -Text "MSVC x64 failed its probe. Log: $($compilerProbe.CombinedLogPath)"
                     }
                 }
             }
         }
     }
     elseif ($PlanOnly) {
-        [void]$lines.Add('[PLAN] Probele externe .NET/UBT/MSVC sunt descrise, dar nu sunt lansate în PlanOnly.')
+        [void]$lines.Add('[PLAN] External .NET/UBT/MSVC probes are described but not launched in PlanOnly.')
     }
     else {
-        [void]$lines.Add('[SKIP] Probele .NET/UBT/MSVC nu au fost lansate deoarece preflight-ul a eșuat deja.')
+        [void]$lines.Add('[SKIP] .NET/UBT/MSVC probes were not launched because preflight had already failed.')
     }
 
     $doctorStopwatch.Stop()
@@ -1866,7 +1866,7 @@ function Invoke-BsDoctor {
                 visualStudioVersion = $visualStudioVersion
                 msvcToolset = $msvcToolsetVersion
             }
-        Write-BsMessage -Level 'FAIL' -Message "Doctor — $($failures.Count) verificări eșuate. Log: $logPath"
+        Write-BsMessage -Level 'FAIL' -Message "Doctor — $($failures.Count) checks failed. Log: $logPath"
         foreach ($failure in $failures) {
             Write-Host ('  - ' + $failure) -ForegroundColor Red
         }
@@ -1895,13 +1895,13 @@ function Invoke-BsDoctor {
             msvcToolset = $msvcToolsetVersion
         }
     if ($PlanOnly) {
-        Write-BsMessage -Level 'PLAN' -Message 'Doctor — verificările externe sunt planificate, fără lansare.'
+        Write-BsMessage -Level 'PLAN' -Message 'Doctor — external checks are planned without launching them.'
     }
     elseif ($warnings.Count -gt 0) {
-        Write-BsMessage -Level 'WARN' -Message "Doctor — PASS cu $($warnings.Count) avertismente. Log: $logPath"
+        Write-BsMessage -Level 'WARN' -Message "Doctor — PASS with $($warnings.Count) warnings. Log: $logPath"
     }
     else {
-        Write-BsMessage -Level 'PASS' -Message 'Doctor — toolchain-ul este pregătit.'
+        Write-BsMessage -Level 'PASS' -Message 'Doctor — toolchain is ready.'
     }
     return $record
 }
@@ -1967,7 +1967,7 @@ function Invoke-BsBuild {
 function Invoke-BsTest {
     $filter = [string]$script:Context.Config.testFilter
     if ($filter -notmatch '^[A-Za-z0-9_.:+ -]+$') {
-        throw "Filtrul de teste conține caractere nesigure: $filter"
+        throw "Test filter contains unsafe characters: $filter"
     }
 
     $nextStepNumber = $script:StepNumber + 1
@@ -2462,12 +2462,12 @@ function Complete-BsRun {
     Save-BsRunState
 
     if ($FinalExitCode -eq 0) {
-        Write-BsMessage -Level 'PASS' -Message "Rezultat final: $overallStatus"
+        Write-BsMessage -Level 'PASS' -Message "Final result: $overallStatus"
     }
     else {
-        Write-BsMessage -Level 'FAIL' -Message "Rezultat final: FAILED (cod $FinalExitCode)"
+        Write-BsMessage -Level 'FAIL' -Message "Final result: FAILED (code $FinalExitCode)"
     }
-    Write-BsMessage -Level 'INFO' -Message "Sumar: $($script:RunJsonPath)"
+    Write-BsMessage -Level 'INFO' -Message "Summary: $($script:RunJsonPath)"
 }
 
 if ($MyInvocation.InvocationName -eq '.') {
@@ -2478,7 +2478,7 @@ $finalExitCode = $script:ExitPreflight
 try {
     Initialize-BsContext -ExplicitEngineRoot $EngineRoot
     Write-BsMessage -Level 'INFO' -Message "Broken Streets automation — $Action"
-    Write-BsMessage -Level 'INFO' -Message ("UE {0} CL {1}, sursă: {2}" -f $script:Context.Engine.Version,
+    Write-BsMessage -Level 'INFO' -Message ("UE {0} CL {1}, source: {2}" -f $script:Context.Engine.Version,
         $script:Context.Engine.Changelist, $script:Context.Engine.Source)
 
     $doctor = Invoke-BsDoctor
@@ -2506,7 +2506,7 @@ try {
                 'Test' { $step = Invoke-BsTest }
                 'Validate' { $step = Invoke-BsValidate }
                 'Cook' { $step = Invoke-BsCook }
-                default { throw "Acțiune internă necunoscută: $stepName" }
+                default { throw "Unknown internal action: $stepName" }
             }
 
             if (-not (Test-BsStepSucceeded -Step $step)) {
@@ -2528,10 +2528,10 @@ catch {
         )
     }
     $failureCode = $script:ExitInternal
-    $failureLabel = 'Eroare internă'
+    $failureLabel = 'Internal error'
     if (($null -eq $script:Context) -or ($null -eq $script:Context.Engine)) {
         $failureCode = $script:ExitPreflight
-        $failureLabel = 'Preflight eșuat'
+        $failureLabel = 'Preflight failed'
     }
     Write-BsMessage -Level 'FAIL' -Message "${failureLabel}: $message"
     if ($null -ne $script:RunState) {

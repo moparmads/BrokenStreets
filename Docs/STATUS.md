@@ -1,50 +1,53 @@
-# Starea proiectului
+# Project status
 
-**Actualizat:** 30 august 2026
-**Milestone curent:** Fundație recuperabilă
-**Branch activ:** `main`
+**Updated:** August 30, 2026
+**Current milestone:** Recoverable foundation
+**Active branch:** `feature/BS-010-automation-smoke` (BS-010 integration pending)
 
-## Rezumat
+## Summary
 
-- Ultimul task complet: `BS-009` — automatizare locală Doctor/Generate/Build/Test/Validate/Cook.
-- Task activ: niciunul.
-- Următorul task: `BS-010` — primul Automation smoke test.
+- Last completed task: `BS-010` — first Automation smoke test and canonical English migration.
+- Active implementation task: none; BS-010 is awaiting integration into `main`.
+- Next task: `BS-010A` — independent repository and Git LFS backup.
 
-## Ce există efectiv
+## What actually exists
 
-- proiect Unreal Engine 5.8.2 Blank C++;
-- un singur modul runtime `BrokenStreets`;
-- runner local Windows PowerShell 5.1 prin `Tools/BS.cmd`, cu engine/toolchain pinning, timeout, process containment, loguri și sumar JSON;
-- build `Development Editor | Win64` reușit manual;
-- Git, Git LFS, branch `main` și remote privat funcționale;
-- fără cod gameplay Broken Streets;
-- fără asset-uri `.uasset`/`.umap` proprii proiectului;
-- fără TestGym, teste automate, multiplayer, save ori sisteme de joc;
-- harta implicită este încă template-ul Engine `/Engine/Maps/Templates/OpenWorld`.
+- Unreal Engine 5.8.2 Blank C++ project;
+- one runtime module, `BrokenStreets`;
+- one deterministic C++ Automation smoke test on the active BS-010 branch;
+- local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
+- verified `Development Editor | Win64` build;
+- functioning Git, Git LFS, `main` branch, and private remote;
+- no Broken Streets gameplay code;
+- no project-owned `.uasset` or `.umap` files;
+- no TestGym, multiplayer, save, or game systems;
+- the default map is still the Engine template `/Engine/Maps/Templates/OpenWorld`.
 
-## Baseline-uri verificate
+## Verified baselines
 
 - Runtime baseline: `f1b5648` — `chore: initialize Broken Streets Unreal project`.
-- Build manual: reușit, `1 succeeded, 0 failed`, la 28 august 2026.
-- BS-007A clean clone: `main` clonat într-un folder temporar separat; Git LFS pull și status clean.
-- Solution generation: reușită prin `UnrealVersionSelector.exe` din Epic Games Launcher.
-- Clean-clone build: `Result: Succeeded`, 7/7 actions, 38,87 secunde, MSVC 14.50 + Windows SDK 10.0.22621.0.
-- Headless Editor initialization: engine inițializat, template map încărcat și Map Check `0 Error(s), 0 Warning(s)`. Procesul de primă pornire a continuat mentenanța DDC după comanda Quit și a fost oprit controlat după ce criteriul de încărcare trecuse; shutdown automation se standardizează în BS-009.
+- Manual build: `1 succeeded, 0 failed` on August 28, 2026.
+- BS-007A clean clone: `main` cloned into a separate temporary directory; Git LFS pull and clean status passed.
+- Solution generation passed through Epic Games Launcher's `UnrealVersionSelector.exe`.
+- Clean-clone build: `Result: Succeeded`, 7/7 actions, 38.87 seconds, MSVC 14.50 + Windows SDK 10.0.22621.0.
+- Headless Editor initialization: engine initialized, template map loaded, and Map Check reported `0 Error(s), 0 Warning(s)`. First-start DDC maintenance continued after Quit and was terminated in a controlled way after the load criterion passed; BS-009 standardized shutdown automation.
 - Project-memory candidate: `b3115494e0568342278fa18a2f89f5f9aa386332`, tree `8339f1a6151eb4158b257dfbea5854ada639e3e4`.
-- BS-008: 36 fișiere/4.118 linii de documentație, 0 linkuri locale rupte, `AGENTS.md` 13.688 bytes, Git și Git LFS fsck PASS, fără schimbări C++/Config/Content.
-- GitHub: branch-ul BS-008 și `main` au fost împinse; la închidere, `main` local și `origin/main` sunt verificate identice.
-- BS-009 candidate `557ede8cc16cb1daedee2a1511a720dde79b6ade`, tree `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3`: self-test runner 5/5 PASS.
-- BS-009 `Tools/BS.cmd All`: `PASS_WITH_SKIPS`, cod 0; Generate și Build PASS, Test 0 declarat până la BS-010, Validate 0 asset-uri declarat până la BS-011, Cook 578 pachete + 7/7 omisiuni Engine clasificate, 0 project-owned, 0 warning-uri. Evidence local: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`.
+- BS-008: 36 files / 4,118 documentation lines, 0 broken local links, `AGENTS.md` 13,688 bytes, Git and Git LFS fsck PASS, no C++/Config/Content changes.
+- GitHub: BS-008 branch and `main` were pushed; local `main` and `origin/main` were identical at closure.
+- BS-009 candidate `557ede8cc16cb1daedee2a1511a720dde79b6ade`, tree `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3`: runner self-test 5/5 PASS.
+- BS-009 `Tools/BS.cmd All`: `PASS_WITH_SKIPS`, code 0; Generate and Build PASS, zero tests declared until BS-010, zero assets declared until BS-011, Cook 578 packages + 7/7 classified Engine omissions, 0 project-owned, 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`.
+- BS-010 candidate `888942e37c23810f8dc7fe38700b21254e77d3f6`, tree `9c505c91d0553b56fc2039b1c2604584bd0d7812`: runner self-test 5/5 PASS; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0. Generate and Build passed; Test performed 1 and succeeded 1 with 0 failed; Validate declared 0 project assets until BS-011; Cook produced 578 packages plus 7/7 classified Engine omissions with 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T092315Z-17944-67bfdda6/run.json`. On August 30, 2026, Madalin Gavrila also ran `BrokenStreets.Smoke.ProjectBoot` through Unreal Editor's Session Frontend Automation UI: 1 test, 0 failures, 0 skips, green result, and Automation Testing Log result `Success`.
+- Final BS-010 clean-state gate after restoring the exact verified `.uproject`: `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Doctor reported 0 warnings; Generate and Build passed; Test performed 1, succeeded 1, failed 0, and skipped 0; Validate intentionally skipped with 0 project assets until BS-011; Cook produced 578 packages plus 7/7 classified Engine omissions with 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T094937Z-37516-4eb9c17e/run.json`.
 
-## Abateri și lucruri deschise
+## Deviations and open items
 
-- `Config/DefaultEngine.ini` are momentan `r.RayTracing=True`; roadmapul presupunea Ray Tracing Off. Nu se schimbă până la un task de configurare/benchmark explicit.
-- `F:/BrokenStreets_SourceArt` există, dar backup-ul 3-2-1 și restore drill-ul nu sunt încă verificate.
-- Nu există încă obiecte Git LFS; acest lucru este normal cât timp proiectul nu are asset-uri Unreal proprii.
-- Clean clone-ul fără folder `Content/` a produs un warning baseline `DirectoryWatcher` pentru calea lipsă; BS-011 îl elimină natural când creează prima hartă project-owned. Map Check-ul a rămas 0/0.
-- Nu există încă backup independent al tuturor refs și obiectelor Git LFS; `BS-010A` îl configurează și îl testează fără GitHub înainte de asset-uri importante.
-- Recovery complet cu TestGym, smoke tests, cook și LFS este `BS-007B`; depinde de `BS-009`, `BS-010`, `BS-010A`, `BS-011`, `BS-012`, `BS-013` și `BS-013B`. Recovery-ul de save începe separat după BS-020.
+- `Config/DefaultEngine.ini` currently has `r.RayTracing=True`; the roadmap assumed Ray Tracing Off. Do not change it before an explicit configuration/benchmark task.
+- `F:/BrokenStreets_SourceArt` exists, but its 3-2-1 backup and restore drill are not verified.
+- No Git LFS objects exist yet, which is expected while there are no project-owned Unreal assets.
+- A clean clone without `Content/` produced a baseline `DirectoryWatcher` warning for the missing path; BS-011 naturally removes it by creating the first project-owned map. Map Check remained 0/0.
+- No independent backup of all Git refs and Git LFS objects exists yet; BS-010A configures and tests it without GitHub before important assets.
+- Full recovery with TestGym, smoke tests, cook, and LFS is BS-007B; it depends on BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B. Save recovery begins separately after BS-020.
 
-## Criteriul pentru actualizare
+## Update criterion
 
-Actualizează acest document numai cu fapte verificate: commit, build, test, asset sau sistem existent. Nu muta un task în `Done` doar fiindcă documentația ori codul a fost scris.
+Update this document only with verified facts: commit, build, test, asset, or existing system. Do not move a task to `Done` merely because documentation or code was written.

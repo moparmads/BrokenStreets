@@ -1,98 +1,98 @@
-# Scenarii permanente de benchmark
+# Permanent benchmark scenarios
 
-Scenariile au nume și fixtures stabile pentru comparație între commituri. Fiecare raport fixează engine/build/hardware/driver/preset/resolution/seed/warm-up.
+Scenarios have stable names and fixtures so results can be compared across commits. Every report pins engine, build, hardware, driver, preset, resolution, seed, and warm-up.
 
 ## BS-PERF-001 — Empty TestGym
 
-- project-owned map aproape goală;
-- 1 player, apoi 1 host + 3 clients;
-- măsoară overhead-ul de engine/proiect/replication fără content;
-- devine baseline pentru costul incremental.
+- nearly empty project-owned map;
+- one player, then one host plus three clients;
+- measures engine, project, and replication overhead without content;
+- becomes the baseline for incremental cost.
 
 ## BS-PERF-002 — Representative Street
 
-- un bloc/intersecție cu geometrie, materiale, lighting, decals și props apropiate de categoria finală;
-- zi/noapte și vreme controlate;
-- Low/Recommended/Ultra;
-- renderer/scalability/asset budgets.
+- one block or intersection with geometry, materials, lighting, decals, and props close to final categories;
+- controlled day/night and weather;
+- Low, Recommended, and Ultra;
+- renderer, scalability, and asset budgets.
 
 ## BS-PERF-003 — Four Players Together
 
-- host + 3 clienți în aceeași intersecție;
-- avatars, inventory summaries, interaction, un AI/job relevant;
-- contention, relevancy public și GPU crowding.
+- host plus three clients at the same intersection;
+- avatars, inventory summaries, interaction, and one relevant AI/job;
+- contention, public relevancy, and GPU crowding.
 
 ## BS-PERF-004 — Four Corners / Four Bubbles
 
-- cei patru jucători în zone suficient de depărtate pentru streaming/relevancy diferit;
-- măsoară host CPU/memory/loaded cells/network;
-- validate server streaming/out și world-owned actor persistence.
+- four players far enough apart to require different streaming and relevancy;
+- measures host CPU, memory, loaded cells, and network;
+- validates server streaming/out and world-owned Actor persistence.
 
 ## BS-PERF-005 — Four Private Interiors
 
-- patru PropertyInstanceIds cu același/diferite templates;
-- visual/audio/nav/physics/replication isolation;
-- visitors off pentru baseline, apoi un visitor;
-- load/unload și memory caps.
+- four `PropertyInstanceId` values using the same or different templates;
+- visual, audio, navigation, physics, replication isolation;
+- visitors off for baseline, then one visitor;
+- load/unload behavior and memory caps.
 
 ## BS-PERF-006 — Four High-Speed Vehicles
 
-- un vehicul per player, direcții diferite;
-- network smoothing, World Partition, collision/physics și asset streaming;
-- traversare repetată în ambele sensuri.
+- one vehicle per player moving in different directions;
+- network smoothing, World Partition, collision/physics, and asset streaming;
+- repeated traversal in both directions.
 
 ## BS-PERF-007 — Four Concurrent Jobs
 
-- patru JobInstances, participanți separați;
-- objectives, UI/read models, AI/spawn și save receipts;
-- late join/reconnect într-un job controlat.
+- four separate `JobInstance` values and participant groups;
+- objectives, UI/read models, AI/spawn, and save receipts;
+- late join and reconnect during a controlled job.
 
 ## BS-PERF-008 — Crowd + Traffic + Rain
 
-- densitate controlată pe tier;
-- Full/Reduced/Representation/Statistical counts raportate;
-- vreme, wet materials/VFX/audio;
-- Low păstrează entitățile gameplay.
+- controlled density per tier;
+- reported Full, Reduced, Representation, and Statistical counts;
+- weather, wet materials, VFX, and audio;
+- Low retains gameplay entities.
 
 ## BS-PERF-009 — Police + Traffic + Combat
 
-- Incident, heat, pursuit, physical traffic și combat controlat;
-- worst normal gameplay, nu spawn nelimitat artificial;
-- director budgets, AI/path recovery, physics/network.
+- Incident, heat, pursuit, physical traffic, and controlled combat;
+- worst normal gameplay, not an artificial unlimited spawn;
+- director budgets, AI/path recovery, physics, and network.
 
 ## BS-PERF-010 — Traversal Soak
 
-- 30 minute de rută repetabilă;
-- warm-up separat de măsurare;
-- cell churn, IO, hitches, shader/PSO și memory trend;
-- aceeași rută/seed/vehicle speed.
+- 30 minutes on a repeatable route;
+- warm-up separated from measurement;
+- cell churn, I/O, hitches, shader/PSO behavior, and memory trend;
+- identical route, seed, and vehicle speed.
 
 ## BS-PERF-011 — Save 10k Records
 
-- 10.000 item-like records deterministe cu variații controlate;
-- capture, serialize, write, load, validate și migration;
-- game-thread stall separat de worker/I/O;
+- 10,000 deterministic item-like records with controlled variation;
+- capture, serialize, write, load, validate, and migrate;
+- game-thread stall separated from worker and I/O time;
 - kill/fault stages;
-- file size, memory peak și determinism.
+- file size, peak memory, and determinism.
 
 ## BS-PERF-012 — Multiplayer Soak
 
-- minimum trei rulări independente a câte două ore înainte de content lock;
-- host + 3 clients, join/leave/reconnect, travel, jobs, autosaves, interiors și vehicles;
-- crash blocker, memory growth, network drift, duplicate transactions și log spam.
+- at least three independent two-hour runs before content lock;
+- host plus three clients, join/leave/reconnect, travel, jobs, autosaves, interiors, and vehicles;
+- crash blockers, memory growth, network drift, duplicate transactions, and log spam.
 
-## Protocol comun
+## Common protocol
 
-1. checkout commitul exact și clean working tree;
-2. build packaged relevant;
-3. restart procese/hardware state conform protocolului;
-4. warm-up fix;
-5. minimum trei runs pentru performance gate;
-6. păstrează trace și summary;
-7. compară cu ultimul baseline acceptat;
-8. dacă FAIL, oprește content expansion și alege fix/fallback/scope cut.
+1. Check out the exact commit with a clean working tree.
+2. Build the relevant packaged configuration.
+3. Reset processes and hardware state according to the protocol.
+4. Use a fixed warm-up.
+5. Run at least three times for a performance gate.
+6. Retain the trace and summary.
+7. Compare against the last accepted baseline.
+8. On FAIL, stop content expansion and choose a fix, fallback, or scope cut.
 
-## Metadata minimă
+## Minimum metadata
 
 ```text
 Scenario ID/version:

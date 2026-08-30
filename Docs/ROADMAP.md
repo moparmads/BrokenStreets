@@ -1,409 +1,409 @@
-# Roadmap canonic Broken Streets
+# Broken Streets Canonical Roadmap
 
-**Actualizat:** 28 august 2026
-**Motor:** Unreal Engine 5.8.2
-**Platformă:** Windows PC, Steam
-**Topologie:** solo sau co-op privat, 1 listen-server host + maximum 3 clienți
-**Metodă:** gates măsurabile, nu promisiuni calendaristice
+**Updated:** August 30, 2026
+**Engine:** Unreal Engine 5.8.2
+**Platform:** Windows PC, Steam
+**Topology:** solo or private co-op, one listen-server host plus at most three clients
+**Method:** measurable gates, not calendar promises
 
-## 0. Regula roadmapului
+## 0. Roadmap rule
 
-Roadmapul descrie ordinea viitoare, nu implementarea existentă. `Docs/STATUS.md` spune ce este real. Un milestone nu se extinde cu conținut până când gate-ul lui trece.
+This roadmap describes future order, not existing implementation. `Docs/STATUS.md` states what is real. A milestone does not expand content until its gate passes.
 
-Ordinea a fost optimizată pentru două riscuri:
+The order minimizes two risks:
 
-1. să nu construim Manhattan înainte să existe un joc;
-2. să nu construim luni de infrastructură generică înainte de prima buclă jucabilă.
+1. building Manhattan before a game exists;
+2. building months of generic infrastructure before the first playable loop.
 
-## 1. Strategia completă
+## 1. Complete strategy
 
 ```text
-baseline recuperabil
-  → build/test/cook repetabil și TestGym
-  → core minim măsurabil
-  → spike-uri care pot invalida proiectul
-  → identity/session/save portabil subțire
-  → player + UI minim
-  → interaction/economie + walking legal slice
-  → vehicul MVP
+recoverable baseline
+  → repeatable build/test/cook and TestGym
+  → minimum measurable core
+  → project-invalidating risk spikes
+  → thin portable identity/session/save
+  → minimum player + UI
+  → interaction/economy + legal walking slice
+  → vehicle MVP
   → illegal reaction slice
-  → vertical slice hard gate
+  → vertical-slice hard gate
   → health/hospital → arrest/prison → needs
-  → appearance/catalog → proprietăți în trepte
+  → appearance/catalog → staged properties
   → movement/combat → population/traffic
   → factions/NPC/job families
-  → primul district de producție
+  → first production district
   → Early Access hardening
-  → Manhattan district cu district
+  → Manhattan district by district
 ```
 
-## M0 — Viziune și produs
+## M0 — Vision and product
 
-**Status:** suficient pentru pornire; detaliile rămase sunt programate la gate-ul relevant.
+**Status:** sufficient to start; remaining details are scheduled at the gate that can answer them.
 
-Livrabile:
+Deliverables:
 
-- VISION, DECISIONS, NON_GOALS;
-- promisiunea `economie + legal/ilegal + co-op + aspirație`;
-- lista deciziilor `CONFIRMAT`, `PROVIZORIU`, `PROPUS — NECESITĂ APROBARE`, `DEFERRED`;
-- politică originalitate/clean-room.
+- VISION, DECISIONS, and NON_GOALS;
+- promise: `economy + legal/illegal + co-op + aspiration`;
+- `CONFIRMED`, `PROVISIONAL`, `PROPOSED — APPROVAL REQUIRED`, and `DEFERRED` decisions;
+- originality and clean-room policy.
 
-**Gate:** nicio contradicție care blochează fundația; propunerile nu sunt prezentate ca fapte.
+**Gate:** no contradiction blocks the foundation; proposals are not presented as facts.
 
-## M1 — Baseline recuperabil și memoria proiectului
+## M1 — Recoverable baseline and project memory
 
-### M1A — Baseline local
+### M1A — Local baseline
 
-| Task | Rezultat | Status |
+| Task | Result | Status |
 |---|---|---|
-| BS-001 | căi stabile pe SSD, în afara OneDrive | Done |
-| BS-002 | UE/VS/SDK verificate | Done |
+| BS-001 | stable SSD paths outside OneDrive | Done |
+| BS-002 | UE, VS, and SDK verified | Done |
 | BS-003 | Blank C++ `BrokenStreets` | Done |
-| BS-004 | build baseline nemodificat | Done |
-| BS-005 | Git ignore + Git LFS | Done |
-| BS-006 | repository GitHub privat + push `main` | Done |
+| BS-004 | unmodified baseline build | Done |
+| BS-005 | Git ignore plus Git LFS | Done |
+| BS-006 | private GitHub repository plus `main` push | Done |
 
-### M1B — Recovery și documentație
+### M1B — Recovery and documentation
 
-| Task | Rezultat | Gate |
+| Task | Result | Gate |
 |---|---|---|
-| BS-007A | clean clone simplu din GitHub | generate project/build/open baseline fără fișiere locale ascunse |
-| BS-008 | AGENTS + documentația canonică + workflow | Codex din root rezumă corect regulile și task-ul următor |
-| BS-009 | acțiuni repetabile Build/Test/Validate/Cook | fiecare pornește și produce log clar |
-| BS-010 | primul Automation smoke test | verde în Editor și command line |
-| BS-010A | backup independent repository + Git LFS | toate refs și obiectele LFS se restaurează fără GitHub |
-| BS-011 | `L_TestGym_Core` project-owned | load în packaged Development |
-| BS-012 | `L_TestGym_Network` | 1 host + 3 clienți pornesc corect |
-| BS-013 | `L_Benchmark_Street` placeholder | primul trace/versioned baseline |
-| BS-013A | Source Art backup | regula 3-2-1 + checksum + restore verificat |
-| BS-013B | config PC-only + renderer/scalability baseline de test | maps project-owned, config nefolosit eliminat, ADR și preset verificabil |
-| BS-007B | recovery drill complet | clone + LFS + build + test + cook + open TestGym pe profil/PC curat |
+| BS-007A | basic clean clone from GitHub | generate, build, and open baseline without hidden local files |
+| BS-008 | AGENTS, canonical docs, and workflow | Codex at repository root correctly summarizes rules and next task |
+| BS-009 | repeatable Build/Test/Validate/Cook actions | every action starts and produces a clear log |
+| BS-010 | first Automation smoke test plus canonical English migration | green in Editor and command line; tracked project prose is English |
+| BS-010A | independent repository and Git LFS backup | all refs and LFS objects restore without GitHub |
+| BS-011 | project-owned `L_TestGym_Core` | loads in packaged Development |
+| BS-012 | `L_TestGym_Network` | one host plus three clients start correctly |
+| BS-013 | `L_Benchmark_Street` placeholder | first trace and versioned baseline |
+| BS-013A | Source Art backup | 3-2-1 rule plus checksum and verified restore |
+| BS-013B | PC-only configuration plus test renderer/scalability baseline | project-owned maps, unused configuration removed, ADR, verifiable preset |
+| BS-007B | complete recovery drill | clone, LFS, build, test, cook, and open TestGym on a clean profile or PC |
 
-**Corecție de dependență:** BS-007A nu cere TestGym/cook deoarece ele nu există încă. BS-007B închide gate-ul complet după BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013 și BS-013B. Restore-ul de save nu aparține BS-007B înainte să existe schema/harness-ul BS-020.
+**Dependency correction:** BS-007A does not require TestGym or cook because they do not exist yet. BS-007B closes the complete gate after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B. Save restoration does not belong to BS-007B before BS-020 creates the schema and harness.
 
-**Gate M1:** proiectul poate fi reconstruit din clone și documentație; source art are recovery separat; nu există gameplay încă.
+**M1 gate:** project reconstructs from clone and documentation; Source Art has separate recovery; gameplay does not yet exist.
 
-## M2 — Core minim și observabilitate
+## M2 — Minimum core and observability
 
-Nu construim un framework universal. O primitivă comună apare când are un consumator real și se generalizează după al doilea.
+Do not build a universal framework. A common primitive appears for one real consumer and is generalized only after the second.
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-014 | typed/stable IDs + Gameplay Tags policy |
-| BS-015 | logging categories, structured context și feature flags |
-| BS-016 | build/content/save compatibility handshake |
-| BS-017 | results/errors și command envelope tipizat |
-| BS-018 | Asset Manager + soft reference/loading policy |
-| BS-019 | authority/state debug overlay minimal |
-| BS-020 | save header/version + serializer/fault harness minimal |
-| BS-021 | profiling fixture și baseline CPU/GPU/memory/network |
+| BS-014 | typed and stable IDs plus Gameplay Tags policy |
+| BS-015 | logging categories, structured context, and feature flags |
+| BS-016 | build, content, and save compatibility handshake |
+| BS-017 | typed results/errors and command envelope |
+| BS-018 | Asset Manager plus soft-reference and loading policy |
+| BS-019 | minimal authority and state debug overlay |
+| BS-020 | minimum save header, version, serializer, and fault harness |
+| BS-021 | profiling fixture and CPU/GPU/memory/network baseline |
 
-Condiții:
+Conditions:
 
-- IDs au teste de round-trip/duplicate;
-- Shipping nu include test/debug tooling neintenționat;
-- baseline-ul project-owned/config/renderer din M1 rămâne verde după schimbările Core;
-- nu există Tick permanent, global scan ori hard catalog reference.
+- ID round-trip and duplicate tests;
+- no unintended test or debug tooling in Shipping;
+- M1 project-owned baseline, configuration, and renderer remain green after Core changes;
+- no permanent Tick, global scan, or hard catalog reference.
 
-**Gate M2:** un test determinist poate crea stare, un log arată owner/authority/ID, iar baseline-ul poate fi comparat după commit.
+**M2 gate:** a deterministic test creates state, a log shows owner, authority, and ID, and the baseline can be compared after each commit.
 
-## M3 — Spike-uri eliminatorii
+## M3 — Eliminating spikes
 
-Aceste spike-uri sunt time-boxed și pot schimba scope-ul înainte de sisteme mari. Fiecare are prag numeric, rezultat `Adopt/Reject/Re-test`, fallback și ADR.
+These time-boxed spikes may change scope before large systems begin. Each has a numeric threshold, `Adopt/Reject/Re-test` result, fallback, and ADR.
 
-| Task | Risc invalidant | Dovadă minimă |
+| Task | Project risk | Minimum evidence |
 |---|---|---|
-| BS-022 | Steam/NAT | packaged build pe 2 PC-uri, 2 conturi și 2 rețele, fără port forwarding manual |
-| BS-023 | patru bule World Partition | 1 host + 3 clienți separați, server streaming/out decis, unload/reload fără pierdere |
-| BS-024 | profil portabil + crash/disconnect | revision/receipt/conflict policy și kill matrix |
-| BS-025 | patru interioare izolate | visual/audio/nav/physics/replication/save isolation |
-| BS-026 | high-speed streaming | pawn/vehicul placeholder rapid fără hitch/pierdere de state peste prag |
+| BS-022 | Steam and NAT | packaged build on two PCs, two accounts, and two networks without manual port forwarding |
+| BS-023 | four World Partition bubbles | one host plus three separated clients, explicit server streaming/out, unload/reload without loss |
+| BS-024 | portable profile plus crash/disconnect | revision, receipt, conflict policy, and kill matrix |
+| BS-025 | four isolated interiors | visual, audio, navigation, physics, replication, and save isolation |
+| BS-026 | high-speed streaming | fast placeholder Pawn/vehicle without threshold-breaking hitches or state loss |
 
-Condițional, nu obligatoriu devreme:
+Conditional, not mandatory early:
 
-- Replication Graph numai dacă standard replication nu trece relevancy/bandwidth;
-- Iris numai dacă baseline-ul nu trece ori avantajul merită riscul;
-- Mass numai când există workload crowd/traffic reprezentativ;
-- GAS numai înainte de Health/Effects, pe cazuri reale.
+- Replication Graph only when standard replication fails relevancy or bandwidth;
+- Iris only when the baseline fails or the advantage justifies the risk;
+- Mass only with a representative crowd or traffic workload;
+- GAS only before Health/Effects and tested against real use cases.
 
-**Gate M3:** cele cinci riscuri eliminatorii au soluție măsurată sau fallback/scope cut aprobat. Nu este necesar un sistem de producție complet.
+**M3 gate:** all five eliminating risks have a measured solution or an approved fallback or scope cut. Full production systems are not required.
 
-## M4 — Identity, Session și Save MVP
+## M4 — Identity, Session, and Save MVP
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-027 | local account binding + CharacterId + character slots |
-| BS-028 | PortableCharacterProfile subțire + CharacterActiveTime |
-| BS-029 | HostWorldSave subțire |
-| BS-030 | SessionCommitJournal + receipts + conflict UX |
-| BS-031 | crash-safe generations/checksum/migration v1 |
-| BS-032 | Null listen session: host/join/late join/reconnect |
-| BS-033 | Steam private invite/session integration |
-| BS-034 | patru profile simultane și portability între două lumi |
+| BS-027 | local account binding, CharacterId, and character slots |
+| BS-028 | thin PortableCharacterProfile plus CharacterActiveTime |
+| BS-029 | thin HostWorldSave |
+| BS-030 | SessionCommitJournal, receipts, and conflict UX |
+| BS-031 | crash-safe generations, checksum, and migration v1 |
+| BS-032 | null listen session: host, join, late join, reconnect |
+| BS-033 | Steam private invite and session integration |
+| BS-034 | four simultaneous profiles and portability between two worlds |
 
-Nu implementăm de la început toate câmpurile finale din profile. Schema crește prin feature fragments versionate.
+Do not implement every final profile field at once. The schema grows through versioned feature fragments.
 
-**Gate M4:** 1/2/4 jucători intră, schimbă o valoare de test, ies și revin; profilul absent nu avansează; host crash revine la ultimul commit confirmat; un conflict nu este rezolvat tăcut.
+**M4 gate:** one, two, and four players join, modify a test value, leave, and return; absent profiles do not progress; host crash returns to the latest confirmed commit; conflicts are never silently resolved.
 
-## M5 — Player și UI minim
+## M5 — Minimum player and UI
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-035 | Character/Pawn, Enhanced Input și locomotion TP de bază |
-| BS-036 | crouch/vault simplu, stamina și replication/prediction tests |
-| BS-037 | first-person funcțional peste același gameplay, fără polish final |
-| BS-038 | HUD prompt/toast/pause shell + accessibility camera/input |
-| BS-039 | phone shell minim, extins numai când apare primul consumator |
+| BS-035 | Character/Pawn, Enhanced Input, and basic third-person locomotion |
+| BS-036 | simple crouch/vault, stamina, and replication/prediction tests |
+| BS-037 | functional first-person over identical gameplay without final polish |
+| BS-038 | HUD prompt, toast, pause shell, and camera/input accessibility |
+| BS-039 | minimum phone shell expanded only for a real consumer |
 
-Third-person vine primul pentru co-op/animație. FP nu creează un al doilea gameplay system. Map/GPS complet nu blochează walking slice.
+Third-person comes first for co-op and animation. First-person never creates a second gameplay system. Complete map and GPS do not block the walking slice.
 
-**Gate M5:** 1/2/4 se mișcă și schimbă perspectiva fără avantaj diferit; client correction rămâne în prag; efectele de cameră pot fi reduse/oprite.
+**M5 gate:** one, two, and four players move and change perspective without different advantages; client correction stays below threshold; camera effects can be reduced or disabled.
 
-## M6 — Interaction, Economy și primul walking slice legal
+## M6 — Interaction, Economy, and first legal walking slice
 
-Aceasta este prima buclă jucabilă și vine înainte de vehicul/poliție completă.
+This first playable loop precedes full vehicles or police.
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-040 | interaction focus/use + timed action server-validated |
-| BS-041 | ItemDefinition/Instance + inventory slot/weight/container v1 |
-| BS-042 | ownership/permissions + drop/cleanup + trade/gift minimal |
-| BS-043 | legal cash/bank/dirty cash + EconomyTransactionLedger în cenți |
-| BS-044 | ATM + Shop v0 + buy/sell + save migration |
-| BS-045 | Job Runtime minimal: participants/objectives/outcome/payout receipt |
-| BS-046 | tutorial + primul walking job legal aprobat; curieratul este candidatul D144 |
-| BS-047 | `job → bani → magazin → obiect cumpărat` |
+| BS-040 | server-validated interaction focus/use and timed action |
+| BS-041 | ItemDefinition/Instance plus inventory slot, weight, and container v1 |
+| BS-042 | ownership/permissions plus drop, cleanup, and minimum trade/gift |
+| BS-043 | legal cash, bank, dirty cash, and EconomyTransactionLedger in cents |
+| BS-044 | ATM plus Shop v0, buy/sell, and save migration |
+| BS-045 | minimum Job Runtime: participants, objectives, outcome, payout receipt |
+| BS-046 | tutorial plus approved first legal walking job; courier is candidate D144 |
+| BS-047 | `job → money → shop → purchased item` |
 
-Zona este un greybox mic, nu Manhattan. Toate operațiile critice au TransactionId și idempotency. UI normal parcurge flow-ul; debug commands doar asistă testarea.
+The area is a small greybox, not Manhattan. Critical operations use TransactionId and idempotency. Normal UI completes the flow; debug commands only assist testing.
 
-**Gate M6:** bucla de 10–20 minute trece solo/1+1/1+3, late join/reconnect relevant, save/reload și 100 retry pentru tranzacție fără dublare. Creatorul confirmă că progresul de bază este clar și promițător.
+**M6 gate:** the 10–20 minute loop passes solo, one-plus-one, and one-plus-three, relevant late join/reconnect, save/reload, and 100 transaction retries without duplication. The creator confirms the basic progression is clear and promising.
 
 ## M7 — Vehicle MVP
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-048 | sedan Chaos placeholder + arcade-realist handling |
-| BS-049 | enter/exit/seats/camera și network smoothing |
-| BS-050 | VehicleDefinition/Record + ownership/permissions |
-| BS-051 | purchase + trunk inventory + persistence/materialization |
-| BS-052 | fuel/condition/recovery incremental |
+| BS-048 | placeholder Chaos sedan plus arcade-realistic handling |
+| BS-049 | enter, exit, seats, camera, and network smoothing |
+| BS-050 | VehicleDefinition/Record plus ownership/permissions |
+| BS-051 | purchase, trunk inventory, persistence, and materialization |
+| BS-052 | incremental fuel, condition, and recovery |
 
-Hotwire, upgrades, damage/explosion și polish vin după fundația necesară; nu blochează primul vehicle value test.
+Hotwire, upgrades, damage, explosion, and polish follow the necessary foundation and do not block the first vehicle-value test.
 
-**Gate M7:** patru vehicule pot fi conduse în patru zone și recuperate fără clonarea recordului/conținutului; cumpărarea schimbă clar walking loop-ul.
+**M7 gate:** four vehicles drive in four areas and recover without cloning records or contents; purchase clearly changes the walking loop.
 
 ## M8 — Illegal reaction slice
 
-| Task | Rezultat |
+| Task | Result |
 |---|---|
-| BS-053 | nav/spawn anchors + un NPC/agent StateTree minimal |
-| BS-054 | Legality tags + Incident + detectare simplă LOS/noise |
-| BS-055 | Active Heat individual + temporary outfit/vehicle signature |
-| BS-056 | Police Director cu buget + o unitate pursuit/escape/arrest placeholder |
-| BS-057 | primul job ilegal aprobat; coletul din zonă restricționată este candidatul D145 |
-| BS-058 | dirty money + laundering minimal + consecință/recovery receipt |
+| BS-053 | navigation/spawn anchors plus one minimal StateTree NPC |
+| BS-054 | Legality tags, Incident, and simple LOS/noise detection |
+| BS-055 | individual Active Heat plus temporary outfit/vehicle signature |
+| BS-056 | budgeted Police Director plus one pursuit, escape, and arrest placeholder unit |
+| BS-057 | approved first illegal job; restricted-area parcel is candidate D145 |
+| BS-058 | minimum dirty money and laundering plus consequence/recovery receipt |
 
-Fără forensics, camere, evidence graph ori poliție armată. Complicitatea cere acțiune concretă.
+No forensics, cameras, evidence graph, or armed police. Complicity requires concrete action.
 
-**Gate M8:** patru jucători pot avea heat diferit; colegul neimplicat nu este urmărit; jobul ilegal aprobat funcționează solo/co-op; escape/reconnect/reward nu dublează rezultate; directorul respectă bugetul.
+**M8 gate:** four players can have different heat; uninvolved teammates are not pursued; the approved illegal job works solo and co-op; escape, reconnect, and rewards do not duplicate; the director respects its budget.
 
 ## M9 — Vertical Slice hard gate
 
-Conținut minim:
+Minimum content:
 
 - tutorial;
-- job legal și ilegal;
-- ATM/shop/duffle/objective purchase;
-- un vehicul cumpărabil;
-- heat/pursuit/escape/arrest placeholder;
-- profile portabile și save recovery;
-- greybox 4x4 blocuri cu safe point, shop, warehouse, ATM, dealer, portal interior și spawn anchors;
-- UI normal pentru întregul flow.
+- one legal and one illegal job;
+- ATM, shop, duffle bag, and objective purchase;
+- one purchasable vehicle;
+- heat, pursuit, escape, and arrest placeholder;
+- portable profiles and save recovery;
+- 4×4-block greybox with safe point, shop, warehouse, ATM, dealer, interior portal, and spawn anchors;
+- normal UI for the entire flow.
 
-Acceptare:
+Acceptance:
 
-- 30–60 minute de progres coerent;
-- 1, 2 și 4 jucători total;
-- jucători împreună și separați/joburi simultane;
-- late join/reconnect/disconnect mid-command;
-- două rețele reale prin Steam;
-- host crash și portability între lumi;
-- packaged Development/Shipping-like;
-- trei rulări de performance pe hardware/preset fixat;
-- playtest creator: bucla este distractivă înainte de artă finală.
+- 30–60 minutes of coherent progression;
+- one, two, and four total players;
+- together and separated players or simultaneous jobs;
+- late join, reconnect, and disconnect during a command;
+- two real networks through Steam;
+- host crash and portability between worlds;
+- packaged Development or Shipping-like;
+- three performance runs on pinned hardware and preset;
+- creator playtest confirms the loop is fun before final art.
 
-**Hard gate:** niciun sistem major nou și niciun district final până nu trece.
+**Hard gate:** no new major system and no final district before PASS.
 
-## M10 — Consecințe în milestone-uri mici
+## M10 — Consequences in small milestones
 
 ### M10A Health/Hospital
 
-- GAS adopt/reject pe cazuri reale;
-- health general + hit zones, wounds moderate, first aid;
-- downed/revive;
-- hospital transition, fee/loss prin owners și safe return.
+- GAS adopt/reject against real cases;
+- general health plus hit zones, moderate wounds, and first aid;
+- downed and revive;
+- hospital transition, owner-mediated fee or loss, and safe return.
 
 ### M10B Arrest/Prison
 
-- surrender/arrest final;
-- confiscare coordonată;
-- prison instance, bail/vizite/disconnect după Decision Packet;
-- release/re-entry.
+- final surrender and arrest;
+- coordinated confiscation;
+- prison instance, bail, visits, and disconnect after a Decision Packet;
+- release and re-entry.
 
 ### M10C Needs
 
-- hunger, thirst, sleep/vote, bladder/toilet, hygiene;
-- CharacterActiveTime, fără progres offline;
-- effects data-driven și update rar.
+- hunger, thirst, sleep and vote, bladder and toilet, hygiene;
+- CharacterActiveTime with no offline progression;
+- data-driven effects and infrequent updates.
 
-Fiecare submilestone are gate solo/1+1/1+3, reconnect și idempotency; nu se livrează ca mega-feature unic.
+Each sub-milestone has solo, one-plus-one, one-plus-three, reconnect, and idempotency gates; these are never delivered as one mega-feature.
 
-## M11 — Aspirație în trepte
+## M11 — Aspiration in stages
 
-### M11A Appearance și catalog
+### M11A Appearance and catalog
 
-- creator de personaj pe body/skeleton unic;
-- clothing/jewelry slots, clipping validation, outfit inventory;
-- social/status metadata;
-- cataloage, rare stock și illegal equipment.
+- character creator on one body and skeleton;
+- clothing and jewelry slots, clipping validation, outfit inventory;
+- social and status metadata;
+- catalogs, rare stock, and illegal equipment.
 
-### M11B Proprietate de bază
+### M11B Basic property
 
-- offer, purchase/rent transaction, PropertyRecord/Instance;
-- patru instanțe simultane, visitors/permissions;
-- storage și portability.
+- offer, purchase or rent transaction, PropertyRecord/Instance;
+- four simultaneous instances plus visitors and permissions;
+- storage and portability.
 
-### M11C Proprietate extinsă
+### M11C Extended property
 
-- furniture free placement cu limite;
-- moving service fizic;
-- rent/autopay/grace/eviction/recovery storage;
+- bounded free furniture placement;
+- physical moving service;
+- rent, autopay, grace, eviction, and recovery storage;
 - debt v1.
 
-Fiecare treaptă dovedește că banii produc gameplay/status înainte să extindă catalogul.
+Each stage proves that money produces gameplay or status before the catalog expands.
 
-## M12 — Movement și Combat
+## M12 — Movement and Combat
 
-Ordine:
+Order:
 
-1. prone/ladders/swimming/marked high mantle;
-2. fists + improvized weapon;
-3. pistol, knife, shotgun incremental;
-4. hybrid server-authoritative ballistics;
-5. armor/hit zones și FP/TP parity;
-6. Armed Response/Manhunt;
-7. vehicle severe damage/fire/explosion.
+1. prone, ladders, swimming, and marked high mantle;
+2. fists plus improvised weapon;
+3. incremental pistol, knife, and shotgun;
+4. server-authoritative hybrid ballistics;
+5. armor, hit zones, and first-/third-person parity;
+6. Armed Response and Manhunt;
+7. severe vehicle damage, fire, and explosion.
 
-Combatul nu folosește bullet sponges și poate fi evitat de cariera legală. Fiecare mecanică trece latency/correction și aceleași reguli Health.
+Combat avoids bullet sponges and may be avoided by legal careers. Every mechanic passes latency and correction checks and uses the same Health rules.
 
-## M13 — Population, Traffic și World Events
+## M13 — Population, Traffic, and World Events
 
-- representation LOD + Actor promotion/demotion;
-- routines ambientale simple;
-- traffic statistical flow + physical promotion;
-- world event eligibility/cooldown/budget;
-- weather/day-night/scalability;
-- World Partition/HLOD/Data Layers/OFPA de producție;
-- four-bubble stress și memory soak.
+- representation LOD plus Actor promotion and demotion;
+- simple ambient routines;
+- statistical traffic flow plus physical promotion;
+- world-event eligibility, cooldown, and budget;
+- weather, day/night, and scalability;
+- production World Partition, HLOD, Data Layers, and OFPA;
+- four-bubble stress and memory soak.
 
-Mass este adoptat numai dacă workload-ul măsurat justifică. Low reduce ambient/cosmetic, nu martori, poliție ori obiective.
+Adopt Mass only when measured workload justifies it. Low reduces ambient and cosmetic density, never witnesses, police, or objectives.
 
-**Gate:** packaged pe patru PC-uri reale înainte de content lock: host hardware-etalon + trei clienți remote, patru zone/joburi, fără memory growth ori gameplay eliminat.
+**Gate:** packaged on four real PCs before content lock: reference host plus three remote clients, four areas or jobs, no memory growth, and no removed gameplay.
 
-## M14 — Factions, NPC stories și fabrică de joburi
+## M14 — Factions, NPC stories, and job factory
 
-- două familii mafiote candidate pentru Early Access;
-- reputație individuală, access/jobs/warnings/retaliation;
-- contacte persistente și dialog cu alegeri simple;
-- relația personajului portabilă, NPC intrinsic state world-owned;
-- JobDefinition data-driven și variants după primul job manual distractiv.
+- two organized-crime families as Early Access candidates;
+- individual reputation, access, jobs, warnings, and retaliation;
+- persistent contacts and dialogue with simple choices;
+- portable character relationship plus world-owned intrinsic NPC state;
+- data-driven JobDefinition and variants after the first manual job is fun.
 
-Ordinea familiilor candidate:
+Candidate family order:
 
 1. courier/delivery;
-2. warehouse/cleaning/service;
-3. taxi după trafic;
-4. burglary/trespass;
-5. auto theft după vehicle permissions/hotwire;
-6. contraband după cargo/dirty cash/factions.
+2. warehouse, cleaning, or service;
+3. taxi after traffic;
+4. burglary or trespass;
+5. vehicle theft after permissions and hotwire;
+6. contraband after cargo, dirty cash, and factions.
 
-Security, store robbery, fraud/business și heists sunt post-slice și pot fi post-Early Access. Nu cerem șase familii complete înainte de a valida locațiile districtului.
+Security, store robbery, fraud or business, and heists are post-slice and may be post-Early Access. Six complete families are not required before district locations are validated.
 
-## M15 — Primul district de producție
+## M15 — First production district
 
-Se începe numai după vertical slice și după un greybox gameplay/location pass.
+Starts only after the vertical slice and a gameplay and location greybox pass.
 
 Pipeline:
 
-1. metrics + modular kit;
-2. representative street benchmark cu artă apropiată de final;
-3. road/gameplay greybox lock;
-4. exterior/HLOD/Nanite/LOD;
-5. interioare/lighting/signage original;
-6. traffic/crowd/audio;
-7. gameplay/content placement;
-8. four-bubble optimization și accessibility.
+1. metrics and modular kit;
+2. representative street benchmark using near-final art;
+3. road and gameplay greybox lock;
+4. exterior, HLOD, Nanite, and LOD;
+5. interiors, lighting, and original signage;
+6. traffic, crowd, and audio;
+7. gameplay and content placement;
+8. four-bubble optimization and accessibility.
 
-**Gate:** district finit, vandabil, repetabil și fără debt ce se multiplică la următorul district.
+**Gate:** finished, sellable, repeatable district without debt that multiplies into the next district.
 
-## M16 — Early Access content și hardening
+## M16 — Early Access content and hardening
 
-Cantitățile sunt aprobate numai după măsurarea ritmului real de cod, QA și artă. Ținta de planificare, nu promisiunea, este:
+Quantities are approved only after measuring real code, QA, and art throughput. Planning target, not promise:
 
-- un district dens;
-- tutorial 20–30 minute;
-- cel puțin trei familii legale și trei ilegale numai dacă ritmul permite;
-- variante data-driven suficiente pentru 10–15 ore fără repetare evidentă;
-- vehicule/proprietăți/haine/bijuterii/echipamente pe mai multe tier-uri;
-- police, hospital, prison, dirty money, rent/debt și portable characters;
-- 1/2/4 players, Steam invite, join/reconnect;
-- keyboard/mouse complet;
-- localization-ready, accessibility de bază, crash/feedback flow.
+- one dense district;
+- 20–30 minute tutorial;
+- at least three legal and three illegal job families only when throughput allows;
+- enough data-driven variants for 10–15 hours without obvious repetition;
+- vehicles, properties, clothes, jewelry, and equipment across several tiers;
+- police, hospital, prison, dirty money, rent and debt, and portable characters;
+- one, two, and four players, Steam invite, join, and reconnect;
+- complete mouse and keyboard;
+- localization-ready, basic accessibility, crash and feedback flow.
 
 Hardening:
 
-- feature/content lock, regression și migration suite;
-- security/RPC/economy exploit audit;
-- network emulation și 3 × 2h multiplayer soak;
-- cook/package/PSO/hitch/scalability;
-- hardware requirements măsurate;
-- legal/privacy/content review;
-- release candidate + rollback build.
+- feature and content lock, regression, and migration suite;
+- security, RPC, and economy exploit audit;
+- network emulation and three independent two-hour multiplayer soaks;
+- cook, package, PSO, hitch, and scalability;
+- measured hardware requirements;
+- legal, privacy, and content review;
+- release candidate plus rollback build.
 
-Manhattan complet nu este condiție pentru Early Access.
+Complete Manhattan is not an Early Access requirement.
 
-## M17 — Extinderea Manhattan
+## M17 — Manhattan expansion
 
-După Early Access, fabrica validată se repetă:
+After Early Access, repeat the validated factory:
 
-- câte un district cu același benchmark/gate;
-- cataloage și job families noi;
-- povești NPC/factions;
-- businesses active fără venit offline;
-- combat/melee/voice/controller/vreme extinse după cerere și buget;
-- host migration/cross-store numai dacă merită un proiect separat.
+- one district at a time with identical benchmark and gate;
+- new catalogs and job families;
+- NPC and faction stories;
+- active businesses without offline income;
+- expanded combat, melee, voice, controller, and weather based on demand and budget;
+- host migration and cross-store only when they justify a separate project.
 
-Full Manhattan este rezultatul multiplicării unei bucle și a unui pipeline stabile, nu un singur task.
+Full Manhattan results from multiplying a stable loop and pipeline; it is never one task.
 
-## Reguli pentru schimbarea roadmapului
+## Roadmap change rules
 
-1. problemă observată ori playtest;
-2. metrică și cauza probabilă;
-3. alternative + impact asupra dependențelor;
-4. decizia creatorului când schimbă produsul;
-5. ADR când schimbă arhitectura;
-6. update simultan la DECISIONS/ROADMAP/STATUS/system docs/task;
-7. un ID de task deja implementat nu este reutilizat pentru alt rezultat.
+1. observed problem or playtest;
+2. metric and likely cause;
+3. alternatives and dependency impact;
+4. creator decision when the product changes;
+5. ADR when architecture changes;
+6. synchronized DECISIONS, ROADMAP, STATUS, system document, and task;
+7. never reuse an implemented task ID for another outcome.
 
 ## Kill criteria
 
-O caracteristică este simplificată/amânată dacă:
+Simplify or defer a feature when it:
 
-- nu produce o alegere observabilă;
-- rupe gate-ul 1 host + 3 clienți separați;
-- depășește bugetul fără fallback;
-- cere duplicarea unui owner;
-- nu poate fi testată ori migrată;
-- depinde de conținut imposibil la ritmul real;
-- creează risc juridic/licență neclară;
-- există doar pentru a imita un alt joc.
+- creates no observable choice;
+- breaks the separated host-plus-three-client gate;
+- exceeds budget without fallback;
+- requires duplicate ownership;
+- cannot be tested or migrated;
+- depends on content impossible at real throughput;
+- creates legal or unclear-license risk;
+- exists only to imitate another game.

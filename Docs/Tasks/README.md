@@ -1,8 +1,8 @@
 # Task packets
 
-Fiecare rezultat implementabil are un ID stabil `BS-###` și un singur document activ. Task-ul descrie rezultat, scope și dovadă; roadmapul descrie ordinea.
+Every implementable result has a stable `BS-###` ID and one active document. The task describes outcome, scope, and evidence; the roadmap describes order.
 
-## Stări
+## States
 
 ```text
 Draft → Ready → In Progress → Needs Owner Verification → Done
@@ -10,42 +10,43 @@ Draft → Ready → In Progress → Needs Owner Verification → Done
                          ↘ Verification Failed → In Progress
 ```
 
-- `Draft`: lipsesc dependențe, decizii ori acceptarea.
-- `Ready`: Definition of Ready este completă.
-- `In Progress`: branch activ și schimbări în lucru.
-- `Needs Owner Verification`: Codex a verificat ce poate; Madalin are pași exacți de build/playtest.
-- `Verification Failed`: log/captură arată eșec; task-ul revine la implementare.
-- `Blocked / Needs Decision`: o alegere materială sau dependență externă împiedică progresul.
-- `Done`: toate cerințele universale și cele condiționale relevante au dovadă, status/docs/commit sunt sincronizate.
+- `Draft`: dependencies, decisions, or acceptance are missing.
+- `Ready`: Definition of Ready is complete.
+- `In Progress`: an active branch and work in progress exist.
+- `Needs Owner Verification`: Codex verified everything available; Madalin has exact build/playtest steps.
+- `Verification Failed`: a log/screenshot proves failure; the task returns to implementation.
+- `Blocked / Needs Decision`: a material choice or external dependency prevents progress.
+- `Done`: every universal and relevant conditional requirement has evidence, and status/docs/commit are synchronized.
 
-Cod scris nu înseamnă `Done`.
+Written code does not mean `Done`.
 
 ## Definition of Ready
 
-Înainte de cod:
+Before code:
 
-- rezultat observabil și motivul pentru care vine acum;
+- observable outcome and why it comes now;
 - in scope/out of scope;
-- owner de domeniu și dependențe;
-- authority/audience pentru multiplayer;
+- domain owner and dependencies;
+- multiplayer authority/audience;
 - persistence/migration impact;
 - performance/update model;
 - Blueprint/Editor surface;
-- decizii materiale acceptate ori default reversibil declarat;
-- criterii Given/When/Then;
-- verificări automate/manuale și rollback.
+- material decisions accepted or a reversible default declared;
+- Given/When/Then criteria;
+- automated/manual verification and rollback.
 
-## Reguli
+## Rules
 
-- Nu combina sisteme independente într-un task mare doar pentru comoditate.
-- Un task poate avea subtask-uri, dar păstrează un singur outcome coerent.
-- Un bug important primește regression test când este fezabil.
-- Un ID deja implementat nu se reutilizează pentru alt rezultat.
-- Fișierele task-urilor Done pot rămâne ca evidence; Git păstrează istoricul.
+- Do not combine independent systems into one large task for convenience.
+- A task may contain subtasks, but keeps one coherent outcome.
+- An important bug receives a regression test when feasible.
+- An implemented ID is never reused for another result.
+- Done task files may remain as evidence; Git preserves history.
 
 ## Index
 
-| Task | Titlu | Status | Branch |
+| Task | Title | Status | Branch |
 |---|---|---|---|
 | BS-008 | Project memory and agent workflow | Done | `main` |
-| [BS-009](BS-009-Build-Automation.md) | Automatizare Build/Test/Validate/Cook | Done | `main` |
+| [BS-009](BS-009-Build-Automation.md) | Build/Test/Validate/Cook automation | Done | `main` |
+| [BS-010](BS-010-Automation-Smoke-Test.md) | First Automation smoke test and canonical English migration | Done | `feature/BS-010-automation-smoke` (integration pending) |

@@ -1,89 +1,89 @@
-# Ghid de compilare pentru Madalin
+# Compilation Guide for Madalin
 
-Acesta este workflow-ul normal după ce Codex modifică C++. Nu trebuie să scrii ori să repari cod.
+This is the normal workflow after Codex changes C++. You never need to write or repair code.
 
-## Înainte să începi
+## Before starting
 
-Codex trebuie să-ți spună explicit una dintre variante:
+Codex must explicitly state one of:
 
-- `Editorul trebuie închis` — default pentru headers, reflection, module, networking layout, save/serialization;
-- `Editorul poate rămâne deschis` — numai pentru o schimbare mică verificată;
-- `Folosește Live Coding` — numai când Codex justifică exact că schimbarea este sigură.
+- `Unreal Editor must be closed` — the default for headers, reflection, modules, networking layout, save, or serialization;
+- `Unreal Editor may remain open` — only for a verified small change;
+- `Use Live Coding` — only when Codex explains exactly why the change is safe.
 
-Dacă nu spune, închide Unreal Editor înainte de build. Salvează asset-urile când Editorul întreabă numai dacă știi că sunt modificările tale intenționate.
+If no state is given, close Unreal Editor before building. Save assets when prompted only when they are known intentional changes.
 
-## Build normal în Visual Studio
+## Normal Visual Studio build
 
-1. Închide Unreal Editor.
-2. Deschide File Explorer.
-3. Intră în `F:\BrokenStreets`.
-4. Deschide `BrokenStreets.sln`.
-5. Așteaptă până când Visual Studio termină încărcarea soluției și nu mai afișează operații de restore/indexing importante.
-6. În bara de sus, la `Solution Configurations`, selectează `Development Editor`.
-7. Imediat lângă, la `Solution Platforms`, selectează `Win64`.
-8. În `Solution Explorer`, deschide `Games`.
-9. Click dreapta pe proiectul `BrokenStreets` din `Games`.
-10. Apasă `Build`.
-11. În partea de jos, deschide tab-ul `Output` dacă nu este deja vizibil.
-12. La `Show output from`, selectează `Build`.
-13. Așteaptă până apare rezumatul final.
+1. Close Unreal Editor.
+2. Open File Explorer.
+3. Navigate to `F:\BrokenStreets`.
+4. Open `BrokenStreets.sln`.
+5. Wait until Visual Studio finishes loading the solution and no important restore or indexing operation remains.
+6. In the top bar, set `Solution Configurations` to `Development Editor`.
+7. Set adjacent `Solution Platforms` to `Win64`.
+8. In `Solution Explorer`, expand `Games`.
+9. Right-click the `BrokenStreets` project under `Games`.
+10. Click `Build`.
+11. Open the bottom `Output` tab if it is not visible.
+12. Set `Show output from` to `Build`.
+13. Wait for the final summary.
 
 ### PASS
 
-Output-ul se termină cu:
+Output ends with:
 
-- `Result: Succeeded` sau echivalent;
-- `Build: 1 succeeded, 0 failed` ori un rezumat fără failed;
-- zero erori.
+- `Result: Succeeded` or equivalent;
+- `Build: 1 succeeded, 0 failed`, or another summary with no failed project;
+- zero errors.
 
-Nu este o problemă dacă target-ul este `up-to-date` și nu există error.
+An `up-to-date` target with no error is acceptable.
 
 ### FAIL
 
-Dacă apare `failed`, `error C...`, `UnrealHeaderTool failed` ori fereastra se oprește:
+If `failed`, `error C...`, `UnrealHeaderTool failed`, or a stopped window appears:
 
-1. Nu modifica fișiere și nu căuta singur un fragment de cod.
-2. Nu apăsa `Clean Solution` și nu șterge foldere.
-3. În `Output`, selectează textul de la `Build started` până la rezumatul final.
-4. Copiază întregul text și trimite-l lui Codex.
-5. Dacă textul este prea mare, salvează-l într-un `.txt` și atașează fișierul.
-6. Atașează și o captură cu prima eroare, dar logul text complet este mai important.
+1. Do not change files or search for a code fragment yourself.
+2. Do not click `Clean Solution` and do not delete folders.
+3. In `Output`, select everything from `Build started` through the final summary.
+4. Copy the complete text and send it to Codex.
+5. If it is too large, save it to a `.txt` file and attach it.
+6. Include a screenshot of the first error, but the complete text log is more important.
 
-Logul Unreal Build Tool se află de obicei în:
+The Unreal Build Tool log is usually:
 
 `C:\Users\madal\AppData\Local\UnrealBuildTool\Log.txt`
 
-Trimite-l numai dacă Codex îl cere ori Output-ul este incomplet.
+Send it only when Codex requests it or the Output is incomplete.
 
-## După build reușit
+## After a successful build
 
-1. Închide Visual Studio numai dacă vrei; nu este obligatoriu.
-2. Deschide `F:\BrokenStreets\BrokenStreets.uproject`.
-3. Dacă Unreal întreabă dacă trebuie rebuild modules, oprește-te și trimite captura; build-ul explicit tocmai făcut ar trebui să fie suficient.
-4. Urmează testul manual exact dat de Codex.
-5. Trimite rezultatul PASS ori captura/logul cerut la FAIL.
+1. Close Visual Studio only if desired.
+2. Open `F:\BrokenStreets\BrokenStreets.uproject`.
+3. If Unreal asks to rebuild modules, stop and send a screenshot; the explicit build should already be sufficient.
+4. Follow the exact manual test supplied by Codex.
+5. Return the PASS result or the requested screenshot/log on FAIL.
 
-## Când NU folosim Live Coding
+## When not to use Live Coding
 
-Nu apăsa `Ctrl+Alt+F11` pentru:
+Do not press `Ctrl+Alt+F11` for:
 
-- clase/structuri/enum-uri Unreal noi;
-- schimbări `UPROPERTY`, `UFUNCTION`, `UCLASS`, `USTRUCT`, `UENUM`;
-- `.h`, `.Build.cs`, Target.cs ori plugin/module changes;
-- replicated properties/RPC layout;
-- save schema/serialization/migrations;
-- constructor/default subobject changes;
-- crash-uri sau stare suspectă după un patch anterior.
+- new Unreal classes, structures, or enums;
+- changes to `UPROPERTY`, `UFUNCTION`, `UCLASS`, `USTRUCT`, or `UENUM`;
+- `.h`, `.Build.cs`, Target.cs, plugin, or module changes;
+- replicated property or RPC layout;
+- save schema, serialization, or migration;
+- constructor or default-subobject changes;
+- crashes or suspicious state after a prior patch.
 
-Pentru acestea: închide Editorul și rulează build-ul complet de mai sus.
+For these changes, close the Editor and run the complete build above.
 
-## Ce nu faci manual
+## What not to do manually
 
-- nu copiezi cod în Visual Studio;
-- nu editezi `.Build.cs`, config ori `.uproject`;
-- nu apeși `Rebuild Solution` decât dacă task-ul spune explicit;
-- nu construiești proiectul `UE5` ori toate cele 59+ proiecte din solution;
-- nu ștergi `Binaries/Intermediate/Saved` ca primă soluție;
-- nu alegi altă versiune de Unreal.
+- do not paste code into Visual Studio;
+- do not edit `.Build.cs`, configuration, or `.uproject`;
+- do not click `Rebuild Solution` unless the task explicitly requires it;
+- do not build the `UE5` project or all 59+ projects in the solution;
+- do not delete `Binaries`, `Intermediate`, or `Saved` as a first response;
+- do not select another Unreal version.
 
-Codex îți va spune exact dacă un caz excepțional cere alt pas.
+Codex will provide exact instructions whenever an exceptional case requires another action.

@@ -1,117 +1,117 @@
-# Recovery, backup și restaurare
+# Recovery, Backup, and Restoration
 
-GitHub este o copie remote, nu dovada că proiectul poate fi reconstruit. Recovery se testează.
+GitHub is a remote copy; it is not proof that the project can be reconstructed. Recovery is tested.
 
-## BS-007A — clean clone simplu
+## BS-007A — basic clean clone
 
-Poate fi executat acum:
+This can run now:
 
-1. Alege un folder nou, explicit, în afara `F:/BrokenStreets` și `F:/UE_5.8.2`.
-2. Clonează repository-ul privat și branch-ul `main`.
-3. Rulează Git LFS pull.
-4. Confirmă că lipsesc intenționat `.vs`, `Binaries`, `Intermediate`, `Saved`.
-5. Generează fișierele Visual Studio.
+1. Choose a new, explicit folder outside `F:/BrokenStreets` and `F:/UE_5.8.2`.
+2. Clone the private repository and `main`.
+3. Run Git LFS pull.
+4. Confirm `.vs`, `Binaries`, `Intermediate`, and `Saved` are intentionally absent.
+5. Generate Visual Studio files.
 6. Build `BrokenStreetsEditor | Win64 | Development`.
-7. Deschide proiectul și confirmă baseline-ul gol.
-8. Notează durata, commitul și orice pas ne-documentat.
+7. Open the project and confirm the empty baseline.
+8. Record duration, commit, and every undocumented step.
 
-PASS demonstrează că proiectul de bază nu depinde de cache-ul vechi. Folderul recovery nu devine proiectul principal.
+PASS proves the base project does not depend on its old cache. The recovery folder never becomes the main project.
 
-BS-007A a fost executat pe același profil Windows și cu aceeași instalare UE. Nu demonstrează încă portabilitate pe alt profil/PC și nu demonstrează recovery de save, asset-uri LFS ori source art care nu existau la baseline.
+BS-007A ran under the same Windows profile and UE installation. It does not yet prove portability to another profile or PC, nor recovery of saves, LFS assets, or Source Art that did not exist at baseline.
 
-## Engine association pe profil/PC nou
+## Engine association on a new profile or PC
 
-`BrokenStreets.uproject` poate conține un `EngineAssociation` GUID înregistrat local. GUID-ul nu este o cale portabilă și nu trebuie presupus existent pe alt profil sau PC.
+`BrokenStreets.uproject` may contain an `EngineAssociation` GUID registered only locally. That GUID is not a portable path and must not be assumed to exist elsewhere.
 
-Recovery-ul sigur:
+Safe recovery:
 
-1. instalează/verifică exact UE 5.8.2 și notează calea absolută;
-2. rulează build-ul prin `Engine/Build/BatchFiles/Build.bat` din acel engine, cu calea absolută a `.uproject`;
-3. deschide prin `Engine/Binaries/Win64/UnrealEditor.exe` din același engine, cu `.uproject` ca argument;
-4. pentru integrarea Explorer/IDE, asociază local proiectul cu engine-ul exact și regenerează fișierele; o rescriere de `EngineAssociation` făcută numai pentru recovery nu se împinge fără task de upgrade/toolchain;
-5. BS-009 validează comanda de project generation fără dependență ascunsă de Explorer, iar BS-007B o repetă pe alt profil Windows sau pe al doilea PC.
+1. install and verify exactly UE 5.8.2 and record its absolute path;
+2. build through that engine's `Engine/Build/BatchFiles/Build.bat` with the absolute `.uproject` path;
+3. open through the same engine's `Engine/Binaries/Win64/UnrealEditor.exe`, passing the `.uproject`;
+4. for Explorer/IDE integration, associate the project locally and regenerate files. Do not push an `EngineAssociation` rewrite caused only by recovery without an upgrade/toolchain task;
+5. BS-009 validates project generation without hidden Explorer dependence; BS-007B repeats it on another Windows profile or second PC.
 
-## BS-007B — recovery complet al proiectului
+## BS-007B — complete project recovery
 
-Se execută după BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013 și BS-013B:
+Run after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B:
 
-1. clean clone nou;
-2. Git LFS pull și pointer audit;
-3. project generation;
+1. create a new clean clone;
+2. run Git LFS pull and pointer audit;
+3. generate project files;
 4. command-line Development Editor build;
-5. automation smoke tests;
+5. Automation smoke tests;
 6. Data Validation;
-7. cook/package minimal;
-8. open/load `L_TestGym_Core` prin executable-ul engine-ului exact;
-9. LFS lock/unlock/pointer/push exercise pentru un asset de test aprobat;
-10. repetare pe alt profil Windows sau al doilea PC, fără a presupune GUID-ul local;
-11. raport cu pași/durată/probleme și update toolchain docs.
+7. minimal cook and package;
+8. open and load `L_TestGym_Core` through the exact engine executable;
+9. perform an approved LFS lock, unlock, pointer, and push exercise on a test asset;
+10. repeat on another Windows profile or second PC without assuming the local GUID;
+11. report steps, duration, and problems, then update toolchain documentation.
 
-Restore-ul de save nu este un criteriu BS-007B înainte ca BS-020 să creeze schema și fault harness-ul. Din BS-020 încolo, fiecare gate persistent adaugă propriul restore/fault test.
+Save restoration is not a BS-007B criterion before BS-020 creates the schema and fault harness. From BS-020 onward, every persistent gate adds its own restore and fault test.
 
-## Backup independent pentru repository și Git LFS — BS-010A
+## Independent repository and Git LFS backup — BS-010A
 
-GitHub este remote-ul de colaborare, nu singurul plan de disaster recovery. Înainte de primul asset Unreal important, BS-010A cere:
+GitHub is the collaboration remote, not the only disaster-recovery plan. Before the first important Unreal asset, BS-010A requires:
 
-- toate refs/tag-urile necesare și toate obiectele Git LFS, nu doar working tree-ul;
-- o copie versionată pe mediu/locație independentă de GitHub și de SSD-ul proiectului;
-- manifest/checksum și data ultimului backup reușit;
-- checkpoint remote înainte de operații riscante ori migrații de asset-uri;
-- restore într-un folder nou cu accesul la GitHub dezactivat/indisponibil;
-- build/open al commitului restaurat și verificarea fiecărui pointer LFS;
-- owner, frecvență, retenție, alertă de capacitate și procedură de reînnoire a credentialelor.
+- every required ref and tag plus every Git LFS object, not only the working tree;
+- a versioned copy on media or storage independent from both GitHub and the project SSD;
+- manifest, checksum, and last-successful-backup date;
+- remote checkpoint before risky operations or asset migrations;
+- restoration into a new folder while GitHub is unavailable or disabled;
+- build/open of the restored commit and verification of every LFS pointer;
+- owner, frequency, retention, capacity alert, and credential-renewal procedure.
 
-Un `git bundle` singur nu include obiectele LFS. Soluția aprobată trebuie să păstreze atât obiectele Git/refs, cât și storage-ul LFS ori să folosească un al doilea remote care oferă ambele. Providerul/mediul nu se alege automat fără acordul creatorului.
+A `git bundle` alone does not include LFS objects. The approved solution must preserve both Git objects/refs and LFS storage, or use a second remote that provides both. Codex never selects a provider or medium without creator approval.
 
-## Backup Source Art 3-2-1
+## Source Art 3-2-1 backup
 
-`F:/BrokenStreets_SourceArt` nu este protejat de repository-ul jocului.
+`F:/BrokenStreets_SourceArt` is not protected by the game repository.
 
-Gate-ul cere:
+The gate requires:
 
-- trei copii totale;
-- două tipuri de medii/locații;
-- o copie off-site;
-- checksum/manifest pentru fișiere importante;
-- versionare ori snapshot policy;
-- capacitate estimată și alertă înainte de umplere;
-- restore trimestrial al unui eșantion într-un folder nou.
+- three total copies;
+- two media or storage types;
+- one off-site copy;
+- checksum or manifest for important files;
+- versioning or snapshot policy;
+- estimated capacity and pre-full alert;
+- quarterly sample restoration into a new folder.
 
-Nu configura automat un provider/cloud fără alegerea și autorizarea creatorului.
+Do not configure a provider or cloud automatically without creator choice and authorization.
 
-## Save recovery viitor
+## Future save recovery
 
-Fiecare schema persistentă trebuie să aibă:
+Every persistent schema requires:
 
-- versions/migrations;
-- checksum și minimum o generație anterioară validă;
-- temp pe același volum cu destinația;
-- ordinea `capture → serialize temp → flush → read-back/checksum → atomic local replace → manifest commit`;
-- manifest actualizat numai după validare; temp neconfirmat nu devine generație activă;
-- startup selection newest-to-oldest dintre generațiile committed valide, cu fallback raportat;
+- versions and migrations;
+- checksum and at least one prior valid generation;
+- temporary file on the same volume as its destination;
+- ordering: `capture → serialize temp → flush → read-back/checksum → atomic local replace → manifest commit`;
+- manifest update only after validation; an unconfirmed temporary file never becomes active;
+- newest-to-oldest selection among valid committed generations, with reported fallback;
 - golden test files;
-- crash/fault injection înainte și după fiecare etapă, plus corrupt/truncated/stale behavior;
-- recovery UI/report;
-- compatibility/rollback plan.
+- crash/fault injection before and after every stage plus corrupt, truncated, and stale behavior;
+- recovery UI or report;
+- compatibility and rollback plan.
 
 ## Incident checklist
 
-La proiect corupt/build imposibil:
+For project corruption or an impossible build:
 
-1. oprește salvările și bulk operations;
-2. notează branch/commit/status și copiază logul;
-3. nu șterge foldere largi ca prim pas;
-4. verifică dacă un clean clone reproduce;
-5. clasifică: source/config, generated files, asset LFS, engine/toolchain, save;
-6. restaurează din sursa cea mai îngustă și verificată;
-7. rebuild/test înainte de a relua munca;
-8. adaugă regresie/documentație pentru cauza reală.
+1. stop saves and bulk operations;
+2. record branch, commit, status, and log;
+3. do not delete broad folders as a first step;
+4. check whether a clean clone reproduces the problem;
+5. classify it as source/configuration, generated files, LFS asset, engine/toolchain, or save;
+6. restore from the narrowest verified source;
+7. rebuild and test before resuming work;
+8. add regression coverage or documentation for the actual cause.
 
 ## Destructive safety
 
-Orice delete/move recursiv:
+Every recursive delete or move:
 
-- are target absolut verificat;
-- nu folosește root, home, workspace root generic, globs ori variabile nerezolvate;
-- preferă un folder recovery/trash;
-- nu atinge proiectul principal, engine-ul sau Source Art fără aprobarea explicită a creatorului.
+- uses a verified absolute target;
+- never targets a root, home directory, generic workspace root, glob, or unresolved variable;
+- prefers a recovery or trash folder;
+- never touches the main project, engine, or Source Art without explicit creator approval.

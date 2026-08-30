@@ -9,33 +9,33 @@
 
 ## Context
 
-Patru jucători se pot separa pe o lume mare, iar fiecare bulă poate avea actori relevanți diferiți. UE 5.8.2 oferă standard replication, Replication Graph și Iris, dar etichetele/maturitatea și integrarea diferă. Alegerea prematură poate bloca Shipping ori produce coupling inutil.
+Four players may separate across a large world, giving each simulation bubble a different set of relevant Actors. UE 5.8.2 provides standard replication, Replication Graph, and Iris, but their labels, maturity, and integration differ. A premature choice could block Shipping or create unnecessary coupling.
 
-## Alternative
+## Alternatives
 
-1. Standard replication + relevancy/dormancy/conditions.
-2. Standard replication + Replication Graph pentru routing/relevancy.
-3. Iris în spike separat.
+1. Standard replication with relevancy, dormancy, and conditions.
+2. Standard replication plus Replication Graph for routing and relevancy.
+3. Iris in a separate spike.
 
-## Recomandare propusă
+## Proposed recommendation
 
-- Standard replication este fallback-ul obligatoriu.
-- Se măsoară mai întâi workload-ul 1 host + 3 clienți împreună și separați.
-- Replication Graph se adoptă numai dacă oferă un avantaj necesar și trece build/late join/reconnect/packaged tests în UE 5.8.2.
-- Iris se testează numai dacă baseline-ul nu trece ori avantajul potențial justifică riscul.
-- Domeniile expun comenzi/read models fără a depinde de un backend unic.
+- Standard replication is the mandatory fallback.
+- First measure one host plus three clients both together and separated.
+- Adopt Replication Graph only when it provides a necessary benefit and passes build, late-join, reconnect, and packaged tests in UE 5.8.2.
+- Test Iris only when the baseline fails or its potential advantage justifies the risk.
+- Domains expose commands and read models without depending on a single replication backend.
 
-## Metrici/gate ce trebuie completate înainte de acceptare
+## Metrics/gate required before acceptance
 
-- server frame time și replication time;
-- bandwidth per client și total;
-- replicated actor/subobject counts;
-- snapshot size și late-join time;
+- server frame time and replication time;
+- bandwidth per client and total bandwidth;
+- replicated Actor/subobject counts;
+- snapshot size and late-join time;
 - dormancy/relevancy correctness;
-- 100–200 ms latency + packet loss;
-- memory și stability în packaged host + 3 clients;
-- fallback demonstrat.
+- 100–200 ms latency plus packet loss;
+- memory and stability in a packaged host plus three clients;
+- demonstrated fallback.
 
 ## Revisit trigger
 
-Workload-ul reprezentativ se schimbă material ori o versiune UE viitoare schimbă maturitatea/compatibilitatea. Upgrade-ul nu se face în același task.
+The representative workload changes materially, or a future UE version changes maturity or compatibility. An engine upgrade is never performed in the same task.

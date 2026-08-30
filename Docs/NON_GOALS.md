@@ -1,68 +1,68 @@
-# Non-goals și tăieri de scope
+# Non-goals and scope cuts
 
-Acest document protejează proiectul de sisteme costisitoare care nu sunt necesare pentru primul produs vandabil. `NON-SCOPE` nu intră în v1; `DEFERRED` poate fi reconsiderat numai după gate-ul indicat și o decizie explicită.
+This document protects the project from expensive systems that are unnecessary for the first sellable product. `NON-SCOPE` items do not enter v1; `DEFERRED` items may be reconsidered only after the stated gate and an explicit decision.
 
-## Non-scope pentru v1
+## Non-scope for v1
 
-- dedicated servers, matchmaking public competitiv și crossplay/cross-store;
-- mai mult de patru jucători total;
-- celelalte boroughs din New York;
-- metrou fizic ori fast travel prin metrou, canalizare, bărci și avioane;
-- reconstrucție 1:1 a Manhattan-ului, nume reale obligatorii sau landmark-uri copiate;
-- poveste principală obligatorie și companion permanent;
-- PvP competitiv, sabotaj proiectat ori furt direct din inventarul colegului;
-- economie online securizată, backend autoritar și prevenirea trișării intenționate locale;
-- progres economic sau nevoi cât personajul este offline;
-- taxe ca sistem separat, credit auto, leasing și ipotecă;
-- simulator medical, mecanic ori balistic dur;
-- simularea completă și persistentă a fiecărui cetățean;
-- forensics: ADN, amprente, dovezi persistente, camere generale și martori complecși;
-- poliție coruptă, mită generală și războaie autonome poliție–mafie;
-- deformare auto avansată și transmisie manuală;
-- temperatură, anotimpuri și zăpadă în prima versiune;
-- wall-running, free-climbing și rețea completă de parkour;
-- engine fork ori modificări în engine-ul instalat fără un ADR viitor explicit.
+- dedicated servers, public competitive matchmaking, and crossplay/cross-store;
+- more than four total players;
+- New York boroughs outside Manhattan;
+- physical subway or subway fast travel, sewers, boats, and aircraft;
+- a 1:1 Manhattan reconstruction, mandatory real names, or copied landmarks;
+- a mandatory main story and permanent companion;
+- competitive PvP, designed sabotage, or direct theft from a teammate's inventory;
+- secure online economy, authoritative backend, and prevention of intentional local cheating;
+- economic or needs progression while a character is offline;
+- taxes as a separate system, car financing, leasing, and mortgages;
+- hardcore medical, mechanic, or ballistics simulation;
+- complete persistent simulation of every citizen;
+- forensics: DNA, fingerprints, persistent evidence, general camera networks, and complex witnesses;
+- corrupt police, general bribery, and autonomous police–mafia wars;
+- advanced vehicle deformation and manual transmission;
+- temperature, seasons, and snow in the first version;
+- wall-running, free climbing, and a full parkour network;
+- an engine fork or installed-engine changes without a future explicit ADR.
 
-## Deferred până după vertical slice
+## Deferred until after the vertical slice
 
-- creator de personaj final și catalog mare de haine/bijuterii;
-- full-body first-person polish, reflections perfecte și toate variantele de animație;
-- prone, înot, ladders, manual cover și mișcare extinsă;
-- combat complet, melee complex, arsenal mare și poliție armată;
-- population/traffic la densitate finală;
-- proprietăți cu free placement final, moving service, rent și debt complete;
-- dependență/toleranță aprofundată pentru droguri;
-- facțiuni și povești NPC extinse;
-- șase familii de joburi și heist-uri;
-- muzică personală transmisă altor jucători;
-- voice de proximitate și telefon;
-- businesses și orice venit asociat.
+- final character creator and large clothing/jewelry catalog;
+- full-body first-person polish, perfect reflections, and every animation variant;
+- prone, swimming, ladders, manual cover, and extended movement;
+- complete combat, complex melee, large arsenal, and armed police;
+- final-density population/traffic;
+- properties with final free placement, moving service, full rent, and full debt;
+- deep drug tolerance/dependence;
+- extended factions and NPC stories;
+- six job families and heists;
+- personal music broadcast to other players;
+- proximity/phone voice;
+- businesses and any associated income.
 
-## Deferred până după Early Access sau după dovadă
+## Deferred until after Early Access or sufficient evidence
 
 - host migration;
-- controller complet, aim assist și glyph-uri dacă nu este promovat înainte;
-- afaceri active extinse;
-- voice-over și limbi suplimentare;
-- vreme avansată;
-- extinderea Manhattan-ului district cu district;
-- Mass sau Iris dacă baseline-ul standard deja trece bugetele;
-- pluginuri externe pentru probleme ce pot fi rezolvate simplu în proiect.
+- complete controller support, aim assist, and glyphs unless promoted earlier;
+- extended active businesses;
+- voice-over and additional languages;
+- advanced weather;
+- district-by-district Manhattan expansion;
+- Mass or Iris when the standard baseline already meets budgets;
+- external plugins for problems the project can solve simply.
 
-## Nu sunt criterii de acceptare
+## Not acceptance criteria
 
-- „exact ca GTA/RDR2/Cyberpunk/Spider-Man/Schedule”;
-- „ultra realist” fără comportament și buget măsurabil;
-- „optimizat” fără trace și baseline;
-- număr mare de asset-uri fără o buclă jucabilă;
-- un prototip PIE fără test packaged/network/recovery corespunzător.
+- “exactly like GTA/RDR2/Cyberpunk/Spider-Man/Schedule”;
+- “ultra realistic” without measurable behavior and budget;
+- “optimized” without trace and baseline;
+- a large asset count without a playable loop;
+- a PIE prototype without the corresponding packaged/network/recovery test.
 
-## Regula de promovare în scope
+## Rule for promoting an item into scope
 
-Un non-goal/deferred intră în roadmap numai după:
+A non-goal/deferred item enters the roadmap only after:
 
-1. problema sau valoarea pentru jucător este demonstrată;
-2. dependențele și costul sunt identificate;
-3. există buget și test de acceptare;
-4. creatorul aprobă schimbarea;
-5. DECISIONS, ROADMAP și eventual un ADR sunt actualizate în același task.
+1. its problem or player value is demonstrated;
+2. dependencies and cost are identified;
+3. a budget and acceptance test exist;
+4. the creator approves the change;
+5. DECISIONS, ROADMAP, and any required ADR are updated in the same task.

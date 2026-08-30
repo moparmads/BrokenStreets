@@ -9,34 +9,34 @@
 
 ## Context
 
-Blank/Maximum wizardul a activat Ray Tracing și Substrate. Aceste setări nu reprezintă o decizie măsurată. Produsul urmărește realism vizual ridicat, dar FPS/stabilitatea și un preset Low accesibil au prioritate.
+The Blank/Maximum project wizard enabled Ray Tracing and Substrate. Those settings are not a measured product decision. The product targets high visual realism, but frame rate, stability, and an accessible Low preset take priority.
 
-## Alternative
+## Alternatives
 
-1. software/Lumen baseline fără hardware RT obligatoriu;
-2. hardware RT ca opțiune High/Ultra;
-3. hardware RT obligatoriu pentru toate presetările;
-4. Substrate integral ori selectiv versus material pipeline clasic.
+1. Software/Lumen baseline without mandatory hardware RT.
+2. Hardware RT as an optional High/Ultra feature.
+3. Mandatory hardware RT for every preset.
+4. Full or selective Substrate versus the classic material pipeline.
 
-## Recomandare propusă
+## Proposed recommendation
 
-- Minimum/Low nu depinde de hardware Ray Tracing sau Frame Generation.
-- High/Ultra poate activa RT numai dacă benchmark-ul justifică și are fallback clar.
-- Lumen/VSM/Nanite/Substrate/TSR și alternativele se măsoară pe aceeași representative street.
-- Gameplay entities rămân identice între presetări; numai cosmetic/ambient density se reduce.
-- Nu blocăm valorile înainte de un workload apropiat de artă finală.
+- Minimum/Low does not depend on hardware Ray Tracing or Frame Generation.
+- High/Ultra may enable RT only when a benchmark justifies it and a clear fallback exists.
+- Measure Lumen, VSM, Nanite, Substrate, TSR, and alternatives on the same representative street.
+- Gameplay entities remain identical across presets; only cosmetic and ambient density may decrease.
+- Do not freeze values before testing a workload close to final art.
 
 ## Gate
 
-Pentru fiecare preset/hardware fixăm:
+For every preset and hardware target, record:
 
-- driver, resolution/internal scale și build;
+- driver, resolution/internal scale, and build;
 - p50/p95/p99/max GT/RT/GPU;
-- VRAM/working set;
+- VRAM and working set;
 - shader/PSO/streaming hitches;
-- imagine comparativă și defecte vizibile;
-- 20% headroom target în scenariul normal unde este posibil.
+- comparison image and visible defects;
+- a target of 20% headroom in the normal scenario where feasible.
 
-## Task imediat
+## Immediate task
 
-BS-011 creează map-ul project-owned, iar BS-013B transformă setările accidentale într-un config PC-only explicit de test și consemnează rezultatul inițial. Acceptarea rendererului final are loc după Representative Street cu artă relevantă în M15.
+BS-011 creates the first project-owned map. BS-013B converts accidental defaults into an explicit PC-only test configuration and records the initial result. Final renderer acceptance happens after the M15 Representative Street contains relevant art.
