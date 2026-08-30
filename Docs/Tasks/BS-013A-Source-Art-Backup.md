@@ -54,6 +54,7 @@ The game repository is recoverable, but creator-owned 3D source files are outsid
 ## Allowed files/domains
 
 - `Tools/SourceArtBackup/` and thin command wrappers under `Tools/`;
+- the policy metadata surface of `Tools/Backup/Invoke-RepositoryBackup.ps1`, only so an offline invocation cannot claim the local-layer encryption/off-site/schedule policy;
 - `Tools/README.md`;
 - `Docs/Tasks/`, `Docs/STATUS.md`, `Docs/PENDING_DECISIONS.md`, and recovery/toolchain workflow documentation;
 - external data only under `E:/BrokenStreets_SourceArtBackup` and the marked `BrokenStreets_OfflineBackup` root on the approved external drive;

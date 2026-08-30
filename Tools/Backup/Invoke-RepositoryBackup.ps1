@@ -6,7 +6,12 @@ param(
     [string]$BackupRoot,
     [switch]$SkipOriginRefresh,
     [switch]$AllowDirty,
-    [switch]$PlanOnly
+    [switch]$PlanOnly,
+    [ValidateSet('Local', 'Offline')]
+    [string]$PolicyContext = 'Local',
+    [string]$EncryptionPolicyOverride,
+    [string]$OffsitePolicyOverride,
+    [string]$SchedulePolicyOverride
 )
 
 Set-StrictMode -Version Latest
@@ -239,6 +244,9 @@ try {
     if ([int]$config.schemaVersion -ne 1) {
         throw "Unsupported backup configuration schema: $($config.schemaVersion)"
     }
+    $effectiveEncryptionPolicy = if ([string]::IsNullOrWhiteSpace($EncryptionPolicyOverride)) { [string]$config.encryptionPolicy } else { $EncryptionPolicyOverride }
+    $effectiveOffsitePolicy = if ([string]::IsNullOrWhiteSpace($OffsitePolicyOverride)) { [string]$config.offsitePolicy } else { $OffsitePolicyOverride }
+    $effectiveSchedulePolicy = if ([string]::IsNullOrWhiteSpace($SchedulePolicyOverride)) { [string]$config.scheduleLocalTime } else { $SchedulePolicyOverride }
     $script:GitExecutable = Resolve-GitExecutable -PreferredPath ([string]$config.gitExecutable)
 
     if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
@@ -464,13 +472,15 @@ try {
             }
             originRefresh = $originRefresh
             policy = [ordered]@{
+                context = $PolicyContext
                 owner = [string]$config.owner
                 retentionGenerationCount = [int]$config.retentionGenerationCount
                 warningFreeSpaceGiB = [double]$config.warningFreeSpaceGiB
                 hardMinimumFreeSpaceGiB = [double]$config.hardMinimumFreeSpaceGiB
-                scheduleLocalTime = [string]$config.scheduleLocalTime
-                encryption = [string]$config.encryptionPolicy
-                offsite = [string]$config.offsitePolicy
+                scheduleLocalTime = $(if ($PolicyContext -eq 'Local') { [string]$config.scheduleLocalTime } else { $null })
+                schedule = $effectiveSchedulePolicy
+                encryption = $effectiveEncryptionPolicy
+                offsite = $effectiveOffsitePolicy
             }
         }
         $manifestPath = Join-Path $stagingPath 'manifest.json'

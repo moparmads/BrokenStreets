@@ -53,7 +53,14 @@ try {
     $repositoryBackupRoot = Join-Path $offlineRoot ([string]$config.repositoryOfflineRelativeRoot)
     $sourceArtBackupRoot = Join-Path $offlineRoot ([string]$config.sourceArtOfflineRelativeRoot)
 
-    $repositoryArguments = @('-BackupRoot', $repositoryBackupRoot, '-SkipOriginRefresh')
+    $repositoryArguments = @(
+        '-BackupRoot', $repositoryBackupRoot,
+        '-SkipOriginRefresh',
+        '-PolicyContext', 'Offline',
+        '-EncryptionPolicyOverride', [string]$config.encryptionPolicy,
+        '-OffsitePolicyOverride', [string]$config.offsitePolicy,
+        '-SchedulePolicyOverride', 'Manual offline checkpoint only'
+    )
     $sourceArtArguments = @('-Target', 'Offline', '-BackupRoot', $sourceArtBackupRoot, '-FullObjectAudit')
     if ($PlanOnly) {
         $repositoryArguments += '-PlanOnly'
@@ -83,7 +90,7 @@ try {
         repository = [ordered]@{
             backupRoot = [string]$config.repositoryOfflineRelativeRoot
             generationId = [string]$repositoryLatest.generationId
-            sourceCommit = [string]$repositoryLatest.sourceCommit
+            sourceCommit = [string]$repositoryLatest.sourceHeadCommit
             latestPointerSha256 = Get-SourceArtSha256 -Path $repositoryLatestPath
         }
         sourceArt = [ordered]@{
