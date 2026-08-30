@@ -1,6 +1,6 @@
 # BS-013A — Source Art 3-2-1 Backup and Verified Restore
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-013A-source-art-backup`
 **Base commit:** `a84ba6d65ca19faa2a7bef89bf6a59e747f2c1ee`
@@ -109,13 +109,15 @@ No Blueprint, asset, map, or Unreal configuration changes. Unreal Editor is not 
 
 No Unreal Editor or Visual Studio action is required.
 
-The normal offline command already published and fully restored checkpoint `20260830T195222Z-35276-c790aa50`; the creator does not need to rerun it for this acceptance.
+The normal offline command published and fully restored final `main` checkpoint `20260830T195922Z-38792-110472d5`; the creator did not need to rerun it for acceptance.
 
 1. Close any File Explorer window displaying `G:` and ensure no file copy is active.
 2. In the Windows taskbar notification area, select **Safely Remove Hardware and Eject Media**.
 3. Select the LaCie external drive and wait for Windows to report that it is safe to remove. If Windows says the drive is in use, do not unplug it; close the named application and retry.
 4. Disconnect the LaCie drive and store it physically separately from the PC.
 5. Reply `gata, l-am scos si l-am pus separat` so the final task-status closure can proceed.
+
+Creator acceptance passed on August 30, 2026. Madalin Gavrila safely removed the verified LaCie checkpoint, disconnected it, and confirmed separate physical storage. The offline copy is therefore no longer continuously attached to the PC.
 
 ## Risks and rollback
 
@@ -137,9 +139,10 @@ The normal offline command already published and fully restored checkpoint `2026
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | August 30, 2026 | `05bfb593011bdfcb0ed37fe885a86f4d5ba8c7a5` | tree `1b793f1fff7049fd059b51356c167f8ad2466c23`; tooling/docs only; no C++/Config/Content/`.uproject`/plugin changes; real Source Art remained empty and unchanged | Windows PowerShell 5.1 parser 10/10; Source Art self-test; existing repository/LFS self-test; runner self-test 6/6; local generations `20260830T194043Z-9992-ff41f77b` and scheduled `20260830T194204Z-38996-b5a81fd0`; local restore `BS-013A-local-20260830T1941Z`; offline checkpoint `20260830T195222Z-35276-c790aa50` combining repository generation `20260830T195220Z-20964-5d4c696c` and Source Art generation `20260830T195222Z-13368-c36825e2`; complete offline restore `BS-013A-05bfb59`; restored Build/Test summaries under that working copy's `Saved/Automation/BS-009/` | PASS — synthetic Unicode/binary/deduplication/multi-generation/locked-file/same-drive/existing-destination/corruption cases; repository self-test restored 3 refs + 1 LFS payload without GitHub; runner 6/6; local and offline empty-source generations; combined checkpoint captured 18 refs + 3 LFS objects; restore used no network and recovered exact candidate branch; Git/LFS fsck passed; restored Build 28.49s; Automation 1/1 passed; scheduled task enabled/Ready with direct result 0; 931.38 GiB offline free | Codex |
+| August 30, 2026 | merge `272993dbb53dfa97481fa7463c8d9cf1d22cd9f9` | later evidence/docs and merge over the unchanged verified tooling/runtime/content; local `main`, `origin/main`, and restored `main` matched before ejection | final offline checkpoint `20260830T195922Z-38792-110472d5`; repository generation `20260830T195920Z-37620-1d6ff86e`; Source Art generation `20260830T195921Z-39652-781d3033`; complete restore `BS-013A-main-272993d`; creator safe ejection and separate storage | PASS — 19 refs and 3 LFS objects restored without GitHub; empty real Source Art restored and verified; restored origin was local on `E:`; zero offline staging folders; creator confirmed the verified unencrypted drive is disconnected and physically separate | Madalin Gavrila / Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-Implementation and all machine-verifiable checks are complete on the pushed feature branch. Integrate the verified candidate and publish/restore a final `main` checkpoint while the external drive remains connected. Creator verification is then limited to safely ejecting that checkpoint and confirming that the drive is physically stored separately from the PC. No Unreal Editor or Visual Studio action is required. After confirmation, synchronize the final Done status while retaining the explicit plaintext-drive and finite-capacity risks. The base rollback is `a84ba6d65ca19faa2a7bef89bf6a59e747f2c1ee`; BS-013B is next.
+Implementation, integration, machine verification, creator acceptance, and offline storage are complete. `main` merge `272993dbb53dfa97481fa7463c8d9cf1d22cd9f9` was captured and restored before the external drive was safely removed. No Unreal Editor or Visual Studio action remains. The external checkpoint is plaintext and finite-capacity, so physical custody, weekly/major-change checkpoints, quarterly sample restore, and the documented capacity trigger remain operational requirements. The base rollback is `a84ba6d65ca19faa2a7bef89bf6a59e747f2c1ee`; BS-013B is next.
