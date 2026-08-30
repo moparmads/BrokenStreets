@@ -1,6 +1,6 @@
 # ADR-0005 — Renderer and Scalability Baseline
 
-**Status:** Proposed
+**Status:** Accepted
 **Owner:** Madalin Gavrila
 **Date:** 2026-08-28
 **Task:** BS-013B test baseline / M15 representative benchmark final
@@ -18,13 +18,18 @@ The Blank/Maximum project wizard enabled Ray Tracing and Substrate. Those settin
 3. Mandatory hardware RT for every preset.
 4. Full or selective Substrate versus the classic material pipeline.
 
-## Proposed recommendation
+## Decision
 
-- Minimum/Low does not depend on hardware Ray Tracing or Frame Generation.
-- High/Ultra may enable RT only when a benchmark justifies it and a clear fallback exists.
-- Measure Lumen, VSM, Nanite, Substrate, TSR, and alternatives on the same representative street.
+- The initial PC baseline is Win64, DX12, and Shader Model 6.
+- Software Lumen, Virtual Shadow Maps, Nanite support, and TSR form the initial renderer path.
+- Hardware ray tracing project support is disabled. A later High/Ultra option requires a representative benchmark, fallback, and full shader/cook verification.
+- Substrate remains enabled with Blendable GBuffer. Complex multi-slab materials require explicit content budgets and representative measurement.
+- `BS-PC-Recommended-P0` is a reproducible 1920×1080 High-scalability test preset with 100% screen percentage, VSync Off, and Dynamic Resolution Off. It is not the final player-facing preset.
+- Minimum/Low never depends on hardware ray tracing or Frame Generation.
 - Gameplay entities remain identical across presets; only cosmetic and ambient density may decrease.
-- Do not freeze values before testing a workload close to final art.
+- Final values and hardware specifications do not freeze before testing a workload close to final art.
+
+Madalin Gavrila approved this initial reversible direction on August 30, 2026. BS-013B supplies the first configuration and evidence; the M15 representative-art gate may retain it or supersede this ADR.
 
 ## Gate
 
@@ -39,4 +44,4 @@ For every preset and hardware target, record:
 
 ## Immediate task
 
-BS-011 creates the first project-owned map. BS-013B converts accidental defaults into an explicit PC-only test configuration and records the initial result. Final renderer acceptance happens after the M15 Representative Street contains relevant art.
+BS-013B converts accidental defaults into an explicit PC-only test configuration and records the initial result on the existing project-owned fixtures. Final renderer acceptance happens after the M15 Representative Street contains relevant art.

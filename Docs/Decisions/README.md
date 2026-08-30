@@ -22,7 +22,7 @@ Do not rewrite an old ADR to hide history. Create a new one and use `Superseded 
 | ADR-0002 | Private Steam Listen Server | Accepted | M3 Steam + M4 sessions |
 | ADR-0003 | Replication Backend Selection | Proposed | M3 four-bubble benchmark |
 | ADR-0004 | Instanced Private Properties | Proposed | M3 four-interior isolation |
-| ADR-0005 | Renderer and Scalability Baseline | Proposed | BS-013B test baseline / M15 final benchmark |
+| ADR-0005 | Renderer and Scalability Baseline | Accepted | BS-013B test baseline / M15 final benchmark |
 
 ## When an ADR is mandatory
 

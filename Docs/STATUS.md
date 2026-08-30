@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-013B-pc-renderer-baseline`
 
 ## Summary
 
 - Last completed task: `BS-013A` — Source Art 3-2-1 backup and verified restore.
-- Active implementation task: none; the repository is on clean `main`.
-- Next task: `BS-013B`.
+- Active implementation task: `BS-013B` — PC configuration and renderer baseline.
+- Next task after the active work: `BS-007B`.
 
 ## What actually exists
 
