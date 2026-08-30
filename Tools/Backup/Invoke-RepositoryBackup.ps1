@@ -16,6 +16,7 @@ $script:Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 $script:LogLines = New-Object System.Collections.Generic.List[string]
 $script:RunId = $null
 $script:ResolvedBackupRoot = $null
+$script:GitExecutable = $null
 
 function Write-BackupTextFile {
     param(
@@ -111,6 +112,27 @@ function Invoke-NativeCommand {
     }
 }
 
+function Resolve-GitExecutable {
+    param([string]$PreferredPath)
+
+    $candidates = New-Object System.Collections.Generic.List[string]
+    if (-not [string]::IsNullOrWhiteSpace($PreferredPath)) {
+        $candidates.Add([System.IO.Path]::GetFullPath($PreferredPath))
+    }
+    $pathCommand = Get-Command git.exe -ErrorAction SilentlyContinue
+    if ($null -ne $pathCommand) {
+        $candidates.Add([string]$pathCommand.Source)
+    }
+    $candidates.Add('C:\Program Files\Git\cmd\git.exe')
+
+    foreach ($candidate in ($candidates | Select-Object -Unique)) {
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+            return $candidate
+        }
+    }
+    throw 'A Git executable could not be resolved. Update gitExecutable in RepositoryBackupConfig.json.'
+}
+
 function Invoke-Git {
     param(
         [Parameter(Mandatory = $true)][string[]]$Arguments,
@@ -118,7 +140,7 @@ function Invoke-Git {
         [switch]$AllowFailure
     )
 
-    return Invoke-NativeCommand -FilePath 'git.exe' -Arguments $Arguments -WorkingDirectory $WorkingDirectory -AllowFailure:$AllowFailure
+    return Invoke-NativeCommand -FilePath $script:GitExecutable -Arguments $Arguments -WorkingDirectory $WorkingDirectory -AllowFailure:$AllowFailure
 }
 
 function Get-Sha256 {
@@ -217,6 +239,7 @@ try {
     if ([int]$config.schemaVersion -ne 1) {
         throw "Unsupported backup configuration schema: $($config.schemaVersion)"
     }
+    $script:GitExecutable = Resolve-GitExecutable -PreferredPath ([string]$config.gitExecutable)
 
     if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
         $RepositoryRoot = [string]$config.repositoryRoot
@@ -416,6 +439,7 @@ try {
                 uncommittedFilesIncluded = $false
             }
             git = [ordered]@{
+                executable = $script:GitExecutable
                 version = $gitVersion
                 lfsVersion = $lfsVersion
                 bundleFile = 'repository.bundle'

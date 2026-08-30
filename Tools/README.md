@@ -120,6 +120,8 @@ E:\BrokenStreets_RepositoryBackup\
 
 The bundle contains all captured Git refs and tags. Git LFS payloads are verified by their SHA-256 OID and copied once into the shared content-addressed store. The tool retains 30 Git generations and never deletes LFS objects automatically. It warns below 100 GiB free and fails below the 10 GiB hard reserve.
 
+The scheduled task does not inherit the interactive Codex PATH. `RepositoryBackupConfig.json` therefore pins the verified local Git executable that includes Git LFS, while interactive runs retain a PATH fallback. If the Codex runtime is relocated, update and reverify that path before the next scheduled backup.
+
 Preview safety checks without writing:
 
 ```powershell

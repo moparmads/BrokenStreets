@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "repositoryRoot": "F:\\BrokenStreets",
   "backupRoot": "E:\\BrokenStreets_RepositoryBackup",
+  "gitExecutable": "C:\\Users\\madal\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd\\git.exe",
   "defaultBranch": "main",
   "originRemote": "origin",
   "refreshOrigin": true,
