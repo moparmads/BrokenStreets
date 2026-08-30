@@ -253,22 +253,72 @@ function Get-Percentile {
     return ([double]$sorted[$lower] * (1.0 - $fraction)) + ([double]$sorted[$upper] * $fraction)
 }
 
-function Get-CsvSeries {
+function Read-PerformanceCsv {
     param(
-        [Parameter(Mandatory = $true)][object[]]$Rows,
-        [Parameter(Mandatory = $true)][string]$Column
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][int]$WarmupCount
     )
 
-    $values = New-Object System.Collections.Generic.List[double]
-    foreach ($row in $Rows) {
-        $property = $row.PSObject.Properties[$Column]
-        if ($null -eq $property) { continue }
-        $parsed = 0.0
-        if ([double]::TryParse([string]$property.Value, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$parsed)) {
-            $values.Add($parsed)
+    Add-Type -AssemblyName Microsoft.VisualBasic
+    $columnNames = @('FrameTime', 'GameThreadTime', 'RenderThreadTime', 'GPUTime')
+    $indices = @{}
+    $series = @{}
+    foreach ($columnName in $columnNames) {
+        $series[$columnName] = New-Object System.Collections.Generic.List[double]
+    }
+
+    $parser = New-Object Microsoft.VisualBasic.FileIO.TextFieldParser($Path)
+    try {
+        $parser.TextFieldType = [Microsoft.VisualBasic.FileIO.FieldType]::Delimited
+        $parser.SetDelimiters(',')
+        $parser.HasFieldsEnclosedInQuotes = $true
+        $header = $parser.ReadFields()
+        foreach ($columnName in $columnNames) {
+            $matches = New-Object System.Collections.Generic.List[int]
+            for ($index = 0; $index -lt $header.Length; $index++) {
+                if ($header[$index] -ceq $columnName) { $matches.Add($index) }
+            }
+            if ($matches.Count -ne 1) {
+                throw "CSV column '$columnName' must appear exactly once; found $($matches.Count)."
+            }
+            $indices[$columnName] = $matches[0]
+        }
+
+        $rowCount = 0
+        while (-not $parser.EndOfData) {
+            $fields = $parser.ReadFields()
+            if ($null -eq $fields) { continue }
+            if ($fields.Length -gt 0 -and $fields[0] -ceq 'EVENTS') {
+                break
+            }
+            if ($fields.Length -ne $header.Length) {
+                throw "CSV row $($rowCount + 1) has $($fields.Length) fields; expected $($header.Length)."
+            }
+            if ($rowCount -ge $WarmupCount) {
+                foreach ($columnName in $columnNames) {
+                    $parsed = 0.0
+                    $value = $fields[[int]$indices[$columnName]]
+                    if (-not [double]::TryParse($value, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$parsed)) {
+                        throw "CSV row $($rowCount + 1) has an invalid '$columnName' value."
+                    }
+                    $series[$columnName].Add($parsed)
+                }
+            }
+            $rowCount++
         }
     }
-    return $values.ToArray()
+    finally {
+        $parser.Close()
+    }
+
+    return [pscustomobject]@{
+        rowCount = $rowCount
+        stableCount = [Math]::Max(0, $rowCount - $WarmupCount)
+        frame = $series['FrameTime'].ToArray()
+        gameThread = $series['GameThreadTime'].ToArray()
+        renderThread = $series['RenderThreadTime'].ToArray()
+        gpu = $series['GPUTime'].ToArray()
+    }
 }
 
 function Get-SeriesSummary {
@@ -374,7 +424,6 @@ function Invoke-Capture {
             '-trace=cpu,gpu,frame,bookmark,loadtime,file,rendercommands,rhicommands',
             "-tracefile=$tracePath",
             '-traceautostart=1',
-            '-log',
             "-abslog=$logPath"
         ) -join ' '
 
@@ -421,16 +470,15 @@ function Invoke-Capture {
         }
 
         $logAudit = Test-RuntimeLog -LogPath $logPath
-        $rows = @(Import-Csv -LiteralPath $csvDestination)
-        if ($rows.Count -ne $CaptureFrames) {
-            throw "Capture $runLabel expected $CaptureFrames CSV rows; found $($rows.Count)."
+        $csvData = Read-PerformanceCsv -Path $csvDestination -WarmupCount $WarmupFrames
+        if ($csvData.rowCount -ne $CaptureFrames) {
+            throw "Capture $runLabel expected $CaptureFrames CSV rows; found $($csvData.rowCount)."
         }
-        $stableRows = @($rows | Select-Object -Skip $WarmupFrames)
-        $frameSeries = Get-CsvSeries -Rows $stableRows -Column 'FrameTime'
-        $gameSeries = Get-CsvSeries -Rows $stableRows -Column 'GameThreadTime'
-        $renderSeries = Get-CsvSeries -Rows $stableRows -Column 'RenderThreadTime'
-        $gpuSeries = Get-CsvSeries -Rows $stableRows -Column 'GPUTime'
-        if ($frameSeries.Count -ne $stableRows.Count) {
+        $frameSeries = [double[]]$csvData.frame
+        $gameSeries = [double[]]$csvData.gameThread
+        $renderSeries = [double[]]$csvData.renderThread
+        $gpuSeries = [double[]]$csvData.gpu
+        if ($frameSeries.Count -ne $csvData.stableCount) {
             throw "Capture $runLabel has incomplete FrameTime data."
         }
 
@@ -440,7 +488,7 @@ function Invoke-Capture {
             result = if ($logAudit.passed) { 'PASS' } else { 'FAIL' }
             processExitCode = $exitCode
             engineNormalExit = $logAudit.passed
-            stableFrames = $stableRows.Count
+            stableFrames = $csvData.stableCount
             frame = $frameSummary
             gameThread = Get-SeriesSummary -Values $gameSeries
             renderThread = Get-SeriesSummary -Values $renderSeries
