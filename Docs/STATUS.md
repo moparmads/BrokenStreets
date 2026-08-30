@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `feature/BS-010-automation-smoke`
+**Active branch:** `feature/BS-010-automation-smoke` (BS-010 integration pending)
 
 ## Summary
 
-- Last completed task: `BS-009` — local Doctor/Generate/Build/Test/Validate/Cook automation.
-- Active task: `BS-010` — first Automation smoke test and canonical English migration; awaiting creator verification in the Unreal Editor Automation UI.
-- Next task after BS-010: `BS-010A` — independent repository and Git LFS backup.
+- Last completed task: `BS-010` — first Automation smoke test and canonical English migration.
+- Active implementation task: none; BS-010 is awaiting integration into `main`.
+- Next task: `BS-010A` — independent repository and Git LFS backup.
 
 ## What actually exists
 
@@ -36,7 +36,7 @@
 - GitHub: BS-008 branch and `main` were pushed; local `main` and `origin/main` were identical at closure.
 - BS-009 candidate `557ede8cc16cb1daedee2a1511a720dde79b6ade`, tree `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3`: runner self-test 5/5 PASS.
 - BS-009 `Tools/BS.cmd All`: `PASS_WITH_SKIPS`, code 0; Generate and Build PASS, zero tests declared until BS-010, zero assets declared until BS-011, Cook 578 packages + 7/7 classified Engine omissions, 0 project-owned, 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`.
-- BS-010 candidate `888942e37c23810f8dc7fe38700b21254e77d3f6`, tree `9c505c91d0553b56fc2039b1c2604584bd0d7812`: runner self-test 5/5 PASS; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0. Generate and Build passed; Test performed 1 and succeeded 1 with 0 failed; Validate declared 0 project assets until BS-011; Cook produced 578 packages plus 7/7 classified Engine omissions with 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T092315Z-17944-67bfdda6/run.json`. Manual Editor Automation UI acceptance remains pending.
+- BS-010 candidate `888942e37c23810f8dc7fe38700b21254e77d3f6`, tree `9c505c91d0553b56fc2039b1c2604584bd0d7812`: runner self-test 5/5 PASS; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0. Generate and Build passed; Test performed 1 and succeeded 1 with 0 failed; Validate declared 0 project assets until BS-011; Cook produced 578 packages plus 7/7 classified Engine omissions with 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T092315Z-17944-67bfdda6/run.json`. On August 30, 2026, Madalin Gavrila also ran `BrokenStreets.Smoke.ProjectBoot` through Unreal Editor's Session Frontend Automation UI: 1 test, 0 failures, 0 skips, green result, and Automation Testing Log result `Success`.
 
 ## Deviations and open items
 
