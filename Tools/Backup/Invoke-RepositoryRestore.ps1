@@ -152,7 +152,7 @@ function Get-RefMap {
 }
 
 function Get-LfsInventory {
-    param([Parameter(Mandatory = $true)][string[]]$Lines)
+    param([Parameter(Mandatory = $true)][AllowEmptyCollection()][string[]]$Lines)
 
     $inventory = @{}
     foreach ($line in $Lines) {
