@@ -1,6 +1,6 @@
 # BS-009 — Automatizare Build/Test/Validate/Cook
 
-**Status:** In Progress
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-009-build-automation`
 **Base commit:** `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`
@@ -110,8 +110,18 @@ Nu este necesar un playtest sau setup manual pentru Done. Creatorul primește o 
 
 | Data | Candidate commit | Runtime/content tree | Build/test/trace | Rezultat | Executat de |
 |---|---|---|---|---|---|
-| pending | pending | N/A — tooling only | pending | pending | Codex |
+| 30 august 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3` | `Tools/Tests/Runner.SelfTest.ps1` | PASS — 5/5; argumente, cod nativ 37, timeout 124, proces nepot orfan și JSON atomic | Codex |
+| 30 august 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | același tree; fără C++/Config/Content | `Tools/BS.cmd All` — UE 5.8.2 CL 56702186, `BrokenStreetsEditor Win64 Development` | `PASS_WITH_SKIPS`, cod 0; Generate/Build PASS, Test 0 până la BS-010, Validate 0 asset-uri până la BS-011, Cook 578 + 7/7 omisiuni Engine clasificate, 0 warning-uri | Codex |
+
+Evidence local canonic: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`. Outputurile rămân local, regenerabile și ignorate de Git. Probe suplimentare: Doctor PASS în `20260830T082922Z-31884-43180674`; `All -PlanOnly` PLANNED în `20260830T082938Z-12004-a95a98b1`.
+
+Manual acceptance, networking, persistence și playtest: N/A — task exclusiv de tooling local, fără gameplay, C++, Config, Content sau asset-uri. Editorul a fost închis pentru verificările reale.
 
 ## Final handoff
 
-Se completează după verificarea candidatului și sincronizarea `main`/GitHub.
+- Candidate verificat: `557ede8cc16cb1daedee2a1511a720dde79b6ade`.
+- Final evidence commit: commitul documentației care urmează imediat candidatului; hashul este fixat în commitul de închidere fără modificări de runtime/build scripts.
+- Comandă creator: închide Unreal Editor și rulează `F:\BrokenStreets\Tools\BS.cmd All`.
+- Rezultat așteptat înainte de BS-010/BS-011: `PASS_WITH_SKIPS`, cu skip-urile explicate mai sus; orice cod nenul sau `FAILED` se oprește și se raportează împreună cu linia `Sumar:`.
+- Rollback sigur: revert-ul commiturilor BS-009 revine la baza `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`; fișierele generate din `Saved/`, `Binaries/` și soluțiile rămân regenerabile.
+- Următorul task logic: BS-010 — primul Automation smoke test Broken Streets.

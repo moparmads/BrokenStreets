@@ -1,19 +1,20 @@
 # Starea proiectului
 
-**Actualizat:** 28 august 2026
+**Actualizat:** 30 august 2026
 **Milestone curent:** Fundație recuperabilă
-**Branch activ:** `feature/BS-009-build-automation`
+**Branch activ:** `main`
 
 ## Rezumat
 
-- Ultimul task complet: `BS-008` — memoria proiectului, arhitectura, roadmapul și workflow-ul Codex.
-- Task activ: `BS-009` — acțiuni repetabile Build/Test/Validate/Cook.
-- Următorul task după BS-009: `BS-010` — primul Automation smoke test.
+- Ultimul task complet: `BS-009` — automatizare locală Doctor/Generate/Build/Test/Validate/Cook.
+- Task activ: niciunul.
+- Următorul task: `BS-010` — primul Automation smoke test.
 
 ## Ce există efectiv
 
 - proiect Unreal Engine 5.8.2 Blank C++;
 - un singur modul runtime `BrokenStreets`;
+- runner local Windows PowerShell 5.1 prin `Tools/BS.cmd`, cu engine/toolchain pinning, timeout, process containment, loguri și sumar JSON;
 - build `Development Editor | Win64` reușit manual;
 - Git, Git LFS, branch `main` și remote privat funcționale;
 - fără cod gameplay Broken Streets;
@@ -32,6 +33,8 @@
 - Project-memory candidate: `b3115494e0568342278fa18a2f89f5f9aa386332`, tree `8339f1a6151eb4158b257dfbea5854ada639e3e4`.
 - BS-008: 36 fișiere/4.118 linii de documentație, 0 linkuri locale rupte, `AGENTS.md` 13.688 bytes, Git și Git LFS fsck PASS, fără schimbări C++/Config/Content.
 - GitHub: branch-ul BS-008 și `main` au fost împinse; la închidere, `main` local și `origin/main` sunt verificate identice.
+- BS-009 candidate `557ede8cc16cb1daedee2a1511a720dde79b6ade`, tree `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3`: self-test runner 5/5 PASS.
+- BS-009 `Tools/BS.cmd All`: `PASS_WITH_SKIPS`, cod 0; Generate și Build PASS, Test 0 declarat până la BS-010, Validate 0 asset-uri declarat până la BS-011, Cook 578 pachete + 7/7 omisiuni Engine clasificate, 0 project-owned, 0 warning-uri. Evidence local: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`.
 
 ## Abateri și lucruri deschise
 
