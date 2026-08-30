@@ -2,27 +2,27 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-012-testgym-network`
 
 ## Summary
 
 - Last completed task: `BS-011` — project-owned TestGym core map.
-- Active task: none; the repository is on clean `main` after BS-011 closure.
-- Next task: `BS-012` — `L_TestGym_Network`.
+- Active task: `BS-012` — automated and creator acceptance passed; integration, backup/restore audit, and LFS lock release are in progress.
+- Next task after BS-012: `BS-013` — `L_Benchmark_Street` placeholder.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
 - one runtime module, `BrokenStreets`;
 - one deterministic C++ Automation smoke test on `main`;
-- one project-owned Unreal map, `/Game/BS/Maps/Test/L_TestGym_Core`, containing only the Unreal Basic Level template actor set;
+- two project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core` and `/Game/BS/Maps/Test/L_TestGym_Network`; the network fixture retains the Basic Level actor set and adds four deterministic PlayerStarts;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
 - functioning Git, Git LFS, `main` branch, and private remote;
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - no Broken Streets gameplay code;
-- no project-owned `.uasset` files and no project-owned `.umap` other than `L_TestGym_Core`;
-- no network TestGym, multiplayer, save, or game systems;
+- no project-owned `.uasset` files and no project-owned `.umap` other than the two TestGym fixtures;
+- a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - the default map is still the Engine template `/Engine/Maps/Templates/OpenWorld`.
 
 ## Verified baselines
@@ -47,6 +47,8 @@
 - BS-011 Win64 Development package: UAT Build/Cook/Stage/Package/Archive completed with exit 0; the package manifest contains `BrokenStreets/Content/BS/Maps/Test/L_TestGym_Core.umap`; the packaged executable loaded `/Game/BS/Maps/Test/L_TestGym_Core`, brought the world up for play, and exited normally with status 0. Local archive: `Saved/Packages/BS-011/43cf7d0`; boot evidence: `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log`. On August 30, 2026, Madalin Gavrila confirmed the expected Basic Level floor, sky, and lighting in a responsive packaged game window, supplied a screenshot, and closed it normally without a crash dialog.
 - BS-011 was integrated into `main` by merge commit `e21c78a60db565f26c5ece33ba386de79cfd0279`. Local and GitHub `main` matched exactly; the remote map pointer referenced LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; Git LFS fsck passed; and lock `49915812` was released only after the post-merge audit.
 - BS-011 recovery checkpoint: clean generation `20260830T115256Z-29716-852e443d` captured 13 refs and 1 LFS object under `E:/BrokenStreets_RepositoryBackup`. Isolated restore `BS-011-e21c78a` verified all 13 refs and the LFS object without GitHub; the restored map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`.
+- BS-012 automated candidate `d475fce9d92bbd382a4ff89e7745e6fd765f1169`, tree `4de4d828a2145544cd7f8117c78df214a2db2d57`: the 55,593-byte network map is stored through Git LFS as OID `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`, while the Core map remains byte-identical. Runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Build and Automation passed; Data Validation validated 2/2 project assets with 0 invalid/unable/missing/warnings/errors; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings; exact-map UAT packaging completed with exit 0. One packaged listen host and three clients loaded `L_TestGym_Network`, all three clients joined, all four processes remained alive for 10 seconds, and the failure scan was clear. Local evidence: `Saved/Automation/BS-009/20260830T123125Z-38300-bd6b5a5a/run.json`, `Saved/Verification/BS-012/d475fce/MapCheck/Unreal.log`, and `Saved/Verification/BS-012/d475fce/Loopback-Attempt2`.
+- BS-012 creator acceptance passed on August 30, 2026: Madalin Gavrila observed one host and three responsive client windows on the expected TestGym for longer than 10 seconds, supplied a screenshot, and closed all four normally. Retained logs show exactly three accepted connections and joins, exact-map load in every process, normal exit markers, and no failure marker or remaining process. A verbose replication audit under `Saved/Verification/BS-012/d475fce/PawnAudit-Attempt2-VerboseNet` found four distinct replicated Engine `DefaultPawn` objects on the host and every client. The temporary pawn mesh is owner-no-see; camera framing, not a missing pawn, explains views containing only two remote spheres.
 
 ## Deviations and open items
 
