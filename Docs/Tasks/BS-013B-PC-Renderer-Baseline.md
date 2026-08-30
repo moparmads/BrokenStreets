@@ -1,6 +1,6 @@
 # BS-013B — PC Configuration and Renderer Baseline
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-013B-pc-renderer-baseline`
 **Base commit:** `7daaa19e26846d511a712b16c34482e35956c049`
@@ -122,7 +122,8 @@ Creator progress on August 31, 2026:
 
 - Visual Studio `Development Editor | Win64` compilation passed with `1 succeeded, 0 failed, 0 up-to-date, 0 skipped`.
 - The first `Visual` attempt passed the renderer audit 52/52, then stopped before launching the game because the creator PowerShell PATH did not expose `git`.
-- Tool-fix commit `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` now resolves Git from the repository backup pin/bundled Codex runtime without requiring a separate installation or PATH edit. The exact `.cmd` entry point passed its Git-resolution self-test with Git deliberately absent from PATH, and the audit passed 52/52. The visual retry remains pending.
+- Tool-fix commit `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` now resolves Git from the repository backup pin/bundled Codex runtime without requiring a separate installation or PATH edit. The exact `.cmd` entry point passed its Git-resolution self-test with Git deliberately absent from PATH, and the audit passed 52/52.
+- The visual retry passed. Madalin inspected and traversed the exact packaged fixture, observed no rendering mismatch or crash dialog, and closed it once with `Alt+F4`. The launcher returned `0`. The retained 107,644-byte log confirms D3D12, SM6, `PCD3D_SM6`, `raytracing="0"`, exact-map play, `Alt-F4`, status-0 exit, `PreExit Game`, and `LogExit: Exiting`, with no fatal/crash marker. SHA-256: `65FA652197620E6DB4D1E31BD94AE1D459CCC71BFB8BCA232FA7416CC653C2ED`.
 
 ## Risks and rollback
 
@@ -145,6 +146,7 @@ Creator progress on August 31, 2026:
 |---|---|---|---|---|---|
 | 2026-08-31 | `b646af33b1676088adae9dbb320f01c4a9ba9d27` | tree `d0984c6f083280a62bc5d292b156b462b45cddde`; Config `67fc0de9d562f5bb87d8ca549c6ce18404161649`; Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb`; Source `1b7850b3b6330e9fece6a41b8b35f34d7f9e3ec1` | parser PASS; audit 52/52; audit self-test 5/5; runner self-test 6/6; `BS.cmd All` `PASS_WITH_SKIPS`; Map Check 0/0; UAT/package PASS; three 3,000-stable-frame captures PASS | Automated PASS; owner visual pending | Codex |
 | 2026-08-31 | `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` | tree `e42430f3292e5abb92a4f12eae1fcfd39152d950`; unchanged Config/Content/Source; Tools `c53a8676d798de9339fad400d5db30e01b5e9370` | creator compile 1/0; first Visual audit 52/52 then pre-launch Git-resolution failure; fixed exact `.cmd` self-test PASS with Git absent from PATH; post-fix audit 52/52; audit self-test 5/5; runner self-test 6/6 | Tool regression PASS; owner visual retry pending | Madalin Gavrila / Codex |
+| 2026-08-31 | `b86a2ba5628d39dc02c7eafa5bee3f00ae796185` | tree `2a2403925eed67a0f5f4b43d47eb85318aab6bf6`; unchanged Config/Content/Source/Tools | creator `Visual` audit 52/52; exact packaged map and DX12/SM6/raytracing-off markers; normal `Alt+F4` status-0 shutdown; 107,644-byte log SHA-256 `65FA652197620E6DB4D1E31BD94AE1D459CCC71BFB8BCA232FA7416CC653C2ED` | Creator PASS | Madalin Gavrila |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 

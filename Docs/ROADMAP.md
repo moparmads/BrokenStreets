@@ -79,7 +79,7 @@ Deliverables:
 | BS-013B | PC-only configuration plus test renderer/scalability baseline | project-owned maps, unused configuration removed, ADR, verifiable preset |
 | BS-007B | complete recovery drill | clone, LFS, build, test, cook, and open TestGym on a clean profile or PC |
 
-**Current M1B status:** BS-013B automated configuration, package, and three-run capture gates passed on candidate `b646af3`. Creator compile and visual acceptance remain before integration; BS-007B starts only after that closure.
+**Current M1B status:** BS-013B passed automated configuration/package/capture gates and creator compile/visual acceptance. BS-007B is the next task and closes the complete recovery gate.
 
 **Dependency correction:** BS-007A does not require TestGym or cook because they do not exist yet. BS-007B closes the complete gate after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B. Save restoration does not belong to BS-007B before BS-020 creates the schema and harness.
 

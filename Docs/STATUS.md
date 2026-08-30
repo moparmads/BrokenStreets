@@ -6,9 +6,9 @@
 
 ## Summary
 
-- Last completed task: `BS-013A` — Source Art 3-2-1 backup and verified restore.
-- Active verification task: `BS-013B` — PC configuration and renderer baseline; automated gates passed and creator visual acceptance is pending.
-- Next task after the active work: `BS-007B`.
+- Last completed task: `BS-013B` — PC configuration and renderer baseline.
+- No implementation task is currently active.
+- Next task: `BS-007B` — complete recovery drill.
 
 ## What actually exists
 
@@ -63,8 +63,7 @@
 - BS-013A was integrated into `main` by merge commit `272993dbb53dfa97481fa7463c8d9cf1d22cd9f9`. Final offline checkpoint `20260830T195922Z-38792-110472d5` captured that exact commit through repository generation `20260830T195920Z-37620-1d6ff86e` (19 refs, 3 LFS objects) and Source Art generation `20260830T195921Z-39652-781d3033` (0 files). Complete restore `E:/BrokenStreets_OfflineRecoveryTests/BS-013A-main-272993d` used no GitHub; restored/local/GitHub `main` matched, the restored origin was local on `E:`, and the external store had zero staging folders. Madalin Gavrila then safely removed the LaCie drive and confirmed separate physical storage, completing the first 3-2-1 checkpoint.
 - BS-013B automated candidate `b646af33b1676088adae9dbb320f01c4a9ba9d27`, tree `d0984c6f083280a62bc5d292b156b462b45cddde`: renderer audit passed 52/52; audit self-test passed 5/5; evolving CSV parser and runner self-tests passed; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`; Build, Automation, Data Validation, and Cook passed; exact-map Map Check reported 0 errors and 0 warnings; Win64 Development Build/Cook/Stage/Package/Archive completed with UAT exit 0 and Cook 0 errors/0 warnings.
 - BS-013B provisional renderer evidence: three fresh packaged DX12/SM6 runs retained 3,000 post-warm-up frames each. Median-run frame mean/p50/p95/p99/max were 5.5224/5.3757/8.6581/9.1303/9.6906 ms. The worst limiting-pipeline p95 was render-thread 11.8720 ms, below the fixture-only 13.33 ms informational target; all runs had zero stable frames above 50 or 100 ms. The high-end, stationary, one-player greybox result is not a Manhattan or hardware promise. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P1.md`.
-- BS-013B creator compilation and packaged visual/traversal acceptance are pending. The automated Engine logs show controlled status-0 shutdown, but the outer unattended observer still returned unexplained code `777003`; BS-013B cannot become Done until the normal creator checkpoint passes.
-- BS-013B creator compilation passed on August 31, 2026 with `1 succeeded, 0 failed`. The first packaged `Visual` attempt passed the renderer audit 52/52 but stopped before game launch because `git` was absent from the creator PowerShell PATH. Commit `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` added deterministic Git discovery through the existing repository-backup/Codex-runtime pin. The exact command entry point then passed with Git deliberately absent from PATH, and the post-fix audit passed 52/52; creator visual retry remains pending.
+- BS-013B creator acceptance passed on August 31, 2026. Visual Studio `Development Editor | Win64` compiled with `1 succeeded, 0 failed`. The first `Visual` attempt exposed a missing interactive Git PATH after its 52/52 audit; commit `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` fixed discovery and passed the exact command-path regression with Git deliberately absent from PATH. Madalin then inspected and traversed the exact package and closed it with `Alt+F4`. The launcher returned `0`; the 107,644-byte log confirms D3D12/SM6, hardware ray tracing off, exact-map play, and complete status-0 shutdown without a fatal/crash marker. Log SHA-256: `65FA652197620E6DB4D1E31BD94AE1D459CCC71BFB8BCA232FA7416CC653C2ED`.
 
 ## Deviations and open items
 

@@ -1,6 +1,6 @@
 # BS-PERF-002-P1 — PC Renderer Test Baseline
 
-**Status:** Automated PASS; creator visual acceptance pending
+**Status:** Accepted provisional test baseline
 
 **Scenario:** Renderer-configured P1 precursor for [BS-PERF-002 — Representative Street](../BENCHMARK_SCENARIOS.md)
 
@@ -12,7 +12,7 @@
 
 **PASS for the reversible PC renderer test baseline; not a production-performance pass.** The exact packaged candidate used the approved DX12/SM6 renderer and `BS-PC-Recommended-P0` preset, loaded the benchmark fixture, completed three comparable captures, and met the provisional informational threshold in every run. No stable frame exceeded 50 or 100 ms.
 
-The fixture is still a stationary, single-player greybox on high-end creator hardware. These numbers do not promise final Manhattan performance, minimum hardware, or a player-facing Recommended preset. Final renderer and hardware acceptance remains gated by representative art.
+Creator visual/traversal acceptance also passed on August 31, 2026. The fixture is still a stationary, single-player greybox on high-end creator hardware. These numbers do not promise final Manhattan performance, minimum hardware, or a player-facing Recommended preset. Final renderer and hardware acceptance remains gated by representative art.
 
 ## Candidate identity
 
@@ -103,8 +103,9 @@ The reported local GPU budget counter reached 23,554 MB and the system GPU budge
 - Win64 Development Build/Cook/Stage/Package/Archive completed with UAT exit code 0; Cook reported 0 errors and 0 warnings.
 - The package contains no SM5-named output, Android File Server payload, or `SecurityToken=` text. The IoStore project descriptor retains the literal name `AndroidFileServer` only as an explicit disabled plugin declaration; no plugin binary loaded and no UAT or runtime log references it.
 - All three Engine logs contain the exact map and renderer markers, reach controlled normal shutdown, and contain no fatal/crash marker.
-- The external observer returned unexplained code `777003` for all three unattended runs even though the Engine logs report status-0 shutdown. Creator visual acceptance therefore remains mandatory.
+- The external observer returned unexplained code `777003` for all three unattended runs even though the Engine logs report status-0 shutdown. The separate creator checkpoint closed normally with launcher code `0`; the unattended discrepancy remains retained for future tooling work.
 - The first creator `Visual` attempt passed the configuration audit but stopped before game launch because Git was not on the interactive PowerShell PATH. Tool-fix `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` resolves the existing bundled Git automatically; its exact command-path regression passed with Git deliberately removed from PATH. This does not change the packaged runtime or measurements above.
+- The successful creator retry loaded D3D12/SM6 with hardware ray tracing off and the exact benchmark map, remained visually correct and responsive during inspection/traversal, then closed through `Alt+F4` with status `0` and complete Engine shutdown. Retained log: `Saved/Verification/BS-013B/CreatorVisual-20260830T213221Z/BrokenStreets.log`; 107,644 bytes; SHA-256 `65FA652197620E6DB4D1E31BD94AE1D459CCC71BFB8BCA232FA7416CC653C2ED`.
 
 Package root: `Saved/Packages/BS-013B/b646af3-20260830T210716Z/Windows/`
 
@@ -131,4 +132,4 @@ Capture summary: `Saved/Performance/BS-013B/b646af3-20260830T210814Z/capture-sum
 - The camera was stationary and the build was Development, not a production Shipping build.
 - High-end creator hardware cannot establish Minimum or Recommended specifications.
 - Unreal Insights traces are retained but were not used to claim allocation-level memory correctness for this pass.
-- Madalin must compile the unchanged candidate, open the prepared packaged visual checkpoint, confirm the fixture is visible and responsive, and close it normally. Only then may BS-013B become Done and integrate into `main`.
+- Madalin completed compilation and the packaged visual/traversal checkpoint. BS-013B may integrate into `main`. BS-007B is the next recovery task; representative renderer acceptance remains a later art-backed gate.
