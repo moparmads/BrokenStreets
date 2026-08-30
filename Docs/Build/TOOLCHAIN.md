@@ -1,6 +1,6 @@
 # Toolchain canonic
 
-**Actualizat:** 28 august 2026
+**Actualizat:** 30 august 2026
 **Politică:** versiunile se schimbă numai prin task/branch separat, build complet și plan de rollback.
 
 ## Baseline instalat și verificat
@@ -40,6 +40,22 @@ Pentru verificare automatizată, cu Unreal Editor închis:
 ```
 
 Comanda de referință a trecut în clean clone-ul BS-007A. BS-009 o încapsulează într-o acțiune repetabilă, cu log și cod de ieșire clar; build-ul manual din Visual Studio rămâne disponibil pentru creator.
+
+## Runnerul canonic BS-009
+
+Cu Unreal Editor închis, comanda normală pentru verificarea completă este:
+
+```powershell
+.\Tools\BS.cmd All
+```
+
+Acțiunile disponibile sunt `Doctor`, `Generate`, `Build`, `Test`, `Validate`, `Cook` și `All`. `Test`, `Validate` și `Cook` compilează automat targetul Editor înainte de acțiunea cerută, astfel încât nu pot verifica accidental un DLL C++ vechi. O previzualizare fără procese Unreal se obține cu `-PlanOnly`.
+
+Runnerul descoperă engine-ul fără o cale hard-coded în script, dar acceptă numai versiunea și changelist-ul fixate în `Tools/Build/RunnerConfig.json`. Pentru UBT folosește runtime-ul DotNet livrat cu engine-ul și `UnrealBuildTool.dll`; astfel evită executabilul apphost care poate afișa dialogul generic `.NET 0xe0434352` fără să explice lipsa de acces la cache/loguri. `Doctor` verifică înainte de lansare că rădăcinile locale UBT sunt inscriptibile, apoi probează runtime-ul inclus, Win64 SDK-ul efectiv, Visual Studio 18, toolset-ul MSVC 14.50, `cl.exe`, `link.exe` și biblioteca CRT.
+
+Fiecare rulare scrie `run.json`, logul runnerului și loguri separate pe etapă sub `Saved/Automation/BS-009/<run-id>/`. Stările temporare `SKIPPED_NO_TESTS` și `SKIPPED_NO_ASSETS` sunt vizibile până la BS-010, respectiv BS-011. La Cook, `Packages Skipped by Platform` este acceptat numai când fiecare element are un motiv permis, totalul clasificat este identic cu totalul UE și toate pachetele sunt Engine-owned; orice abatere ori pachet project-owned blochează gate-ul.
+
+Procesele externe sunt izolate prin Windows Job Object cu `KILL_ON_JOB_CLOSE`. Timeout-ul combină job-ul cu snapshot PID și `taskkill /T`, apoi cere zero procese active înainte de a raporta terminarea ca fiind confirmată. Self-testul din `Tools/Tests/Runner.SelfTest.ps1` acoperă inclusiv un proces nepot orfan, propagarea codurilor native și sumarul JSON atomic.
 
 ## Regenerarea fișierelor Visual Studio
 

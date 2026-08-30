@@ -48,3 +48,4 @@ Cod scris nu înseamnă `Done`.
 | Task | Titlu | Status | Branch |
 |---|---|---|---|
 | BS-008 | Project memory and agent workflow | Done | `main` |
+| [BS-009](BS-009-Build-Automation.md) | Automatizare Build/Test/Validate/Cook | In Progress | `feature/BS-009-build-automation` |

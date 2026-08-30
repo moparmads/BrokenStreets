@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "projectFile": "BrokenStreets.uproject",
+  "expectedEngine": {
+    "major": 5,
+    "minor": 8,
+    "patch": 2,
+    "changelist": 56702186
+  },
+  "editorTarget": "BrokenStreetsEditor",
+  "platform": "Win64",
+  "configuration": "Development",
+  "visualStudioArgument": "-2026",
+  "testFilter": "StartsWith:BrokenStreets",
+  "allowNoTests": true,
+  "minimumFreeDiskGb": 20,
+  "doctorProbeTimeoutSeconds": 120,
+  "expectedWindowsSdk": "10.0.22621.0",
+  "expectedVisualStudioMajor": 18,
+  "expectedMsvcFamily": "14.50",
+  "timeoutsSeconds": {
+    "Generate": 600,
+    "Build": 3600,
+    "Test": 1800,
+    "Validate": 1800,
+    "Cook": 7200
+  }
+}

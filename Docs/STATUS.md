@@ -2,13 +2,13 @@
 
 **Actualizat:** 28 august 2026
 **Milestone curent:** Fundație recuperabilă
-**Branch activ:** `main`
+**Branch activ:** `feature/BS-009-build-automation`
 
 ## Rezumat
 
 - Ultimul task complet: `BS-008` — memoria proiectului, arhitectura, roadmapul și workflow-ul Codex.
-- Task activ: niciunul.
-- Următorul task: `BS-009` — acțiuni repetabile Build/Test/Validate/Cook.
+- Task activ: `BS-009` — acțiuni repetabile Build/Test/Validate/Cook.
+- Următorul task după BS-009: `BS-010` — primul Automation smoke test.
 
 ## Ce există efectiv
 
