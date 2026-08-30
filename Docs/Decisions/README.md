@@ -1,22 +1,22 @@
 # Architecture Decision Records
 
-ADR-urile păstrează decizii tehnice cross-system, costisitoare ori greu de inversat. Nu sunt folosite pentru prețuri, damage numbers, UI spacing sau alte valori de tuning.
+ADRs preserve technical decisions that are cross-system, expensive, or difficult to reverse. They are not used for prices, damage numbers, UI spacing, or other tuning values.
 
-## Statusuri
+## Statuses
 
-- `Proposed` — recomandare în așteptarea aprobării/prototipului;
-- `Accepted` — decizie activă;
-- `Rejected` — analizată și refuzată;
-- `Superseded` — înlocuită de ADR-ul indicat;
-- `Deprecated` — încă există pentru compatibilitate, dar nu se extinde.
+- `Proposed` — recommendation awaiting approval or prototype evidence;
+- `Accepted` — active decision;
+- `Rejected` — analyzed and declined;
+- `Superseded` — replaced by the referenced ADR;
+- `Deprecated` — retained for compatibility but no longer extended.
 
-Codex poate crea `Proposed`. O decizie de produs materială devine `Accepted` numai după alegerea lui Madalin; o decizie pur tehnică poate fi acceptată după gate-ul măsurat prevăzut în ADR.
+Codex may create a `Proposed` ADR. A material product decision becomes `Accepted` only after Madalin chooses it; a purely technical decision may be accepted after the measured gate defined by the ADR passes.
 
-Nu rescrie un ADR vechi pentru a ascunde istoria. Creează unul nou și folosește `Superseded by`.
+Do not rewrite an old ADR to hide history. Create a new one and use `Superseded by`.
 
 ## Index
 
-| ADR | Titlu | Status | Validation gate |
+| ADR | Title | Status | Validation gate |
 |---|---|---|---|
 | ADR-0001 | Portable Character Ownership | Accepted | M4 portability/recovery |
 | ADR-0002 | Private Steam Listen Server | Accepted | M3 Steam + M4 sessions |
@@ -24,12 +24,12 @@ Nu rescrie un ADR vechi pentru a ascunde istoria. Creează unul nou și foloseș
 | ADR-0004 | Instanced Private Properties | Proposed | M3 four-interior isolation |
 | ADR-0005 | Renderer and Scalability Baseline | Proposed | BS-013B test baseline / M15 final benchmark |
 
-## Când este obligatoriu
+## When an ADR is mandatory
 
 - network topology/backend/relevancy;
 - save schema/protocol/conflict policy;
 - module/plugin/third-party dependency;
 - World Partition/server streaming/interior architecture;
 - renderer/scalability baseline;
-- owner/graniță cross-system;
-- tehnologie ce poate bloca Shipping ori migration.
+- cross-system owner/boundary;
+- technology that can block Shipping or migration.

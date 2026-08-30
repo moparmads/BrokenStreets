@@ -1,36 +1,36 @@
 # Broken Streets
 
-Broken Streets este un life/crime sandbox original construit în Unreal Engine 5.8.2 pentru Windows PC și Steam. Poate fi jucat complet solo sau în co-op privat de maximum patru jucători în total: un listen-server host și cel mult trei clienți.
+Broken Streets is an original life/crime sandbox built in Unreal Engine 5.8.2 for Windows PC and Steam. It supports full solo play and private co-op for up to four total players: one listen-server host and up to three clients.
 
-Jucătorul începe fără bani și își construiește propria viață prin joburi legale ori ilegale. Lumea reacționează la risc, statut și ilegalitate, iar progresul economic este transformat în vehicule, haine, bijuterii, proprietăți și echipamente tot mai valoroase.
+The player starts with no money and builds a personal life through legal or illegal jobs. The world reacts to risk, status, and illegality, while economic progress becomes increasingly valuable vehicles, clothing, jewelry, properties, and equipment.
 
-## Starea actuală
+## Current status
 
-Proiectul este un baseline C++ gol. Nu există încă gameplay Broken Streets, hartă de producție ori sisteme implementate. Vezi [starea proiectului](Docs/STATUS.md) înainte de orice task.
+The project is an empty C++ baseline. No Broken Streets gameplay, production map, or game systems exist yet. Read the [project status](Docs/STATUS.md) before starting any task.
 
-## Căi locale
+## Local paths
 
-- Proiect: `F:/BrokenStreets`
-- Engine instalat: `F:/UE_5.8.2/UE_5.8`
-- Source Art separat: `F:/BrokenStreets_SourceArt`
-- Repository privat: `https://github.com/moparmads/BrokenStreets`
+- Project: `F:/BrokenStreets`
+- Installed engine: `F:/UE_5.8.2/UE_5.8`
+- Separate Source Art: `F:/BrokenStreets_SourceArt`
+- Private repository: `https://github.com/moparmads/BrokenStreets`
 
-Engine-ul instalat și Source Art nu fac parte din acest repository.
+The installed engine and Source Art are not part of this repository.
 
-## Documentație
+## Documentation
 
-Începe cu [indexul documentației](Docs/INDEX.md). Regulile permanente pentru Codex sunt în [AGENTS.md](AGENTS.md).
+Start with the [documentation index](Docs/INDEX.md). Permanent Codex rules live in [AGENTS.md](AGENTS.md).
 
-Documentele canonice nu au sufixe de versiune; Git păstrează istoricul. Fișierele din `Docs/Archive/` sunt context istoric, nu surse normative.
+Canonical documents do not use version suffixes; Git preserves history. Files under `Docs/Archive/` are historical context, not normative sources.
 
 ## Workflow
 
-- Madalin Gavrila deține direcția jocului și produce asset-urile 3D.
-- Codex scrie și modifică C++, config, teste și documentație.
-- Madalin compilează și execută pașii vizuali în Unreal Editor folosind instrucțiuni exacte.
-- `main` rămâne buildabil; fiecare rezultat coerent folosește un branch și un task `BS-###`.
-- C++ deține gameplay-ul autoritativ/persistent/replicat; Blueprint rămâne strat subțire de prezentare și configurare.
+- Madalin Gavrila owns the game's direction and produces the 3D assets.
+- Codex writes and modifies C++, configuration, tests, and documentation.
+- Madalin compiles and performs visual Unreal Editor steps using exact instructions.
+- `main` remains buildable; every coherent result uses a branch and a `BS-###` task.
+- C++ owns authoritative, persistent, and replicated gameplay; Blueprint remains a thin presentation and configuration layer.
 
-## Originalitate
+## Originality
 
-Referințele la jocuri existente descriu numai experiențe dorite. Codul, asset-urile, harta, UI-ul, textele, personajele și brandurile Broken Streets sunt originale. Vezi [politica de referințe](Docs/REFERENCE_POLICY.md).
+References to existing games describe desired experiences only. Broken Streets code, assets, map, UI, text, characters, and brands are original. See the [reference policy](Docs/REFERENCE_POLICY.md).

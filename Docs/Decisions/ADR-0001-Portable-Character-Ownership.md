@@ -9,40 +9,40 @@
 
 ## Context
 
-Fiecare jucător își creează propriul personaj și trebuie să își continue progresul când intră în lumea unui prieten. Lumea aparține host-ului, dar banii, obiectele, vehiculele, proprietățile, reputația și progresul personal nu trebuie pierdute ori resetate la schimbarea host-ului.
+Each player creates a personal character and must retain that character's progress when joining a friend's world. The world belongs to the host, but money, items, vehicles, properties, reputation, and personal progression must not be lost or reset when the host changes.
 
-Nu există backend autoritar. Co-op-ul este privat, iar editarea intenționată a save-ului local este acceptată.
+There is no authoritative backend. Co-op is private, and intentional local save editing is accepted.
 
-## Decizie
+## Decision
 
-- Progresul personal confirmat aparține `PortableCharacterProfile`, păstrat de jucător.
-- Starea world-owned aparține `HostWorldSave`.
-- Cât sesiunea rulează, partea server a listen serverului este singurul runtime mutation authority și urmărește commits prin `SessionCommitJournal`; clientul local al host-ului nu ocolește validarea.
-- Vehiculele și proprietățile portabile sunt recorduri; Actorii/instanțele din lumea curentă sunt materializări temporare.
-- Profilul prezentat de un guest este input neîncrezător și este validat înainte de materializare.
-- Absența personajului nu avansează needs, rent, debt ori alte sisteme personale; acestea folosesc `CharacterActiveTime`.
-- Fără backend, sistemul promite recovery și detectarea conflictelor best-effort, nu atomicitate perfectă cross-PC.
+- Confirmed personal progress belongs to the player-owned `PortableCharacterProfile`.
+- World-owned state belongs to `HostWorldSave`.
+- While a session is running, the listen server's server side is the only runtime mutation authority and tracks commits through `SessionCommitJournal`; the host's local client does not bypass validation.
+- Portable vehicles and properties are records; Actors or instances in the current world are temporary materializations.
+- A guest-provided profile is untrusted input and is validated before materialization.
+- Character absence does not advance needs, rent, debt, or other personal systems; they use `CharacterActiveTime`.
+- Without a backend, the system promises recovery and best-effort conflict detection, not perfect cross-PC atomicity.
 
-Politica exactă pentru un commit ambiguu după crash rămâne un Decision Packet înainte de M4; recomandarea este în `Docs/PENDING_DECISIONS.md`.
+The exact policy for an ambiguous post-crash commit remains a Decision Packet before M4; the recommendation is recorded in `Docs/PENDING_DECISIONS.md`.
 
-## Consecințe pozitive
+## Positive consequences
 
-- personajul are continuitate între prieteni;
-- host world și player progress nu se suprascriu reciproc;
-- recordurile pot fi validate, migrate și materializate determinist;
-- arhitectura este compatibilă cu trișarea acceptată fără a ignora coruperea accidentală.
+- the character remains continuous between friends' worlds;
+- host-world state and player progress do not overwrite one another;
+- records can be validated, migrated, and materialized deterministically;
+- the architecture accommodates accepted cheating without ignoring accidental corruption.
 
-## Costuri și limite
+## Costs and limits
 
-- reconcilierea este mai complexă decât un save numai la host;
-- două PC-uri fără backend nu pot avea commit distribuit perfect;
-- orice feature persistent trebuie împărțit explicit în personal/world/session;
-- QA include crash, stale revision și conflict UX.
+- reconciliation is more complex than a host-only save;
+- two PCs without a backend cannot provide a perfect distributed commit;
+- every persistent feature must be explicitly divided into personal, world, and session state;
+- QA includes crashes, stale revisions, and conflict UX.
 
 ## Validation gate
 
-M3/M4 trebuie să demonstreze profile epochs/revisions/receipts, crash-safe local save, conflict detectat și portability între două lumi. Eșecul reduce ce este portabil înainte să introducă un backend neaprobat.
+M3/M4 must demonstrate profile epochs/revisions/receipts, crash-safe local saves, detected conflicts, and portability between two worlds. Failure reduces the portable scope before introducing an unapproved backend.
 
 ## Approval
 
-Acceptat prin cerințele explicite ale creatorului: personajul, banii, inventarul și bunurile continuă în lumea altui jucător; lumea host-ului rămâne separată.
+Accepted from the creator's explicit requirements: the character, money, inventory, and possessions continue in another player's world while the host's world remains separate.

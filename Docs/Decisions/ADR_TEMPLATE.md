@@ -7,45 +7,45 @@
 **Supersedes:** none
 **Superseded by:** none
 
-## Context și problemă
+## Context and problem
 
-Ce problemă reală/metrică cere o decizie acum? De ce nu poate rămâne un default reversibil?
+What real problem or metric requires a decision now? Why can it not remain a reversible default?
 
 ## Decision drivers
 
 - ...
 
-## Alternative evaluate
+## Evaluated alternatives
 
 ### A — [name]
 
-- avantaje;
-- costuri/riscuri;
-- dovezi.
+- benefits;
+- costs/risks;
+- evidence.
 
 ### B — [name]
 
-- avantaje;
-- costuri/riscuri;
-- dovezi.
+- benefits;
+- costs/risks;
+- evidence.
 
-## Decizie
+## Decision
 
-Formula exactă a alegerii. Un `Proposed` descrie recomandarea, nu o prezintă ca acceptată.
+State the exact choice. A `Proposed` ADR describes a recommendation; it does not present it as accepted.
 
-## Consecințe
+## Consequences
 
-### Pozitive
+### Positive
 
 - ...
 
-### Negative / datorii asumate
+### Negative / accepted debt
 
 - ...
 
 ## Impact
 
-| Arie | Impact |
+| Area | Impact |
 |---|---|
 | Network/authority | |
 | Save/migration | |
@@ -54,11 +54,11 @@ Formula exactă a alegerii. Un `Proposed` descrie recomandarea, nu o prezintă c
 | Blueprint/Editor | |
 | User workflow | |
 
-## Plan de validare
+## Validation plan
 
-- scenariu;
-- hardware/build/config fixate;
-- metrici/praguri;
+- scenario;
+- pinned hardware/build/configuration;
+- metrics/thresholds;
 - fallback;
 - task/gate.
 
@@ -66,12 +66,12 @@ Formula exactă a alegerii. Un `Proposed` descrie recomandarea, nu o prezintă c
 
 - ...
 
-## Documente și task-uri afectate
+## Affected documents and tasks
 
 - ...
 
 ## Approval/evidence
 
-| Data | Persoană/gate | Rezultat |
+| Date | Person/gate | Result |
 |---|---|---|
 | | | |

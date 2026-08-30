@@ -1,93 +1,93 @@
 # System Ownership
 
-Ownership înseamnă cine poate modifica adevărul runtime, nu cine lucrează la fișier. Orice stare are un singur writer. Un consumer cere schimbarea printr-o comandă tipizată și primește rezultat/eveniment/read model.
+Ownership means who may change runtime truth, not who edits a file. Every state has one writer. A consumer requests change through a typed command and receives a result, event, or read model.
 
-## Dimensiunile ownership-ului
+## Ownership dimensions
 
-- **Storage owner:** tipul/serviciul care păstrează starea în memorie.
-- **Runtime mutation authority:** singurul domeniu care poate valida și modifica acea stare.
-- **Persistence owner:** domeniul produce snapshotul semantic; Save orchestrează versiunea și I/O.
-- **Replication audience:** public, owner-only, party, relevant-only ori server-only.
+- **Storage owner:** the type or service holding state in memory.
+- **Runtime mutation authority:** the only domain allowed to validate and mutate that state.
+- **Persistence owner:** the domain produces the semantic snapshot; Save orchestrates versioning and I/O.
+- **Replication audience:** public, owner-only, party, relevant-only, or server-only.
 
-Aceste roluri pot locui temporar în același Actor/Subsystem, dar nu se confundă conceptual.
+These roles may temporarily live in one Actor or Subsystem, but they remain conceptually distinct.
 
-**Terminologie:** `host` este jucătorul/PC-ul care rulează listen serverul. În coloana Runtime authority, `server` înseamnă exclusiv partea server a acelui proces. Clientul local al host-ului trece prin aceleași validări ca orice client remote.
+**Terminology:** `host` is the player/PC running the listen server. In the Runtime authority column, `server` means only the server side of that process. The host's local client passes through the same validation as every remote client.
 
-## Matricea domeniilor
+## Domain matrix
 
-| Domeniu | Adevăr deținut | Runtime authority | Persistență | Audience implicit | Consumatori / comenzi publice | Dependențe interzise |
+| Domain | Owned truth | Runtime authority | Persistence | Default audience | Consumers / public commands | Forbidden dependencies |
 |---|---|---|---|---|---|---|
-| Core | typed IDs, results/errors, time types, tags, feature flags | local/server după tip; fără gameplay global | config/version metadata | după consumator | toate domeniile folosesc primitive | nu depinde de gameplay/UI |
-| Identity/Profile | AccountId binding, CharacterId, character slots, Portable Profile revision | server validează runtime; clientul deține fișierul local | PortableCharacterProfile | owner-only/server | Online, Save, Player cer identity/profile snapshot | nu acceptă profilul clientului ca adevăr neverificat |
-| Online/Session | lobby, invite, join, member state, reservation | server pentru sesiune; platforma pentru identity/lobby | config + minimal session recovery | party/public summary | UI și Save consumă lifecycle events | nu modifică economie/inventar |
-| Network | RPC policy, relevancy, facades, compatibility handshake | server | config/ADR, nu gameplay save | variabil | toate domeniile replicate | nu devine ownerul semantic al stării |
-| World | world clock, weather, district/world state, streaming coordination | server/world owner | HostWorldSave | public/relevant | Needs, AI, Traffic, Events | nu modifică CharacterActiveTime personal |
-| Player | possession, locomotion state, input intent, camera gameplay parity | server pentru movement/gameplay; local pentru presentation | profil/settings unde e necesar | public/relevant + local | Interaction, Combat, UI | nu deține bani/save/catalog |
-| Appearance | body preset, outfit record, jewelry, visual/social signature | server validează echiparea | Portable Profile | public subset + owner private | AI, Law, UI | nu mută iteme fără Inventory/Ownership |
-| Interaction | focus target, verb eligibility, timed action lifecycle | server validează acțiunea | numai acțiuni ce cer recovery | owner/relevant | emite commands către domeniul țintă | nu aplică direct bani/item state |
-| Items | definitions și instance metadata | server pentru instanțe; definitions immutable | item records prin ownerul containerului | owner/relevant | Inventory, Shops, Jobs | nu decide container, bani ori ownership |
-| Inventory | locația unică a itemului, containers, capacity/weight | server | Portable Profile/Vehicle/Property/World după container | owner/authorized | Move/Add/Remove cu precondiții | nu modifică bani ori drepturi de ownership |
-| Ownership | owner, access rights, keys, permissions, transfer | server | recordul bunului | owner/authorized/public summary | Inventory, Vehicles, Properties, Trade | nu mută itemul și nu debitează bani direct |
-| Economy | legal cash, bank, dirty cash, EconomyTransactionLedger | server | Portable Profile + journal/receipts | owner-only | debit/credit/transfer/quote results | nu creează item, job ori drept de proprietate |
-| Progression | level, licenses, unlocks, progression awards applied | server | Portable Profile | owner-only/public summary selectiv | Jobs/Activities emit award request | nu calculează payout monetar |
-| Shops | catalog view, stock/offers, order lifecycle | server/world owner | HostWorldSave unde stock persistă | requester/public catalog | cere tranzacții coordinatorului | nu scrie wallet/inventory |
-| Jobs | definitions, JobInstance, participants, objectives, outcome | server/session owner | HostWorldSave/SessionCommitJournal; receipt în profil | participants/public summary | cere rewards, incidents, progression | nu scrie direct bani/heat/profile |
-| Legality | clasificarea acțiunii și Incident/heat request | server | incident temporar; cazier prin domeniul relevant | relevant/owner | Police/Factions consumă Incident | nu spawn-ează poliție și nu aplică damage |
-| Police | response tier, dispatch, pursuit, arrest state | server | active state world/session; outcome/cazier persistent coordonat | relevant/public + owner | consumă Incident, cere AI/Consequences | nu inventează crime, bani ori confiscări |
-| Factions | reputație per familie, access, retaliation | server | Portable Profile + world NPC state separat | owner/relevant | Jobs, AI, Dialogue | nu modifică Economy direct |
-| Needs | hunger, thirst, sleep, bladder, hygiene | server, din CharacterActiveTime | Portable Profile | owner-only + efecte publice minime | Player/Health/UI consumă effects | nu controlează world clock/sleep vote |
-| Health | health, hit zones, wounds, downed/revive | server | Portable Profile pentru injury persistent | relevant + owner detail | Combat/Consequences/UI | nu aplică fee/confiscare |
-| Consequences | orchestration downed/arrest → hospital/prison → release | server | session/world + receipts personale | participant/relevant | cere mutații de la Health/Economy/Inventory | nu dublează adevărul domeniilor chemate |
-| Combat | attack intent, weapon operation, hit resolution | server | weapon state prin Inventory/Items; stats unde e cazul | relevant | cere damage la Health și Incident la Legality | nu modifică health/heat direct |
-| Vehicles | VehicleRecord semantic, runtime vehicle, seats, fuel, condition, trunk link | server | Portable Profile/approved store | relevant + owner detail | Ownership, Inventory, World | nu deține conținutul trunkului; Inventory îl deține |
-| Properties | PropertyRecord, instance rights, visitors, decor/storage placement | server | Portable Profile + materialization world state | authorized/relevant | Ownership, Economy, Inventory | nu scrie wallet sau item location direct |
-| AI Foundation | nav/perception/state tasks, spawn anchors, simulation tier | server | doar NPC important/world deltas | relevant | Police, Population, Jobs, Factions | nu deține lege/job/economie |
-| Population | ambient records, spawn, promote/demote, crowd budget | server | statistical/world state minim | relevant | World, Legality presentation | NPC ambient nu devine profil persistent implicit |
-| Traffic | flow records, promote/demote, physical traffic budget | server | statistical/world state minim | relevant | World, Police, Vehicles | nu deține vehicule personale |
-| World Events | eligibility, cooldown, event instance, budget | server/world owner | HostWorldSave dacă persistă | relevant/participants | Jobs, World, AI | nu ocolește owners pentru rewards/incidents |
-| UI | view models, focus, layout, local navigation | local | user settings numai | local | trimite intents și prezintă read models | nicio mutație gameplay directă |
-| Audio | mixes, routing, occlusion, radio presentation | local + metadata server limitată | settings/content | local/relevant | World, Vehicle, UI | nu schimbă state gameplay prin audio event |
-| Save | schema registry, capture coordination, migration, checksum, I/O, generations | server/local după store | fișierele aprobate | server/local only | cere snapshot de la owners | nu calculează reguli ori rezolvă tăcut conflicte |
-| Build/Tools | build, cook, validation, profiling, automation | developer/editor | rapoarte și config versionat | developer | toate domeniile | nu intră ca dependency runtime Shipping |
+| Core | typed IDs, results/errors, time types, tags, feature flags | local/server by type; no global gameplay owner | configuration/version metadata | by consumer | every domain uses primitives | does not depend on gameplay/UI |
+| Identity/Profile | AccountId binding, CharacterId, character slots, Portable Profile revision | server validates runtime; client owns its local file | PortableCharacterProfile | owner-only/server | Online, Save, and Player request identity/profile snapshots | never treats a client profile as verified truth |
+| Online/Session | lobby, invite, join, member state, reservation | server for session; platform for identity/lobby | configuration plus minimal session recovery | party/public summary | UI and Save consume lifecycle events | does not mutate economy/inventory |
+| Network | RPC policy, relevancy, facades, compatibility handshake | server | configuration/ADR, not gameplay save | variable | every replicated domain | never becomes semantic owner of state |
+| World | world clock, weather, district/world state, streaming coordination | server/world owner | HostWorldSave | public/relevant | Needs, AI, Traffic, Events | does not mutate personal CharacterActiveTime |
+| Player | possession, locomotion state, input intent, camera gameplay parity | server for movement/gameplay; local for presentation | profile/settings where required | public/relevant plus local | Interaction, Combat, UI | does not own money/save/catalog |
+| Appearance | body preset, outfit record, jewelry, visual/social signature | server validates equipment | Portable Profile | public subset plus owner-private | AI, Law, UI | never moves items without Inventory/Ownership |
+| Interaction | focus target, verb eligibility, timed-action lifecycle | server validates action | only actions requiring recovery | owner/relevant | sends commands to the target domain | never directly applies money/item state |
+| Items | definitions and instance metadata | server for instances; immutable definitions | item records through container owner | owner/relevant | Inventory, Shops, Jobs | does not decide container, money, or ownership |
+| Inventory | unique item location, containers, capacity/weight | server | Portable Profile/Vehicle/Property/World by container | owner/authorized | Move/Add/Remove with preconditions | does not mutate money or ownership rights |
+| Ownership | owner, access rights, keys, permissions, transfer | server | possession record | owner/authorized/public summary | Inventory, Vehicles, Properties, Trade | does not move items or debit money directly |
+| Economy | legal cash, bank, dirty cash, EconomyTransactionLedger | server | Portable Profile plus journal/receipts | owner-only | debit/credit/transfer/quote results | does not create items, jobs, or ownership rights |
+| Progression | level, licenses, unlocks, applied progression awards | server | Portable Profile | owner-only/selective public summary | Jobs/Activities emit award requests | does not calculate monetary payout |
+| Shops | catalog view, stock/offers, order lifecycle | server/world owner | HostWorldSave where stock persists | requester/public catalog | asks the transaction coordinator | never writes wallet/inventory |
+| Jobs | definitions, JobInstance, participants, objectives, outcome | server/session owner | HostWorldSave/SessionCommitJournal; profile receipt | participants/public summary | requests rewards, incidents, progression | never writes money/heat/profile directly |
+| Legality | action classification and Incident/heat request | server | temporary incident; record through relevant domain | relevant/owner | Police/Factions consume Incident | never spawns police or applies damage |
+| Police | response tier, dispatch, pursuit, arrest state | server | active world/session state; coordinated persistent outcome/record | relevant/public plus owner | consumes Incident, requests AI/Consequences | never invents crimes, money, or confiscation |
+| Factions | reputation per family, access, retaliation | server | Portable Profile plus separate world NPC state | owner/relevant | Jobs, AI, Dialogue | does not mutate Economy directly |
+| Needs | hunger, thirst, sleep, bladder, hygiene | server, derived from CharacterActiveTime | Portable Profile | owner-only plus minimal public effects | Player/Health/UI consume effects | does not control world clock or sleep vote |
+| Health | health, hit zones, wounds, downed/revive | server | Portable Profile for persistent injuries | relevant plus owner detail | Combat/Consequences/UI | does not apply fees/confiscation |
+| Consequences | orchestration of downed/arrest → hospital/prison → release | server | session/world plus personal receipts | participant/relevant | requests mutations from Health/Economy/Inventory | never duplicates called-domain truth |
+| Combat | attack intent, weapon operation, hit resolution | server | weapon state through Inventory/Items; stats where needed | relevant | requests damage from Health and Incident from Legality | never mutates health/heat directly |
+| Vehicles | semantic VehicleRecord, runtime vehicle, seats, fuel, condition, trunk link | server | Portable Profile/approved store | relevant plus owner detail | Ownership, Inventory, World | does not own trunk contents; Inventory does |
+| Properties | PropertyRecord, instance rights, visitors, decor/storage placement | server | Portable Profile plus world materialization state | authorized/relevant | Ownership, Economy, Inventory | never writes wallet or item location directly |
+| AI Foundation | navigation/perception/state tasks, spawn anchors, simulation tier | server | important NPC/world deltas only | relevant | Police, Population, Jobs, Factions | does not own law, jobs, or economy |
+| Population | ambient records, spawn, promote/demote, crowd budget | server | minimal statistical/world state | relevant | World, Legality presentation | ambient NPC never implicitly becomes a persistent profile |
+| Traffic | flow records, promote/demote, physical-traffic budget | server | minimal statistical/world state | relevant | World, Police, Vehicles | does not own personal vehicles |
+| World Events | eligibility, cooldown, event instance, budget | server/world owner | HostWorldSave when persistent | relevant/participants | Jobs, World, AI | never bypasses owners for rewards/incidents |
+| UI | view models, focus, layout, local navigation | local | user settings only | local | sends intents and displays read models | no direct gameplay mutation |
+| Audio | mixes, routing, occlusion, radio presentation | local plus limited server metadata | settings/content | local/relevant | World, Vehicle, UI | does not change gameplay state through an audio event |
+| Save | schema registry, capture coordination, migration, checksum, I/O, generations | server/local by store | approved files | server/local only | requests snapshots from owners | never calculates rules or silently resolves conflicts |
+| Build/Tools | build, cook, validation, profiling, automation | developer/editor | reports and versioned configuration | developer | every domain | never becomes a Shipping runtime dependency |
 
-## Operații multi-domeniu
+## Multi-domain operations
 
-Un `UseCaseCoordinator`/transaction coordinator poate ordona comenzi și compensări, dar nu scrie direct starea ownerilor. Fiecare operație are ID idempotent și rezultat explicit.
+A `UseCaseCoordinator` or transaction coordinator may order commands and compensations, but it never writes owner state directly. Every operation has an idempotent ID and explicit result.
 
-Exemple:
+Examples:
 
 - **Purchase:** Shop offer → Economy debit → Items/Inventory materialization → Ownership transfer → receipt/commit.
-- **Trade:** bilateral consent → permission lock → Inventory moves → Ownership transfers → Economy transfers opționale → unlock/commit.
+- **Trade:** bilateral consent → permission lock → Inventory moves → Ownership transfers → optional Economy transfers → unlock/commit.
 - **Hospital:** Consequences starts → Health outcome → Economy fee → Inventory confiscation/move → safe spawn → receipt.
 - **Job payout:** Jobs outcome → Economy/Progression requests → SessionCommitJournal receipt → profile export.
 
-La eșec, coordinatorul folosește pași compensabili ori marchează operația pentru recovery; nu presupune că două fișiere pe PC-uri diferite pot fi atomic tranzacționate.
+On failure, the coordinator uses compensable steps or marks the operation for recovery. It never assumes files on two different PCs can be updated atomically.
 
-## Reguli de dependență
+## Dependency rules
 
-- Core nu depinde de domenii gameplay.
-- Definitions/data pot fi consumate de runtime; runtime nu modifică definitions.
-- Economy nu depinde de Jobs; Jobs consumă Economy API.
-- Inventory și Ownership sunt separate: locația itemului nu este dreptul asupra lui.
-- Progression nu este Economy; level-ul nu modifică damage-ul.
-- Legality produce Incident; Police produce răspuns.
-- Health produce downed; Police produce arrest; Consequences orchestrează rezultatul.
-- Save depinde de snapshot interfaces, nu de implementarea internă a fiecărui owner.
-- UI și Audio nu sunt dependencies ale regulilor de domeniu; presentation consumă output.
-- Editor/DeveloperTool nu sunt dependencies runtime Shipping.
+- Core does not depend on gameplay domains.
+- Runtime may consume definitions/data; runtime never mutates definitions.
+- Economy does not depend on Jobs; Jobs consumes the Economy API.
+- Inventory and Ownership are separate: item location is not the right to own it.
+- Progression is not Economy; level does not modify damage.
+- Legality produces Incident; Police produces the response.
+- Health produces downed; Police produces arrest; Consequences orchestrates the outcome.
+- Save depends on snapshot interfaces, not internal owner implementations.
+- UI and Audio are not dependencies of domain rules; presentation consumes output.
+- Editor/DeveloperTool code is not a Shipping runtime dependency.
 
-## Contractul unui document de sistem
+## System-document contract
 
-Un document real se creează just-in-time din `Docs/Systems/SYSTEM_TEMPLATE.md`, nu ca placeholder gol. El trebuie să fixeze:
+A real system document is created just in time from `Docs/Systems/SYSTEM_TEMPLATE.md`, never as an empty placeholder. It must define:
 
-- owner și cele patru dimensiuni de ownership;
-- commands/events și consumers;
-- authority, RPC validation, audience și late join;
-- data model, IDs, persistence/migration;
-- update model, LOD și bugete;
+- owner and all four ownership dimensions;
+- commands/events and consumers;
+- authority, RPC validation, audience, and late join;
+- data model, IDs, persistence, and migration;
+- update model, LOD, and budgets;
 - Blueprint/Editor surface;
-- failures/exploits/recovery;
-- teste și acceptance steps;
-- dependențe permise/interzise.
+- failures, exploits, and recovery;
+- tests and acceptance steps;
+- allowed and forbidden dependencies.
 
-Orice modificare ce ar crea doi writers pentru același adevăr este defect arhitectural și necesită redesign/ADR, nu o excepție rapidă.
+Any change that creates two writers for the same truth is an architecture defect requiring redesign or an ADR, not a quick exception.

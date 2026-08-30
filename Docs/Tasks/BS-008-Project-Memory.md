@@ -1,92 +1,92 @@
-# BS-008 — Project memory and agent workflow
+# BS-008 — Project Memory and Agent Workflow
 
 **Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `main` (integrat din `docs/BS-008-project-memory`)
+**Branch:** `main` (integrated from `docs/BS-008-project-memory`)
 **Base commit:** `f1b5648`
 **Roadmap milestone:** M1B
 
 ## Observable outcome
 
-Orice task Codex pornit din `F:/BrokenStreets` găsește reguli consistente despre produs, arhitectură, ownership, C++/Blueprint, task workflow, testare, performance, Git, recovery și următorul pas, fără ca Madalin să repete contextul.
+Any Codex task started from `F:/BrokenStreets` finds consistent rules for product, architecture, ownership, C++/Blueprint boundaries, task workflow, testing, performance, Git, recovery, and the next step without Madalin repeating context.
 
 ## Why now
 
-Repository-ul și baseline-ul C++ există. Memoria trebuie fixată înainte de primul cod propriu pentru a evita sisteme contradictorii și pași manuali vagi.
+The repository and C++ baseline exist. Project memory must be established before original code to prevent contradictory systems and vague manual steps.
 
 ## In scope
 
-- root `AGENTS.md` și `README.md`;
-- documente canonice și index/status;
-- roadmap corectat pentru dependențe;
-- architecture/system ownership;
-- task/system/ADR templates;
-- build, Git, recovery, test și performance workflow;
-- clean-room/reference policy;
-- versionare și GitHub sync.
+- root `AGENTS.md` and `README.md`;
+- canonical documents, index, and status;
+- dependency-corrected roadmap;
+- architecture and system ownership;
+- task, system, and ADR templates;
+- build, Git, recovery, testing, and performance workflows;
+- clean-room and reference policy;
+- versioning and GitHub synchronization.
 
 ## Out of scope
 
-- schimbări C++/Config/Content;
-- map, TestGym, build scripts și automation code;
-- renderer/plugin activation changes;
-- implementarea oricărui sistem gameplay;
-- backup fizic Source Art.
+- C++, Config, or Content changes;
+- map, TestGym, build scripts, or automation code;
+- renderer or plugin activation;
+- gameplay-system implementation;
+- physical Source Art backup.
 
 ## Dependencies
 
-- BS-001–BS-006 Done;
+- BS-001 through BS-006 Done;
 - official Codex AGENTS.md discovery guidance reviewed;
-- existing 200-question decision register and roadmap audited;
-- current project/toolchain/config inspected.
+- existing 200-question register and roadmap audited;
+- current project, toolchain, and configuration inspected.
 
 ## Allowed files/domains
 
-- `AGENTS.md`, `README.md`, `Docs/**` numai.
+- `AGENTS.md`, `README.md`, and `Docs/**` only.
 
 ## Network/persistence/performance impact
 
-Documentație only; N/A pentru runtime. Regulile rezultate sunt constraints pentru task-urile viitoare.
+Documentation only; runtime impact N/A. Resulting rules constrain future tasks.
 
 ## Acceptance criteria
 
-1. Din root, agentul identifică owner workflow și limba de comunicare.
-2. Poate indica sursa de adevăr pentru produs, arhitectură, sistem, status și roadmap.
-3. Rezumă corect limita C++/Blueprint și single-writer ownership.
-4. Folosește topologia exactă `1 host + max 3 clients = 4 players total`.
-5. Identifică BS-007A ca recovery simplu și BS-009 ca următorul tooling task.
-6. Nu declară gameplay existent.
-7. Toate linkurile locale relative și documentele obligatorii există.
-8. `AGENTS.md` rămâne sub limita implicită de 32 KiB.
-9. Git diff conține numai documentație, fără fișiere generate/secrete.
-10. Commitul este sincronizat pe repository-ul privat.
+1. From repository root, the agent identifies owner workflow and conversation language.
+2. It identifies sources of truth for product, architecture, system, status, and roadmap.
+3. It correctly summarizes the C++/Blueprint boundary and single-writer ownership.
+4. It uses exact topology: `1 host + max 3 clients = 4 players total`.
+5. It identifies BS-007A as basic recovery and BS-009 as the next tooling task.
+6. It declares no gameplay exists.
+7. Every required relative link and document exists.
+8. `AGENTS.md` remains below the default 32 KiB discovery limit.
+9. Git diff contains only documentation with no generated file or secret.
+10. The commit is synchronized to the private repository.
 
 ## Verification
 
-- markdown/file/link audit;
-- terminology/conflict search;
+- Markdown, file, and link audit;
+- terminology and conflict search;
 - AGENTS byte count;
-- Git status/diff check;
-- BS-007A clean clone/build/Editor initialization evidence trecut pe baseline `f1b5648`;
-- no Unreal build required deoarece nu se schimbă C++/Config/Content.
+- Git status and diff;
+- existing BS-007A clean-clone, build, and Editor-initialization evidence on baseline `f1b5648`;
+- Unreal build N/A because C++, Config, and Content do not change.
 
 ## Completion evidence
 
 - Candidate commit: `b3115494e0568342278fa18a2f89f5f9aa386332`.
 - Verified tree: `8339f1a6151eb4158b257dfbea5854ada639e3e4`.
-- Scope: 36 fișiere noi, 4.118 linii, exclusiv `AGENTS.md`, `README.md` și `Docs/**`.
-- Link/file audit: 0 linkuri locale rupte; toate fișierele obligatorii există.
-- `AGENTS.md`: 13.688 bytes, sub limita implicită de 32 KiB.
-- Terminology/source-of-truth/decision/dependency audit: PASS după corecțiile independente.
-- `git diff --cached --check`, `git fsck --no-dangling` și `git lfs fsck --pointers HEAD`: PASS.
-- Secrets/generated/runtime scope audit: PASS; nicio schimbare C++, Config, Content, `.uproject` sau plugin.
-- Runtime build: `N/A` pentru BS-008; baseline-ul `f1b5648` are clean-clone build și Editor initialization PASS prin BS-007A.
-- Remote: branch-ul task-ului și `main` împinse; `main` local și `origin/main` verificate identice la închidere.
-- Manual Unreal/Visual Studio acceptance: `N/A`, documentație only.
+- Scope: 36 new files, 4,118 lines, exclusively `AGENTS.md`, `README.md`, and `Docs/**`.
+- Link/file audit: zero broken local links; every required file exists.
+- `AGENTS.md`: 13,688 bytes, below the default 32 KiB limit.
+- Terminology, source-of-truth, decision, and dependency audits: PASS after independent corrections.
+- `git diff --cached --check`, `git fsck --no-dangling`, and `git lfs fsck --pointers HEAD`: PASS.
+- Secret, generated-file, and runtime-scope audit: PASS; no C++, Config, Content, `.uproject`, or plugin change.
+- Runtime build: `N/A` for BS-008; baseline `f1b5648` has clean-clone build and Editor-initialization PASS through BS-007A.
+- Remote: task branch and `main` pushed; local and `origin/main` verified identical at closure.
+- Manual Unreal/Visual Studio acceptance: `N/A`, documentation only.
 - Next task: `BS-009`.
 
 ## Risks and rollback
 
-- risc: documentație prea mare ori duplicată; atenuare prin INDEX, docs JIT și surse canonice;
-- risc: propuneri tratate ca decizii; atenuare prin status explicit și PENDING_DECISIONS;
-- rollback: revert commitul BS-008; base `f1b5648` rămâne baseline.
+- risk: oversized or duplicated documentation; mitigated through INDEX, just-in-time documents, and canonical ownership;
+- risk: proposals treated as decisions; mitigated through explicit statuses and PENDING_DECISIONS;
+- rollback: revert the BS-008 commit; base `f1b5648` remains the baseline.

@@ -9,25 +9,25 @@
 
 ## Context
 
-Apartamentele private pot folosi loading mascat și pot avea același template pentru mai mulți owners. Patru jucători trebuie să poată fi simultan în patru interioare diferite, iar prietenii autorizați pot vizita aceeași instanță. Server travel nu poate muta un singur jucător fără a afecta sesiunea.
+Private apartments may use masked loading and may share a template across several owners. Four players must be able to occupy four different interiors simultaneously, while authorized friends may visit the same instance. Server travel cannot move a single player without affecting the session.
 
-## Recomandare propusă
+## Proposed recommendation
 
-- `PropertyTemplateId` descrie interiorul comun; `PropertyInstanceId` identifică proprietatea personală.
-- Instanțele sunt materializate în sloturi izolate în același world autoritativ.
-- Un loading screen individual maschează încărcarea și teleportul.
-- Visitors intră în aceeași `PropertyInstanceId` după permission validation.
-- Mobilierul folosește `ItemInstanceId` + transform + ownership/container, fără coliziuni între template-uri identice.
-- Tehnologia concretă (Level Instance/Data Layers/alt runtime) nu este aleasă înainte de spike.
+- `PropertyTemplateId` describes the shared interior; `PropertyInstanceId` identifies the personal property.
+- Instances materialize in isolated slots inside the same authoritative world.
+- A per-player loading screen masks loading and teleportation.
+- Visitors enter the same `PropertyInstanceId` after permission validation.
+- Furniture uses `ItemInstanceId` plus transform plus ownership/container, without collisions between identical templates.
+- The concrete technology—Level Instances, Data Layers, or another runtime approach—is not selected before the spike.
 
-## Gate obligatoriu
+## Mandatory gate
 
-Patru instanțe simultane trebuie să demonstreze izolare pentru:
+Four simultaneous instances must demonstrate isolation for:
 
 - visuals/occlusion;
 - audio;
 - collision/physics;
-- nav/AI;
+- navigation/AI;
 - replication/relevancy;
 - permissions/visitors;
 - IDs/save;
@@ -35,4 +35,4 @@ Patru instanțe simultane trebuie să demonstreze izolare pentru:
 
 ## Fallback
 
-Reducerea numărului de instanțe simultane, slot pool mai strict, interioare simplificate ori acces secvențial controlat. Nu folosim server travel individual imposibil și nu pretindem izolare per-player prin Data Layers globale fără dovadă.
+Reduce simultaneous instance count, enforce a stricter slot pool, simplify interiors, or provide controlled sequential access. Do not use impossible per-player server travel or claim per-player isolation through global Data Layers without evidence.

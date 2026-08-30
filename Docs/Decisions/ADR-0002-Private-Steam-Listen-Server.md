@@ -9,43 +9,43 @@
 
 ## Context
 
-Broken Streets trebuie să funcționeze complet solo și cu creatorul plus trei prieteni. Nu se dorește server dedicat, configurare de router ori infrastructură publică în v1. Lansarea inițială este Steam-only.
+Broken Streets must work completely solo and in co-op for the creator plus three friends. V1 does not use dedicated servers, router configuration, or public infrastructure. The initial release is Steam-only.
 
-## Decizie
+## Decision
 
-- Solo folosește aceleași reguli autoritative, fără a crea o arhitectură offline separată.
-- Co-op-ul folosește un listen server pe PC-ul host-ului.
-- `Host` denumește jucătorul/PC-ul care rulează sesiunea; autoritatea gameplay aparține părții server. Clientul local al host-ului folosește aceleași command/RPC validation paths ca un client remote.
-- Limita funcțională este maximum patru jucători în total: `1 host + 0–3 clients`.
-- Sesiunile sunt private/invite-only prin Steam.
-- Conectarea trebuie să funcționeze fără port forwarding manual, validată pe două rețele reale.
-- Join-in-progress și reconnect fac parte din v1.
-- Nu există tether; host-ul poate simula patru zone/interioare/joburi.
-- Dedicated servers și cross-store nu intră în v1.
+- Solo uses the same authoritative rules instead of a separate offline architecture.
+- Co-op uses a listen server on the host player's PC.
+- `Host` names the player/PC running the session; gameplay authority belongs to the server side. The host's local client uses the same command/RPC validation paths as a remote client.
+- The functional limit is four total players: `1 host + 0–3 clients`.
+- Sessions are private and invite-only through Steam.
+- Joining must work without manual port forwarding and must be validated across two real networks.
+- Join-in-progress and reconnect are part of v1.
+- There is no tether; the host may simulate four areas, interiors, or jobs.
+- Dedicated servers and cross-store play are outside v1.
 
-Host migration rămâne o decizie separată `Proposed`; recomandarea v1 este fără host migration, cu save și session close la shutdown normal.
+Host migration remains a separate `Proposed` decision. The v1 recommendation is no host migration, with save and session closure during a normal shutdown.
 
-## Consecințe pozitive
+## Positive consequences
 
-- cost operațional redus și co-op simplu între prieteni;
-- server-side authority clar, inclusiv pentru acțiunile jucătorului host;
-- Steam oferă identity/invites/transportul ce trebuie validat;
-- scope fix pentru bugete și teste.
+- low operational cost and straightforward co-op between friends;
+- clear server-side authority, including the host player's actions;
+- Steam supplies identity, invites, and transport that can be validated;
+- fixed scope for budgets and testing.
 
-## Costuri și limite
+## Costs and limits
 
-- host-ul are cerințe CPU/RAM mai mari;
-- sesiunea depinde de host și conexiunea lui;
-- patru bule fără tether sunt riscul principal de scalare;
-- Steam behavior nu poate fi acceptat numai prin PIE/LAN.
+- the host has higher CPU and RAM requirements;
+- the session depends on the host and their connection;
+- four untethered simulation bubbles are the primary scaling risk;
+- Steam behavior cannot be accepted from PIE or LAN testing alone.
 
 ## Validation gate
 
-- packaged build pe două PC-uri, două conturi Steam și două rețele;
-- apoi host + trei clienți pentru four-bubble tests;
-- reconnect, host normal shutdown și host crash;
-- fără port forwarding manual.
+- packaged build on two PCs, two Steam accounts, and two networks;
+- then one host plus three clients for four-bubble tests;
+- reconnect, normal host shutdown, and host crash;
+- no manual port forwarding.
 
 ## Approval
 
-Acceptat prin cerințele explicite ale creatorului: Steam-only, co-op privat, fără server dedicat, creator + trei prieteni.
+Accepted from the creator's explicit requirements: Steam-only private co-op, no dedicated server, creator plus three friends.

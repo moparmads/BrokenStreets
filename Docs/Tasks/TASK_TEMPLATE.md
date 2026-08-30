@@ -9,11 +9,11 @@
 
 ## Observable outcome
 
-Ce poate vedea/testa creatorul după task?
+What can the creator see or test after this task?
 
 ## Why now
 
-Ce dependență folosește și ce deblochează?
+Which dependency does it use, and what does it unlock?
 
 ## In scope
 
@@ -32,27 +32,27 @@ Ce dependență folosește și ce deblochează?
 
 ## Allowed files/domains
 
-- paths/systems permise;
-- modificări interzise/nelegate.
+- allowed paths/systems;
+- forbidden or unrelated changes.
 
 ## Authority/network impact
 
 - owner/server/client;
 - RPC/audience/relevancy;
 - late join/reconnect/disconnect;
-- `N/A + motiv` dacă nu atinge networking.
+- `N/A + reason` when networking is unaffected.
 
 ## Persistence/migration impact
 
 - store/schema/version/migration/recovery;
-- `N/A + motiv` dacă nu atinge persistarea.
+- `N/A + reason` when persistence is unaffected.
 
 ## Performance budget
 
 - update model;
 - CPU/memory/network/content bounds;
 - scenario/metric/threshold;
-- `N/A + motiv` dacă nu este hot path.
+- `N/A + reason` when this is not a hot path.
 
 ## Blueprint/Editor impact
 
@@ -74,12 +74,12 @@ Ce dependență folosește și ce deblochează?
 
 ## Manual acceptance
 
-Pași exacți conform `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md`, cu PASS/FAIL.
+Exact steps following `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md`, with PASS/FAIL criteria.
 
 ## Risks and rollback
 
 - base commit;
-- riscuri;
+- risks;
 - rollback/revert plan;
 - save/content compatibility.
 
@@ -89,16 +89,16 @@ Pași exacți conform `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md`, cu PASS/F
 
 ## Verification evidence
 
-| Data | Candidate commit | Runtime/content tree | Build/test/trace | Rezultat | Executat de |
+| Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | | | | | | |
 
-Orice schimbare ulterioară în C++, Config, Content, `.uproject`, pluginuri ori build scripts marchează dovada candidatului `INVALIDATED` până la rerularea verificărilor relevante. Un commit ulterior exclusiv de evidence/docs poate referi tree-ul neschimbat.
+Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-- schimbări;
-- verificări trecute/omise;
-- pași creator;
-- log/captură cerută la fail;
-- risc și next task.
+- changes;
+- passed/skipped checks;
+- creator steps;
+- log/screenshot requested on failure;
+- risk and next task.

@@ -1,83 +1,83 @@
-# Decizii materiale rămase deschise
+# Remaining material open decisions
 
-Acest fișier este o coadă de `Decision Packets`, nu un chestionar nou. Deciziile de produs de mai jos nu blochează fundația curentă; alegerea operațională OPS-01 devine necesară numai la task-ul ei. Codex întreabă când următorul task depinde direct de alegere.
+This file is a queue of Decision Packets, not a new questionnaire. The product decisions below do not block the current foundation; the OPS-01 operating choice becomes necessary only for its task. Codex asks when the next task directly depends on a choice.
 
-Legendă: `Recommended` este direcția tehnică actuală, nu acceptarea creatorului.
+Legend: `Recommended` is the current technical direction, not creator acceptance.
 
-## Înainte de backup-ul independent
+## Before independent backup
 
-| ID | Decizie | Recommended | Devine necesară înainte de |
+| ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| OPS-01 | Mediu/provider, capacitate, retenție și criptare pentru copia independentă Git/LFS și Source Art | mediu local separat plus copie versionată off-site; restore fără GitHub verificat | BS-010A și BS-013A |
+| OPS-01 | Medium/provider, capacity, retention, and encryption for the independent Git/LFS and Source Art copy | separate local medium plus versioned off-site copy; restore verified without GitHub | BS-010A and BS-013A |
 
-## Înainte de Identity / Session / Save MVP
+## Before Identity / Session / Save MVP
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D61 | Host migration în v1? | Nu; shutdown normal salvează și închide sesiunea | Steam session MVP |
-| D62 | Reconnect reservation | 120 secunde ca valoare de test, data-driven | reconnect implementation |
-| D65 | Pauză | solo poate opri lumea; multiplayer nu oprește lumea din meniu | pause/menu behavior |
-| D66 | Friendly fire / PvP | aliați; friendly fire configurabil ulterior, fără PvP/sabotaj | combat input/security |
-| D72 | Conflict/commit fără backend | ultimul checkpoint confirmat bilateral câștigă; rezultat neconfirmat rollback/report; conflict cross-host cere alegere | portable profile transaction spike |
-| D73–74 | UX save/manual și generații | autosave + safety save; minimum 5 generații cu checksum | save UI/recovery |
+| D61 | Host migration in v1? | No; normal shutdown saves and closes the session | Steam session MVP |
+| D62 | Reconnect reservation | 120 seconds as a data-driven test value | reconnect implementation |
+| D65 | Pause | solo may stop the world; multiplayer menus do not stop it | pause/menu behavior |
+| D66 | Friendly fire / PvP | allies; friendly fire configurable later, no PvP/sabotage | combat input/security |
+| D72 | Conflict/commit without backend | last bilaterally confirmed checkpoint wins; unconfirmed result rolls back/reports; cross-host conflict asks the player | portable-profile transaction spike |
+| D73–74 | Save/manual UX and generations | autosave + safety save; at least 5 checksum-protected generations | save UI/recovery |
 
-## Înainte de primul walking slice
+## Before the first walking slice
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D144 | Primul job legal | curierat/livrare pe jos | JobDefinition 1 |
-| D146 | Descoperirea jobului | telefon + punct/NPC fizic simplu | job UI |
-| D149–150 | Co-op/scaling | fiecare poate face orice; obiective/route/time/reward data-driven, fără health inflation | 1/2/4 acceptance |
-| D151 | Reconnect în job | rezervare, reluare aceeași instanță, apoi reconciliere fără duplicare | job reconnect |
-| D152 | Payout/eșec | payout individual afișat; fără payout complet la eșec; consecințele rămân | reward contract |
+| D144 | First legal job | walking courier/delivery | JobDefinition 1 |
+| D146 | Job discovery | phone + simple physical point/NPC | job UI |
+| D149–150 | Co-op/scaling | everyone can do everything; data-driven objectives/route/time/reward, no health inflation | 1/2/4 acceptance |
+| D151 | Reconnect during a job | reservation, resume same instance, then reconcile without duplication | job reconnect |
+| D152 | Payout/failure | visible individual payout; no full payout on failure; consequences remain | reward contract |
 
-## Înainte de vehicule
+## Before vehicles
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D179 | Recovery vehicul | rămâne unde este în sesiune; după restart este recuperabil determinist în garaj | VehicleRecord persistence |
-| D180 | Chei/permisiuni/hotwire | key record + permisiuni temporare + hotwire timed action | ownership integration |
-| D185 | Reguli rutiere v1 | semafor, coliziune gravă, condus periculos, furt și stop simplu | traffic/police integration |
+| D179 | Vehicle recovery | remains where it is during the session; after restart it is deterministically recoverable in the garage | VehicleRecord persistence |
+| D180 | Keys/permissions/hotwire | key record + temporary permissions + timed hotwire action | ownership integration |
+| D185 | v1 traffic rules | traffic lights, serious collision, dangerous driving, theft, and simple stop | traffic/police integration |
 
-## Înainte de illegal reaction slice
+## Before the illegal reaction slice
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D145 | Prima activitate ilegală | furt/recuperare colet într-o zonă restricționată | Illegal JobDefinition 1 |
-| D160 | Treptele poliției | Attention, Pursuit, Armed Response, Manhunt; fără elicopter v1 | Police state model |
-| D163 | Complicitate | numai după ajutor concret, nu proximitate | party law rules |
+| D145 | First illegal activity | steal/recover a package from a restricted area | Illegal JobDefinition 1 |
+| D160 | Police tiers | Attention, Pursuit, Armed Response, Manhunt; no helicopter in v1 | Police state model |
+| D163 | Complicity | only after concrete assistance, never proximity alone | party law rules |
 
-## Înainte de health/prison/needs
+## Before health/prison/needs
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D105 | Downed window/revive cap | 60 sec și un revive/incident doar ca test | Health tuning playtest |
-| D106/D122 | Pierderi hospital/arrest | banca sigură; procentele sunt tuning, confiscarea prin ownerii Economy/Inventory | Consequences transaction |
-| D166 | Prison loop | 3–12 minute, activități simple, fără prison break v1; bail/vizite/disconnect prin playtest | Prison design |
+| D105 | Downed window/revive cap | 60 seconds and one revive/incident only as test values | Health tuning playtest |
+| D106/D122 | Hospital/arrest losses | bank is safe; percentages are tuning; confiscation goes through Economy/Inventory owners | Consequences transaction |
+| D166 | Prison loop | 3–12 minutes, simple activities, no v1 prison break; bail/visits/disconnect set by playtest | Prison design |
 
-## Înainte de proprietăți și aspirație extinsă
+## Before properties and extended aspiration
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D142 | Businesses | post-Early Access; activitate fizică, fără venit offline | business roadmap |
-| D199 | DCC și pipeline numeric | programele creatorului + bugete măsurate în Benchmark Street | import masiv de artă |
+| D142 | Businesses | post-Early Access; physical activity, no offline income | business roadmap |
+| D199 | DCC and numeric pipeline | creator's applications + budgets measured in Benchmark Street | mass art import |
 
-## Înainte de Early Access content lock
+## Before Early Access content lock
 
-| ID sursă | Decizie | Recommended | Devine necesară înainte de |
+| Source ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| D187 | HUD permanent/contextual | contextual și configurabil | UI production lock |
-| D192 | Voice chat | group voice candidat; proximity/phone ulterior | platform feature lock |
-| D194 | Muzică personală | local-only; fără retransmitere | audio feature lock |
-| D195 | Limbi | English source, Romanian candidat; toate textele localizabile | content lock |
-| D200 | Prag comercial | un district finit; cantitățile se recalculează după vertical slice | Early Access commitment |
+| D187 | Permanent/contextual HUD | contextual and configurable | UI production lock |
+| D192 | Voice chat | group voice candidate; proximity/phone later | platform feature lock |
+| D194 | Personal music | local-only; no rebroadcast | audio feature lock |
+| D195 | Languages | English source; additional localization only after content scope and demand are measured | content lock |
+| D200 | Commercial threshold | one finished district; recalculate quantities after the vertical slice | Early Access commitment |
 
-## Cum se închide o decizie
+## Closing a decision
 
-1. Codex prezintă contextul, maximum trei alternative și recomandarea.
-2. Creatorul alege sau cere prototip.
-3. Se actualizează `DECISIONS.md` din `PROPUS — NECESITĂ APROBARE` în `CONFIRMAT` ori `RESPINS`.
-4. Dacă alegerea este arhitecturală și greu de inversat, se acceptă/supersedează un ADR.
-5. Task-ul dependent devine `Ready`.
+1. Codex presents context, up to three alternatives, and a recommendation.
+2. The creator chooses or requests a prototype.
+3. Update `DECISIONS.md` from `PROPOSED — APPROVAL REQUIRED` to `CONFIRMED` or `REJECTED`.
+4. If the choice is architectural and difficult to reverse, accept or supersede an ADR.
+5. The dependent task becomes `Ready`.
 
-Nu cerem toate aceste răspunsuri acum; decizia luată înainte de date reale este adesea mai slabă decât un default reversibil.
+Do not request every answer now. A decision made before real evidence is often weaker than a reversible default.

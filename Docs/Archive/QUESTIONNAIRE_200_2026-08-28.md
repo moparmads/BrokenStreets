@@ -1,477 +1,297 @@
-# Arhivă non-normativă — chestionarul inițial
+# Non-normative archive — initial questionnaire
 
-> Acest document păstrează întrebările de cercetare. Răspunsurile consolidate și statusul lor se află exclusiv în `Docs/DECISIONS.md`. Nu folosi o întrebare de aici ca decizie și nu repeta chestionarul creatorului.
+> This document preserves the original research questions in English. Consolidated answers and their status exist only in `Docs/DECISIONS.md`. Never treat a question here as a decision and never ask the creator to repeat the questionnaire.
 
-# BROKEN STREETS — Chestionarul complet de design
+# BROKEN STREETS — Complete Design Questionnaire
 
-**Versiune:** 1.0
-**Număr total:** 200 de întrebări
-**Scop:** transformarea viziunii Broken Streets într-un design coerent înainte de implementarea sistemelor.
+**Version:** 1.0
+**Total:** 200 questions
+**Purpose:** convert the Broken Streets vision into a coherent design before system implementation.
 
-## Cum răspunzi
+## How to answer
 
-- `[B]` înseamnă că răspunsul poate schimba arhitectura, performanța sau ordinea implementării.
-- Poți răspunde în serii: `1–25`, `26–50` etc.
-- Răspunde cu numărul întrebării și alegerea sau explicația ta.
-- Dacă nu știi, scrie `NU ȘTIU`. Codex îți va prezenta opțiuni, avantaje, dezavantaje și o recomandare.
-- Poți scrie `DECIDE TU` pentru detalii în care vrei să alegem soluția recomandată.
-- Răspunsurile deja oferite au fost folosite pentru formularea întrebărilor; nu trebuie să justifici din nou o alegere decât dacă întrebarea cere o precizare.
+- `[B]` means the answer may change architecture, performance, or implementation order.
+- Answers may be sent in batches such as `1–25` or `26–50`.
+- Include the question number and choice or explanation.
+- If unknown, answer `I DON'T KNOW`; Codex will present options, tradeoffs, and a recommendation.
+- Answer `DECIDE FOR ME` when the recommended solution should be chosen.
+- Previous answers informed these questions; justification need not be repeated unless clarification is requested.
 
 ---
 
-## 1. Viziunea centrală — întrebările 1–8
-
-1. **[B]** Ordonează cele patru promisiuni ale jocului de la cea mai importantă la cea mai puțin importantă: viață aspirațională, ascensiune financiară, carieră legală/ilegală și povești trăite în co-op.
-
-2. În ce situație începe personajul: fără bani și locuință, cu un apartament modest, cu o mașină ieftină, cu datorii sau într-o altă situație?
-
-3. Care este fantezia de endgame: milionar cu proprietăți și mașini, antreprenor cu afaceri, lider interlop, persoană respectată legal sau posibilitatea de a combina aceste direcții?
-
-4. **[B]** Întreaga experiență trebuie să poată fi terminată solo sau accepți activități care necesită obligatoriu minimum doi jucători?
-
-5. **[B]** Co-op-ul trebuie să fie doar o metodă de a juca împreună sau fiecare activitate importantă trebuie proiectată cu roluri și avantaje speciale pentru echipă?
-
-6. Vrei o campanie principală cu început și final, fire narative separate sau un sandbox în care povestea apare mai ales din sisteme?
-
-7. Cât ar trebui să dureze o sesiune satisfăcătoare: 30–60 de minute, 1–2 ore, 3–4 ore sau fără o durată vizată?
-
-8. După atingerea succesului maxim, jocul continuă nelimitat, pornește un New Game Plus, oferă un final sau lasă toate opțiunile deschise?
-
-## 2. Ton, public și limite — întrebările 9–14
-
-9. Tonul este serios și dur, realist cu umor ocazional, satiric sau diferă în funcție de activitate?
-
-10. Ce rating de vârstă urmărești și ce permiți dintre violență grafică, droguri, alcool, jocuri de noroc, nuditate și limbaj vulgar?
-
-11. Când realismul intră în conflict cu distracția, alegem realism strict, realism simplificat sau distracția, caz cu caz?
-
-12. Cât umor vrei în dialoguri, reclame, radio, evenimente și reacțiile NPC-urilor?
-
-13. **[B]** Folosim numai mărci, magazine și vehicule fictive inspirate din realitate sau vrei și mărci/licențe reale atunci când este posibil?
-
-14. Ce teme, activități, infracțiuni sau tipuri de misiuni nu vrei sub nicio formă în Broken Streets?
-
-## 3. Platformă, performanță și scalabilitate — întrebările 15–24
-
-15. **[B]** Care este configurația celui mai slab PC pe care vrei să ruleze jocul: procesor, placă video, RAM, VRAM și SSD/HDD? Dacă nu o știi, accepți să alegem un PC-etalon după primul benchmark?
-
-16. **[B]** Pe PC-ul minim accepți `1080p/30 FPS stabil`, vrei minimum `45 FPS` sau ceri `60 FPS`?
-
-17. **[B]** Pe configurația recomandată ținta este `1080p/60`, `1440p/60`, `1440p/90` sau altceva?
-
-18. **[B]** SSD-ul și minimum 16 GB RAM pot fi cerințe obligatorii?
-
-19. **[B]** Accepți ca presetul Low să reducă vizibil pietonii, traficul, distanța de afișare și numărul obiectelor cosmetice, păstrând identic gameplay-ul?
-
-20. **[B]** Accepți ca Low să reducă sau să dezactiveze Lumen, ray tracing, umbrele avansate și reflexiile costisitoare?
-
-21. Accepți TSR/DLSS/FSR/XeSS și rezoluție dinamică pentru menținerea FPS-ului, fără ca Frame Generation să fie necesar pentru atingerea minimului?
-
-22. **[B]** Accepți ca PC-ul host-ului să aibă cerințe CPU/RAM mai mari decât PC-urile celor trei clienți, deoarece simulează toate cele patru zone?
-
-23. Care este timpul maxim acceptabil pentru pornirea jocului, încărcarea campaniei și intrarea într-un interior?
-
-24. Ordonează prioritățile când trebuie făcut un compromis: FPS, densitatea orașului, iluminarea realistă, calitatea personajelor și distanța vizuală.
-
-## 4. NYC, geografie și dimensiunea hărții — întrebările 25–35
-
-25. **[B]** Vrei Manhattan recognoscibil dar comprimat, o copie geografică apropiată sau un NYC fictiv construit din zone recognoscibile?
-
-26. **[B]** La forma finală vrei doar Manhattan sau și Brooklyn, Queens, Bronx și Staten Island?
-
-27. **[B]** Care este prima zonă pe care vrei să o construim complet?
-
-28. **[B]** În câte minute ar trebui traversată harta finală cu o mașină obișnuită, fără trafic extrem?
-
-29. În câte minute ar trebui traversat pe jos primul district complet?
-
-30. Cât de fidel trebuie păstrat gridul stradal real și ce landmark-uri trebuie să fie recognoscibile obligatoriu?
-
-31. Folosim numele reale ale străzilor și cartierelor sau nume fictive inspirate din NYC?
-
-32. Câtă verticalitate vrei: străzi și clădiri, acoperișuri, scări de incendiu, metrou, tuneluri și canalizare?
-
-33. Acoperișurile trebuie să formeze o rețea reală de explorare sau sunt accesibile numai în anumite clădiri și misiuni?
-
-34. Metroul este un sistem fizic cu trenuri și stații, un fast travel mascat sau ambele?
-
-35. Cum limităm natural harta și cum vrei să fie adăugate zonele ulterioare: poduri, tuneluri, feribot, metrou sau update-uri ale aceluiași world map?
-
-## 5. Interioare, timp, vreme și starea lumii — întrebările 36–44
-
-36. **[B]** Orașul și interioarele trebuie să fie continue fără ecrane de încărcare vizibile sau accepți tranziții scurte pentru interioarele foarte complexe?
-
-37. **[B]** Aproximativ ce procent dintre clădiri trebuie să fie accesibil la lansare: 5%, 10%, 25%, majoritatea sau doar cele cu scop de gameplay?
-
-38. Ce interioare au prioritate: apartamente, magazine, restaurante, cluburi, birouri, depozite, spitale, secții de poliție sau altele?
-
-39. Accepți interioare modulare recombinate inteligent sau fiecare interior important trebuie să fie unic?
-
-40. **[B]** Confirmi că cei patru jucători pot fi simultan în patru interioare sau cartiere complet diferite?
-
-41. **[B]** Cât durează o zi completă în joc: 48, 72, 96, 120 de minute sau altă durată?
-
-42. **[B]** Confirmi că somnul este individual, iar timpul global sare numai dacă toți jucătorii dorm sau votează pentru salt?
-
-43. Vrei anotimpuri? Dacă da, sunt dinamice în aceeași campanie sau fiecare campanie/zonă are un anotimp fix?
-
-44. Ce fenomene meteo dorești și care afectează gameplay-ul: ploaie, furtună, ceață, caniculă, zăpadă, gheață și inundații locale?
-
-## 6. Populație, AI și simulare socială — întrebările 45–54
-
-45. **[B]** Ce joc reprezintă cel mai bine densitatea de populație dorită: GTA V, Spider-Man, Cyberpunk 2077 sau alt exemplu?
-
-46. **[B]** Confirmi că presetările slabe pot reduce mulțimea și traficul vizual, dar nu elimină martorii, poliția sau NPC-urile relevante pentru gameplay?
-
-47. **[B]** Ce NPC-uri trebuie să aibă identitate permanentă: contacte, vecini, comercianți, angajați, martori importanți și/sau cetățeni aleatori?
-
-48. **[B]** Fiecare cetățean trebuie să aibă casă, serviciu, bani și nevoi reale sau numai NPC-urile importante, iar restul oferă o iluzie convingătoare?
-
-49. Cât de detaliate sunt rutinele: traseu simplu, program casă–muncă–magazin sau viață complexă cu variații?
-
-50. Ce trebuie să-și amintească NPC-urile despre jucător și pentru cât timp: ajutor, insultă, furt, violență, datorii și reputație?
-
-51. După ce poate fi recunoscut jucătorul: față, haine, voce, mașină, număr de înmatriculare sau reputație?
-
-52. Reputația socială este globală sau separată pe cartier, profesie, poliție, mafie și clasă socială?
-
-53. Ce relații permiți cu NPC-urile: prietenie, rivalitate, romantism, familie, mentorat și angajare?
-
-54. Cum preferi conversațiile: replici contextuale scurte, dialog cu opțiuni, conversații cinematice sau o combinație?
-
-## 7. Co-op privat și sesiunea — întrebările 55–66
-
-55. **[B]** Patru jucători reprezintă limita absolută sau arhitectura trebuie să permită o posibilă extindere după lansare?
-
-56. **[B]** Jocul este Steam-only inițial sau trebuie să permită invitații între magazine PC diferite printr-un serviciu comun?
-
-57. **[B]** Confirmi modelul: un jucător creează sesiunea, PC-ul lui rulează listen server-ul, iar ceilalți intră prin invitație privată?
-
-58. **[B]** Conectarea trebuie să funcționeze fără configurarea routerului și fără port forwarding manual?
-
-59. **[B]** Prietenii pot intra după pornirea sesiunii și în timpul unui job sau numai din lobby/între activități?
-
-60. Când un prieten intră, apare la ultima locație salvată, acasă, lângă host sau într-un punct sigur apropiat de grup?
-
-61. **[B]** Pentru v1 accepți ca ieșirea normală a host-ului să salveze campania și să închidă sesiunea pentru toți, fără host migration?
-
-62. La un crash al host-ului, cât timp așteptăm reconectarea și la ce autosave valid revenim?
-
-63. **[B]** Confirmi că nu există limită de distanță și că fiecare jucător poate rămâne permanent într-o zonă diferită?
-
-64. **[B]** Pot exista patru joburi independente simultan sau campania are un singur job principal activ, cu activități secundare individuale?
-
-65. În multiplayer, pauza totală există numai dacă toți votează, numai pentru host sau nu există deloc?
-
-66. **[B]** Jucătorii sunt întotdeauna aliați sau permiți friendly fire, furt între prieteni, sabotaj ori PvP opțional configurat de host?
-
-## 8. Save, progres și încredere — întrebările 67–75
-
-67. **[B]** Accepți modelul recomandat: campania host-ului conține lumea și câte un record economic/persistent separat pentru fiecare prieten?
-
-68. **[B]** Banii și bunurile rămân exclusiv în acea campanie sau trebuie să urmeze jucătorul în campaniile altor persoane?
-
-69. **[B]** Dacă ceva poate călători între lumi, ce anume: aspectul, hainele, banii, echipamentele, vehiculele, proprietățile, reputația sau cazierul?
-
-70. **[B]** Când campania nu rulează, timpul, nevoile, chiria, taxele, dobânzile și afacerile se opresc complet?
-
-71. **[B]** Fiind co-op privat, accepți că proprietarul campaniei își poate modifica tehnic save-ul local, chiar dacă jocul previne erorile și duplicarea accidentală?
-
-72. **[B]** Dacă un jucător se deconectează în timpul unui transfer, schimb sau cumpărături, operația se anulează complet și revine la starea anterioară?
-
-73. Vrei mai multe sloturi de campanie, salvări manuale plus autosave sau numai autosave cu checkpoint-uri?
-
-74. Vrei copii automate de siguranță și posibilitatea de a reveni la una dintre ultimele salvări valide?
-
-75. **[B]** În Early Access promitem compatibilitatea tuturor salvărilor sau accepți resetări rare dacă o schimbare majoră nu poate fi migrată sigur?
-
-## 9. Player, camere, input și mișcare — întrebările 76–87
-
-76. **[B]** First-person și third-person pot fi schimbate oricând dintr-un buton, inclusiv în vehicule și combat?
-
-77. **[B]** Cele două perspective trebuie să ofere exact aceleași acțiuni și avantaje de gameplay?
-
-78. În first-person vezi corpul complet sau numai mâinile și obiectele ținute?
-
-79. În third-person preferi cameră centrată, peste umăr sau comutabilă între umărul stâng și drept?
-
-80. Ce efecte trebuie să poată fi dezactivate: head bob, motion blur, camera shake, blur la sprint și schimbarea FOV-ului?
-
-81. **[B]** Jocul trebuie proiectat complet pentru mouse+tastatură și controller din prima versiune?
-
-82. Ce opțiuni sunt obligatorii: remapping total, sensibilitate separată, hold/toggle, mers lent și aim assist pentru controller?
-
-83. Ce viteze de deplasare există și cât de importantă este stamina: mers lent, mers, jogging, alergare și sprint?
-
-84. **[B]** Cât parkour dorești: obstacole joase, escaladare urbană moderată sau mișcare apropiată de jocurile dedicate?
-
-85. Personajul poate folosi scări de incendiu, țevi, cornișe și cabluri sau numai trasee special pregătite?
-
-86. Înotul, bărcile și deplasarea în apă sunt necesare?
-
-87. Vrei crouch, prone și cover manual, cover automat sau niciun sistem complex de cover?
-
-## 10. Crearea personajului, hainele și statutul — întrebările 88–94
-
-88. **[B]** Personajul este creat complet de jucător sau alegem personaje presetate personalizabile?
-
-89. **[B]** Permiți diferențe reale de înălțime și formă corporală, acceptând costul suplimentar pentru haine, animații și coliziuni?
-
-90. Ce poate fi modificat: față, păr, piele, ochi, tatuaje, cicatrici, voce, mers și postură?
-
-91. Câte straturi de haine trebuie purtate simultan: lenjerie, tricou, cămașă, jachetă, pantaloni, încălțăminte și accesorii?
-
-92. Ce sloturi de bijuterii dorești: lanțuri, ceasuri, brățări, inele, cercei și piercing-uri?
-
-93. Vrei outfit-uri salvate și schimbare rapidă numai la garderobă, oriunde din inventar sau în anumite locații?
-
-94. Hainele și bijuteriile influențează doar aspectul sau și statutul, accesul social, buzunarele, protecția și recunoașterea de către martori?
-
-## 11. Nevoi, sănătate, răni și moarte — întrebările 95–106
-
-95. **[B]** Confirmă lista exactă: foame, somn, igienă și injury. Vrei să adaugi sete, temperatură, toaletă, stres, durere, boli sau dependențe?
-
-96. **[B]** Confirmi că nevoile avansează numai cât campania rulează și jucătorul este activ, nu după timpul real offline?
-
-97. După cât timp de joc apare foamea și ce produce fiecare etapă: notificare, stamina redusă, recuperare lentă, slăbiciune sau leșin?
-
-98. Ce produce lipsa somnului: reacții lente, stamina redusă, vedere afectată, micro-adormire sau efecte discrete?
-
-99. Ce influențează igiena: aspectul, reacțiile NPC-urilor, accesul în locații, anumite joburi sau sănătatea?
-
-100. **[B]** Sănătatea este un indicator general sau folosim răni separate pentru cap, trunchi, brațe și picioare?
-
-101. Ce răni simulăm: sângerare, fracturi, arsuri, comoție, infecții, cicatrici și durere persistentă?
-
-102. Rănile afectează mișcarea și acțiunile: șchiopătat, aim slab, imposibilitatea de a sprinta, ridica sau conduce?
-
-103. Cum se tratează rănile: prim ajutor, medicamente, ambulanță, spital, operații și recuperare în timp?
-
-104. Vrei alcoolul, drogurile, toleranța, sevrajul și dependența ca sisteme reale sau numai ca elemente narative/economice?
-
-105. **[B]** Cum funcționează downed/revive: cât durează, cine poate stabiliza și de câte ori poți fi ridicat înainte de spital?
-
-106. **[B]** Confirmi că la moarte păstrezi contul și bunurile depozitate, dar poți pierde cash purtat, contrabandă, obiecte abandonate, timp și costuri medicale?
-
-## 12. Interacțiuni, obiecte, inventar și ownership — întrebările 107–118
-
-107. **[B]** Când ridici un obiect mic, intră instant în inventar, este ținut fizic în mână sau regula diferă după categorie?
-
-108. **[B]** Inventarul este limitat prin sloturi, greutate, volum, o combinație sau este aproape nelimitat?
-
-109. Ce obiecte identice se pot grupa și ce categorii trebuie să rămână instanțe individuale?
-
-110. Ce stare proprie are un obiect: calitate, uzură, murdărie, muniție, serie, proveniență și modificări?
-
-111. Ce containere există: buzunare, rucsacuri, portbagaje, dulapuri, seifuri și depozite? Capacitatea este realistă?
-
-112. **[B]** Obiectele lăsate în lume rămân exact unde au fost puse sau dispar după o regulă clară dacă nu sunt importante?
-
-113. **[B]** Obiectele cumpărate/găsite rămân proprietatea personală a jucătorului în recordul campaniei?
-
-114. **[B]** Ce permisiuni poate acorda proprietarul: folosește, mută, consumă, conduce, depozitează, modifică și vinde?
-
-115. Schimbul între jucători folosește o fereastră sigură confirmată de ambii, transfer direct din mână sau ambele?
-
-116. Pot jucătorii să-și fure obiectele între ei și poate host-ul dezactiva această regulă?
-
-117. Interacțiunea principală folosește un singur buton contextual, meniu radial pentru acțiuni multiple sau combinație?
-
-118. Ce acțiuni necesită timp și animație și pot fi întrerupte: forțat uși, căutat, reparat, realimentat, tratat și mutat obiecte?
-
-## 13. Economie, bancă, taxe, chirie și datorii — întrebările 119–130
-
-119. **[B]** Confirmi că timpul economic se oprește complet când campania host-ului nu rulează?
-
-120. **[B]** Vrei numerar, cont bancar și bani ilegali/murdari ca trei forme distincte sau numai cash și bancă?
-
-121. **[B]** Dacă există bani murdari, trebuie spălați înaintea cumpărăturilor mari și ce risc dorești pentru această operație?
-
-122. Ce se întâmplă exact cu numerarul purtat la moarte, spital și arest: pierdere totală, procent, confiscare sau posibilitate de recuperare?
-
-123. Contul bancar este accesibil integral din telefon oriunde sau anumite operațiuni necesită ATM/sucursală?
-
-124. Transferurile între prieteni sunt gratuite și nelimitate sau au limite, comisioane și posibilitatea de a atrage atenție?
-
-125. Pe lângă conturile personale, vrei un fond comun voluntar pentru echipă, afaceri ori bunuri comune?
-
-126. Folosim dolari și cenți exacți sau rotunjim majoritatea prețurilor și veniturilor pentru claritate?
-
-127. Prețurile urmează aproximativ NYC-ul real sau comprimăm economia pentru ca progresul să fie satisfăcător într-un număr rezonabil de ore?
-
-128. Vrei prețuri fixe sau variații pe cartier, cerere, raritate, reputație, anotimp și evenimente?
-
-129. După câte ore de joc ar trebui obținute prima mașină, primul apartament bun și primul obiect de lux?
-
-130. **[B]** Precizează regulile pentru taxe, datorii și chirie: ce plăți sunt manuale/automate, ce perioadă de grație există și când apar penalizări, evacuare sau recuperarea bunului?
-
-## 14. Cumpărături, lux, proprietăți și afaceri — întrebările 131–142
-
-131. **[B]** Cumpărăturile se fac în magazine fizice, prin aplicații cu livrare sau prin ambele? Ce categorii trebuie cumpărate fizic?
-
-132. Magazinele au stoc real care se epuizează și se reface sau catalog permanent cu raritate controlată prin preț și acces?
-
-133. Mașinile se cumpără de la dealeri, second-hand, licitații, persoane private și piață ilegală? Ce canale intră în prima versiune?
-
-134. Pentru mașini și proprietăți vrei plată integrală, finanțare, leasing, închiriere și ipotecă?
-
-135. Hainele influențează temperatura, buzunarele, protecția, statutul, recunoașterea și accesul social sau doar o parte dintre acestea?
-
-136. Bijuteriile sunt simboluri de statut, investiții, obiecte ușor de furat, garanții pentru împrumuturi și/sau bunuri care atrag atenție?
-
-137. **[B]** Apartamentele există fizic în clădire cu vedere reală sau pot fi spații separate încărcate când intri?
-
-138. Un jucător poate închiria/deține mai multe locuințe și aceeași proprietate poate fi cumpărată separat de mai mulți jucători?
-
-139. Cât de profundă este personalizarea locuinței: preseturi, mobilier plasat liber, finisaje și modificări structurale?
-
-140. Bunurile se mută între proprietăți instant sau trebuie transportate fizic de jucător, vehicul ori serviciu de mutări?
-
-141. Ce categorii de echipament trebuie să existe primele și ce le diferențiază: eficiență, zgomot, capacitate, fiabilitate, uzură și statut?
-
-142. **[B]** Afacerile sunt gestionate activ, produc venit pasiv numai când campania rulează sau evoluează și între sesiuni?
-
-## 15. Joburi, misiuni și evenimente — întrebările 143–152
-
-143. **[B]** Joburile sunt predominant scrise manual, generate sistemic sau hibride: povești manuale plus activități repetabile?
-
-144. Ce fantezie alegi pentru primul job legal: livrări, taxi, mecanic, construcții, curățenie, securitate, depozit sau altceva?
-
-145. Ce fantezie alegi pentru prima activitate ilegală: furt, spargere, furt auto, contrabandă, jaf, fraudă, recuperare pentru mafie sau altceva?
-
-146. Cum sunt descoperite joburile: telefon, aplicații, firme fizice, NPC-uri, contacte și reputație?
-
-147. Povestea principală blochează sisteme/zone sau doar oferă context, personaje și recompense?
-
-148. Ce evenimente spontane apar în oraș și cât de des: accidente, jafuri, controale, cereri urgente, oportunități rare și conflicte?
-
-149. **[B]** Joburile co-op oferă roluri distincte precum șofer, observator, negociator și executant sau fiecare poate face orice?
-
-150. **[B]** Cum se adaptează jobul la 1–4 jucători: obiective simultane, timp, dificultate, adversari și recompense?
-
-151. **[B]** Ce se întâmplă când cineva intră, se deconectează sau revine în mijlocul jobului?
-
-152. **[B]** Cum se împart recompensele și ce se întâmplă la eșec: egal, după contribuție, negociat, checkpoint, consecințe persistente sau continuare cu plată redusă?
-
-## 16. Crimă, martori, poliție, mafie și închisoare — întrebările 153–166
-
-153. **[B]** Wanted-ul, cazierul și consecințele sunt strict individuale sau anumite infracțiuni compromit întreaga echipă?
-
-154. Ce trebuie să știe un martor pentru un raport util: fapta, fața, hainele, vocea, arma, vehiculul și numărul lui?
-
-155. Raportarea este instant sau martorul trebuie să scoată telefonul, să fugă ori să ajungă la poliție?
-
-156. Poți convinge, mitui, amenința sau imobiliza un martor și ce consecințe suplimentare are fiecare metodă?
-
-157. Camerele de securitate sunt vizibile, evitabile, dezactivabile și pot avea înregistrări șterse/recuperate?
-
-158. Identificarea folosește fața, vocea, hainele, amprentele, ADN-ul, arma și numărul mașinii? Ce ascund masca și mănușile?
-
-159. **[B]** Ce dovezi fizice intră în prima versiune și care rămân persistente după descărcarea zonei?
-
-160. **[B]** Care sunt treptele răspunsului poliției: verificare, oprire, urmărire, blocaje, unități armate, elicopter și investigație ulterioară?
-
-161. **[B]** Poliția vine numai din unități existente care se deplasează fizic sau poate apărea controlat în afara privirii?
-
-162. Cum scapi și cum te predai: ruperea contactului, schimbarea hainelor/mașinii, ascundere, rezolvarea dovezilor, surrender voluntar?
-
-163. Când devii complice pentru un prieten urmărit: simpla prezență, conducerea mașinii, o acțiune concretă sau ignorarea unui ordin?
-
-164. Mafia este o singură organizație sau mai multe familii? Reputația este individuală, comună grupului sau ambele?
-
-165. Vrei polițiști corupți, informatori, mită, protecție și conflicte poliție–mafie independente de jucător?
-
-166. **[B]** Închisoarea este gameplay complet, zonă cu activități limitate, secvență scurtă sau salt de timp? Pot prietenii ajuta legal ori ilegal?
-
-## 17. Combat, arme și damage — întrebările 167–175
-
-167. Confirmi că o carieră legală poate evita aproape complet combat-ul, iar o carieră violentă îl poate face frecvent fără a schimba letalitatea de bază?
-
-168. **[B]** Definește letalitatea: câte lovituri obișnuite de pistol în trunchi suportă un om neprotejat și cât de des o lovitură la cap este fatală?
-
-169. **[B]** Gloanțele folosesc proiectile cu viteză/cădere, calcul instant la distanțe mici sau un sistem hibrid?
-
-170. Ce arme intră în nucleul inițial: pumni, arme improvizate, cuțite, pistoale, shotgun, SMG și puști?
-
-171. Cum sunt obținute armele și cât de rare sunt: licență, magazin legal, piață ilegală, furt, crafting sau recompense?
-
-172. Armele sunt vizibile pe corp, ascunse sub haine sau transportate în geantă/vehicul? Ce observă civilii și poliția?
-
-173. Cât de detaliată este manipularea: recoil, încărcătoare păstrate, glonț pe țeavă, blocaje, curățare și uzură?
-
-174. Vrei damage pe zone, armură cu acoperire reală, penetrare prin materiale și ricoșeu?
-
-175. Cât de profund este melee-ul: lovituri simple, blocaj/esquivă, grappling, imobilizare și folosirea mediului?
-
-## 18. Vehicule și trafic — întrebările 176–185
-
-176. **[B]** Ce senzație de condus urmărești: arcade realist, simulare accesibilă, realism dur sau comportament diferit pe categorii?
-
-177. **[B]** Damage-ul vehiculului este vizual, afectează motorul/roțile/direcția sau include deformare fizică avansată?
-
-178. Vrei transmisie automată implicită și manuală opțională? Ce asistențe pot fi dezactivate: ABS, tracțiune și stabilitate?
-
-179. **[B]** Mașinile personale rămân exact unde au fost parcate, cu damage și combustibil, sau sunt recuperate automat în garaj?
-
-180. Cum funcționează cheile, permisiunile, încuierea, spargerea, hotwire-ul și furtul cheilor?
-
-181. Combustibilul diferă după vehicul și stilul de condus? Alimentarea durează, poate fi întreruptă și permite canistre/ajutor?
-
-182. Cât de detaliate sunt întreținerea, defecțiunile, reparațiile, asigurarea, tractarea și recuperarea unei mașini distruse?
-
-183. Ce upgrade-uri persistente permiți: motor, suspensie, frâne, anvelope, blindaj, vopsea, sunet și interior?
-
-184. **[B]** Confirmi că traficul îndepărtat este simulat simplificat și devine fizic complet numai lângă jucători?
-
-185. Ce reguli rutiere sunt aplicate: viteza, semafoarele, camerele, parcarea, numărul de înmatriculare, opririle și confiscarea?
-
-## 19. UI, audio, voice chat și accesibilitate — întrebările 186–195
-
-186. **[B]** UI-ul este minimalist și integrat în lume, bazat pe telefon, HUD clasic sau combinație?
-
-187. HUD-ul este permanent, apare contextual sau poate fi configurat complet?
-
-188. Nevoile și starea folosesc procente exacte sau termeni naturali precum „flămând”, „obosit” și „rănit”?
-
-189. Vrei minimap permanent, hartă mare, GPS cu traseu, indicatoare în lume sau combinație?
-
-190. Telefonul este interfața principală pentru joburi, bancă, hartă, contacte, cumpărături și mesaje?
-
-191. Cum îi vezi pe prieteni: contur prin pereți, marker, hartă, ping contextual sau fără ajutor supranatural?
-
-192. **[B]** Vrei voice chat integrat și cum funcționează: canal de grup, proximitate, telefon în joc sau combinație?
-
-193. Cât de realist este sunetul: ocluzie prin pereți, ecou în interioare, distanțe reale și identitate sonoră pe cartiere?
-
-194. Muzica folosește ambient, radio în mașini și locații, piese originale și/sau muzică licențiată?
-
-195. **[B]** Ce limbi și opțiuni de accesibilitate sunt obligatorii la lansare: subtitrări, speaker labels, text mărit, daltonism, indicatoare sonore și reducerea mișcării camerei?
-
-## 20. Producție, asset-uri, Codex și lansare — întrebările 196–200
-
-196. **[B]** Proiectul Unreal există deja? Care este calea, ce funcționează acum și sunt instalate Visual Studio, SDK-urile și toolchain-ul pentru UE 5.8.1?
-
-197. **[B]** Confirmi că Codex poate modifica direct proiectul, compila și rula testele, iar tu intervii pentru decizii, asset-uri și pașii vizuali explicați exact în Unreal Editor?
-
-198. **[B]** Confirmi regula: C++ pentru gameplay, networking, save, economie, AI și performanță; Blueprint pentru animații, UI, cinematics, configurarea asset-urilor și excepții aprobate?
-
-199. **[B]** Ce programe folosești pentru asset-uri și accepți un pipeline obligatoriu pentru scară, pivot, nume, foldere, materiale, coliziuni, Nanite/LOD/HLOD, plus Source Art separat de repo-ul jocului?
-
-200. **[B]** Lansarea dorită este Early Access sau versiune completă și care este pragul minim înainte de a cere bani: suprafață, joburi, vehicule, proprietăți, ore de conținut și nivel de stabilitate?
+## 1. Central vision — questions 1–8
+
+1. **[B]** Rank these promises: aspirational life, financial ascent, legal/illegal career, and shared co-op stories.
+2. What is the starting situation: no money/home, modest apartment, cheap car, debt, or something else?
+3. What is the endgame fantasy: wealthy collector, entrepreneur, criminal leader, respected legal citizen, or a mixture?
+4. **[B]** Must the entire experience be completable solo, or may some activities require at least two players?
+5. **[B]** Is co-op only shared play, or should every major activity contain specialized team roles and advantages?
+6. Do you want a main campaign, separate storylines, or a systems-driven sandbox?
+7. How long is a satisfying session: 30–60 minutes, 1–2 hours, 3–4 hours, or no target?
+8. After maximum success, does play continue indefinitely, start New Game Plus, end, or remain open?
+
+## 2. Tone, audience, and limits — questions 9–14
+
+9. Is the tone harsh and serious, realistic with occasional humor, satirical, or activity-dependent?
+10. What age rating and levels of graphic violence, drugs, alcohol, gambling, nudity, and language are intended?
+11. When realism conflicts with fun, choose strict realism, simplified realism, or case-by-case fun?
+12. How much humor should exist in dialogue, advertising, radio, events, and NPC reactions?
+13. **[B]** Use fictional brands, stores, and vehicles only, or pursue real licenses where possible?
+14. Which themes, activities, crimes, or mission types must never appear?
+
+## 3. Platform, performance, and scalability — questions 15–24
+
+15. **[B]** What is the weakest target PC: CPU, GPU, RAM, VRAM, and SSD/HDD? If unknown, may a reference PC be selected after the first benchmark?
+16. **[B]** Is stable `1080p/30 FPS` acceptable on minimum hardware, or are 45 or 60 FPS required?
+17. **[B]** Is Recommended `1080p/60`, `1440p/60`, `1440p/90`, or another target?
+18. **[B]** May SSD and at least 16 GB RAM be mandatory?
+19. **[B]** May Low visibly reduce pedestrians, traffic, draw distance, and cosmetic objects while preserving gameplay?
+20. **[B]** May Low reduce or disable Lumen, ray tracing, advanced shadows, and expensive reflections?
+21. Are TSR, DLSS, FSR, XeSS, and Dynamic Resolution allowed without requiring Frame Generation for minimum performance?
+22. **[B]** May the host require more CPU and RAM because it simulates all four areas?
+23. What are acceptable startup, campaign-load, and interior-entry times?
+24. Rank compromise priorities: FPS, city density, realistic lighting, character quality, and view distance.
+
+## 4. NYC, geography, and map size — questions 25–35
+
+25. **[B]** Should Manhattan be recognizable but compressed, geographically close, or a fictional NYC assembled from recognizable areas?
+26. **[B]** Final scope: Manhattan only, or Brooklyn, Queens, Bronx, and Staten Island too?
+27. **[B]** What first area should be completed?
+28. **[B]** How many minutes should ordinary-car traversal take without extreme traffic?
+29. How many minutes should walking across the first complete district take?
+30. How faithfully should the real street grid remain, and which landmarks must be recognizable?
+31. Use real street and district names or fictional NYC-inspired names?
+32. How much verticality: streets and buildings, rooftops, fire escapes, subway, tunnels, and sewer?
+33. Should rooftops form a true exploration network or exist only in selected buildings and missions?
+34. Is the subway physical, masked fast travel, or both?
+35. How is the map bounded and later expanded: bridges, tunnels, ferries, subway, or updates to one World?
+
+## 5. Interiors, time, weather, and world state — questions 36–44
+
+36. **[B]** Must city and interiors be continuous, or may complex interiors use short transitions?
+37. **[B]** Approximately what share of buildings is accessible at launch: 5%, 10%, 25%, most, or only gameplay-relevant locations?
+38. Which interiors have priority: apartments, stores, restaurants, clubs, offices, warehouses, hospitals, police stations, or others?
+39. Are intelligently recombined modular interiors acceptable, or must every important interior be unique?
+40. **[B]** Can four players simultaneously occupy four completely different interiors or districts?
+41. **[B]** How long is a complete in-game day: 48, 72, 96, 120 minutes, or another duration?
+42. **[B]** Is sleep individual with global time skipping only when everyone sleeps or votes?
+43. Are there seasons, and are they dynamic or fixed per campaign/area?
+44. Which weather appears and affects gameplay: rain, storms, fog, heat, snow, ice, or local flooding?
+
+## 6. Population, AI, and social simulation — questions 45–54
+
+45. **[B]** Which game best represents desired population density: GTA V, Spider-Man, Cyberpunk 2077, or another?
+46. **[B]** May low settings reduce visual crowd and traffic without removing witnesses, police, or gameplay-relevant NPCs?
+47. **[B]** Which NPCs have permanent identity: contacts, neighbors, merchants, employees, important witnesses, random citizens?
+48. **[B]** Does every citizen need a real home, job, money, and needs, or only important NPCs while others create an illusion?
+49. How detailed are routines: simple route, home–work–store schedule, or complex varied life?
+50. What do NPCs remember, and for how long: help, insult, theft, violence, debt, and reputation?
+51. How may a player be recognized: face, clothing, voice, car, license plate, or reputation?
+52. Is social reputation global or separated by district, profession, police, organized crime, and class?
+53. Which NPC relationships exist: friendship, rivalry, romance, family, mentorship, and employment?
+54. Preferred conversations: short contextual lines, choice dialogue, cinematics, or a mixture?
+
+## 7. Private co-op and session — questions 55–66
+
+55. **[B]** Is four players an absolute limit, or should architecture permit later expansion?
+56. **[B]** Initially Steam-only, or cross-store PC invitations through a shared service?
+57. **[B]** Confirm one player creates a session, their PC runs a listen server, and others join through private invitation?
+58. **[B]** Must connection work without router configuration or manual port forwarding?
+59. **[B]** May friends join after session start and during a job, or only in lobby or between activities?
+60. Where does a joining friend appear: last location, home, near host, or nearest safe group point?
+61. **[B]** For v1, may normal host exit save and close the session for everyone without host migration?
+62. On host crash, how long is reconnection allowed and which valid autosave is restored?
+63. **[B]** Is there no distance limit, allowing every player to remain in a different area?
+64. **[B]** May four independent jobs run simultaneously, or is there one main campaign job plus individual side activities?
+65. In multiplayer, is global pause unanimous, host-only, or absent?
+66. **[B]** Are players always allies, or may the host configure friendly fire, theft, sabotage, or optional PvP?
+
+## 8. Save, progression, and trust — questions 67–75
+
+67. **[B]** Accept the recommended model: host campaign owns the world, with a separate economic and persistent record per friend?
+68. **[B]** Are money and possessions exclusive to one campaign, or do they follow the player into others' campaigns?
+69. **[B]** What travels between worlds: appearance, clothing, money, equipment, vehicles, properties, reputation, criminal record?
+70. **[B]** When a campaign is not running, do time, needs, rent, taxes, interest, and businesses stop completely?
+71. **[B]** In private co-op, is it acceptable that the campaign owner can technically edit local saves while the game prevents mistakes and accidental duplication?
+72. **[B]** If a player disconnects during transfer, trade, or purchase, should the operation cancel completely and roll back?
+73. Multiple campaign slots, manual saves plus autosave, or autosave checkpoints only?
+74. Automatic safety copies and restoration to recent valid saves?
+75. **[B]** During Early Access, promise all save compatibility or allow rare resets when safe migration is impossible?
+
+## 9. Player, cameras, input, and movement — questions 76–87
+
+76. **[B]** Can first- and third-person switch at any time, including vehicles and combat?
+77. **[B]** Must both perspectives provide identical actions and gameplay advantages?
+78. In first-person, show the full body or only hands and held objects?
+79. Third-person camera: centered, over shoulder, or switchable left/right shoulder?
+80. Which effects can be disabled: head bob, motion blur, camera shake, sprint blur, and FOV change?
+81. **[B]** Must the first version fully support both mouse and keyboard and controller?
+82. Which options are mandatory: full remapping, separate sensitivity, hold/toggle, slow walk, controller aim assist?
+83. Which speeds exist and how important is stamina: slow walk, walk, jog, run, sprint?
+84. **[B]** How much parkour: low obstacles, moderate urban climbing, or movement close to dedicated parkour games?
+85. Can characters use fire escapes, pipes, ledges, and cables, or only prepared routes?
+86. Are swimming, boats, and water travel required?
+87. Crouch, prone, manual cover, automatic cover, or no complex cover?
+
+## 10. Character creation, clothing, and status — questions 88–94
+
+88. **[B]** Fully player-created character or customizable presets?
+89. **[B]** Allow real height and body-shape variation despite clothing, animation, and collision cost?
+90. What is customizable: face, hair, skin, eyes, tattoos, scars, voice, walk, and posture?
+91. How many clothing layers may be worn: underwear, shirt, overshirt, jacket, pants, footwear, accessories?
+92. Which jewelry slots: chains, watches, bracelets, rings, earrings, and piercings?
+93. Saved outfits and quick changing only at wardrobe, anywhere from inventory, or at selected places?
+94. Do clothes and jewelry affect only appearance, or also status, access, pockets, protection, and witness recognition?
+
+## 11. Needs, health, injuries, and death — questions 95–106
+
+95. **[B]** Confirm hunger, sleep, hygiene, and injury. Add thirst, temperature, toilet, stress, pain, disease, or addiction?
+96. **[B]** Do needs advance only while the campaign and player are active, never from real offline time?
+97. When does hunger appear, and do stages cause notification, stamina loss, slow recovery, weakness, or fainting?
+98. What does sleep deprivation cause: slow reaction, reduced stamina, impaired vision, microsleep, or subtle effects?
+99. What does hygiene affect: appearance, NPC reactions, location access, jobs, or health?
+100. **[B]** Is health general or separated into head, torso, arm, and leg injuries?
+101. Which injuries: bleeding, fracture, burn, concussion, infection, scar, and persistent pain?
+102. Do injuries affect movement and actions: limp, poor aim, inability to sprint, lift, or drive?
+103. Treatment methods: first aid, medicine, ambulance, hospital, surgery, and recovery over time?
+104. Are alcohol, drugs, tolerance, withdrawal, and addiction real systems or narrative/economic elements?
+105. **[B]** How does downed/revive work: duration, stabilizer, and number of revives before hospital?
+106. **[B]** On death, keep account and stored goods but risk carried cash, contraband, abandoned items, time, and medical cost?
+
+## 12. Interaction, items, inventory, and ownership — questions 107–118
+
+107. **[B]** Does a small object enter inventory instantly, stay physically in hand, or vary by category?
+108. **[B]** Is inventory limited by slots, weight, volume, a combination, or almost unlimited?
+109. Which identical objects stack, and which categories remain individual instances?
+110. What per-item state exists: quality, wear, dirt, ammunition, serial, provenance, and modifications?
+111. Which containers exist: pockets, backpacks, trunks, closets, safes, and warehouses? Are capacities realistic?
+112. **[B]** Do dropped objects remain forever or disappear under a clear rule when unimportant?
+113. **[B]** Do purchased and found objects remain personal property in the campaign record?
+114. **[B]** Which permissions may owners grant: use, move, consume, drive, deposit, modify, and sell?
+115. Does player trade use a bilateral secure window, direct handoff, or both?
+116. May players steal from one another, and can the host disable it?
+117. Primary interaction: one contextual button, radial menu, or combination?
+118. Which interruptible actions require time and animation: forcing doors, searching, repairing, refueling, treating, and moving objects?
+
+## 13. Economy, bank, taxes, rent, and debt — questions 119–130
+
+119. **[B]** Does economic time stop completely when the host campaign is not running?
+120. **[B]** Use cash, bank balance, and dirty money as three forms, or cash and bank only?
+121. **[B]** Must dirty money be laundered for large purchases, and what risk should laundering create?
+122. What exactly happens to carried cash on death, hospital, and arrest: total loss, percentage, confiscation, or recovery?
+123. Is the entire bank accessible by phone anywhere, or do some operations require ATM or branch?
+124. Are friend transfers free and unlimited, or capped, charged, and capable of attracting attention?
+125. Besides personal accounts, is there a voluntary shared team, business, or property fund?
+126. Use exact dollars and cents or round most prices and income?
+127. Follow approximate real NYC prices or compress the economy for satisfying progression?
+128. Fixed prices or variations by district, demand, rarity, reputation, season, and events?
+129. After how many hours should the first car, good apartment, and luxury item be earned?
+130. **[B]** Define tax, debt, and rent rules: manual or automatic payment, grace period, penalties, eviction, and repossession.
+
+## 14. Shopping, luxury, properties, and businesses — questions 131–142
+
+131. **[B]** Shopping in physical stores, delivery apps, or both? Which categories must be bought physically?
+132. Real depleting and restocking inventory, or permanent catalog with rarity controlled by price and access?
+133. Vehicle channels: new dealer, used, auction, private person, illegal market? Which enter v1?
+134. For vehicles and properties: full payment, financing, leasing, rent, and mortgage?
+135. Do clothes affect temperature, pockets, protection, status, recognition, and access, or only some?
+136. Is jewelry status, investment, theft target, loan collateral, and/or attention magnet?
+137. **[B]** Are apartments physical spaces with real views or separate spaces loaded on entry?
+138. May a player own or rent several homes, and may several players separately buy the same property?
+139. How deep is customization: presets, free furniture, finishes, and structural modification?
+140. Do possessions move instantly or physically by player, vehicle, or moving service?
+141. Which equipment categories come first, and how do efficiency, noise, capacity, reliability, wear, and status differ?
+142. **[B]** Are businesses actively managed, passive only while the campaign runs, or progressing between sessions?
+
+## 15. Jobs, missions, and events — questions 143–152
+
+143. **[B]** Are jobs mostly handcrafted, system-generated, or hybrid?
+144. First legal-job fantasy: delivery, taxi, mechanic, construction, cleaning, security, warehouse, or other?
+145. First illegal fantasy: theft, burglary, vehicle theft, contraband, robbery, fraud, organized-crime recovery, or other?
+146. How are jobs found: phone, apps, physical companies, NPCs, contacts, and reputation?
+147. Does a main story lock systems and areas, or only provide context, characters, and rewards?
+148. Which spontaneous events and frequency: accidents, robberies, checks, urgent requests, rare opportunities, conflicts?
+149. **[B]** Do co-op jobs provide driver, lookout, negotiator, and operator roles, or may everyone do anything?
+150. **[B]** How does a job scale from one to four players: simultaneous objectives, time, difficulty, enemies, and rewards?
+151. **[B]** What happens when a player joins, disconnects, or returns during a job?
+152. **[B]** How are rewards split, and what follows failure: equal, contribution, negotiation, checkpoint, persistent consequences, or reduced payment?
+
+## 16. Crime, witnesses, police, organized crime, and prison — questions 153–166
+
+153. **[B]** Are wanted state, criminal record, and consequences strictly individual, or can some crimes compromise the entire team?
+154. What must a witness know: act, face, clothing, voice, weapon, vehicle, and plate?
+155. Is reporting instant, or must a witness use a phone, escape, or reach police?
+156. Can a witness be persuaded, bribed, threatened, or restrained, and what added consequences follow?
+157. Are security cameras visible, avoidable, disableable, and are recordings erasable or recoverable?
+158. Identification by face, voice, clothes, fingerprints, DNA, weapon, and plate? What do masks and gloves hide?
+159. **[B]** Which physical evidence enters v1 and persists after area unload?
+160. **[B]** Police response tiers: check, stop, pursuit, roadblocks, armed units, helicopter, and later investigation?
+161. **[B]** Must police always travel from existing units, or may they spawn under control outside view?
+162. How do escape and surrender work: break contact, change outfit or car, hide, address evidence, volunteer surrender?
+163. When does helping a wanted friend create complicity: proximity, driving, concrete action, or ignoring an order?
+164. One criminal organization or several families? Is reputation individual, shared, or both?
+165. Include corrupt police, informants, bribes, protection, and autonomous police–crime conflicts?
+166. **[B]** Is prison complete gameplay, a limited-activity area, short sequence, or time skip? Can friends help legally or illegally?
+
+## 17. Combat, weapons, and damage — questions 167–175
+
+167. Can a legal career avoid almost all combat while a violent career encounters it frequently without changing base lethality?
+168. **[B]** Define lethality: ordinary torso pistol hits tolerated by an unarmored person and headshot fatality frequency?
+169. **[B]** Do bullets use velocity and drop, instant calculation at short range, or a hybrid?
+170. Which initial weapons: fists, improvised weapons, knives, pistols, shotgun, SMG, and rifle?
+171. How are weapons obtained and how rare: license, legal store, illegal market, theft, crafting, or reward?
+172. Are weapons visible, concealed under clothes, or transported in bag or vehicle? What do civilians and police notice?
+173. Handling depth: recoil, retained magazines, chambered round, jams, cleaning, and wear?
+174. Location damage, real armor coverage, material penetration, and ricochet?
+175. Melee depth: simple strikes, block/dodge, grappling, restraint, and environmental use?
+
+## 18. Vehicles and traffic — questions 176–185
+
+176. **[B]** Driving feel: arcade-realistic, accessible simulation, hard realism, or category-dependent?
+177. **[B]** Is vehicle damage visual, mechanical, directional, or advanced physical deformation?
+178. Automatic default with optional manual? Which ABS, traction, and stability assists may be disabled?
+179. **[B]** Do personal cars remain exactly where parked with damage and fuel, or recover automatically to the garage?
+180. How do keys, permissions, locking, forced entry, hotwire, and key theft work?
+181. Does fuel vary by vehicle and driving style? Is refueling timed, interruptible, and compatible with fuel cans or help?
+182. How deep are maintenance, failure, repair, insurance, towing, and destroyed-car recovery?
+183. Which persistent upgrades: engine, suspension, brakes, tires, armor, paint, sound, interior?
+184. **[B]** Is distant traffic simplified and promoted to full physical simulation near players?
+185. Which road rules are enforced: speed, lights, cameras, parking, plates, stops, and confiscation?
+
+## 19. UI, audio, voice chat, and accessibility — questions 186–195
+
+186. **[B]** Minimal diegetic UI, phone-based UI, classic HUD, or combination?
+187. Is HUD permanent, contextual, or fully configurable?
+188. Do needs and state use exact percentages or natural labels such as hungry, tired, and injured?
+189. Permanent minimap, large map, route GPS, world markers, or combination?
+190. Is phone the main interface for jobs, bank, map, contacts, shopping, and messages?
+191. How are friends shown: through-wall outline, marker, map, contextual ping, or no supernatural aid?
+192. **[B]** Integrated voice chat: party channel, proximity, in-game phone, or combination?
+193. Audio realism: wall occlusion, interior reverb, realistic distance, and district identity?
+194. Music sources: ambience, vehicle and location radio, original tracks, and/or licensed music?
+195. **[B]** Which launch languages and accessibility options: subtitles, speaker labels, large text, color-blind support, sound indicators, and reduced camera motion?
+
+## 20. Production, assets, Codex, and release — questions 196–200
+
+196. **[B]** Does the Unreal project already exist, where is it, what works, and are Visual Studio, SDKs, and the UE toolchain installed?
+197. **[B]** May Codex directly edit the project, build, and run tests while the creator handles decisions, assets, and exactly explained visual Editor steps?
+198. **[B]** Confirm C++ for gameplay, networking, save, economy, AI, and performance; Blueprint for animation, UI, cinematics, asset configuration, and approved exceptions?
+199. **[B]** Which DCC applications are used, and is a mandatory scale, pivot, naming, folder, material, collision, Nanite/LOD/HLOD pipeline accepted with Source Art outside the game repository?
+200. **[B]** Is the target Early Access or full release, and what minimum area, jobs, vehicles, properties, content hours, and stability justify charging money?
 
 ---
 
-## Ordinea recomandată pentru răspunsuri
+## Recommended answer order
 
-- Mai întâi toate întrebările `[B]` din 1–75 — fixează arhitectura și infrastructura.
-- Apoi 76–142 — fixează player-ul, viața și economia.
-- Apoi 143–185 — fixează joburile, criminalitatea, combat-ul și vehiculele.
-- La final 186–200 — fixează prezentarea și procesul de producție.
+- First answer every `[B]` question from 1–75 to define architecture and infrastructure.
+- Then 76–142 for player, life, and economy.
+- Then 143–185 for jobs, crime, combat, and vehicles.
+- Finally 186–200 for presentation and production.
 
-După fiecare lot de răspunsuri, Codex va:
+After each batch, Codex will:
 
-- rezuma deciziile fără a le reinterpreta greșit;
-- identifica contradicțiile și compromisurile;
-- propune o recomandare pentru răspunsurile `NU ȘTIU`;
-- actualiza roadmap-ul și documentele sistemelor;
-- separa ce este stabilit pentru v1 de ce este amânat.
+- summarize decisions without misinterpretation;
+- identify contradictions and tradeoffs;
+- recommend answers for `I DON'T KNOW`;
+- update the roadmap and system documents;
+- separate v1 commitments from deferred work.

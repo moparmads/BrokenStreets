@@ -1,30 +1,30 @@
-# Workflow-ul unui task Codex
+# Codex Task Workflow
 
 ## 1. Intake
 
-1. Deschide repository root `F:/BrokenStreets`, nu engine root și nu Source Art.
-2. Citește `AGENTS.md`, `Docs/INDEX.md`, `Docs/STATUS.md` și task packet-ul.
-3. Verifică branch/status/base commit și modificările existente.
-4. Selectează numai documentele relevante conform INDEX.
-5. Confirmă outcome, scope și ce nu va fi atins.
+1. Open repository root `F:/BrokenStreets`, never the engine root or Source Art.
+2. Read `AGENTS.md`, `Docs/INDEX.md`, `Docs/STATUS.md`, and the task packet.
+3. Check branch, status, base commit, and existing changes.
+4. Select only the relevant documents according to INDEX.
+5. Confirm the outcome, scope, and what will not be touched.
 
 ## 2. Definition of Ready
 
-Completează `Docs/Tasks/TASK_TEMPLATE.md`.
+Complete `Docs/Tasks/TASK_TEMPLATE.md`.
 
-Pentru sistem nou, creează system doc din template și fixează:
+For a new system, create its system document from the template and define:
 
-- experiența și non-goals;
-- single writer/ownership;
-- command/event contracts;
+- experience and non-goals;
+- single writer and ownership;
+- command and event contracts;
 - server/client/audience/reconnect;
-- data model, IDs, max cardinality;
-- persistence/migration;
-- update/LOD/budget;
-- tests/manual acceptance;
-- deciziile rămase.
+- data model, IDs, and maximum cardinality;
+- persistence and migration;
+- update model, LOD, and budget;
+- tests and manual acceptance;
+- remaining decisions.
 
-Dacă o alegere materială lipsește, prezintă un Decision Packet:
+When a material choice is missing, present a Decision Packet:
 
 ```text
 Decision:
@@ -35,72 +35,72 @@ Player/technical impact:
 What remains reversible:
 ```
 
-Nu cere răspunsuri pentru tuning ce poate rămâne data-driven până la playtest.
+Do not request answers for tuning that can remain data-driven until playtesting.
 
-## 3. Branch și plan
+## 3. Branch and plan
 
-1. Creează branch `feature/BS-###-*`, `fix/BS-###-*` sau `docs/BS-###-*`.
-2. Scrie un plan scurt cu un singur pas `In Progress`.
-3. Identifică validarea cea mai ieftină și riscul cel mai mare.
-4. Evită schimbări nelegate și infrastructură fără consumator.
+1. Create `feature/BS-###-*`, `fix/BS-###-*`, or `docs/BS-###-*`.
+2. Write a short plan with exactly one step `In Progress`.
+3. Identify the cheapest validation and the largest risk.
+4. Avoid unrelated changes and infrastructure without a consumer.
 
-## 4. Implementare
+## 4. Implementation
 
-- C++ first pentru autoritate/persistență/replicare/hot paths.
-- Păstrează adevărul într-un owner; folosește commands/events/read models.
-- Adaugă testul/regression odată cu behavior-ul.
-- Documentează orice pas Editor pe care Codex nu îl poate realiza sigur.
-- Nu modifica Engine Source, pluginuri ori save schema în afara scope-ului.
-- Verifică periodic diff/status, mai ales într-un worktree murdar.
+- Prefer C++ for authority, persistence, replication, and hot paths.
+- Keep truth in one owner; use commands, events, and read models.
+- Add tests or regressions with behavior.
+- Document any Editor step Codex cannot perform safely.
+- Never modify Engine Source, plugins, or save schema outside scope.
+- Check diff and status periodically, especially in a dirty worktree.
 
-## 5. Candidat și verificare Codex
+## 5. Candidate and Codex verification
 
-1. Stage-uiește numai fișierele task-ului.
-2. Inspectează `git diff HEAD`, lista staged, `git diff --cached --check`, generated files și `git lfs status`.
-3. Creează commitul candidat pe branch înainte de verificarea finală reproductibilă.
-4. Leagă toate dovezile de hash/tree; dacă o reparare schimbă inputuri runtime, creează candidat nou și rerulează verificările afectate.
+1. Stage only task files.
+2. Inspect `git diff HEAD`, the staged list, `git diff --cached --check`, generated files, and `git lfs status`.
+3. Create an atomic candidate commit on the branch before final reproducible verification.
+4. Tie all evidence to its hash/tree. If a repair changes runtime inputs, create a new candidate and rerun affected checks.
 
-Alege verificările proporționale din `DEFINITION_OF_DONE.md`:
+Select proportional checks from `DEFINITION_OF_DONE.md`:
 
-- static/diff/doc checks;
+- static, diff, and documentation checks;
 - Development Editor build;
-- unit/automation/functional;
-- network/persistence/fault/performance;
-- Data Validation/cook/package;
-- generated file/LFS/license audit.
+- unit, automation, and functional tests;
+- network, persistence, fault, and performance tests;
+- Data Validation, cook, and package;
+- generated-file, LFS, and license audits.
 
-Un test omis este raportat cu motiv și risc, nu ascuns.
+Every skipped test reports its reason and risk.
 
-## 6. Handoff către Madalin
+## 6. Handoff to Madalin
 
-Pentru cod/Editor:
+For code or Editor work:
 
-1. spune dacă UE/VS trebuie închis;
-2. pași exacți în engleza UI, explicați în română;
-3. rezultat așteptat după fiecare etapă;
-4. criteriu PASS/FAIL;
-5. locația logului și ce captură/log complet să trimită;
-6. instrucțiune de oprire dacă rezultatul diferă.
+1. state whether Unreal Editor and Visual Studio must be closed;
+2. provide exact English UI labels explained in Romanian;
+3. state the expected result after every stage;
+4. define PASS and FAIL;
+5. give the log location and exact screenshot or complete log to return;
+6. instruct the creator to stop if the result differs.
 
-Task-ul devine `Needs Owner Verification` până primește dovadă.
+The task becomes `Needs Owner Verification` until evidence is received.
 
 ## 7. Failure loop
 
-La eșec:
+On failure:
 
-- păstrează logul complet și commitul testat;
-- reproduce/citește cauza, fără a cere utilizatorului să repare cod;
-- schimbă numai cauza demonstrată;
-- adaugă regression test când este fezabil;
-- repetă aceeași acceptance până trece;
-- nu pile-ui workaround-uri contradictorii.
+- preserve the complete log and tested commit;
+- reproduce and identify the cause without asking the user to repair code;
+- change only the demonstrated cause;
+- add a regression test where feasible;
+- repeat the same acceptance until it passes;
+- never stack contradictory workarounds.
 
-## 8. Închidere
+## 8. Closure
 
-1. Actualizează system doc/ADR/task/status cu hashul candidatului și dovada.
-2. Inspectează `git diff HEAD`, indexul staged, generated files, warnings, LFS și secrets.
-3. Creează, dacă este necesar, un commit final numai de evidence/docs; nu schimba inputurile runtime fără reverificare.
-4. Merge/push conform Git workflow după verificare și confirmă `main == origin/main`.
-5. Finalul include rezultat, fișiere, evidence, pașii creatorului, riscuri, rollback hash și next task.
+1. Update the system document, ADR, task, and STATUS with the candidate hash and evidence.
+2. Inspect `git diff HEAD`, staged index, generated files, warnings, LFS, and secrets.
+3. If needed, create a final evidence/docs-only commit; do not change runtime inputs without reverification.
+4. Merge and push according to the Git workflow after acceptance, then confirm `main == origin/main`.
+5. The final handoff includes result, files, evidence, creator steps, risks, rollback hash, and next task.
 
-Un task mare se sparge înainte de implementare; nu este „aproape Done” dacă gate-ul principal nu a fost testat.
+Split a large task before implementation. A task is never “almost Done” while its main gate remains untested.

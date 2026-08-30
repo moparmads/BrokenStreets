@@ -1,34 +1,34 @@
-# Git workflow și rollback
+# Git Workflow and Rollback
 
 ## Repository
 
 - root: `F:/BrokenStreets`;
 - remote: `https://github.com/moparmads/BrokenStreets.git`;
 - default branch: `main`;
-- repository: privat;
-- Git LFS: obligatoriu pentru `.uasset` și `.umap`.
+- repository: private;
+- Git LFS: required for `.uasset` and `.umap`.
 
-## Flux per task
+## Per-task flow
 
-1. Verifică branch, `git status` și base commit.
-2. Dacă există modificări necunoscute ori overlapping, oprește-te și explică.
-3. Actualizează task packet-ul la `Ready`.
-4. Creează branch:
+1. Check branch, `git status`, and base commit.
+2. Stop and explain any unknown or overlapping changes.
+3. Update the task packet to `Ready`.
+4. Create a branch:
    - `feature/BS-###-short-name`;
    - `fix/BS-###-short-name`;
    - `docs/BS-###-short-name`.
-5. Pentru orice asset binar, obține lock-ul LFS înainte de deschiderea/editarea lui.
-6. Fă modificări mici și în scope.
-7. Inspectează separat working tree-ul și indexul: `git status --short --branch`, `git diff HEAD`, `git diff --cached --name-status`, `git diff --cached --check`, generated files și `git lfs status`.
-8. Creează un commit candidat atomic pe branch. Nu îl considera acceptat doar pentru că există.
-9. Rulează verificările proporționale pe commitul candidat/tree-ul exact. Madalin compilează/playtestează când este necesar. Orice fix produce un candidat nou și invalidează dovada veche pentru fișierele runtime afectate.
-10. Actualizează task/status/evidence. Un commit ulterior numai cu documentația dovezii poate referi candidatul verificat; nu trebuie să schimbe C++, Config, Content, `.uproject`, pluginuri ori build scripts.
-11. Push branch, review/merge în `main`, apoi push `main`.
-12. Confirmă că `main` local și remote au același commit, obiectele LFS sunt pe remote și working tree-ul este curat. Eliberează lock-urile binare numai după această confirmare.
+5. Acquire an LFS lock before opening or editing any binary asset.
+6. Make small, in-scope changes.
+7. Inspect working tree and index separately: `git status --short --branch`, `git diff HEAD`, `git diff --cached --name-status`, `git diff --cached --check`, generated files, and `git lfs status`.
+8. Create an atomic candidate commit on the branch. Its existence does not imply acceptance.
+9. Run proportional checks on the exact candidate commit/tree. Madalin compiles and playtests when required. A fix creates a new candidate and invalidates old evidence for affected runtime files.
+10. Update task, status, and evidence. A later documentation-only evidence commit may reference the candidate but must not change C++, Config, Content, `.uproject`, plugins, or build scripts.
+11. Push the branch, review and merge into `main`, then push `main`.
+12. Confirm local and remote `main` match, LFS objects are remote, and the working tree is clean. Release binary locks only after confirmation.
 
 ## Commit messages
 
-Format recomandat:
+Recommended format:
 
 ```text
 docs: establish BS-008 project memory
@@ -38,61 +38,61 @@ test: cover BS-024 profile recovery
 chore: pin BS-009 build toolchain
 ```
 
-Descrie rezultatul, nu activitatea vagă „updates”. Include ID-ul task-ului când ajută trasabilitatea.
+Describe the result, never a vague activity such as “updates.” Include the task ID when it improves traceability.
 
-## Asset-uri binare
+## Binary assets
 
-- `.uasset/.umap` trebuie să fie LFS pointers.
-- Un asset binar nu este editat în două branch-uri în paralel.
-- Editorul este închis înainte de rollback/revert al unui asset încărcat.
-- Înainte de editare: `git lfs locks`, apoi `git lfs lock "Content/path/Asset.uasset"`. Dacă lock-ul lipsește, eșuează ori aparține altcuiva, nu edita asset-ul.
-- După staging: `git check-attr filter diff merge lockable -- "Content/path/Asset.uasset"`, `git lfs status` și `git lfs ls-files`. Pentru fiecare blob staged verifică pointerul din index, nu fișierul smudged din working tree: `git show ':Content/path/Asset.uasset' | git lfs pointer --check --stdin`; orice cod de ieșire nenul oprește commitul. După commitul candidat rulează și `git lfs fsck --pointers HEAD` pentru pointere canonice.
-- Înainte de push: `git lfs push --dry-run origin HEAD` arată obiectele pending; după push verifică remote-ul și lock ownerul.
-- După merge/push confirmat: `git lfs unlock "Content/path/Asset.uasset"`. Nu folosi `--force` fără aprobarea explicită și cauza documentată.
-- Nu muta/renumi asset-uri în File Explorer; folosește Unreal Editor și fix redirectors în task explicit.
+- `.uasset` and `.umap` must be LFS pointers.
+- Never edit one binary asset concurrently on two branches.
+- Close the Editor before rollback or revert of a loaded asset.
+- Before editing: run `git lfs locks`, then `git lfs lock "Content/path/Asset.uasset"`. If the lock is absent, fails, or belongs to someone else, do not edit the asset.
+- After staging: inspect attributes, `git lfs status`, and `git lfs ls-files`. Verify every staged blob from the index, not the smudged working-tree file: `git show ':Content/path/Asset.uasset' | git lfs pointer --check --stdin`. Any nonzero exit blocks the commit. After the candidate commit, run `git lfs fsck --pointers HEAD`.
+- Before push: `git lfs push --dry-run origin HEAD` lists pending objects. After push, verify the remote and lock owner.
+- After confirmed merge and push: `git lfs unlock "Content/path/Asset.uasset"`. Never use `--force` without explicit approval and a documented cause.
+- Do not move or rename assets in File Explorer. Use Unreal Editor and fix redirectors in an explicit task.
 
-Primele lock/pointer/push/unlock sunt exercitate controlat în BS-007B. Până atunci nu presupunem că simpla prezență a `.gitattributes` dovedește workflow-ul complet.
+BS-007B exercises the first controlled lock, pointer, push, and unlock workflow. Until then, `.gitattributes` alone does not prove the complete process.
 
-## Dovada legată de candidat
+## Candidate-bound evidence
 
-Task packet-ul notează cel puțin:
+The task packet records at least:
 
-- candidate commit hash și, când merge-ul adaugă numai metadata, runtime/content tree verificat;
-- lista exactă a comenzilor/testelor, targetul și build configuration;
-- cine a executat verificarea și pe ce engine/hardware/topologie;
-- orice fișier runtime schimbat după test, caz în care dovada este `INVALIDATED` până la rerulare.
+- candidate commit hash and, when a merge adds only metadata, the verified runtime/content tree;
+- exact commands and tests, target, and build configuration;
+- executor, engine, hardware, and topology;
+- every runtime file changed after testing, which marks evidence `INVALIDATED` until rerun.
 
-`git diff` fără argumente vede numai modificările unstaged. Pentru auditul livrării folosește `git diff HEAD` și verifică explicit indexul; altfel un task complet staged poate părea fals gol.
+`git diff` without arguments sees only unstaged changes. Delivery audits use `git diff HEAD` and explicitly inspect the index; otherwise a fully staged task can look falsely empty.
 
-## Interdicții
+## Prohibitions
 
-- fără `git reset --hard`;
-- fără force push pe `main`;
-- fără checkout/restore destructiv peste munca utilizatorului;
-- fără stash automat ce ascunde modificări necunoscute;
-- fără rescrierea istoricului LFS în grabă;
-- fără commit de secrets, Saved/Intermediate/Binaries/cache ori Source Art.
+- no `git reset --hard`;
+- no force push to `main`;
+- no destructive checkout or restore over user work;
+- no automatic stash that hides unknown changes;
+- no rushed LFS history rewrite;
+- no secrets, Saved, Intermediate, Binaries, cache, or Source Art in commits.
 
 ## Rollback
 
-Pentru o schimbare deja acceptată/pushed:
+For an accepted and pushed change:
 
-1. identifică commitul exact;
-2. verifică impactul save/assets/migrations;
-3. creează branch `fix/BS-###-rollback-*` dacă rollback-ul nu este trivial;
-4. folosește `git revert` pentru istoric public;
-5. rebuild/test/restore după revert;
-6. actualizează STATUS și ADR/system docs dacă decizia se schimbă.
+1. identify the exact commit;
+2. inspect save, asset, and migration impact;
+3. create `fix/BS-###-rollback-*` when nontrivial;
+4. use `git revert` for public history;
+5. rebuild, test, and restore after revert;
+6. update STATUS and ADR/system documents when the decision changes.
 
-Un revert de cod nu garantează compatibilitatea unui save ori asset salvat cu versiunea nouă. Planul de rollback se scrie înaintea schimbării de schemă.
+A code revert does not guarantee compatibility with a save or asset written by the newer version. Write the rollback plan before any schema change.
 
-## Tag-uri
+## Tags
 
-Tag numai pentru:
+Create tags only for:
 
-- baseline recuperabil important;
-- vertical slice gate;
-- release candidate/release;
-- save migration checkpoint major.
+- an important recoverable baseline;
+- a vertical-slice gate;
+- release candidate or release;
+- a major save-migration checkpoint.
 
-Nu tag-ui fiecare task.
+Do not tag every task.

@@ -1,46 +1,46 @@
-# BS-009 — Automatizare Build/Test/Validate/Cook
+# BS-009 — Build, Test, Validate, and Cook Automation
 
 **Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-009-build-automation`
 **Base commit:** `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`
-**Roadmap milestone:** M0 — Fundație recuperabilă
+**Roadmap milestone:** M1 — Recoverable baseline
 **System docs:** [Toolchain](../Build/TOOLCHAIN.md), [Test strategy](../Testing/TEST_STRATEGY.md), [Task workflow](../Workflows/CODEX_TASK_WORKFLOW.md)
 
 ## Observable outcome
 
-Din orice terminal aflat în repository, creatorul poate porni `Doctor`, `Generate`, `Build`, `Test`, `Validate`, `Cook` sau `All` printr-o singură comandă. Fiecare rulare afișează un rezultat scurt, întoarce un cod de ieșire corect și păstrează local logurile și sumarul JSON.
+From any terminal in the repository, the creator can start `Doctor`, `Generate`, `Build`, `Test`, `Validate`, `Cook`, or `All` through one command. Every run displays a concise result, returns the correct exit code, and preserves local logs and a JSON summary.
 
 ## Why now
 
-BS-009 transformă build-ul manual verificat în BS-007A într-un gate repetabil. Deblochează primul smoke test (BS-010), TestGym (BS-011), recovery complet (BS-007B) și toate schimbările C++ ulterioare.
+BS-009 turns the manual BS-007A build into a repeatable gate. It unlocks the first smoke test, TestGym, complete recovery, and every later C++ change.
 
 ## In scope
 
-- runner Windows PowerShell 5.1 fără dependențe externe;
-- descoperire deterministă și validare exactă UE 5.8.2, changelist 56702186;
-- acțiuni `Doctor`, `Generate`, `Build`, `Test`, `Validate`, `Cook`, `All`;
-- timeout și terminarea strictă a arborelui procesului lansat;
-- propagarea codurilor native și coduri distincte pentru eșecuri semantice/timeout;
-- loguri locale și sumar JSON sub `Saved/Automation/BS-009/`;
-- clasificare explicită `SKIPPED_NO_TESTS` până la BS-010 și `SKIPPED_NO_ASSETS` până există asset-uri project-owned;
-- documentație de utilizare și evidence.
+- dependency-free Windows PowerShell 5.1 runner;
+- deterministic discovery and exact validation of UE 5.8.2 CL 56702186;
+- `Doctor`, `Generate`, `Build`, `Test`, `Validate`, `Cook`, and `All`;
+- timeout and strict termination of the launched process tree;
+- native exit-code propagation and distinct semantic-failure and timeout codes;
+- local logs and JSON summary under `Saved/Automation/BS-009/`;
+- explicit `SKIPPED_NO_TESTS` until BS-010 and `SKIPPED_NO_ASSETS` until project-owned assets exist;
+- usage documentation and evidence.
 
 ## Out of scope
 
-- primul Automation smoke test (BS-010);
-- prima hartă și asset-uri project-owned (BS-011);
-- staging, packaging, archive ori distribuție;
-- CI cloud, servere dedicate sau platforme non-Windows;
-- modificarea EngineAssociation, a engine-ului instalat, a gameplay-ului, Config sau Content.
+- first Automation smoke test, BS-010;
+- first project-owned map and assets, BS-011;
+- staging, packaging, archive, or distribution;
+- cloud CI, dedicated servers, or non-Windows platforms;
+- EngineAssociation, installed engine, gameplay, Config, or Content changes.
 
 ## Dependencies and required decisions
 
-- BS-008 este Done;
-- baseline-ul este UE 5.8.2 / CL 56702186 și Visual Studio 2026;
-- cook-ul BS-009 este commandlet local pentru platforma `Windows`, fără stage/package;
-- testele zero și validarea zero asset-uri sunt stări temporare vizibile, nu rezultate PASS false;
-- un `EngineRoot` explicit invalid produce fail și nu cade silențios pe alt engine.
+- BS-008 is Done;
+- baseline is UE 5.8.2 CL 56702186 and Visual Studio 2026;
+- BS-009 Cook is a local `Windows` commandlet run without stage or package;
+- zero tests and zero-asset validation are visible temporary states, not false PASS results;
+- an invalid explicit `EngineRoot` fails instead of silently selecting another engine.
 
 ## Allowed files/domains
 
@@ -49,79 +49,79 @@ BS-009 transformă build-ul manual verificat în BS-007A într-un gate repetabil
 - `Docs/Tasks/`;
 - `Docs/STATUS.md`.
 
-Sunt interzise schimbări în `Source/`, `Config/`, `Content/`, `.uproject`, pluginuri și engine.
+Changes to `Source/`, `Config/`, `Content/`, `.uproject`, plugins, and Engine are forbidden.
 
 ## Authority/network impact
 
-N/A — tooling local, fără networking și fără schimbări de authority/replication.
+N/A — local tooling with no networking or authority/replication change.
 
 ## Persistence/migration impact
 
-N/A — nu atinge save data. Outputurile sunt regenerabile și ignorate de Git sub `Saved/`.
+N/A — no save data. Outputs are reproducible and ignored by Git under `Saved/`.
 
 ## Performance budget
 
-- runnerul nu face polling mai des de 250 ms și nu rămâne rezident după rulare;
-- un singur runner poate opera repository-ul la un moment dat;
-- timeout implicit: Generate 10 min, Build 60 min, Test 30 min, Validate 30 min, Cook 120 min;
-- Cook nu folosește `CookAll`, iterative cook, stage sau package.
+- runner polls no more often than 250 ms and does not remain resident;
+- one runner may operate on the repository at a time;
+- default timeouts: Generate 10 minutes, Build 60, Test 30, Validate 30, Cook 120;
+- Cook uses neither `CookAll`, iterative cook, stage, nor package.
 
 ## Blueprint/Editor impact
 
-Niciun Blueprint și niciun asset. Unreal Editor trebuie închis pentru acțiunile reale; toate comenzile sunt headless.
+No Blueprint or asset. Unreal Editor must be closed for real actions; commands are headless.
 
 ## Acceptance criteria
 
-1. **Given** repository-ul pe acest PC **When** rulează `Doctor` **Then** proiectul, UE 5.8.2/CL 56702186, toolchain-ul și spațiul de lucru sunt verificate fără cale de engine hard-coded în script.
-2. **Given** fișierele de soluție sunt regenerabile **When** rulează `Generate` **Then** UnrealBuildTool termină cu 0, raportează `Result: Succeeded`, iar `.sln` și `.slnx` există.
-3. **Given** targetul C++ curent **When** rulează `Build` **Then** `BrokenStreetsEditor Win64 Development` compilează și DLL-ul proiectului există.
-4. **Given** BS-010 nu există încă **When** rulează `Test` **Then** markerii Unreal sunt verificați și rezultatul este `SKIPPED_NO_TESTS`, nu PASS fals.
-5. **Given** nu există asset-uri project-owned **When** rulează `Validate` **Then** inventarul local și liniile `AssetCheck` din UE 5.8 produc `SKIPPED_NO_ASSETS`; orice asset invalid, imposibil de validat ori rezultat lipsă pentru asset-uri existente produce fail chiar dacă procesul întoarce 0.
-6. **Given** configurația Win64 curentă **When** rulează `Cook` **Then** commandlet-ul `Cook` pentru `Windows` termină cu footer-ul `0 error(s)`, outputul rămâne sub `Saved/Cooked/Windows`, iar excluderile benigne raportate de UE ca `Packages Skipped by Platform` sunt păstrate explicit ca `PASS_WITH_SKIPS`.
-7. **Given** o acțiune expiră sau procesul nativ eșuează **When** runnerul se încheie **Then** arborele PID lansat este oprit, codul nenul este păstrat și logul exact este indicat.
-8. **Given** toate gate-urile sunt disponibile **When** rulează `All` **Then** ordinea este Doctor → Generate → Build → Test → Validate → Cook, fail-fast, cu un singur sumar JSON.
+1. `Doctor` verifies project, UE 5.8.2 CL 56702186, toolchain, and workspace without a script-hard-coded engine path.
+2. `Generate` exits 0, reports `Result: Succeeded`, and produces `.sln` and `.slnx`.
+3. `Build` compiles `BrokenStreetsEditor Win64 Development` and the project DLL exists.
+4. Before BS-010, `Test` verifies Unreal markers and reports `SKIPPED_NO_TESTS`, never false PASS.
+5. Without project-owned assets, `Validate` combines local inventory and UE 5.8 `AssetCheck` output to report `SKIPPED_NO_ASSETS`; invalid, unvalidated, or missing results fail even when the process returns 0.
+6. `Cook` for `Windows` ends with `0 error(s)`, retains output under `Saved/Cooked/Windows`, and preserves benign Engine `Packages Skipped by Platform` as `PASS_WITH_SKIPS`.
+7. Timeout or native failure terminates the launched process tree, preserves nonzero code, and identifies the exact log.
+8. `All` runs Doctor → Generate → Build → Test → Validate → Cook, fail-fast, with one JSON summary.
 
 ## Automated verification
 
-- syntax/plan în Windows PowerShell 5.1;
-- `Doctor` și `All` lansate prin `Tools/BS.cmd`;
-- verificarea markerilor și a codurilor din logurile reale UE;
-- verificare Git, Git LFS și linkuri locale de documentație;
-- verificarea că diff-ul nu atinge domeniile interzise.
+- Windows PowerShell 5.1 syntax and plan;
+- `Doctor` and `All` through `Tools/BS.cmd`;
+- real UE log-marker and exit-code verification;
+- Git, Git LFS, and local documentation link checks;
+- forbidden-domain diff audit.
 
 ## Manual acceptance
 
-Nu este necesar un playtest sau setup manual pentru Done. Creatorul primește o comandă simplă de rerulare; la fail trimite captura și calea logului afișată.
+No playtest or manual setup is required for Done. The creator receives one rerun command and returns the displayed log path on failure.
 
 ## Risks and rollback
 
 - **Base:** `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`.
-- Primul cook poate fi lung din cauza hărții Engine OpenWorld, DX12/SM6, Ray Tracing și Substrate existente în baseline.
-- Runnerul nu șterge outputuri, nu schimbă engine association și nu omoară procese după nume.
-- Rollback: revert-ul commiturilor BS-009; outputurile din `Saved/` rămân regenerabile și ignorate.
+- The first cook may be long because the baseline uses the Engine OpenWorld map, DX12/SM6, Ray Tracing, and Substrate.
+- The runner never deletes output, changes engine association, or kills processes by name.
+- Rollback: revert BS-009 commits; `Saved/` output remains ignored and reproducible.
 
 ## Docs/ADR updates
 
-- `Docs/Build/TOOLCHAIN.md` — comanda canonică și interpretarea rezultatelor;
-- `Docs/STATUS.md` — progres și evidence verificată;
+- `Docs/Build/TOOLCHAIN.md` — canonical command and result interpretation;
+- `Docs/STATUS.md` — progress and verified evidence;
 - `Docs/Tasks/README.md` — index.
 
 ## Verification evidence
 
-| Data | Candidate commit | Runtime/content tree | Build/test/trace | Rezultat | Executat de |
+| Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| 30 august 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3` | `Tools/Tests/Runner.SelfTest.ps1` | PASS — 5/5; argumente, cod nativ 37, timeout 124, proces nepot orfan și JSON atomic | Codex |
-| 30 august 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | același tree; fără C++/Config/Content | `Tools/BS.cmd All` — UE 5.8.2 CL 56702186, `BrokenStreetsEditor Win64 Development` | `PASS_WITH_SKIPS`, cod 0; Generate/Build PASS, Test 0 până la BS-010, Validate 0 asset-uri până la BS-011, Cook 578 + 7/7 omisiuni Engine clasificate, 0 warning-uri | Codex |
+| August 30, 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | `d556d791e7fabdbbcf90b501f8f87f4d089dfcd3` | `Tools/Tests/Runner.SelfTest.ps1` | PASS — 5/5: arguments, native code 37, timeout 124, orphaned grandchild, atomic JSON | Codex |
+| August 30, 2026 | `557ede8cc16cb1daedee2a1511a720dde79b6ade` | same tree; no C++/Config/Content | `Tools/BS.cmd All` — UE 5.8.2 CL 56702186, `BrokenStreetsEditor Win64 Development` | `PASS_WITH_SKIPS`, code 0; Generate/Build PASS, zero tests until BS-010, zero assets until BS-011, Cook 578 packages plus 7/7 classified Engine omissions, zero warnings | Codex |
 
-Evidence local canonic: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`. Outputurile rămân local, regenerabile și ignorate de Git. Probe suplimentare: Doctor PASS în `20260830T082922Z-31884-43180674`; `All -PlanOnly` PLANNED în `20260830T082938Z-12004-a95a98b1`.
+Canonical local evidence: `Saved/Automation/BS-009/20260830T083527Z-29808-a4d97f1e/run.json`. Output remains local, reproducible, and Git-ignored. Additional probes: Doctor PASS in `20260830T082922Z-31884-43180674`; `All -PlanOnly` PLANNED in `20260830T082938Z-12004-a95a98b1`.
 
-Manual acceptance, networking, persistence și playtest: N/A — task exclusiv de tooling local, fără gameplay, C++, Config, Content sau asset-uri. Editorul a fost închis pentru verificările reale.
+Manual acceptance, networking, persistence, and playtest: N/A — local tooling only, with no gameplay, C++, Config, Content, or asset change. Editor was closed for real checks.
 
 ## Final handoff
 
-- Candidate verificat: `557ede8cc16cb1daedee2a1511a720dde79b6ade`.
-- Final evidence commit: `c45d1fa871aae435440d37d2414094580e33fe94`; modifică numai task/status/index, fără runtime ori build scripts.
-- Comandă creator: închide Unreal Editor și rulează `F:\BrokenStreets\Tools\BS.cmd All`.
-- Rezultat așteptat înainte de BS-010/BS-011: `PASS_WITH_SKIPS`, cu skip-urile explicate mai sus; orice cod nenul sau `FAILED` se oprește și se raportează împreună cu linia `Sumar:`.
-- Rollback sigur: revert-ul commiturilor BS-009 revine la baza `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`; fișierele generate din `Saved/`, `Binaries/` și soluțiile rămân regenerabile.
-- Următorul task logic: BS-010 — primul Automation smoke test Broken Streets.
+- Verified candidate: `557ede8cc16cb1daedee2a1511a720dde79b6ade`.
+- Final evidence commit: `c45d1fa871aae435440d37d2414094580e33fe94`; task, status, and index only, with no runtime or build-script change.
+- Creator command: close Unreal Editor and run `F:\BrokenStreets\Tools\BS.cmd All`.
+- Expected before BS-010/BS-011: `PASS_WITH_SKIPS` with the explained skips. Stop and report any nonzero code or `FAILED` with the `Summary:` line.
+- Safe rollback: revert BS-009 commits to base `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`; generated `Saved/`, `Binaries/`, and solution files remain reproducible.
+- Next logical task: BS-010 — first Broken Streets Automation smoke test.

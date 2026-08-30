@@ -1,41 +1,41 @@
 # Plugin and License Manifest
 
-Orice plugin, SDK, font, audio, asset pack, cod sau binary extern este înregistrat aici înainte de integrare și commit. Absența unei intrări înseamnă că dependența nu este aprobată.
+Every external plugin, SDK, font, audio file, asset pack, code library, or binary must be recorded here before integration and commit. No entry means the dependency is not approved.
 
-## Baseline curent
+## Current baseline
 
-| Nume | Tip | Versiune/sursă | Scope | Licență/termeni | Motiv | Status |
+| Name | Type | Version/source | Scope | License/terms | Reason | Status |
 |---|---|---|---|---|---|---|
-| Unreal Engine | Engine | Epic Games Launcher, UE 5.8.2 | build/runtime/editor | Unreal Engine EULA aplicabilă contului | motorul proiectului | Approved |
-| ModelingToolsEditorMode | plugin Epic built-in | livrat cu UE 5.8.2 | Editor only | inclus în distribuția Unreal Engine | unelte de modelare/editor disponibile în proiectul Blank | Approved |
-| Git | developer tool | 2.53.0.windows.3 | local development | licența distribuției Git | version control | Approved |
-| Git LFS | developer tool | 3.7.1 | local/GitHub | licența distribuției Git LFS + planul GitHub | asset versioning | Approved |
+| Unreal Engine | Engine | Epic Games Launcher, UE 5.8.2 | build/runtime/editor | Unreal Engine EULA applicable to the account | project engine | Approved |
+| ModelingToolsEditorMode | built-in Epic plugin | shipped with UE 5.8.2 | Editor only | included with the Unreal Engine distribution | modeling/editor tools available in the Blank project | Approved |
+| Git | developer tool | 2.53.0.windows.3 | local development | Git distribution license | version control | Approved |
+| Git LFS | developer tool | 3.7.1 | local/GitHub | Git LFS distribution license + GitHub plan | asset versioning | Approved |
 
-Nu există în prezent pluginuri Marketplace, SDK-uri third-party, asset packs sau cod extern aprobate în repository.
+No Marketplace plugins, third-party SDKs, asset packs, or external code are currently approved in the repository.
 
-## Checklist înainte de o dependență nouă
+## Checklist before adding a dependency
 
-1. Problemă demonstrată și motiv pentru care UE/proiectul nu o rezolvă suficient.
-2. Alternative: implementare proprie, plugin Epic built-in, plugin extern, amânare.
-3. Compatibilitate exactă cu UE 5.8.2, Win64, cook și Shipping.
-4. Sursă oficială, versiune pinată și checksum/tag/commit unde este posibil.
-5. Licență, drept comercial, attribution și redistribuire verificate.
-6. Acces la source/debug symbols și plan dacă proiectul este abandonat.
-7. Impact asupra build time, binary size, startup, memory, networking și save.
-8. Security/privacy review pentru orice network/account/telemetry SDK.
-9. Clean clone și packaged build test.
-10. Aprobarea explicită a lui Madalin și task/ADR când este arhitectural.
+1. Demonstrated problem and why Unreal/the project cannot solve it sufficiently.
+2. Alternatives: in-house implementation, built-in Epic plugin, external plugin, or deferral.
+3. Exact compatibility with UE 5.8.2, Win64, cook, and Shipping.
+4. Official source, pinned version, and checksum/tag/commit when possible.
+5. Verified license, commercial rights, attribution, and redistribution terms.
+6. Source/debug-symbol access and a plan if the dependency is abandoned.
+7. Impact on build time, binary size, startup, memory, networking, and save data.
+8. Security/privacy review for every network/account/telemetry SDK.
+9. Clean-clone and packaged-build test.
+10. Explicit Madalin approval plus a task/ADR when architectural.
 
-## Reguli
+## Rules
 
-- Nu copiem pluginuri din alte proiecte fără sursă/licență.
-- Nu activăm pluginuri „poate vor fi utile”.
-- Un plugin Editor nu devine dependency Runtime.
-- O versiune floating/latest este interzisă pentru build reproducibil.
-- Eliminarea unei dependențe include migration și cleanup de asset references/config.
-- Conținutul de research nu devine dependency.
+- Never copy plugins from other projects without source and license evidence.
+- Do not enable plugins because they “might be useful.”
+- An Editor plugin does not become a Runtime dependency.
+- Floating/latest versions are forbidden in reproducible builds.
+- Removing a dependency includes migration and cleanup of asset references/configuration.
+- Research content never becomes a dependency.
 
-## Template intrare nouă
+## New-entry template
 
 ```text
 Name:
