@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-011-testgym-core`
 
 ## Summary
 
 - Last completed task: `BS-010A` — independent repository and Git LFS backup.
-- Active task: none.
-- Next task: `BS-011` — project-owned `L_TestGym_Core`.
+- Active task: `BS-011` — prepare and verify the first project-owned `L_TestGym_Core`; the binary map does not exist yet.
+- Next task after BS-011: `BS-012` — `L_TestGym_Network`.
 
 ## What actually exists
 
