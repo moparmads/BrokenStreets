@@ -12,7 +12,7 @@
 
 **PASS for the profiling pipeline; not a production-performance pass.** The exact packaged candidate loaded the benchmark map, produced three comparable 3,600-frame CSV captures and three non-empty Unreal trace files, and completed CPU/GPU trace analysis. The placeholder contains only a floor, sky, lighting, and four Engine cubes. Its frame rate must not be used to promise Manhattan performance, freeze hardware requirements, or claim that Broken Streets is optimized.
 
-Creator visual/traversal acceptance remains pending. Renderer/scalability decisions remain owned by BS-013B and the representative baseline remains owned by BS-021.
+Creator visual/traversal acceptance passed on August 30, 2026. Renderer/scalability decisions remain owned by BS-013B and the representative baseline remains owned by BS-021.
 
 ## Candidate identity
 
@@ -89,7 +89,8 @@ These are process/CSV observations, not a frozen RAM or VRAM budget.
 - Exact-map Map Check: 0 errors and 0 warnings.
 - Win64 Development Build/Cook/Stage/Package/Archive: UAT exit 0, Cook 0 errors and 0 warnings.
 - Every runtime log loaded and brought up `/Game/BS/Maps/Benchmark/L_Benchmark_Street`, captured 3,600 frames, requested exit status 0 through `CsvProfiler.ExitAfterCsvProfiling`, and reached `PreExit Game` without a fatal/crash marker.
-- The process observer nevertheless returned Windows code `777003` for all three unattended captures. Because the Engine logs show the controlled status-0 exit but the outer code is unexplained, the separate creator launch/normal-close checkpoint remains required.
+- The process observer nevertheless returned Windows code `777003` for all three unattended captures. Because the Engine logs show the controlled status-0 exit but the outer code is unexplained, a separate creator launch/normal-close checkpoint was required.
+- The creator checkpoint launched the same archived executable and exact map, remained responsive during inspection/traversal, and closed through `Alt+F4` with Windows exit code `0`. The retained 96,140-byte log has SHA-256 `C296C735551CE131715D7502713CCDFC20F7A7A95791089C4C02D58CDE256390`, contains the exact-map load and complete normal shutdown, and contains no fatal/crash marker.
 - Unreal Insights opened Run 01 and completed analysis in 2.01 seconds for a 28.57-second session: 73 CPU threads, 4,751 timers, 22,271,463 CPU scopes, 3 GPU queues, and 153 GPU timers.
 - Insights also reported 30,638 invalid `MemAlloc` tag-tracker events, four load-time warnings, and microsecond-scale GPU event-order warnings. CPU/GPU timing analysis completed, but allocation-level memory analysis is rejected for this baseline. Memory values above come only from CSV counters and external working-set sampling.
 
@@ -123,4 +124,4 @@ Map Check: `Saved/Verification/BS-013/a25a762/MapCheck/Unreal.log`
 - High-end creator hardware, one empty greybox, one player, a stationary camera, Development build, and current unapproved renderer settings make this unsuitable for Minimum/Recommended hardware claims.
 - There is no production geometry, material library, Nanite/LOD/HLOD workload, World Partition traversal, traffic, crowd, AI, physics, vehicles, weather, audio load, UI load, save work, or multiplayer.
 - The automated process-exit-code discrepancy and Insights allocation-tag errors are preserved rather than normalized away.
-- Madalin must complete the ignored packaged visual/traversal launcher. After that, BS-013 may integrate and establish only that the capture pipeline works. BS-013B and BS-021 must replace this precursor with configuration decisions and representative evidence.
+- Madalin completed the ignored packaged visual/traversal launcher with exit code `0`. BS-013 may integrate and establish only that the capture pipeline works. BS-013B and BS-021 must replace this precursor with configuration decisions and representative evidence.

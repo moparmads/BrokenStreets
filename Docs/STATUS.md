@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-012` — network TestGym fixture.
-- Active task: `BS-013` — `L_Benchmark_Street` placeholder and first versioned profiling trace; automated gates passed and creator packaged acceptance is pending.
+- Active task: `BS-013` — `L_Benchmark_Street` placeholder and first versioned profiling trace; automated and creator gates passed, with integration/recovery pending.
 - Next task after BS-013: `BS-013A` — Source Art 3-2-1 backup and verified restore.
 
 ## What actually exists
@@ -53,6 +53,7 @@
 - BS-012 recovery checkpoint: clean generation `20260830T131034Z-39496-dc415d1a` captured 15 refs and 2 LFS objects under `E:/BrokenStreets_RepositoryBackup`. Offline restore `BS-012-82ad55d` recovered the exact merge without GitHub and verified both LFS objects. The restored Core map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; the restored Network map was 55,593 bytes with SHA-256 `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; restored Development Editor Build and Automation both passed.
 - BS-013 candidate `a25a7621f4b91b6dc3c405f78d11f6abce46f498`, tree `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b`: the 61,422-byte benchmark map is stored through Git LFS as OID `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`; the two TestGym maps remain byte-identical. Runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`; Build and Automation passed; Data Validation validated 3/3 maps; Cook reported zero project-owned omissions and zero warnings; exact-map Map Check reported 0 errors and 0 warnings; Win64 Development package completed with UAT exit 0 and contains the exact map.
 - BS-013 provisional performance evidence: three separate packaged D3D12 1920×1080 runs captured 3,600 frames each with 600-frame warm-up exclusion. Median-run frame mean/p50/p95/p99/max were 6.6180/6.5528/10.1943/10.6761/11.3367 ms, with zero stable frames above 50 or 100 ms. Run 01 Unreal Insights completed CPU/GPU analysis, but allocation analysis is rejected because the trace reported 30,638 invalid memory-tag events. The unattended Engine logs show status-0 controlled shutdown while the outer observer returned unexplained code `777003`; creator visual launch and normal close remain required. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P0.md`.
+- BS-013 creator acceptance passed on August 30, 2026: Madalin completed the ignored packaged visual/traversal checkpoint without reporting a mismatch. The launcher returned Windows exit code `0`; the 96,140-byte retained log loaded the exact benchmark map, recorded `Alt-F4`, requested status `0`, completed `PreExit` and engine shutdown, and closed without a fatal/crash marker. Log SHA-256: `C296C735551CE131715D7502713CCDFC20F7A7A95791089C4C02D58CDE256390`.
 
 ## Deviations and open items
 
