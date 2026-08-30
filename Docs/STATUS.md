@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-013-benchmark-street`
 
 ## Summary
 
 - Last completed task: `BS-012` — network TestGym fixture.
-- Active task: none; the recoverable BS-012 baseline is closed on `main`.
-- Next task after BS-012: `BS-013` — `L_Benchmark_Street` placeholder.
+- Active task: `BS-013` — `L_Benchmark_Street` placeholder and first versioned profiling trace.
+- Next task after BS-013: `BS-013A` — Source Art 3-2-1 backup and verified restore.
 
 ## What actually exists
 
