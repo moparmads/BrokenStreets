@@ -51,4 +51,4 @@ Before code:
 | [BS-009](BS-009-Build-Automation.md) | Build/Test/Validate/Cook automation | Done | `main` |
 | [BS-010](BS-010-Automation-Smoke-Test.md) | First Automation smoke test and canonical English migration | Done | `main` |
 | [BS-010A](BS-010A-Independent-Repository-Backup.md) | Independent repository and Git LFS backup | Done | `main` |
-| [BS-011](BS-011-TestGym-Core.md) | Project-owned TestGym core map | In Progress | `feature/BS-011-testgym-core` |
+| [BS-011](BS-011-TestGym-Core.md) | Project-owned TestGym core map | Needs Owner Verification | `feature/BS-011-testgym-core` |

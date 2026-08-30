@@ -1,6 +1,6 @@
 # BS-011 — Project-Owned TestGym Core Map
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-011-testgym-core`
 **Base commit:** `a6ad7b3d08fdd3330aa0e35c20b93b53d1938598`
@@ -134,9 +134,10 @@ After automated verification, Codex provides the exact packaged executable path 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | August 30, 2026 | `859cc7a7d3d78150e28f2bd80f5445627ae7aee2` | first map candidate; LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; 49,037 bytes | `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T112422Z-41008-0fa8d453/run.json` | INVALIDATED — Build and Automation passed; Unreal validated 1/1 assets with 0 errors/warnings, but the runner rejected coverage because it did not recognize UE 5.8's class-prefixed World identity. A runner-only regression repair requires a new candidate and complete rerun. | Codex |
+| August 30, 2026 | `43cf7d04d32f126eadeb6cdbb21784373142e8b7` | unchanged map LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; 49,037 bytes; one project-owned package | runner self-test 6/6; `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T112827Z-37852-5504cb0b/run.json`; `Saved/Verification/BS-011/MapCheck-43cf7d0/Unreal.log`; Win64 Development `BuildCookRun`; `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log` | PASS — Build and Automation passed; Data Validation requested/validated 1/1 project assets with 0 invalid/unable/missing; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings; package/archive completed with UAT exit 0; the package manifest contains `L_TestGym_Core.umap`; the packaged executable loaded the exact map, brought its world up for play, and exited normally with status 0. Creator visual acceptance remains pending. | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-Preparation is in progress. The task remains open until the creator creates the locked map, Codex verifies the exact candidate through LFS/build/validation/cook/package, and the creator accepts the packaged visual load.
+The locked Basic Level map exists and the exact candidate passed LFS, runner regression, Build, Automation, Data Validation, Cook, Map Check, Win64 Development packaging, and packaged-map boot verification. The task is at `Needs Owner Verification` until Madalin accepts Checkpoint B. The feature branch, remote LFS object, merge, post-merge audit, backup generation, and lock release follow only after that visual acceptance.
