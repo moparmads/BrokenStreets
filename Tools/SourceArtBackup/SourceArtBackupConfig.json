@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "sourceRoot": "F:\\BrokenStreets_SourceArt",
+  "localBackupRoot": "E:\\BrokenStreets_SourceArtBackup",
+  "offlineRelativeRoot": "BrokenStreets_OfflineBackup",
+  "offlineStoreId": "2f5ae76e-43d0-4b80-9a17-0fd3ed78fd7a",
+  "repositoryOfflineRelativeRoot": "Repository",
+  "sourceArtOfflineRelativeRoot": "SourceArt",
+  "warningFreeSpaceGiB": 100,
+  "hardMinimumFreeSpaceGiB": 20,
+  "capacityReviewSourceGiB": 300,
+  "capacityReviewFreeSpaceGiB": 150,
+  "scheduledTaskName": "Broken Streets Source Art Backup",
+  "scheduleLocalTime": "19:30",
+  "owner": "Madalin Gavrila",
+  "encryptionPolicy": "No encryption; creator accepted the physical-confidentiality risk",
+  "offsitePolicy": "Disconnect safely and store separately after every successful offline checkpoint"
+}

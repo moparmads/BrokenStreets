@@ -9,12 +9,7 @@ Legend: `Recommended` is the current technical direction, not creator acceptance
 | ID | Confirmed decision | Evidence/task |
 |---|---|---|
 | OPS-01A | Independent Git/LFS layer uses `E:/BrokenStreets_RepositoryBackup` on the separate physical disk; daily 19:00 plus manual checkpoints; 30 Git generations; LFS objects never auto-delete; warn below 100 GiB; no additional local encryption | BS-010A |
-
-## Before Source Art and off-site backup
-
-| ID | Decision | Recommended | Required before |
-|---|---|---|---|
-| OPS-01B | Off-site provider, encryption, total capacity, retention, and renewal for repository plus Source Art | versioned off-site copy in addition to the verified local layer | BS-013A |
+| OPS-01B | Source Art uses a versioned local layer on `E:` plus a complete repository/Source Art checkpoint on the approved 1 TB LaCie USB drive; the drive is unencrypted by creator choice, is safely disconnected and stored separately after a successful checkpoint, and uses no paid provider; content objects are never auto-deleted; capacity is reviewed at 300 GiB Source Art or below 150 GiB free | BS-013A |
 
 ## Before Identity / Session / Save MVP
 
