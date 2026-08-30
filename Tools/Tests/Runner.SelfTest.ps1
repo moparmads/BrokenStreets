@@ -253,6 +253,27 @@ while ($true) {
     $exitProbePath = Write-SelfTestHelper -Name 'Exit Probe.ps1' -Content @'
 [Environment]::Exit(37)
 '@
+    Invoke-SelfTestCase -Name 'validation identity matches manifest package' -Body {
+        $packageName = '/Game/BS/Maps/Test/L_TestGym_Core'
+        $classPrefixedIdentity = "/Script/Engine.World'/Game/BS/Maps/Test/L_TestGym_Core.L_TestGym_Core'"
+        $bareObjectIdentity = '/Game/BS/Maps/Test/L_TestGym_Core.L_TestGym_Core:PersistentLevel'
+
+        Assert-SelfTest -Condition (Test-BsAssetIdentityMatchesPackage `
+                -AssetIdentity $classPrefixedIdentity -PackageName $packageName) `
+            -Message 'A UE class-prefixed World identity did not match its package.'
+        Assert-SelfTest -Condition (Test-BsAssetIdentityMatchesPackage `
+                -AssetIdentity $bareObjectIdentity -PackageName $packageName) `
+            -Message 'A bare Unreal object identity did not match its package.'
+        Assert-SelfTest -Condition (-not (Test-BsAssetIdentityMatchesPackage `
+                -AssetIdentity '/Game/BS/Maps/Test/L_TestGym_Core_Copy.L_TestGym_Core_Copy' `
+                -PackageName $packageName)) `
+            -Message 'A different package was accepted as validation coverage.'
+        Assert-SelfTest -Condition (-not (Test-BsAssetIdentityMatchesPackage `
+                -AssetIdentity '/Game/BS/Maps/Test/L_TestGym_CoreExtra.L_TestGym_CoreExtra' `
+                -PackageName $packageName)) `
+            -Message 'A package-name prefix collision was accepted as validation coverage.'
+    }
+
     Invoke-SelfTestCase -Name 'native argument quoting (known forms)' -Body {
         $knownCases = @(
             [pscustomobject]@{ Value = 'plain'; Expected = 'plain' },
