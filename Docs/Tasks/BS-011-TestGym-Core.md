@@ -21,6 +21,7 @@ BS-009 and BS-010 provide repeatable automation, while BS-010A protects Git and 
 - only the actors supplied by the Unreal `Basic Level` template for the initial fixture;
 - no Level Blueprint gameplay or per-frame script;
 - Git LFS lock, pointer, object, push, and post-merge unlock verification for the map;
+- the minimum BS-009 runner regression required to recognize UE 5.8 class-prefixed asset identities as validation coverage;
 - Map Check, Data Validation, Build, Automation, Cook, packaged Win64 Development creation, and explicit packaged-map launch;
 - exact creator steps and visual acceptance;
 - task, status, and verification documentation.
@@ -47,11 +48,12 @@ BS-009 and BS-010 provide repeatable automation, while BS-010A protects Git and 
 ## Allowed files/domains
 
 - `Content/BS/Maps/Test/L_TestGym_Core.umap`;
+- `Tools/Invoke-BrokenStreets.ps1` and `Tools/Tests/Runner.SelfTest.ps1`, limited to the demonstrated validation-identity regression;
 - `Docs/Tasks/BS-011-TestGym-Core.md`, `Docs/Tasks/README.md`, and `Docs/STATUS.md`;
 - small verification documentation only when evidence requires it;
 - generated build, validation, cook, package, and log output only under ignored `Saved/`, `Binaries/`, `Intermediate/`, or an explicitly named temporary verification directory.
 
-Forbidden: other project assets, `Config/`, `.uproject`, plugins, Engine Source, runtime C++, Source Art, generated IDE files in Git, and unrelated documentation.
+Forbidden: other project assets, unrelated runner behavior, `Config/`, `.uproject`, plugins, Engine Source, runtime C++, Source Art, generated IDE files in Git, and unrelated documentation.
 
 ## Authority/network impact
 
@@ -86,6 +88,7 @@ Madalin creates and saves the binary map through Unreal Editor 5.8.2 after Codex
 ## Automated verification
 
 - inspect `git status`, attributes, lock owner, staged LFS pointer, `git lfs status`, `git lfs ls-files`, and `git lfs fsck --pointers HEAD`;
+- run `Tools/Tests/Runner.SelfTest.ps1`, including class-prefixed identity, bare object identity, wrong-package, and prefix-collision cases;
 - run the map through Unreal Map Check and project Data Validation;
 - run `Tools/BS.cmd All` with Unreal Editor closed;
 - verify `Development Editor | Win64`, `BrokenStreets.Smoke.ProjectBoot`, Data Validation, and Cook results from the exact candidate tree;
@@ -130,7 +133,7 @@ After automated verification, Codex provides the exact packaged executable path 
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| August 30, 2026 | `859cc7a7d3d78150e28f2bd80f5445627ae7aee2` | first map candidate; LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; 49,037 bytes | `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T112422Z-41008-0fa8d453/run.json` | INVALIDATED — Build and Automation passed; Unreal validated 1/1 assets with 0 errors/warnings, but the runner rejected coverage because it did not recognize UE 5.8's class-prefixed World identity. A runner-only regression repair requires a new candidate and complete rerun. | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 

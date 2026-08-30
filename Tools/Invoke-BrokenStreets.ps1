@@ -2125,6 +2125,28 @@ function Get-BsProjectAssetManifest {
     return @($manifest | Sort-Object packageName)
 }
 
+function Test-BsAssetIdentityMatchesPackage {
+    param(
+        [Parameter(Mandatory = $true)][string]$AssetIdentity,
+        [Parameter(Mandatory = $true)][string]$PackageName
+    )
+
+    if ([string]::IsNullOrWhiteSpace($AssetIdentity) -or
+        [string]::IsNullOrWhiteSpace($PackageName)) {
+        return $false
+    }
+
+    # UE may prefix an object path with its class, for example:
+    # /Script/Engine.World'/Game/BS/Maps/Test/L_TestGym_Core.L_TestGym_Core'
+    $packagePattern = '(?:^|[''"\s])' + [regex]::Escape($PackageName) + '(?:[.:]|[''"\s]|$)'
+    return [regex]::IsMatch(
+        $AssetIdentity.Trim(),
+        $packagePattern,
+        [System.Text.RegularExpressions.RegexOptions]::IgnoreCase -bor
+            [System.Text.RegularExpressions.RegexOptions]::CultureInvariant
+    )
+}
+
 function Invoke-BsValidate {
     $nextStepNumber = $script:StepNumber + 1
     $stepDirectory = Join-Path $script:Context.RunRoot ('Steps\{0:D2}-Validate' -f $nextStepNumber)
@@ -2215,8 +2237,10 @@ function Invoke-BsValidate {
         $processedCount = $resultMatches.Count
         $missingProjectPackages = New-Object System.Collections.ArrayList
         foreach ($manifestPackageName in $manifestPackageNames) {
-            $packagePattern = '^' + [regex]::Escape($manifestPackageName) + '(?:[\.:]|$)'
-            if (@($startIdentities | Where-Object { $_ -match $packagePattern }).Count -eq 0) {
+            $matchingStartIdentities = @($startIdentities | Where-Object {
+                Test-BsAssetIdentityMatchesPackage -AssetIdentity $_ -PackageName $manifestPackageName
+            })
+            if ($matchingStartIdentities.Count -eq 0) {
                 [void]$missingProjectPackages.Add($manifestPackageName)
             }
         }
