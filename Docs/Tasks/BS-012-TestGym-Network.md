@@ -1,6 +1,6 @@
 # BS-012 — Network TestGym Fixture
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-012-testgym-network`
 **Base commit:** `7c7e2790fcac562a85e53bc1e21f091fce8dfd60`
@@ -122,9 +122,13 @@ The four required actor labels and transforms are:
 
 Codex issues the exact numbered Editor steps only after the preparation commit is pushed and the new map path is locked. The creator returns a screenshot showing the map name, World Outliner with all four PlayerStarts, and Content Browser path, then closes the Editor.
 
+Completed on August 30, 2026. Madalin Gavrila saved `L_TestGym_Network`, configured the four required PlayerStarts, supplied the requested Unreal Editor screenshot, and closed the Editor. The screenshot showed the expected map and Content Browser path, all four deterministic PlayerStart labels, 11 total actors, and the selected `PS_Network_01` transform. File inspection then proved that the 55,593-byte network map was the only new asset and that `L_TestGym_Core` remained byte-identical at SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`.
+
 ### Checkpoint B — four-process visual smoke
 
 After the packaged automated topology passes, Codex supplies one-click ignored launchers or exact launch steps. PASS requires one listen-host window and three client windows on the expected TestGym, all responsive for 10 seconds, with no crash or connection dialog. This empty fixture does not require the players to see or interact with each other.
+
+Prepared for creator verification on August 30, 2026. Double-click `F:\BrokenStreets\Saved\Packages\BS-012\d475fce-candidate1\Run-BS012-Visual-Smoke.cmd`. The ignored launcher opens one host and three clients in small windows on port `17780` and writes separate logs under `VisualSmokeLogs`. Leave all four windows open and responsive for at least 10 seconds, then close each game window normally with `Alt+F4` or its `X`. Acceptance is still pending.
 
 ## Risks and rollback
 
@@ -146,10 +150,10 @@ After the packaged automated topology passes, Codex supplies one-click ignored l
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| August 30, 2026 | `d475fce9d92bbd382a4ff89e7745e6fd765f1169` | tree `4de4d828a2145544cd7f8117c78df214a2db2d57`; network map LFS OID `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; 55,593 bytes; Core SHA-256 unchanged at `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d` | runner self-test 6/6; `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T123125Z-38300-bd6b5a5a/run.json`; `Saved/Verification/BS-012/d475fce/MapCheck/Unreal.log`; exact-map Win64 Development `BuildCookRun`; `Saved/Verification/BS-012/d475fce/Loopback-Attempt2` | PASS AUTOMATED / NEEDS OWNER VERIFICATION — Build and Automation passed; Data Validation requested and validated 2/2 project assets with 0 invalid, unable, missing, warnings, or errors; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings; exact-map build/cook/stage/package/archive completed with exit 0; one listen host and three clients loaded the exact map, all three clients joined, all four processes survived the 10-second observation, and the failure scan was clear. Automated processes were terminated by the harness after evidence capture; creator visual and normal-close acceptance remain pending. | Madalin Gavrila / Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later task/status/evidence-only commit may reference the verified candidate while explicitly listing unchanged runtime files.
 
 ## Final handoff
 
-Preparation is in progress. The task remains open until the creator creates the locked map, Codex verifies the exact candidate through LFS/build/validation/cook/package/four-process logs, and the creator accepts the packaged four-process visual smoke.
+The automated BS-012 candidate is ready for owner verification. The locked 55,593-byte network map is committed through Git LFS, the Core fixture is byte-identical, and the exact candidate passed runner self-test, Build, Automation, Data Validation, Cook, Map Check, explicit-map packaging, and one-host/three-client loopback verification. Madalin must still run the supplied visible four-process launcher, observe all four responsive windows for at least 10 seconds, close them normally, and report the result. The task is not merged, backed up, audited, unlocked, or Done yet.
