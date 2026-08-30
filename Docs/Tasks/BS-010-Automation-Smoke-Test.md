@@ -114,4 +114,4 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 
 ## Final handoff
 
-Automated candidate verification and creator Automation UI acceptance are complete. BS-010 is ready for integration into `main`; no gameplay, Config, Content, Blueprint, map, plugin, or save data changed.
+Automated candidate verification and creator Automation UI acceptance are complete. BS-010 was integrated into `main` by merge commit `3a77518326b0dac1ca57f93aa58e9b69076eebfc`; no gameplay, Config, Content, Blueprint, map, plugin, or save data changed.

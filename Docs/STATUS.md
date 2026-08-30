@@ -2,19 +2,19 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `feature/BS-010-automation-smoke` (BS-010 integration pending)
+**Active branch:** `main`
 
 ## Summary
 
 - Last completed task: `BS-010` — first Automation smoke test and canonical English migration.
-- Active implementation task: none; BS-010 is awaiting integration into `main`.
+- Active implementation task: none; BS-010 is integrated into `main`.
 - Next task: `BS-010A` — independent repository and Git LFS backup.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
 - one runtime module, `BrokenStreets`;
-- one deterministic C++ Automation smoke test on the active BS-010 branch;
+- one deterministic C++ Automation smoke test on `main`;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
 - functioning Git, Git LFS, `main` branch, and private remote;
