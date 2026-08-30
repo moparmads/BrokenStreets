@@ -53,4 +53,4 @@ Before code:
 | [BS-010A](BS-010A-Independent-Repository-Backup.md) | Independent repository and Git LFS backup | Done | `main` |
 | [BS-011](BS-011-TestGym-Core.md) | Project-owned TestGym core map | Done | `main` |
 | [BS-012](BS-012-TestGym-Network.md) | Network TestGym fixture | Done | `main` |
-| [BS-013](BS-013-Benchmark-Street.md) | Benchmark Street placeholder and first trace | Needs Owner Verification | `feature/BS-013-benchmark-street` |
+| [BS-013](BS-013-Benchmark-Street.md) | Benchmark Street placeholder and first trace | Done | `main` |

@@ -1,6 +1,6 @@
 # BS-013 — Benchmark Street Placeholder
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-013-benchmark-street`
 **Base commit:** `3f157cbf0a65937af7dbd6813136e9c2298fb3dc`
@@ -154,9 +154,10 @@ After automated verification and profiling pass, Codex provides one ignored pack
 | August 30, 2026 | `a25a7621f4b91b6dc3c405f78d11f6abce46f498` | `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Creator Checkpoint A: saved the 14-actor fixture at the exact path, showed the required labels/layout and one selected mass transform, then closed Unreal Editor. Core and Network maps remained byte-identical. | PASS | Madalin Gavrila |
 | August 30, 2026 | `a25a7621f4b91b6dc3c405f78d11f6abce46f498` | `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Runner self-test 6/6; `Tools/BS.cmd All` `PASS_WITH_SKIPS`; Automation 1/1; Validation 3/3; Cook with no project omission/warning; exact Map Check 0/0; UAT package exit 0; three 3,600-frame CSV/trace captures; Run 01 Insights CPU/GPU analysis completed. See [BS-PERF-002-P0](../Performance/Baselines/BS-PERF-002-P0.md). | AUTOMATED PASS; creator Checkpoint B pending. Allocation trace and unattended outer exit-code caveats retained in the report. | Codex |
 | August 30, 2026 | `a25a7621f4b91b6dc3c405f78d11f6abce46f498` | `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Creator Checkpoint B: Madalin completed the ignored packaged visual/traversal check without reporting a mismatch and supplied the launcher result. The retained log loaded the exact map, recorded `Alt-F4`, requested status `0`, completed `PreExit` and engine shutdown, and closed with no fatal/crash marker. Launcher exit code `0`; log SHA-256 `C296C735551CE131715D7502713CCDFC20F7A7A95791089C4C02D58CDE256390`. | PASS | Madalin Gavrila |
+| August 30, 2026 | merge `f956ee6b43e61112351bd94e03a235b6f270eca5` | Runtime/content candidate unchanged from `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Local and remote `main` matched; the remote map pointer referenced the expected 61,422-byte LFS payload; generation `20260830T185341Z-37436-48a79bbe` captured 17 refs and 3 LFS objects; offline restore `BS-013-f956ee6` recovered the exact merge and map hashes without GitHub; restored Build passed in 28.42 s and Automation passed 1/1; lock `49918635` was released and no remote LFS lock remained. | PASS | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later task/status/evidence-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-BS-013 has passed the asset, runner, Map Check, package, three-run CSV/trace, first Unreal Insights, and both creator checkpoints on the exact candidate. The remaining gates are integration, independent backup/restore, remote audit, and final LFS unlock. The task remains **Needs Owner Verification** until those recovery and repository gates pass.
+BS-013 is **Done**. The exact 14-actor fixture, automated gates, package, profiling evidence, creator acceptance, `main` integration, GitHub/LFS audit, independent backup, offline restore, restored Build/Automation, and lock release all passed. This closes only the capture-pipeline placeholder; renderer/scalability decisions remain BS-013B and representative performance remains BS-021.
