@@ -1,6 +1,6 @@
 # BS-010 — First Automation Smoke Test and Canonical English Migration
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-010-automation-smoke`
 **Base commit:** `a924d598b69bcc339b36deeba77d16c201f656dc`
@@ -106,10 +106,10 @@ Run `BrokenStreets.Smoke.ProjectBoot` from Unreal Editor's Automation tab and co
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| pending | pending | C++ test only; no Content/Config | pending | pending | Codex |
+| August 30, 2026 | `888942e37c23810f8dc7fe38700b21254e77d3f6` | tree `9c505c91d0553b56fc2039b1c2604584bd0d7812`; C++ test only; no Content/Config | runner self-test; `Tools/BS.cmd All`; local summary `Saved/Automation/BS-009/20260830T092315Z-17944-67bfdda6/run.json` | `PASS_WITH_SKIPS`, code 0 — self-test 5/5; Generate/Build PASS; Test 1 performed, 1 succeeded, 0 failed; Validate skipped with 0 project assets until BS-011; Cook 578 packages plus 7/7 classified Engine omissions, 0 warnings | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts invalidates the candidate evidence until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged candidate tree.
 
 ## Final handoff
 
-Complete after command-line verification and creator Automation UI acceptance.
+Automated candidate verification is complete. Creator Automation UI acceptance is still required before the task becomes `Done` and merges into `main`.
