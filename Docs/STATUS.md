@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-012` — network TestGym fixture.
-- Active task: `BS-013` — `L_Benchmark_Street` placeholder and first versioned profiling trace.
+- Active task: `BS-013` — `L_Benchmark_Street` placeholder and first versioned profiling trace; automated gates passed and creator packaged acceptance is pending.
 - Next task after BS-013: `BS-013A` — Source Art 3-2-1 backup and verified restore.
 
 ## What actually exists
@@ -15,13 +15,13 @@
 - Unreal Engine 5.8.2 Blank C++ project;
 - one runtime module, `BrokenStreets`;
 - one deterministic C++ Automation smoke test on `main`;
-- two project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core` and `/Game/BS/Maps/Test/L_TestGym_Network`; the network fixture retains the Basic Level actor set and adds four deterministic PlayerStarts;
+- three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and the BS-013 candidate `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
 - functioning Git, Git LFS, `main` branch, and private remote;
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - no Broken Streets gameplay code;
-- no project-owned `.uasset` files and no project-owned `.umap` other than the two TestGym fixtures;
+- no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the BS-013 benchmark candidate;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - the default map is still the Engine template `/Engine/Maps/Templates/OpenWorld`.
 
@@ -51,6 +51,8 @@
 - BS-012 creator acceptance passed on August 30, 2026: Madalin Gavrila observed one host and three responsive client windows on the expected TestGym for longer than 10 seconds, supplied a screenshot, and closed all four normally. Retained logs show exactly three accepted connections and joins, exact-map load in every process, normal exit markers, and no failure marker or remaining process. A verbose replication audit under `Saved/Verification/BS-012/d475fce/PawnAudit-Attempt2-VerboseNet` found four distinct replicated Engine `DefaultPawn` objects on the host and every client. The temporary pawn mesh is owner-no-see; camera framing, not a missing pawn, explains views containing only two remote spheres.
 - BS-012 was integrated into `main` by merge commit `82ad55d336091f41385136465b3bcc3800d4bfdb`. Local and GitHub `main` matched exactly; the remote network-map pointer referenced LFS OID `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; Git LFS fsck and no-pending-object audit passed; and lock `49918506` was released only after integration and recovery verification.
 - BS-012 recovery checkpoint: clean generation `20260830T131034Z-39496-dc415d1a` captured 15 refs and 2 LFS objects under `E:/BrokenStreets_RepositoryBackup`. Offline restore `BS-012-82ad55d` recovered the exact merge without GitHub and verified both LFS objects. The restored Core map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; the restored Network map was 55,593 bytes with SHA-256 `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; restored Development Editor Build and Automation both passed.
+- BS-013 candidate `a25a7621f4b91b6dc3c405f78d11f6abce46f498`, tree `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b`: the 61,422-byte benchmark map is stored through Git LFS as OID `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`; the two TestGym maps remain byte-identical. Runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`; Build and Automation passed; Data Validation validated 3/3 maps; Cook reported zero project-owned omissions and zero warnings; exact-map Map Check reported 0 errors and 0 warnings; Win64 Development package completed with UAT exit 0 and contains the exact map.
+- BS-013 provisional performance evidence: three separate packaged D3D12 1920×1080 runs captured 3,600 frames each with 600-frame warm-up exclusion. Median-run frame mean/p50/p95/p99/max were 6.6180/6.5528/10.1943/10.6761/11.3367 ms, with zero stable frames above 50 or 100 ms. Run 01 Unreal Insights completed CPU/GPU analysis, but allocation analysis is rejected because the trace reported 30,638 invalid memory-tag events. The unattended Engine logs show status-0 controlled shutdown while the outer observer returned unexplained code `777003`; creator visual launch and normal close remain required. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P0.md`.
 
 ## Deviations and open items
 

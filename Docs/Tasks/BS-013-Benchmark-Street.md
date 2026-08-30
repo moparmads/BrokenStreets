@@ -1,6 +1,6 @@
 # BS-013 — Benchmark Street Placeholder
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-013-benchmark-street`
 **Base commit:** `3f157cbf0a65937af7dbd6813136e9c2298fb3dc`
@@ -151,10 +151,11 @@ After automated verification and profiling pass, Codex provides one ignored pack
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| August 30, 2026 | `a25a7621f4b91b6dc3c405f78d11f6abce46f498` | `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Creator Checkpoint A: saved the 14-actor fixture at the exact path, showed the required labels/layout and one selected mass transform, then closed Unreal Editor. Core and Network maps remained byte-identical. | PASS | Madalin Gavrila |
+| August 30, 2026 | `a25a7621f4b91b6dc3c405f78d11f6abce46f498` | `88ae8e05d294d7846048b7fcc182cdd0a5a9bf0b` | Runner self-test 6/6; `Tools/BS.cmd All` `PASS_WITH_SKIPS`; Automation 1/1; Validation 3/3; Cook with no project omission/warning; exact Map Check 0/0; UAT package exit 0; three 3,600-frame CSV/trace captures; Run 01 Insights CPU/GPU analysis completed. See [BS-PERF-002-P0](../Performance/Baselines/BS-PERF-002-P0.md). | AUTOMATED PASS; creator Checkpoint B pending. Allocation trace and unattended outer exit-code caveats retained in the report. | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later task/status/evidence-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-BS-013 is prepared but not yet verified. The next gate is creator Checkpoint A after the preparation commit is pushed and the planned map path is locked. The task remains incomplete until the exact asset, package, three-run profiling evidence, creator checkpoint, integration, backup/restore, remote audit, and lock release all pass.
+BS-013 has passed the asset, runner, Map Check, package, three-run CSV/trace, and first Unreal Insights gates on the exact candidate. The task is now **Needs Owner Verification**. The next gate is creator Checkpoint B using the ignored packaged launcher. The task remains incomplete until that visual/traversal check, integration, independent backup/restore, remote audit, and final LFS unlock all pass.
