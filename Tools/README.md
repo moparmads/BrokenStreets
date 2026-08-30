@@ -42,7 +42,7 @@ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Renderer
 .\Tools\BS-RendererBaseline.cmd SelfTest
 ```
 
-The second command exercises the evolving UE CSV format, including duplicate headers and columns added during capture.
+The second command exercises the evolving UE CSV format and verifies Git discovery. Renderer actions resolve Git from an explicit `-GitExecutablePath`, the interactive PATH, the repository-backup pin, the bundled Codex runtime, or Program Files, so the creator launcher does not require a separate Git installation or PATH edit.
 
 ## Normal command
 

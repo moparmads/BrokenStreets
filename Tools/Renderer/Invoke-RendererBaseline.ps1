@@ -3,6 +3,7 @@ param(
     [ValidateSet('Audit', 'SelfTest', 'Package', 'Capture', 'Visual', 'All')]
     [string]$Action = 'Audit',
     [string]$EngineRoot,
+    [string]$GitExecutablePath,
     [string]$PackageRoot,
     [ValidateRange(1, 10)][int]$Runs = 3,
     [ValidateRange(1200, 20000)][int]$CaptureFrames = 3600,
@@ -20,6 +21,7 @@ $auditScript = Join-Path $scriptRoot 'Invoke-RendererBaselineAudit.ps1'
 $projectFile = Join-Path $projectRoot 'BrokenStreets.uproject'
 $benchmarkMap = '/Game/BS/Maps/Benchmark/L_Benchmark_Street'
 $presetId = 'BS-PC-Recommended-P0'
+$script:ResolvedGitExecutable = $null
 $qualityCommands = @(
     'r.VSync 0',
     'r.DynamicRes.OperationMode 0',
@@ -57,10 +59,52 @@ function Get-Sha256 {
     return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
 }
 
+function Resolve-GitExecutable {
+    $candidates = New-Object System.Collections.Generic.List[string]
+    if (-not [string]::IsNullOrWhiteSpace($GitExecutablePath)) {
+        $candidates.Add([System.IO.Path]::GetFullPath($GitExecutablePath))
+    }
+
+    $pathCommand = Get-Command git.exe -ErrorAction SilentlyContinue
+    if ($null -ne $pathCommand) {
+        $candidates.Add([string]$pathCommand.Source)
+    }
+
+    $backupConfigPath = Join-Path $projectRoot 'Tools\Backup\RepositoryBackupConfig.json'
+    if (Test-Path -LiteralPath $backupConfigPath -PathType Leaf) {
+        $backupConfig = Get-Content -LiteralPath $backupConfigPath -Raw | ConvertFrom-Json
+        if (-not [string]::IsNullOrWhiteSpace([string]$backupConfig.gitExecutable)) {
+            $candidates.Add([System.IO.Path]::GetFullPath([string]$backupConfig.gitExecutable))
+        }
+    }
+
+    $userProfile = [Environment]::GetFolderPath([Environment+SpecialFolder]::UserProfile)
+    if (-not [string]::IsNullOrWhiteSpace($userProfile)) {
+        $candidates.Add((Join-Path $userProfile '.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe'))
+    }
+    $candidates.Add('C:\Program Files\Git\cmd\git.exe')
+    $candidates.Add('C:\Program Files\Git\bin\git.exe')
+
+    foreach ($candidate in ($candidates | Select-Object -Unique)) {
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+            return [System.IO.Path]::GetFullPath($candidate)
+        }
+    }
+    throw 'Git could not be resolved from the explicit parameter, PATH, the repository backup configuration, the Codex runtime, or Program Files.'
+}
+
+function Get-ResolvedGitExecutable {
+    if ([string]::IsNullOrWhiteSpace($script:ResolvedGitExecutable)) {
+        $script:ResolvedGitExecutable = Resolve-GitExecutable
+    }
+    return $script:ResolvedGitExecutable
+}
+
 function Get-GitValue {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
 
-    $value = & git -C $projectRoot @Arguments 2>$null
+    $gitExecutable = Get-ResolvedGitExecutable
+    $value = & $gitExecutable -C $projectRoot @Arguments 2>$null
     if ($LASTEXITCODE -ne 0) {
         throw "Git failed while reading candidate identity: git $($Arguments -join ' ')"
     }
@@ -68,7 +112,8 @@ function Get-GitValue {
 }
 
 function Assert-CleanCandidate {
-    $status = & git -C $projectRoot status --porcelain
+    $gitExecutable = Get-ResolvedGitExecutable
+    $status = & $gitExecutable -C $projectRoot status --porcelain
     if ($LASTEXITCODE -ne 0) { throw 'Git status failed.' }
     if (@($status).Count -ne 0) {
         throw 'Package and capture require a clean committed candidate. Commit the intended BS-013B files first.'
@@ -352,6 +397,12 @@ function Invoke-RendererSelfTest {
         $passed = $result.rowCount -eq 2 -and $result.stableCount -eq 1 -and $result.frame.Count -eq 1 -and [Math]::Abs($result.frame[0] - 5.0) -lt 0.0001 -and [Math]::Abs($result.gpu[0] - 8.0) -lt 0.0001
         if (-not $passed) { throw 'Evolving CSV parser self-test returned unexpected data.' }
         Write-Host '[PASS] Evolving Unreal CSV parser self-test.'
+
+        $resolvedRepository = [System.IO.Path]::GetFullPath((Get-GitValue -Arguments @('rev-parse', '--show-toplevel')))
+        if (-not $resolvedRepository.Equals([System.IO.Path]::GetFullPath($projectRoot), [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Git executable resolution returned the wrong repository: $resolvedRepository"
+        }
+        Write-Host '[PASS] Git executable resolution self-test.'
     }
     finally {
         $tempRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
