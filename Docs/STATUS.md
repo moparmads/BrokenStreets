@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-013A-source-art-backup`
 
 ## Summary
 
 - Last completed task: `BS-013` — Benchmark Street placeholder and first versioned profiling trace.
-- Active implementation task: none; the repository is on clean `main`.
-- Next task: `BS-013A` — Source Art 3-2-1 backup and verified restore.
+- Active verification task: `BS-013A` — Source Art 3-2-1 backup and verified restore; machine checks passed, safe ejection/separate physical storage awaits creator confirmation.
+- Next task after the active work: `BS-013B`.
 
 ## What actually exists
 
@@ -20,6 +20,8 @@
 - verified `Development Editor | Win64` build;
 - functioning Git, Git LFS, `main` branch, and private remote;
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
+- immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
+- one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
 - no Broken Streets gameplay code;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
@@ -55,13 +57,14 @@
 - BS-013 provisional performance evidence: three separate packaged D3D12 1920×1080 runs captured 3,600 frames each with 600-frame warm-up exclusion. Median-run frame mean/p50/p95/p99/max were 6.6180/6.5528/10.1943/10.6761/11.3367 ms, with zero stable frames above 50 or 100 ms. Run 01 Unreal Insights completed CPU/GPU analysis, but allocation analysis is rejected because the trace reported 30,638 invalid memory-tag events. The unattended Engine logs show status-0 controlled shutdown while the outer observer returned unexplained code `777003`; that discrepancy is retained, and the separate creator launch closed normally with code `0`. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P0.md`.
 - BS-013 creator acceptance passed on August 30, 2026: Madalin completed the ignored packaged visual/traversal checkpoint without reporting a mismatch. The launcher returned Windows exit code `0`; the 96,140-byte retained log loaded the exact benchmark map, recorded `Alt-F4`, requested status `0`, completed `PreExit` and engine shutdown, and closed without a fatal/crash marker. Log SHA-256: `C296C735551CE131715D7502713CCDFC20F7A7A95791089C4C02D58CDE256390`.
 - BS-013 was integrated into `main` by merge commit `f956ee6b43e61112351bd94e03a235b6f270eca5`. Local and GitHub `main` matched; the remote pointer referenced LFS OID `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`; Git LFS fsck passed with no pending object. Recovery generation `20260830T185341Z-37436-48a79bbe` captured 17 refs and 3 LFS objects on `E:`. Offline restore `BS-013-f956ee6` recovered the exact merge without GitHub; the restored Benchmark/Core/Network map hashes were `7a5a1f47db15d4ba0e808303695fcc8d3b308b7ebfcda9e5203403178b61aaff`, `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`, and `a501767fdcc89bd7811c7f109fe719b59eacf3a534a16ba95a5c7aaf57cd05ff`; restored Build passed in 28.42 seconds and Automation passed 1/1. Lock `49918635` was released only after push and recovery verification; no remote LFS lock remained.
+- BS-013A candidate `05bfb593011bdfcb0ed37fe885a86f4d5ba8c7a5`, tree `1b793f1fff7049fd059b51356c167f8ad2466c23`: 10 changed PowerShell scripts parsed; Source Art self-test passed Unicode/binary/deduplication/multi-generation/locked-file/pointer/same-drive/existing-destination/corruption checks; repository/LFS self-test restored 3 refs + 1 LFS payload without GitHub; runner self-test passed 6/6. Local empty-source generation and restore passed; the 19:30 task is Ready and its direct run returned 0. Offline checkpoint `20260830T195222Z-35276-c790aa50` combined repository generation `20260830T195220Z-20964-5d4c696c` (18 refs, 3 LFS objects, exact candidate commit) and Source Art generation `20260830T195222Z-13368-c36825e2` (0 files because real Source Art is still empty). Complete restore `E:/BrokenStreets_OfflineRecoveryTests/BS-013A-05bfb59` used no GitHub, recovered the candidate branch, passed Git/LFS fsck, built in 28.49 seconds, and passed Automation 1/1. The unencrypted external drive had 931.38 GiB free. Creator safe-ejection/separate-storage confirmation is still required before task closure.
 
 ## Deviations and open items
 
 - `Config/DefaultEngine.ini` currently has `r.RayTracing=True`; the roadmap assumed Ray Tracing Off. Do not change it before an explicit configuration/benchmark task.
-- `F:/BrokenStreets_SourceArt` exists, but its 3-2-1 backup and restore drill are not verified.
+- `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.
-- The independent repository copy is local to the same PC but on a separate physical disk; it does not protect against loss of the entire PC/location. BS-013A adds the approved off-site layer with Source Art.
+- The external recovery drive is plaintext by creator choice; physical custody is required. It protects against whole-PC/location loss only after safe ejection and separate storage, which awaits creator confirmation for the first verified checkpoint.
 - The scheduled task pins Git/Git LFS from the current Codex runtime path because Task Scheduler does not inherit the interactive PATH. Relocation of that runtime requires a config update and another direct scheduled-task test.
 - Full recovery with TestGym, smoke tests, cook, and LFS is BS-007B; it depends on BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B. Save recovery begins separately after BS-020.
 

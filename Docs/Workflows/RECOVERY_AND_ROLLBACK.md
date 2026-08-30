@@ -103,21 +103,79 @@ The Windows task `BrokenStreets Repository Backup` runs daily at 19:00 for the s
 
 The tool attempts to refresh `origin` and Git LFS first. If authentication or GitHub is unavailable, it reports a warning and publishes only when every LFS payload required by the locally captured refs is present and valid. To renew credentials, sign into the approved `moparmads` GitHub account through the existing Git Credential Manager flow, run `git fetch origin`, then rerun the manual backup. Never place a token in the repository, task action, manifest, or log.
 
-## Source Art 3-2-1 backup
+## Source Art 3-2-1 backup — BS-013A
 
-`F:/BrokenStreets_SourceArt` is not protected by the game repository.
+`F:/BrokenStreets_SourceArt` remains outside Git. Its approved recovery layout is:
 
-The gate requires:
+1. working files on `F:`;
+2. versioned local backup at `E:/BrokenStreets_SourceArtBackup` on a different internal physical disk;
+3. versioned offline checkpoint under `BrokenStreets_OfflineBackup` on the approved 1 TB LaCie USB drive, safely disconnected and stored separately after success.
 
-- three total copies;
-- two media or storage types;
-- one off-site copy;
-- checksum or manifest for important files;
-- versioning or snapshot policy;
-- estimated capacity and pre-full alert;
-- quarterly sample restoration into a new folder.
+No paid provider is used. The external drive is deliberately unencrypted, so physical custody is the accepted confidentiality control. Anyone who obtains the drive can read its Source Art and private repository data. Never place credentials, tokens, private keys, or unrelated personal files in the protected sources.
 
-Do not configure a provider or cloud automatically without creator choice and authorization.
+### Format and publication safety
+
+Source Art generations are immutable inventories. Each file is addressed by its SHA-256 content hash; identical content is stored once across files and generations. Newly copied objects are read back and hashed before publication. A generation stages its inventory, manifest, and checksums, then publishes the directory before advancing `LATEST.json`; `LATEST.previous.json` preserves the earlier successful pointer. Failed runs never make staging authoritative.
+
+Restore fully hashes every referenced object before it creates the destination. Restore always targets a new folder and never overwrites Source Art, the project, the Engine, or a backup store. Empty Source Art is a valid, testable generation.
+
+Content objects and successful generation metadata are never deleted automatically. This favors recovery over silent reclamation. The tool warns below 100 GiB free and fails before an estimated write crosses the 20 GiB hard reserve. Review capacity and procure a larger/replacement medium when Source Art reaches 300 GiB, either backup drive falls below 150 GiB free, or a complete offline checkpoint no longer fits with reserve.
+
+### Local backup
+
+Save the DCC files first. From `F:/BrokenStreets`, run:
+
+```powershell
+.\Tools\BS-SourceArtBackup.cmd
+```
+
+Require `[PASS] Published Source Art generation ...`. The Windows task `Broken Streets Source Art Backup` runs the same local operation daily at 19:30, starts after a missed time when possible, ignores overlapping starts, and records scheduled output under `Saved/SourceArtBackupScheduled`. A changing, unreadable, or locked file fails the run and preserves the prior valid pointer. Manual checkpoints are required before meaningful DCC operations, bulk conversion, folder reorganization, or risky migration; the daily task is not a substitute for saving intentional work.
+
+Inspect the schedule with:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\SourceArtBackup\Register-SourceArtBackupTask.ps1 -Action Inspect
+```
+
+### Offline checkpoint
+
+The one-time initialization command accepts only an exact drive root, rejects the system, working, and local-backup drives, and creates only the dedicated folder plus its stable ID marker:
+
+```powershell
+.\Tools\BS-InitializeOfflineDrive.cmd -DriveRoot G:\
+```
+
+The drive letter may change later. Normal commands search mounted volumes for the unique approved marker instead of trusting `G:`.
+
+After meaningful asset work, before risky migrations or milestone closure, and at least weekly while Source Art changes:
+
+1. save/close DCC files and commit the intended game-repository checkpoint;
+2. connect the approved external drive;
+3. run `.\Tools\BS-OfflineBackup.cmd` from a clean repository;
+4. require PASS for Repository, Git LFS, Source Art, and the combined offline checkpoint;
+5. use **Safely Remove Hardware and Eject Media**;
+6. disconnect the drive and store it separately from the PC.
+
+The combined pointer advances only after both independent generations succeed. Repository capture uses the existing BS-010A bundle/LFS format; Source Art performs a full existing-object audit on the external medium when the checkpoint runs.
+
+### Complete offline restore and quarterly drill
+
+Choose a new destination outside all protected roots:
+
+```powershell
+.\Tools\BS-OfflineRestore.cmd -DestinationRoot E:\BrokenStreets_OfflineRecoveryTests\<new-test-name>
+```
+
+The command validates the combined checkpoint, restores every captured Git ref and Git LFS object without GitHub, restores Source Art, and verifies every file hash. The repository appears under `Repository/WorkingCopy`; Source Art appears under `SourceArt`. After a recovery gate, run `Tools/BS.cmd Build` and `Tools/BS.cmd Test` from the restored working copy.
+
+At least quarterly, perform a restore into a new folder and open representative Blender/Substance/other source files in their authoring applications. Record the date, generation IDs, files opened, and result. A checksum-only PASS does not prove that a proprietary DCC application can still read its format.
+
+### Failure, loss, and drive replacement
+
+- Keep failed staging/restore folders until the cause is understood; never delete a valid generation to make a failing run appear green.
+- If the drive is lost or stolen, assume its plaintext Source Art and repository are disclosed. Replace the medium, initialize a new approved marker through a scoped task, and create/restore-verify a complete checkpoint before retiring the remaining layer.
+- If capacity crosses the review trigger, add a larger medium before deleting anything. Object cleanup is a separate destructive task requiring exact inventory, verified replacement copies, and creator authorization.
+- If only the drive letter changes, do not edit configuration; the marker resolver handles it.
 
 ## Future save recovery
 

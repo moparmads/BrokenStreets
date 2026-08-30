@@ -158,3 +158,65 @@ After a recovery, run from the restored `WorkingCopy`:
 ```
 
 Do not delete a failed generation or restore folder before its logs are reviewed. Backup data and restore drills are outside the game repository and are never committed.
+
+## Source Art local backup
+
+BS-013A protects the non-Git source tree `F:\BrokenStreets_SourceArt` with immutable, SHA-256 content-addressed generations on `E:`:
+
+```powershell
+.\Tools\BS-SourceArtBackup.cmd
+```
+
+The command supports an empty source tree and never writes into Source Art. Identical content is stored once. A source file that is changing, locked against reading, or unreadable fails the run before `LATEST.json` can advance. Existing objects receive a size/trusted-prior-hash check during the normal local run; use `-FullObjectAudit` for a full read of all referenced objects.
+
+Preview without writing:
+
+```powershell
+.\Tools\BS-SourceArtBackup.cmd -PlanOnly
+```
+
+Restore the latest local generation into a new, non-existing folder outside all protected roots:
+
+```powershell
+.\Tools\BS-SourceArtRestore.cmd -DestinationRoot E:\BrokenStreets_SourceArtRecoveryTests\<new-test-name>
+```
+
+Restore verifies the generation checksums and every referenced content object before creating the destination, then hashes every restored file again. It never overwrites an existing folder.
+
+The Windows task `Broken Streets Source Art Backup` runs daily at 19:30. Inspect it with:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\SourceArtBackup\Register-SourceArtBackupTask.ps1 -Action Inspect
+```
+
+After any change under `Tools/SourceArtBackup`, run the isolated regression fixture:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\SourceArtBackup\Tests\SourceArtBackup.SelfTest.ps1
+```
+
+It verifies nested and Unicode paths, binary files, content deduplication, two immutable generations, locked-file failure with pointer preservation, same-drive rejection, exact restore, existing-destination rejection, and corrupted-object rejection before destination creation. It touches only named self-test roots under repository `Saved/` and the local backup `SelfTests/` directory.
+
+## Complete offline checkpoint
+
+The approved external drive contains one dedicated `BrokenStreets_OfflineBackup` root and a stable non-secret marker. Initialization is a one-time or replacement-drive action:
+
+```powershell
+.\Tools\BS-InitializeOfflineDrive.cmd -DriveRoot G:\
+```
+
+Normal use does not depend on the `G:` letter. With the approved marked drive connected and the Git working tree clean, run:
+
+```powershell
+.\Tools\BS-OfflineBackup.cmd
+```
+
+This publishes a complete repository/Git LFS generation, performs a full Source Art object audit and generation, and only then advances the combined offline checkpoint pointer. It needs no cloud provider. The drive is not encrypted by creator choice; safely eject it and store it separately after PASS.
+
+Verify a complete checkpoint without creating a destination:
+
+```powershell
+.\Tools\BS-OfflineRestore.cmd -DestinationRoot E:\BrokenStreets_OfflineRecoveryTests\<new-test-name> -PlanOnly
+```
+
+Perform the isolated restore by removing `-PlanOnly`. It reconstructs `Repository/WorkingCopy` without GitHub and restores Source Art under `SourceArt`. Never use a project, Engine, Source Art, backup-store, drive-root, or existing folder as the destination.
