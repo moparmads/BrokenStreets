@@ -120,7 +120,7 @@ Manual acceptance, networking, persistence și playtest: N/A — task exclusiv d
 ## Final handoff
 
 - Candidate verificat: `557ede8cc16cb1daedee2a1511a720dde79b6ade`.
-- Final evidence commit: commitul documentației care urmează imediat candidatului; hashul este fixat în commitul de închidere fără modificări de runtime/build scripts.
+- Final evidence commit: `c45d1fa871aae435440d37d2414094580e33fe94`; modifică numai task/status/index, fără runtime ori build scripts.
 - Comandă creator: închide Unreal Editor și rulează `F:\BrokenStreets\Tools\BS.cmd All`.
 - Rezultat așteptat înainte de BS-010/BS-011: `PASS_WITH_SKIPS`, cu skip-urile explicate mai sus; orice cod nenul sau `FAILED` se oprește și se raportează împreună cu linia `Sumar:`.
 - Rollback sigur: revert-ul commiturilor BS-009 revine la baza `0de0648e070f58c7d095fc5dba2468a5c7eb7b8c`; fișierele generate din `Saved/`, `Binaries/` și soluțiile rămân regenerabile.
