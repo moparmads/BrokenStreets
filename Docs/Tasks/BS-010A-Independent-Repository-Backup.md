@@ -133,4 +133,4 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 
 ## Final handoff
 
-Automated verification and creator acceptance are complete. BS-010A is ready for integration into `main`; the integrated commit and final clean `main` backup are recorded during closure.
+Automated verification and creator acceptance are complete. BS-010A was integrated into `main` by merge commit `c20d09790fbe521556700219e03f03d6e50899bd`. The closure procedure creates and offline-restores one final clean backup after the final `main` documentation commit so the external recovery evidence captures the exact synchronized repository state.

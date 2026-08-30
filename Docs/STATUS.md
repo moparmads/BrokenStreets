@@ -2,12 +2,12 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `feature/BS-010A-independent-backup` (closure; integration into `main` pending)
+**Active branch:** `main`
 
 ## Summary
 
 - Last completed task: `BS-010A` — independent repository and Git LFS backup.
-- Active task: none; BS-010A integration into `main` is the current closure operation.
+- Active task: none.
 - Next task: `BS-011` — project-owned `L_TestGym_Core`.
 
 ## What actually exists
@@ -41,6 +41,7 @@
 - Final BS-010 clean-state gate after restoring the exact verified `.uproject`: `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Doctor reported 0 warnings; Generate and Build passed; Test performed 1, succeeded 1, failed 0, and skipped 0; Validate intentionally skipped with 0 project assets until BS-011; Cook produced 578 packages plus 7/7 classified Engine omissions with 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T094937Z-37516-4eb9c17e/run.json`.
 - BS-010A candidate `f15227f2da9507582da1f9bedc358b8485691ea4`, tree `4b84d24edf2abc954c84b350f7c4d74a35bb4af7`: backup self-test restored 3 refs and 1 synthetic LFS payload without GitHub; real clean generation `20260830T103932Z-20076-8eb088fc` captured 10 refs and 0 current LFS payloads with verified checksums; offline restore `BS-010A-f15227f` restored all 10 refs; restored Development Editor Build passed in 27.965 seconds; restored Automation performed 1 and succeeded 1 with 0 failed/skipped; the daily 19:00 scheduled task is enabled, starts after a missed time, and its direct test run returned 0.
 - BS-010A creator acceptance: on August 30, 2026, Madalin Gavrila ran the normal manual checkpoint command. Generation `20260830T104652Z-28620-93aa2606` was published from a clean `a9f57e601cb14491f34f66e22ea83fbc4745a666`; manifest and `LATEST.json` agree, origin refresh passed, 11 refs were captured, and 0 current LFS objects were expected.
+- BS-010A was integrated into `main` by merge commit `c20d09790fbe521556700219e03f03d6e50899bd`. No gameplay code, Config, Content, `.uproject`, plugin, or Engine Source file changed.
 
 ## Deviations and open items
 
