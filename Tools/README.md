@@ -39,7 +39,10 @@ After changing renderer audit tooling, run its isolated regression fixture:
 
 ```powershell
 powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Renderer\Tests\RendererBaselineAudit.SelfTest.ps1
+.\Tools\BS-RendererBaseline.cmd SelfTest
 ```
+
+The second command exercises the evolving UE CSV format, including duplicate headers and columns added during capture.
 
 ## Normal command
 

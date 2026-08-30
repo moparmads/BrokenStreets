@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Audit', 'Package', 'Capture', 'Visual', 'All')]
+    [ValidateSet('Audit', 'SelfTest', 'Package', 'Capture', 'Visual', 'All')]
     [string]$Action = 'Audit',
     [string]$EngineRoot,
     [string]$PackageRoot,
@@ -291,11 +291,11 @@ function Read-PerformanceCsv {
             if ($fields.Length -gt 0 -and $fields[0] -ceq 'EVENTS') {
                 break
             }
-            if ($fields.Length -ne $header.Length) {
-                throw "CSV row $($rowCount + 1) has $($fields.Length) fields; expected $($header.Length)."
-            }
             if ($rowCount -ge $WarmupCount) {
                 foreach ($columnName in $columnNames) {
+                    if ([int]$indices[$columnName] -ge $fields.Length) {
+                        throw "CSV row $($rowCount + 1) does not contain the '$columnName' column."
+                    }
                     $parsed = 0.0
                     $value = $fields[[int]$indices[$columnName]]
                     if (-not [double]::TryParse($value, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$parsed)) {
@@ -332,6 +332,36 @@ function Get-SeriesSummary {
         p95Ms = [Math]::Round((Get-Percentile -Values $Values -Percentile 0.95), 4)
         p99Ms = [Math]::Round((Get-Percentile -Values $Values -Percentile 0.99), 4)
         maxMs = [Math]::Round(($Values | Measure-Object -Maximum).Maximum, 4)
+    }
+}
+
+function Invoke-RendererSelfTest {
+    $fixtureRoot = Join-Path ([System.IO.Path]::GetTempPath()) ('BS013B-Renderer-' + [Guid]::NewGuid().ToString('N'))
+    $fixturePath = Join-Path $fixtureRoot 'Evolving.csv'
+    try {
+        [System.IO.Directory]::CreateDirectory($fixtureRoot) | Out-Null
+        $fixtureLines = @(
+            'EVENTS,FrameTime,GameThreadTime,RenderThreadTime,GPUTime,Duplicate,Duplicate',
+            ',1.0,2.0,3.0,4.0,0,0',
+            ',5.0,6.0,7.0,8.0,0,0,new-stat',
+            'EVENTS,FrameTime,GameThreadTime,RenderThreadTime,GPUTime,Duplicate,Duplicate,NewStat',
+            '[HasHeaderRowAtEnd],1'
+        )
+        [System.IO.File]::WriteAllLines($fixturePath, $fixtureLines, (New-Object System.Text.UTF8Encoding($false)))
+        $result = Read-PerformanceCsv -Path $fixturePath -WarmupCount 1
+        $passed = $result.rowCount -eq 2 -and $result.stableCount -eq 1 -and $result.frame.Count -eq 1 -and [Math]::Abs($result.frame[0] - 5.0) -lt 0.0001 -and [Math]::Abs($result.gpu[0] - 8.0) -lt 0.0001
+        if (-not $passed) { throw 'Evolving CSV parser self-test returned unexpected data.' }
+        Write-Host '[PASS] Evolving Unreal CSV parser self-test.'
+    }
+    finally {
+        $tempRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
+        $fixtureFullPath = [System.IO.Path]::GetFullPath($fixtureRoot)
+        if ($fixtureFullPath.StartsWith($tempRoot, [System.StringComparison]::OrdinalIgnoreCase) -and (Split-Path -Leaf $fixtureFullPath).StartsWith('BS013B-Renderer-', [System.StringComparison]::Ordinal)) {
+            if (Test-Path -LiteralPath $fixtureFullPath) { Remove-Item -LiteralPath $fixtureFullPath -Recurse -Force }
+        }
+        else {
+            throw "Refusing to remove unexpected self-test path: $fixtureFullPath"
+        }
     }
 }
 
@@ -562,6 +592,7 @@ function Invoke-Visual {
 try {
     switch ($Action) {
         'Audit' { Invoke-Audit }
+        'SelfTest' { Invoke-RendererSelfTest }
         'Package' { Invoke-Audit; [void](Invoke-Package) }
         'Capture' { Invoke-Audit; [void](Invoke-Capture) }
         'Visual' { Invoke-Audit; Invoke-Visual }
