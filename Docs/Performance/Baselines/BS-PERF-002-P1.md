@@ -104,6 +104,7 @@ The reported local GPU budget counter reached 23,554 MB and the system GPU budge
 - The package contains no SM5-named output, Android File Server payload, or `SecurityToken=` text. The IoStore project descriptor retains the literal name `AndroidFileServer` only as an explicit disabled plugin declaration; no plugin binary loaded and no UAT or runtime log references it.
 - All three Engine logs contain the exact map and renderer markers, reach controlled normal shutdown, and contain no fatal/crash marker.
 - The external observer returned unexplained code `777003` for all three unattended runs even though the Engine logs report status-0 shutdown. Creator visual acceptance therefore remains mandatory.
+- The first creator `Visual` attempt passed the configuration audit but stopped before game launch because Git was not on the interactive PowerShell PATH. Tool-fix `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` resolves the existing bundled Git automatically; its exact command-path regression passed with Git deliberately removed from PATH. This does not change the packaged runtime or measurements above.
 
 Package root: `Saved/Packages/BS-013B/b646af3-20260830T210716Z/Windows/`
 
