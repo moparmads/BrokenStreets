@@ -1,6 +1,6 @@
 # BS-011 — Project-Owned TestGym Core Map
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-011-testgym-core`
 **Base commit:** `a6ad7b3d08fdd3330aa0e35c20b93b53d1938598`
@@ -137,9 +137,10 @@ Completed on August 30, 2026. Madalin Gavrila launched the packaged Win64 Develo
 |---|---|---|---|---|---|
 | August 30, 2026 | `859cc7a7d3d78150e28f2bd80f5445627ae7aee2` | first map candidate; LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; 49,037 bytes | `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T112422Z-41008-0fa8d453/run.json` | INVALIDATED — Build and Automation passed; Unreal validated 1/1 assets with 0 errors/warnings, but the runner rejected coverage because it did not recognize UE 5.8's class-prefixed World identity. A runner-only regression repair requires a new candidate and complete rerun. | Codex |
 | August 30, 2026 | `43cf7d04d32f126eadeb6cdbb21784373142e8b7` | unchanged map LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; 49,037 bytes; one project-owned package | runner self-test 6/6; `Tools/BS.cmd All`; `Saved/Automation/BS-009/20260830T112827Z-37852-5504cb0b/run.json`; `Saved/Verification/BS-011/MapCheck-43cf7d0/Unreal.log`; Win64 Development `BuildCookRun`; `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log`; creator screenshot and playtest | PASS — Build and Automation passed; Data Validation requested/validated 1/1 project assets with 0 invalid/unable/missing; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings; package/archive completed with UAT exit 0; the package manifest contains `L_TestGym_Core.umap`; the packaged executable loaded the exact map, brought its world up for play, and exited normally with status 0; Madalin confirmed the expected floor, sky, lighting, responsiveness, and normal close. | Madalin Gavrila / Codex |
+| August 30, 2026 | merge `e21c78a60db565f26c5ece33ba386de79cfd0279` | verified runtime/content candidate unchanged; final map pointer references OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d` | local/GitHub `main` equality; remote pointer audit; Git LFS dry run and fsck; lock release; backup generation `20260830T115256Z-29716-852e443d`; offline restore `BS-011-e21c78a` | PASS — `main` was pushed and matched GitHub exactly; the remote branch contains the verified LFS pointer; the task lock was released only after that audit; the clean backup captured 13 refs and 1 LFS object; the offline restore verified 13 refs, materialized the 49,037-byte map, and matched its SHA-256 without GitHub. | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
 ## Final handoff
 
-The locked Basic Level map exists and the exact candidate passed LFS, runner regression, Build, Automation, Data Validation, Cook, Map Check, Win64 Development packaging, packaged-map boot verification, and creator visual acceptance. Integration, post-merge audit, backup generation, and lock release are the remaining closure operations; status becomes `Done` only after they pass.
+BS-011 is complete. The project-owned Basic Level map passed LFS, runner regression, Build, Automation, Data Validation, Cook, Map Check, Win64 Development packaging, packaged-map boot verification, and creator visual acceptance. It was integrated into `main` by merge commit `e21c78a60db565f26c5ece33ba386de79cfd0279`; local and GitHub `main` matched, the remote pointer referenced the verified LFS object, and lock `49915812` was released afterward. Backup generation `20260830T115256Z-29716-852e443d` captured the clean merge with 13 refs and 1 LFS object, and isolated restore `BS-011-e21c78a` reproduced the exact map without GitHub.

@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `feature/BS-011-testgym-core`
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-010A` — independent repository and Git LFS backup.
-- Active task: `BS-011` — the first project-owned `L_TestGym_Core` passed automated and creator visual verification; final integration and post-merge audit are in progress.
-- Next task after BS-011: `BS-012` — `L_TestGym_Network`.
+- Last completed task: `BS-011` — project-owned TestGym core map.
+- Active task: none; the repository is on clean `main` after BS-011 closure.
+- Next task: `BS-012` — `L_TestGym_Network`.
 
 ## What actually exists
 
@@ -45,12 +45,13 @@
 - BS-010A was integrated into `main` by merge commit `c20d09790fbe521556700219e03f03d6e50899bd`. No gameplay code, Config, Content, `.uproject`, plugin, or Engine Source file changed.
 - BS-011 candidate `43cf7d04d32f126eadeb6cdbb21784373142e8b7`, tree `7d0d7fd8f9162479cbc4fda754885ab4dd2f7ade`: the 49,037-byte TestGym map is stored through Git LFS as OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Build and Automation passed; Data Validation validated 1/1 project assets with 0 invalid, unable, missing, warnings, or errors; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T112827Z-37852-5504cb0b/run.json` and `Saved/Verification/BS-011/MapCheck-43cf7d0/Unreal.log`.
 - BS-011 Win64 Development package: UAT Build/Cook/Stage/Package/Archive completed with exit 0; the package manifest contains `BrokenStreets/Content/BS/Maps/Test/L_TestGym_Core.umap`; the packaged executable loaded `/Game/BS/Maps/Test/L_TestGym_Core`, brought the world up for play, and exited normally with status 0. Local archive: `Saved/Packages/BS-011/43cf7d0`; boot evidence: `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log`. On August 30, 2026, Madalin Gavrila confirmed the expected Basic Level floor, sky, and lighting in a responsive packaged game window, supplied a screenshot, and closed it normally without a crash dialog.
+- BS-011 was integrated into `main` by merge commit `e21c78a60db565f26c5ece33ba386de79cfd0279`. Local and GitHub `main` matched exactly; the remote map pointer referenced LFS OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; Git LFS fsck passed; and lock `49915812` was released only after the post-merge audit.
+- BS-011 recovery checkpoint: clean generation `20260830T115256Z-29716-852e443d` captured 13 refs and 1 LFS object under `E:/BrokenStreets_RepositoryBackup`. Isolated restore `BS-011-e21c78a` verified all 13 refs and the LFS object without GitHub; the restored map was 49,037 bytes with SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`.
 
 ## Deviations and open items
 
 - `Config/DefaultEngine.ini` currently has `r.RayTracing=True`; the roadmap assumed Ray Tracing Off. Do not change it before an explicit configuration/benchmark task.
 - `F:/BrokenStreets_SourceArt` exists, but its 3-2-1 backup and restore drill are not verified.
-- One Git LFS object now exists for the BS-011 map. Its task lock remains held until accepted integration is pushed and the post-merge LFS audit passes.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.
 - The independent repository copy is local to the same PC but on a separate physical disk; it does not protect against loss of the entire PC/location. BS-013A adds the approved off-site layer with Source Art.
 - The scheduled task pins Git/Git LFS from the current Codex runtime path because Task Scheduler does not inherit the interactive PATH. Relocation of that runtime requires a config update and another direct scheduled-task test.
