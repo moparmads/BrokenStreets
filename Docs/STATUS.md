@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-010A` — independent repository and Git LFS backup.
-- Active task: `BS-011` — the first project-owned `L_TestGym_Core` exists and passed automated verification; packaged visual acceptance by Madalin is pending.
+- Active task: `BS-011` — the first project-owned `L_TestGym_Core` passed automated and creator visual verification; final integration and post-merge audit are in progress.
 - Next task after BS-011: `BS-012` — `L_TestGym_Network`.
 
 ## What actually exists
@@ -44,7 +44,7 @@
 - BS-010A creator acceptance: on August 30, 2026, Madalin Gavrila ran the normal manual checkpoint command. Generation `20260830T104652Z-28620-93aa2606` was published from a clean `a9f57e601cb14491f34f66e22ea83fbc4745a666`; manifest and `LATEST.json` agree, origin refresh passed, 11 refs were captured, and 0 current LFS objects were expected.
 - BS-010A was integrated into `main` by merge commit `c20d09790fbe521556700219e03f03d6e50899bd`. No gameplay code, Config, Content, `.uproject`, plugin, or Engine Source file changed.
 - BS-011 candidate `43cf7d04d32f126eadeb6cdbb21784373142e8b7`, tree `7d0d7fd8f9162479cbc4fda754885ab4dd2f7ade`: the 49,037-byte TestGym map is stored through Git LFS as OID `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; runner self-test passed 6/6; `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`, code 0; Build and Automation passed; Data Validation validated 1/1 project assets with 0 invalid, unable, missing, warnings, or errors; Cook reported 0 project-owned omissions and 0 warnings; Map Check reported 0 errors and 0 warnings. Local evidence: `Saved/Automation/BS-009/20260830T112827Z-37852-5504cb0b/run.json` and `Saved/Verification/BS-011/MapCheck-43cf7d0/Unreal.log`.
-- BS-011 Win64 Development package: UAT Build/Cook/Stage/Package/Archive completed with exit 0; the package manifest contains `BrokenStreets/Content/BS/Maps/Test/L_TestGym_Core.umap`; the packaged executable loaded `/Game/BS/Maps/Test/L_TestGym_Core`, brought the world up for play, and exited normally with status 0. Local archive: `Saved/Packages/BS-011/43cf7d0`; boot evidence: `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log`. Creator visual acceptance remains pending.
+- BS-011 Win64 Development package: UAT Build/Cook/Stage/Package/Archive completed with exit 0; the package manifest contains `BrokenStreets/Content/BS/Maps/Test/L_TestGym_Core.umap`; the packaged executable loaded `/Game/BS/Maps/Test/L_TestGym_Core`, brought the world up for play, and exited normally with status 0. Local archive: `Saved/Packages/BS-011/43cf7d0`; boot evidence: `Saved/Verification/BS-011/PackagedBoot-43cf7d0/Packaged.log`. On August 30, 2026, Madalin Gavrila confirmed the expected Basic Level floor, sky, and lighting in a responsive packaged game window, supplied a screenshot, and closed it normally without a crash dialog.
 
 ## Deviations and open items
 
