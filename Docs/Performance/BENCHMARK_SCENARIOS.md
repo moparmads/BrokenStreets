@@ -16,6 +16,12 @@ Scenarios have stable names and fixtures so results can be compared across commi
 - Low, Recommended, and Ultra;
 - renderer, scalability, and asset budgets.
 
+Precursors are versioned without pretending the fixture is representative:
+
+- `P0` proved the package/capture pipeline on the original greybox defaults;
+- `P1` pins the reversible PC renderer and `BS-PC-Recommended-P0` preset;
+- the representative-art pass replaces both as the meaningful renderer baseline.
+
 ## BS-PERF-003 — Four Players Together
 
 - host plus three clients at the same intersection;

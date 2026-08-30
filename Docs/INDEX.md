@@ -31,6 +31,7 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Testing/TEST_STRATEGY.md` | test levels and multiplayer matrix | acceptance design and verification |
 | `Docs/Performance/BUDGETS.md` | measured/provisional targets and budgets | any hot path or benchmark |
 | `Docs/Performance/BENCHMARK_SCENARIOS.md` | standard comparable scenarios | profiling and scaling gates |
+| `Docs/Performance/Baselines/BS-PERF-002-P1.md` | current provisional PC renderer measurement | BS-013B verification and future renderer comparisons |
 
 ## Navigation rules
 

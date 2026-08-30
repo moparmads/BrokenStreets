@@ -1,6 +1,6 @@
 # Performance budgets
 
-**Status:** provisional until `L_Benchmark_Street` and reference PCs exist.
+**Status:** provisional; the P1 renderer test baseline exists, but representative art and reference PCs do not.
 **Rule:** `TBD` is more accurate than an invented number. Values are frozen through a task or ADR after measurement.
 
 ## 1. Target profiles
@@ -96,3 +96,9 @@ Trace path:
 ```
 
 A change is not called an “optimization” without this minimum context.
+
+## 8. Current renderer precursor
+
+`BS-PERF-002-P1` records the `BS-PC-Recommended-P0` configuration and capture pipeline on the greybox Benchmark Street fixture. On the creator RTX 3090 machine, all three runs met the fixture-only 13.33 ms limiting-pipeline p95 marker and recorded no post-warm-up frame above 50 or 100 ms.
+
+This does not fill the TBD production budgets above. The fixture lacks representative art, streaming, population, vehicles, weather, multiplayer, and gameplay load. See `Docs/Performance/Baselines/BS-PERF-002-P1.md`.

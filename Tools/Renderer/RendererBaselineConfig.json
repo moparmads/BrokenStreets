@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "presetId": "BS-PC-Recommended-P0",
+  "engineVersion": "5.8.2",
+  "platform": "Win64",
+  "resolution": "1920x1080",
+  "qualityLevel": "High",
+  "engineConfigLines": [
+    "EditorStartupMap=/Game/BS/Maps/Test/L_TestGym_Core",
+    "GameDefaultMap=/Game/BS/Maps/Test/L_TestGym_Core",
+    "ServerDefaultMap=/Game/BS/Maps/Test/L_TestGym_Core",
+    "r.AllowStaticLighting=False",
+    "r.Shadow.Virtual.Enable=1",
+    "r.GenerateMeshDistanceFields=True",
+    "r.DynamicGlobalIlluminationMethod=1",
+    "r.ReflectionMethod=1",
+    "r.Nanite.ProjectEnabled=True",
+    "r.AntiAliasingMethod=4",
+    "r.RayTracing=False",
+    "r.Lumen.HardwareRayTracing=False",
+    "r.RayTracing.RayTracingProxies.ProjectEnabled=False",
+    "r.Substrate=True",
+    "r.Substrate.ProjectGBufferFormat=0",
+    "DefaultGraphicsRHI=DefaultGraphicsRHI_DX12",
+    "-D3D12TargetedShaderFormats=PCD3D_SM5",
+    "+D3D12TargetedShaderFormats=PCD3D_SM6",
+    "-D3D11TargetedShaderFormats=PCD3D_SM5"
+  ],
+  "gameUserSettingsLines": [
+    "sg.ResolutionQuality=100.000000",
+    "sg.ViewDistanceQuality=2",
+    "sg.AntiAliasingQuality=2",
+    "sg.ShadowQuality=2",
+    "sg.GlobalIlluminationQuality=2",
+    "sg.ReflectionQuality=2",
+    "sg.PostProcessQuality=2",
+    "sg.TextureQuality=2",
+    "sg.EffectsQuality=2",
+    "sg.FoliageQuality=2",
+    "sg.ShadingQuality=2",
+    "sg.LandscapeQuality=2",
+    "bUseVSync=False",
+    "bUseDynamicResolution=False",
+    "ResolutionSizeX=1920",
+    "ResolutionSizeY=1080",
+    "LastUserConfirmedResolutionSizeX=1920",
+    "LastUserConfirmedResolutionSizeY=1080",
+    "FullscreenMode=1",
+    "LastConfirmedFullscreenMode=1",
+    "PreferredFullscreenMode=1",
+    "Version=5",
+    "FrameRateLimit=0.000000"
+  ],
+  "forbiddenEnginePatterns": [
+    "(?im)^\\s*GameDefaultMap=/Engine/",
+    "(?im)^\\s*\\+D3D11TargetedShaderFormats=",
+    "(?im)^\\s*\\[/Script/(LinuxTargetPlatform|MacTargetPlatform|AndroidFileServerEditor)\\.",
+    "(?im)^\\s*SecurityToken\\s*=",
+    "(?im)^\\s*r\\.SkinCache\\.CompileShaders\\s*=",
+    "(?im)^\\s*r\\.RayTracing\\s*=\\s*True\\s*$",
+    "(?im)^\\s*r\\.Lumen\\.HardwareRayTracing\\s*=\\s*True\\s*$"
+  ],
+  "requiredMaps": [
+    "/Game/BS/Maps/Test/L_TestGym_Core"
+  ],
+  "requiredDisabledPlugins": [
+    "AndroidFileServer"
+  ]
+}

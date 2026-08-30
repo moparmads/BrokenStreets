@@ -291,16 +291,19 @@ C++ owns authority, persistence, replication, and hot paths. Blueprint and Edito
 
 Asset Manager and Primary Data Assets, or a validated equivalent, keep catalogs data-driven. Large references remain soft until an explicit lifetime requires loading. Content validation checks naming, DefinitionId, duplicate IDs, references, collision, and metadata.
 
-## 12. Configuration baseline and known debt
+## 12. Configuration and renderer baseline
 
-The empty project currently has:
+BS-013B owns the current reversible PC test baseline:
 
-- `GameDefaultMap=/Engine/Maps/Templates/OpenWorld`;
-- Ray Tracing enabled;
-- Substrate enabled;
-- Android File Server configuration present and enabled despite the initial PC-only target.
+- Editor, game, and server start on `/Game/BS/Maps/Test/L_TestGym_Core`;
+- Win64 uses DX12 and SM6 without a project-owned D3D11/SM5 path;
+- Software Lumen, Virtual Shadow Maps, Nanite support, TSR, and mesh distance fields are explicit;
+- project hardware ray tracing and Lumen hardware ray tracing are disabled;
+- Substrate uses Blendable GBuffer;
+- Android File Server is explicitly disabled, its generated configuration is absent, and configuration secrets are rejected by audit;
+- `BS-PC-Recommended-P0` pins 1920×1080 High, 100% screen percentage, VSync Off, Dynamic Resolution Off, and uncapped measurement.
 
-This documentation task does not change them. BS-011 creates a project-owned map. BS-013B explicitly owns PC-only configuration cleanup and the measurable renderer/scalability baseline. Tokens and secrets from configuration never enter documentation or logs.
+This is a measurement contract, not a final renderer or hardware specification. ADR-0005 requires representative-art reevaluation before optional hardware RT, final scalability tiers, or Minimum/Recommended hardware are accepted. Gameplay entities never change with cosmetic scalability.
 
 ## 13. Changing architecture
 

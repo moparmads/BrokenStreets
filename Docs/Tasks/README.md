@@ -55,3 +55,4 @@ Before code:
 | [BS-012](BS-012-TestGym-Network.md) | Network TestGym fixture | Done | `main` |
 | [BS-013](BS-013-Benchmark-Street.md) | Benchmark Street placeholder and first trace | Done | `main` |
 | [BS-013A](BS-013A-Source-Art-Backup.md) | Source Art 3-2-1 backup and verified restore | Done | `main` |
+| [BS-013B](BS-013B-PC-Renderer-Baseline.md) | PC configuration and renderer baseline | Done | `main` |
