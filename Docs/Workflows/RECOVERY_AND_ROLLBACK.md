@@ -63,6 +63,46 @@ GitHub is the collaboration remote, not the only disaster-recovery plan. Before 
 
 A `git bundle` alone does not include LFS objects. The approved solution must preserve both Git objects/refs and LFS storage, or use a second remote that provides both. Codex never selects a provider or medium without creator approval.
 
+### Approved local layer
+
+The creator approved this BS-010A policy on August 30, 2026:
+
+- owner: Madalin Gavrila;
+- source: `F:/BrokenStreets` on physical disk 1;
+- independent root: `E:/BrokenStreets_RepositoryBackup` on physical disk 0;
+- frequency: daily at 19:00 plus a manual checkpoint before risky operations or asset migrations;
+- retention: 30 immutable Git generations; shared content-addressed LFS payloads are never deleted automatically;
+- capacity: warn below 100 GiB free and fail below a 10 GiB hard reserve;
+- encryption: no additional encryption for this local copy;
+- off-site protection: deferred to BS-013A, where repository and Source Art capacity/provider are selected together.
+
+The daily task may record a valid committed-ref backup while the working tree is dirty, but its manifest states that uncommitted files were excluded. A manual checkpoint requires a clean working tree.
+
+### Backup procedure
+
+1. Save intended work and create the checkpoint commit.
+2. From `F:/BrokenStreets`, run `.\Tools\BS-Backup.cmd`.
+3. Require `[PASS] Published generation ...`; record the displayed generation path.
+4. Inspect `LATEST.json`, the generation `manifest.json`, and `checksums.sha256` when the operation is a recovery gate.
+5. Do not start the risky operation if backup fails or the latest successful generation does not contain the intended commit.
+
+Each successful generation contains a full Git bundle, exact ref inventory, LFS inventory, manifest, and checksums. LFS objects are stored separately by SHA-256 OID and reused across generations. Staging is published before `LATEST.json` advances; `LATEST.previous.json` preserves the prior pointer.
+
+### Restore procedure without GitHub
+
+1. Choose a new explicit folder under `E:/BrokenStreets_RepositoryBackup/RestoreTests/`; never target the main project, Engine, drive root, or backup root.
+2. Run `.\Tools\BS-Restore.cmd -DestinationRoot <new-folder>` from the main repository tools.
+3. Confirm PASS for checksum, bundle, exact refs, Git fsck, and every LFS object/pointer.
+4. Confirm the restored `WorkingCopy` origin points to the restored local bare repository, not GitHub.
+5. In the restored `WorkingCopy`, run `.\Tools\BS.cmd Build` and `.\Tools\BS.cmd Test` through the pinned engine.
+6. Keep failed restore folders and logs until the cause is understood. A restore-test folder never becomes the main project.
+
+### Schedule, failure, and credentials
+
+The Windows task `BrokenStreets Repository Backup` runs daily at 19:00 for the signed-in owner, ignores overlapping starts, and starts after a missed time when Windows permits. Its action uses the committed PowerShell tool and writes logs under the independent backup root.
+
+The tool attempts to refresh `origin` and Git LFS first. If authentication or GitHub is unavailable, it reports a warning and publishes only when every LFS payload required by the locally captured refs is present and valid. To renew credentials, sign into the approved `moparmads` GitHub account through the existing Git Credential Manager flow, run `git fetch origin`, then rerun the manual backup. Never place a token in the repository, task action, manifest, or log.
+
 ## Source Art 3-2-1 backup
 
 `F:/BrokenStreets_SourceArt` is not protected by the game repository.

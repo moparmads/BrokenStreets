@@ -2,13 +2,13 @@
 
 **Updated:** August 30, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-010A-independent-backup`
 
 ## Summary
 
 - Last completed task: `BS-010` — first Automation smoke test and canonical English migration.
-- Active implementation task: none; BS-010 is integrated into `main`.
-- Next task: `BS-010A` — independent repository and Git LFS backup.
+- Active task: `BS-010A` — independent repository and Git LFS backup.
+- Next task after BS-010A: `BS-011` — project-owned `L_TestGym_Core`.
 
 ## What actually exists
 

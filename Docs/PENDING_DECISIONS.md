@@ -1,14 +1,20 @@
 # Remaining material open decisions
 
-This file is a queue of Decision Packets, not a new questionnaire. The product decisions below do not block the current foundation; the OPS-01 operating choice becomes necessary only for its task. Codex asks when the next task directly depends on a choice.
+This file is a queue of Decision Packets, not a new questionnaire. The product decisions below do not block the current foundation. Codex asks when the next task directly depends on a choice.
 
 Legend: `Recommended` is the current technical direction, not creator acceptance.
 
-## Before independent backup
+## Resolved foundation operations
+
+| ID | Confirmed decision | Evidence/task |
+|---|---|---|
+| OPS-01A | Independent Git/LFS layer uses `E:/BrokenStreets_RepositoryBackup` on the separate physical disk; daily 19:00 plus manual checkpoints; 30 Git generations; LFS objects never auto-delete; warn below 100 GiB; no additional local encryption | BS-010A |
+
+## Before Source Art and off-site backup
 
 | ID | Decision | Recommended | Required before |
 |---|---|---|---|
-| OPS-01 | Medium/provider, capacity, retention, and encryption for the independent Git/LFS and Source Art copy | separate local medium plus versioned off-site copy; restore verified without GitHub | BS-010A and BS-013A |
+| OPS-01B | Off-site provider, encryption, total capacity, retention, and renewal for repository plus Source Art | versioned off-site copy in addition to the verified local layer | BS-013A |
 
 ## Before Identity / Session / Save MVP
 
