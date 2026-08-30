@@ -2,6 +2,45 @@
 
 BS-009 provides one entry point for local project checks. The runner supports Windows PowerShell 5.1, installs nothing, and does not modify Unreal Engine.
 
+## PC renderer baseline
+
+BS-013B pins the first reversible PC renderer and benchmark preset: Win64, DX12, Shader Model 6, Software Lumen, Virtual Shadow Maps, Nanite, TSR, Substrate Blendable GBuffer, and Hardware Ray Tracing off. The first-run comparison preset is 1920x1080 High at 100% screen percentage with VSync and Dynamic Resolution disabled.
+
+Audit the tracked configuration without opening Unreal:
+
+```powershell
+.\Tools\BS-RendererBaseline.cmd Audit
+```
+
+The audit verifies every required renderer, RHI, map, and first-run preset line exactly once; rejects stale non-Windows and Android File Server configuration; confirms the Android File Server plugin is explicitly disabled; and records input hashes under `Saved/Verification/BS-013B/`. It never prints a discovered token value.
+
+After the exact candidate is committed and the normal project gate passes, create the pinned benchmark package and three captures:
+
+```powershell
+.\Tools\BS-RendererBaseline.cmd Package
+.\Tools\BS-RendererBaseline.cmd Capture
+```
+
+`Package` uses the pinned UE 5.8.2 CL 56702186 installation and an exact-map Win64 Development Build/Cook/Stage/Package/Archive. `Capture` launches that package three times at `BS-PC-Recommended-P0`, verifies D3D12/SM6, hardware ray tracing off, exact-map load, settings, controlled Engine shutdown, CSV and trace integrity, then records stable-frame percentiles and hitches under `Saved/Performance/BS-013B/`.
+
+Preview the full sequence without packaging or launching the game:
+
+```powershell
+.\Tools\BS-RendererBaseline.cmd All -PlanOnly
+```
+
+For creator visual acceptance after the automated candidate passes:
+
+```powershell
+.\Tools\BS-RendererBaseline.cmd Visual
+```
+
+After changing renderer audit tooling, run its isolated regression fixture:
+
+```powershell
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\Tools\Renderer\Tests\RendererBaselineAudit.SelfTest.ps1
+```
+
 ## Normal command
 
 1. Close Unreal Editor.
