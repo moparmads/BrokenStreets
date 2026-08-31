@@ -91,8 +91,7 @@ No Blueprint or asset change. Automated verification runs with Unreal Editor and
 
 ## Automated verification
 
-- Windows PowerShell 5.1 parser checks for every recovery script;
-- isolated recovery self-test for path boundaries, new-destination enforcement, LFS pointer parsing, hash mismatch rejection, phase failure propagation, and atomic evidence publication;
+- no new recovery implementation was added; the drill deliberately reused the already verified Git/LFS, `BS.cmd`, UAT, exact-engine, and backup paths instead of creating a second orchestration system for one gate;
 - exact online clone and candidate/ref audit;
 - `git lfs pull`, index-pointer checks, working-file OID checks, `git lfs fsck --pointers HEAD`, and `git lfs fsck`;
 - `Tools/BS.cmd All -EngineRoot F:\UE_5.8.2\UE_5.8` from the online clean clone;
@@ -103,7 +102,15 @@ No Blueprint or asset change. Automated verification runs with Unreal Editor and
 
 ## Manual acceptance
 
-The exact clean-profile and visual instructions are issued only after the automated online candidate passes. They follow `Docs/Workflows/EDITOR_INSTRUCTION_STANDARD.md` and use a temporary standard Windows account, a separately staged pristine workspace, the absolute UE 5.8.2 executable, and exact PASS/FAIL evidence. Unreal Editor and Visual Studio remain closed until those instructions explicitly say otherwise.
+Completed on August 31, 2026 after the automated online candidate passed.
+
+1. Madalin created the temporary local standard Windows account `BSRecoveryTest` without a Microsoft account and without administrator membership.
+2. A second untouched GitHub/LFS workspace was staged at `E:/BrokenStreets_RecoveryTests/BS-007B-Profile-fd0284f-20260831T090920Z/Repository`. It contained the exact candidate, all three materialized maps, and none of the generated project folders or solution files.
+3. From `BSRecoveryTest`, Madalin ran the supplied checkpoint. Its preflight proved that no generated state was inherited, then `Tools/BS.cmd All -EngineRoot F:\UE_5.8.2\UE_5.8` passed.
+4. The checkpoint opened the recovered project through the exact `UnrealEditor.exe`, passing `/Game/BS/Maps/Test/L_TestGym_Core` explicitly. Madalin confirmed the Basic Level floor, sky, lighting, responsive viewport/play, and no crash dialog, then closed with `Alt+F4`.
+5. The terminal reported `[PASS] Unreal Editor closed normally with exit code 0`; Madalin supplied a photograph and confirmed that everything was correct.
+
+The retained Editor log proves the command-line map, exact disk package load, PIE world creation from `L_TestGym_Core`, UE 5.8.2 CL 56702186, `C:/Users/BSRecoveryTest` temporary-work use, `Alt-F4`, normal Editor shutdown, and no fatal/crash marker.
 
 ## Risks and rollback
 
@@ -125,16 +132,11 @@ The exact clean-profile and visual instructions are issued only after the automa
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| August 31, 2026 | `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb` | tree `dd954862f45c3d93642755f5a7d11771597f9e57`; documentation-only task preparation over unchanged `main` runtime/content; clean online clone at `E:/BrokenStreets_RecoveryTests/BS-007B-Online-fd0284f-20260831T090236Z/Repository` | clean GitHub clone; 3/3 materialized LFS maps; both LFS fsck modes; `Saved/Automation/BS-009/20260831T090300Z-28652-6f50f20e/run.json`; exact-Core UAT package; `Saved/Recovery/BS-007B/Online-fd0284f/ExactEngineLoad-Attempt2/UnrealEditor.log` | PASS AUTOMATED — no inherited generated state; Generate 11.447s, Build 35.777s, Automation 1/1 in 41.900s, Validate 3/3 in 7.382s, Cook 514/521 plus 7/7 classified Engine-only omissions and zero project omissions/warnings in 32.620s; exact-Core UAT package exit 0 in 51.92s with 5/5 required files; exact-engine map/world load and complete status-0 shutdown in 6.64s. The retained first load log also exited 0 and loaded the map, but its outer audit falsely expected an Editor-only `FEngineLoop::AppPreExit` marker; corrected game-mode markers passed in attempt 2. | Codex |
+| August 31, 2026 | `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb` | same exact tree in pristine separate-profile workspace `E:/BrokenStreets_RecoveryTests/BS-007B-Profile-fd0284f-20260831T090920Z/Repository`; no association rewrite or tracked change | `Saved/Automation/BS-009/20260831T095945Z-38100-2567320b/run.json`; `Saved/Recovery/BS-007B/SeparateProfile/UnrealEditor.log`; creator photograph and visual confirmation | PASS OWNER — from the separate standard account: Generate 4.466s, Build 24.926s, Automation 1/1 in 16.219s, Validate 3/3 in 6.734s, Cook 514/521 plus 7/7 Engine-only omissions and zero project omissions/warnings in 103.219s; Editor log SHA-256 `A205326023B4EDB32E3DE070DA485B801778B0E15CC2719F9625FC253748CF90` loaded exact Core from `E:`, created its PIE world, used `C:/Users/BSRecoveryTest`, recorded `Alt-F4`, and exited cleanly; Madalin confirmed the expected responsive Basic Level. | Madalin Gavrila / Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or recovery/build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged verified tree.
 
 ## Final handoff
 
-- exact online and clean-profile recovery roots;
-- candidate, merge, tree, and remote identity;
-- LFS asset path, lock ID/owner, pointer OID, working-file hash, remote-object result, and unlock result;
-- runner, package, exact-map load, and creator visual evidence;
-- measured duration and every skipped/N/A item with reason;
-- retained failed attempts or zero-failure statement;
-- rollback base and the next roadmap task.
+The online clean-clone, LFS, complete runner, exact-Core package, exact-engine map load, separate-profile gate, and creator visual acceptance are complete for candidate `fd0284f`. The Core map remained byte-identical at LFS OID/SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; controlled lock `49932145` belongs to `moparmads` and remains held until integration, remote audit, and recovery backup complete. No gameplay, C++, Config, Content, `.uproject`, plugin, build script, or Engine file changed. Integration, remote confirmation, lock release, and final backup remain before `Done`; the next roadmap task is BS-014.

@@ -89,6 +89,8 @@ The `EngineAssociation` value in `.uproject` may be a GUID registered only on th
 - do not commit an association change caused only by recovery;
 - BS-009 pins and tests project generation independently from Explorer; BS-007B validates it on another profile or PC.
 
+BS-007B verified this path on August 31, 2026. A pristine clone was executed by the separate standard Windows account `BSRecoveryTest` through `Tools/BS.cmd All -EngineRoot F:\UE_5.8.2\UE_5.8`; Generate, Build, Automation, Data Validation, and Cook passed. The same profile opened the recovered Core TestGym by invoking the exact `UnrealEditor.exe` and absolute `.uproject` paths. The log used `C:/Users/BSRecoveryTest` for temporary work and no tracked `EngineAssociation` change was made. A separate profile therefore does not require right-click association before the canonical command-line gate.
+
 ## Live Coding
 
 Live Coding may be used only for small, approved changes inside a `.cpp` body that do not alter layout, reflection, or schema.
