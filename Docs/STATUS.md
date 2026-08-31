@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-015-core-observability`
 
 ## Summary
 
 - Last completed task: `BS-014A` — portable Epic Launcher UE 5.8 project association.
-- Active task: none; BS-014A is closed on `main`.
-- Next task: `BS-015` — logging categories, structured context, and feature flags.
+- Active task: `BS-015` — Core observability and feature flags.
+- Next task after acceptance: `BS-016` — build, content, and save compatibility handshake.
 
 ## What actually exists
 

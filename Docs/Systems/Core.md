@@ -1,9 +1,9 @@
 # Core
 
-**Status:** Implemented
+**Status:** Implemented; BS-015 extension in progress
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-014 is complete
+**Active task:** BS-015 — Core observability and feature flags
 **Last verified commit/gate:** merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 3/3 PASS
 
 ## 1. Purpose
