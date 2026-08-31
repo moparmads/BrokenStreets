@@ -2,6 +2,9 @@
 
 #include "BrokenStreets.h"
 #include "Core/Compatibility/BSCompatibility.h"
+#if !UE_BUILD_SHIPPING
+#include "Core/Debug/BSAuthorityStateDebug.h"
+#endif
 #include "Core/FeatureFlags/BSFeatureFlags.h"
 #include "Core/Observability/BSLogCategories.h"
 #include "Core/Observability/BSLogContext.h"
@@ -13,6 +16,11 @@ public:
 	virtual void StartupModule() override
 	{
 		FDefaultGameModuleImpl::StartupModule();
+
+#if !UE_BUILD_SHIPPING
+		AuthorityStateDebugOverlay = MakeUnique<FBSAuthorityStateDebugOverlay>();
+		AuthorityStateDebugOverlay->Start();
+#endif
 
 		FBSCompatibilityPolicy CompatibilityPolicy;
 		if (!FBSCompatibility::TryLoadCurrentPolicy(CompatibilityPolicy))
@@ -39,6 +47,24 @@ public:
 			UE_LOG(LogBrokenStreets, Log, TEXT("Verbose Core diagnostics enabled. %s"), *Context.ToLogString());
 		}
 	}
+
+	virtual void ShutdownModule() override
+	{
+#if !UE_BUILD_SHIPPING
+		if (AuthorityStateDebugOverlay.IsValid())
+		{
+			AuthorityStateDebugOverlay->Stop();
+			AuthorityStateDebugOverlay.Reset();
+		}
+#endif
+
+		FDefaultGameModuleImpl::ShutdownModule();
+	}
+
+private:
+#if !UE_BUILD_SHIPPING
+	TUniquePtr<FBSAuthorityStateDebugOverlay> AuthorityStateDebugOverlay;
+#endif
 };
 
 IMPLEMENT_PRIMARY_GAME_MODULE(FBrokenStreetsModule, BrokenStreets, "BrokenStreets");
