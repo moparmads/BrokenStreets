@@ -1,6 +1,6 @@
 # BS-017 — Typed Results, Errors, and Command Envelope
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-017-results-command-envelope`
 **Base commit:** `180a9a83fd686a3414c821569db19df088265077`
@@ -134,7 +134,7 @@ PASS if the build has zero failures and all ten `BrokenStreets.Core` Automation 
 
 FAIL if compilation reports any introduced error/warning, Unreal asks to choose an engine or rebuild modules, a Core test is missing, or any test is red/yellow. Stop and send the complete Visual Studio Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
 
-Checkpoint A result: Pending creator execution after exact candidate verification.
+Checkpoint A result: Pending creator execution for candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`.
 
 ## Risks and rollback
 
@@ -156,7 +156,7 @@ Checkpoint A result: Pending creator execution after exact candidate verificatio
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | tree `0d204b9784a2d362f303d10843ed724667064744`; Source `a24007261a6d9139be7e8830badfc4afd9b85055`; unchanged Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 11/11; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 22 Shipping Automation markers audited with 0 found; local links 46/46; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T145854Z-35204-e331a983` captured 32 refs and all 3 LFS objects | Automated PASS; creator Build and Editor Automation 10/10 pending | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -167,3 +167,13 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - creator build and ten-Core-test steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-018.
+
+Automated candidate verification is complete. The task remains `Needs Owner Verification` until Madalin completes Checkpoint A. Runtime acceptance is tied to candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`; this evidence update changes documentation only. Network, persistence/fault, and performance scenarios are N/A because BS-017 adds no RPC, replicated state, persisted bytes, command executor, retry store, Tick, or representative workload. Renderer/config audit is N/A because Config is byte-identical to the accepted BS-016 baseline.
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T145926Z-14120-2d87047a/run.json`, SHA-256 `313D9FBE834C1094F6A7BB3B4FAEB7083E2AE7176DD6FC4FD8CAB4C2DAF29E53`;
+- Automation report: `Saved/Automation/BS-009/20260831T145926Z-14120-2d87047a/Steps/04-Test/TestReport/index.json`, SHA-256 `83CC051EDC24C1B64A02726E37DB57967F438C74EC41219AEE7CBEFB01E75672`;
+- Shipping build: `Saved/Verification/BS-017/0e113a5/ShippingBuild/UnrealBuildTool.log`, SHA-256 `C82B56AF8ADCA480DB24390C96DA764DA05F1A3CE1BB9AF350C4D59DBD5856C7`;
+- Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `E39D6C7CD5EA373C653969446F9BE596B3367FC27651E9E852B61DFAC4BCE5CE`;
+- pre-verification repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T145854Z-35204-e331a983`, with exact candidate HEAD, 32 refs, and all 3 LFS objects.

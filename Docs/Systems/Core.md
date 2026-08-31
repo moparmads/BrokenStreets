@@ -1,10 +1,10 @@
 # Core
 
-**Status:** Implemented; BS-017 In Progress
+**Status:** Needs Owner Verification
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
 **Active task:** BS-017 — typed results, errors, and command envelope
-**Last verified commit/gate:** BS-017 working tree; pre-candidate Development Editor Build and Automation 11/11 PASS; exact candidate gate pending
+**Last verified commit/gate:** BS-017 candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`; automated Build/Test/Validate/Cook, Shipping, static, and backup gates PASS; creator Build and Editor Automation 10/10 pending
 
 ## 1. Purpose
 
@@ -279,3 +279,4 @@ Follow `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md`: close Unreal E
 | 2026-08-31 | BS-015 / merge `ccbb92d0fc7a455a9995d529be29e248a22c2812` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 7/7, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-016 / `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | runner self-test 6/6; Generate/Build; Automation 9/9; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/18 test-marker audit; renderer/config 52/52; Git/LFS/static audits; independent backup; creator Development Editor Build and Editor Automation 8/8 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-016 / merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 9/9, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, reachable-object audit, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-017 / `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | runner self-test 6/6; Generate/Build; Automation 11/11; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/22 test-marker audit; links 46/46; Git/LFS/static audits; independent backup | Automated PASS; creator Build and Editor Automation 10/10 pending | Codex |
