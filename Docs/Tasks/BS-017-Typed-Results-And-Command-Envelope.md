@@ -1,8 +1,8 @@
 # BS-017 — Typed Results, Errors, and Command Envelope
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `feature/BS-017-results-command-envelope`
+**Branch:** `main`
 **Base commit:** `180a9a83fd686a3414c821569db19df088265077`
 **Roadmap milestone:** M2 — Minimum core and observability
 **System docs:** `Docs/Systems/Core.md`
@@ -157,6 +157,7 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied successfu
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | 2026-08-31 | `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | tree `0d204b9784a2d362f303d10843ed724667064744`; Source `a24007261a6d9139be7e8830badfc4afd9b85055`; unchanged Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 11/11; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 22 Shipping Automation markers audited with 0 found; local links 46/46; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T145854Z-35204-e331a983` captured 32 refs and all 3 LFS objects; creator Visual Studio Development Editor Build `1 succeeded, 0 failed`; creator Unreal Editor Automation 10/10 with 0 failed/skipped | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e` | tree `35cdf8ae8d0af1fd45242957cc80b2e6e0a584c2`; accepted Source `a24007261a6d9139be7e8830badfc4afd9b85055`; unchanged Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | post-merge `BS.cmd All`: Generate/Build PASS, Automation 11/11, Data Validation 3/3, Cook 514/521 plus the same 7 classified Engine-only omissions with zero project omissions/warnings; Git/LFS/reachable-object audits PASS; local, tracking, and GitHub `main` exact; independent generation `20260831T152133Z-26324-9c6327d7` captured 33 refs and all 3 LFS objects | PASS; implemented on `main` | Madalin Gavrila and Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -168,7 +169,7 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-018.
 
-The exact candidate passed automated and creator verification and is ready for integration. Runtime acceptance is tied to candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`; this evidence update changes documentation only. Network, persistence/fault, and performance scenarios are N/A because BS-017 adds no RPC, replicated state, persisted bytes, command executor, retry store, Tick, or representative workload. Renderer/config audit is N/A because Config is byte-identical to the accepted BS-016 baseline.
+BS-017 is Done on `main` at merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e`. The accepted Source, Config, and Content trees remained exact through integration, and the complete post-merge gate passed. Network, persistence/fault, and performance scenarios are N/A because BS-017 adds no RPC, replicated state, persisted bytes, command executor, retry store, Tick, or representative workload. Renderer/config audit is N/A because Config is byte-identical to the accepted BS-016 baseline. The next task is BS-018.
 
 Retained local evidence:
 
@@ -177,3 +178,6 @@ Retained local evidence:
 - Shipping build: `Saved/Verification/BS-017/0e113a5/ShippingBuild/UnrealBuildTool.log`, SHA-256 `C82B56AF8ADCA480DB24390C96DA764DA05F1A3CE1BB9AF350C4D59DBD5856C7`;
 - Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `E39D6C7CD5EA373C653969446F9BE596B3367FC27651E9E852B61DFAC4BCE5CE`;
 - pre-verification repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T145854Z-35204-e331a983`, with exact candidate HEAD, 32 refs, and all 3 LFS objects.
+- post-merge complete gate: `Saved/Automation/BS-009/20260831T151914Z-32116-620ed071/run.json`, SHA-256 `AE98E6ACEC51F5467C293178B6E8C4634DF3BA45AB5608733F2266D9827177BD`;
+- post-merge Automation report: `Saved/Automation/BS-009/20260831T151914Z-32116-620ed071/Steps/04-Test/TestReport/index.json`, SHA-256 `07CA009DA5EBC706C5DA009F05B90FD1C8F2647A81889CAFDDCF9469EF57C18C`;
+- post-merge repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T152133Z-26324-9c6327d7`, with exact merge HEAD, 33 refs, and all 3 LFS objects.
