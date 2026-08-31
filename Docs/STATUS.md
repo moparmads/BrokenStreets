@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `feature/BS-015-core-observability`
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-014A` — portable Epic Launcher UE 5.8 project association.
-- Active task: `BS-015` — Core observability and feature flags; automated and creator verification PASS, integration pending.
-- Next task after acceptance: `BS-016` — build, content, and save compatibility handshake.
+- Last completed task: `BS-015` — Core observability and feature flags.
+- Active task: none; BS-015 is closed on `main`.
+- Next task: `BS-016` — build, content, and save compatibility handshake.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag contracts and the active BS-015 observability/feature-flag candidate;
-- seven deterministic C++ Automation tests on the active branch: the project smoke, three BS-014 Core tests, and three BS-015 category/context/feature-flag tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag contracts and BS-015 observability/feature-flag contracts on `main`;
+- seven deterministic C++ Automation tests on `main`: the project smoke, three BS-014 Core tests, and three BS-015 category/context/feature-flag tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -72,6 +72,7 @@
 - BS-014A candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d`: `EngineAssociation` is the portable Launcher key `5.8`; Doctor resolved UE 5.8.2 CL 56702186 from the Epic manifest; Generate, Build, Automation 4/4, Data Validation 3/3, and Cook passed under the existing gate with only the seven classified Engine omissions and zero project omissions/warnings. A normal File Explorer launch opened the exact Unreal Editor directly without the recurring selector, rebuild prompt, or crash dialog, and normal `Alt+F4` shutdown left zero Editor processes.
 - BS-014A was integrated into `main` by merge `9f5d4da44bad979849400d5f5e20b5431726d55e`. Source, Config, and Content remained byte-identical at their Git trees. The post-merge complete gate passed with UE 5.8.2 CL 56702186, Automation 4/4, Data Validation 3/3, and zero project cook omissions or warnings. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T112803Z-27816-2cd7815d` captured 27 refs and all 3 LFS objects on `E:`.
 - BS-015 candidate `3669500ed3724a3bea95767e1122c7ead8d1c192`, tree `8875040361271b98dcdd3c3a5ea2bffc5f903947`: two native log categories, bounded fixed-field `FBSLogContext`, and typed fail-closed `CoreVerboseDiagnostics` configuration are implemented with no gameplay, asset, network, or save changes. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 7/7, and Data Validation 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions with zero project omissions/warnings. Win64 Shipping compiled and contained none of 14 audited Automation test markers. The renderer/config audit remained 52/52, Git/LFS/static audits passed, and Content stayed byte-identical. Madalin Gavrila then supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all six Core tests green with 6 passed, 0 failed, and 0 skipped. Integration is pending.
+- BS-015 was integrated into `main` by merge `ccbb92d0fc7a455a9995d529be29e248a22c2812`, tree `1424bf827e59b69ae62662d37b351f7e8eb9ec54`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate, Build, Automation 7/7, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Local, tracking, and GitHub `main` matched; Git LFS fsck/status passed; independent generation `20260831T121314Z-22288-78ad93a9` captured 29 refs and all 3 LFS objects on `E:`.
 
 ## Deviations and open items
 

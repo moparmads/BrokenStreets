@@ -1,10 +1,10 @@
 # Core
 
-**Status:** Implemented; BS-015 candidate accepted, integration pending
+**Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** BS-015 — Core observability and feature flags
-**Last verified commit/gate:** BS-015 candidate `3669500ed3724a3bea95767e1122c7ead8d1c192`; automated Build/Test/Validate/Cook and Shipping PASS; creator Build and Editor Automation 6/6 PASS
+**Active task:** None; BS-015 is complete
+**Last verified commit/gate:** merge `ccbb92d0fc7a455a9995d529be29e248a22c2812`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 6/6 PASS
 
 ## 1. Purpose
 
@@ -199,3 +199,4 @@ Follow `Docs/Tasks/BS-015-Core-Observability-And-Feature-Flags.md`: close Unreal
 | 2026-08-31 | BS-014 / `2449d3ff0aad8500e27a0496add703ac64c5d35b` | Development Editor Build; Automation 4/4; Data Validation 3/3; Cook; Shipping Build and marker audit; creator Development Editor Build and Editor Automation 3/3 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-014 / merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758` | Post-merge Generate, Development Editor Build, Automation 4/4, Data Validation 3/3, Cook, GitHub parity, Git LFS fsck, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-015 / `3669500ed3724a3bea95767e1122c7ead8d1c192` | runner self-test 6/6; Generate/Build; Automation 7/7; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/14 test-marker audit; renderer/config 52/52; Git/LFS/static audits; creator Development Editor Build and Editor Automation 6/6 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-015 / merge `ccbb92d0fc7a455a9995d529be29e248a22c2812` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 7/7, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
