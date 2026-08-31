@@ -1,10 +1,10 @@
 # Save
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Save
 **Active task:** BS-020
-**Last verified commit/gate:** none; contract defined on branch `feature/BS-020-save-envelope-fault-harness`
+**Last verified commit/gate:** candidate `51f0be9ebff63ba91c5b82fd20dc047b18cfe6fb`; automated gate PASS, creator checkpoint pending
 
 ## 1. Purpose
 
@@ -183,4 +183,4 @@ Follow `Docs/Tasks/BS-020-Minimum-Save-Envelope-And-Fault-Harness.md`: close Unr
 
 | Date | Task/commit | Build/test/trace | Result | Approved by |
 |---|---|---|---|---|
-| | | | | |
+| 2026-08-31 | BS-020 / `51f0be9ebff63ba91c5b82fd20dc047b18cfe6fb` | `Tools/BS.cmd All`: Generate/Build PASS, Automation 20/20 including Save 4/4, Data Validation 3/3, Cook 514/521 plus seven classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping PASS with 0/9 BS-020 test markers; renderer/config 52/52; runner self-test 6/6; Git/LFS/reachable-object, scope, links, English-prose, secrets, and independent-backup audits PASS | Automated PASS; creator Visual Studio and Editor checkpoint pending | Codex |

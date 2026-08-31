@@ -36,6 +36,6 @@ Choose the name by ownership, not by a UI feature.
 |---|---|---|---|
 | Core | [Core.md](Core.md) | Implemented | BS-019 is Done on `main`; BS-020 consumes Core compatibility in Save |
 | Items | [Items.md](Items.md) | Implemented | BS-018 is Done; no active Items task |
-| Save | [Save.md](Save.md) | In Progress | BS-020 contract defined; implementation and verification pending |
+| Save | [Save.md](Save.md) | Needs Owner Verification | BS-020 candidate `51f0be9` passed the automated gate; creator checkpoint pending |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.

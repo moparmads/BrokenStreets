@@ -20,6 +20,7 @@ For logic that does not require a World:
 - command/correlation identity, envelope invariants, bounded error-code grammar, and explicit result-state construction.
 - bounded item-load requests, deterministic bundle normalization, and unloaded catalog metadata audit.
 - authority/state net-mode and role naming, bounded local snapshot construction, and deterministic diagnostic formatting.
+- deterministic save-envelope framing, exact golden bytes, compatibility mapping, output clearing, and in-memory corruption injection.
 
 ### Engine automation
 
@@ -51,6 +52,7 @@ For logic that does not require a World:
 
 ### Persistence/fault tests
 
+- BS-020 fixed-header, exact-length, checksum, compatibility, and every-prefix truncation tests run without disk I/O;
 - save, load, and migration;
 - crash at I/O stages;
 - corrupt, stale, and conflicting state;
@@ -172,3 +174,5 @@ Warnings/skips:
 Large generated reports remain under `Saved/` or approved storage. Git receives only small, useful baseline summaries without sensitive data.
 
 Evidence is tied to the candidate commit or tree. If any runtime input changes after testing—C++, Config, Content, `.uproject`, plugin, or build script—the evidence becomes `INVALIDATED` and relevant checks repeat. A later task/status/evidence-only commit may reference the verified candidate while explicitly listing unchanged runtime files.
+
+BS-020 establishes only the in-memory persistence boundary. File creation, temporary-write/flush/read-back/replace ordering, generations, migrations, fallback, and profile/world semantics remain required at their owning later tasks.
