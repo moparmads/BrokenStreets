@@ -16,6 +16,7 @@ For logic that does not require a World:
 - serialization helpers and migrations;
 - deterministic selection and seeds.
 - bounded structured-log formatting and fail-closed feature-flag parsing.
+- build/content/save compatibility parsing, range invariants, decision precedence, and stable rejection reasons.
 
 ### Engine automation
 

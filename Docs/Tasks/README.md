@@ -60,3 +60,4 @@ Before code:
 | [BS-014](BS-014-Stable-Identifiers-And-Gameplay-Tags.md) | Stable identifiers and Gameplay Tags policy | Done | `main` |
 | [BS-014A](BS-014A-Portable-Unreal-Engine-Association.md) | Portable Unreal Engine association | Done | `main` |
 | [BS-015](BS-015-Core-Observability-And-Feature-Flags.md) | Core observability and feature flags | Done | `main` |
+| [BS-016](BS-016-Build-Content-Save-Compatibility.md) | Build, content, and save compatibility handshake | Needs Owner Verification | `feature/BS-016-compatibility-handshake` |
