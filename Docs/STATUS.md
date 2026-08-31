@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-015` — Core observability and feature flags.
-- Active task: `BS-016` — build, content, and save compatibility handshake; automated candidate gate passed and creator Build/Editor Automation acceptance is pending.
+- Active task: `BS-016` — build, content, and save compatibility handshake; automated and creator verification PASS, integration pending.
 - Next task after the active work: `BS-017` — typed results/errors and command envelope.
 
 ## What actually exists
@@ -76,7 +76,7 @@
 
 ## Deviations and open items
 
-- BS-016 candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`, tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`: strict build/content/save compatibility policy and two tests are implemented. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 9/9, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping passed with 0/18 test markers; direct renderer/config audit passed 52/52; Git/LFS/static audits and independent generation `20260831T124836Z-39684-2d542d46` passed. Creator Development Editor Build and Editor Automation 8/8 remain pending.
+- BS-016 candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`, tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`: strict build/content/save compatibility policy and two tests are implemented. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 9/9, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping passed with 0/18 test markers; direct renderer/config audit passed 52/52; Git/LFS/static audits and independent generation `20260831T124836Z-39684-2d542d46` passed. Madalin Gavrila then supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all eight Core tests green with 8 passed, 0 failed, and 0 skipped. Integration is pending.
 - The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.

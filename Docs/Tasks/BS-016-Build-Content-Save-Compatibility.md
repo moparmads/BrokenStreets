@@ -133,7 +133,7 @@ PASS if the build has zero failures and all eight `BrokenStreets.Core` Automatio
 
 FAIL if compilation reports any introduced error/warning, Unreal asks to choose an engine or rebuild modules, a Core test is missing, or any test is red/yellow. Stop and send the complete Visual Studio Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
 
-Checkpoint A result: Pending creator execution for candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`.
+Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied the successful Visual Studio build output showing `1 succeeded, 0 failed`, plus an Unreal Editor Session Frontend screenshot showing all eight filtered Core tests green with 8 passed, 0 failed, and 0 skipped. The Automation Testing Log records `Success` for Compatibility Evaluation, Compatibility Policy, Feature Flags Policy, DefinitionId, InstanceId, Observability Categories, Observability Context, and Tags Policy. No engine-selection, module-rebuild, or crash dialog was reported. Integration remained pending when this evidence was recorded.
 
 ## Risks and rollback
 
@@ -154,7 +154,7 @@ Checkpoint A result: Pending creator execution for candidate `a516cbf7b777ec3b7a
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| 2026-08-31 | `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`; Source `f4e53de56377d0aa3066f733a426efbd68b25c08`; Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 9/9; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 18 Shipping Automation markers audited with 0 found; direct renderer/config audit 52/52; local links 45/45; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T124836Z-39684-2d542d46` captured 30 refs and all 3 LFS objects | Automated PASS; creator Build and Editor Automation 8/8 pending | Codex |
+| 2026-08-31 | `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`; Source `f4e53de56377d0aa3066f733a426efbd68b25c08`; Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 9/9; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 18 Shipping Automation markers audited with 0 found; direct renderer/config audit 52/52; local links 45/45; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T124836Z-39684-2d542d46` captured 30 refs and all 3 LFS objects; creator Visual Studio Build and Editor Automation 8/8 PASS | Automated and creator acceptance PASS; integration pending | Codex and Madalin Gavrila |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -166,7 +166,7 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-017.
 
-Automated candidate verification is complete. The task remains `Needs Owner Verification` until Madalin completes Checkpoint A. Runtime/config acceptance is tied to candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; this evidence update changes documentation only.
+The exact candidate passed automated and creator verification and is ready for integration. Runtime/config acceptance remains tied to candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; later task/status evidence updates change documentation only.
 
 Retained local evidence:
 
