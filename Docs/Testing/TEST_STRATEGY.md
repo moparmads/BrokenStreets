@@ -15,6 +15,7 @@ For logic that does not require a World:
 - transaction idempotency;
 - serialization helpers and migrations;
 - deterministic selection and seeds.
+- bounded structured-log formatting and fail-closed feature-flag parsing.
 
 ### Engine automation
 

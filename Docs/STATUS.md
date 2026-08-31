@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-015-core-observability`
 
 ## Summary
 
 - Last completed task: `BS-014A` — portable Epic Launcher UE 5.8 project association.
-- Active task: none; BS-014A is closed on `main`.
-- Next task: `BS-015` — logging categories, structured context, and feature flags.
+- Active task: `BS-015` — Core observability and feature flags; automated and creator verification PASS, integration pending.
+- Next task after acceptance: `BS-016` — build, content, and save compatibility handshake.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 Core identity and Gameplay Tags contracts on `main`;
-- four deterministic C++ Automation tests on `main`: the existing project smoke plus DefinitionId, InstanceId, and Gameplay Tags policy coverage;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag contracts and the active BS-015 observability/feature-flag candidate;
+- seven deterministic C++ Automation tests on the active branch: the project smoke, three BS-014 Core tests, and three BS-015 category/context/feature-flag tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay system; the implemented Core layer currently contains only BS-014 value types and tag policy;
+- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, two native log categories, bounded structured log context, and one default-off diagnostics flag;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
@@ -71,6 +71,7 @@
 - BS-014 was integrated into `main` by merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`: Generate and Build passed; Automation passed 4/4; Data Validation passed 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions, with zero project omissions or warnings. Summary: `Saved/Automation/BS-009/20260831T105950Z-30072-4a458847/run.json`, SHA-256 `B1F2D514125DD27BABF83B7A3BC4A1D87522A410020AE5055F7B85007EB603CD`. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T110154Z-18636-061487c9` captured 25 refs and all 3 LFS objects on `E:`.
 - BS-014A candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d`: `EngineAssociation` is the portable Launcher key `5.8`; Doctor resolved UE 5.8.2 CL 56702186 from the Epic manifest; Generate, Build, Automation 4/4, Data Validation 3/3, and Cook passed under the existing gate with only the seven classified Engine omissions and zero project omissions/warnings. A normal File Explorer launch opened the exact Unreal Editor directly without the recurring selector, rebuild prompt, or crash dialog, and normal `Alt+F4` shutdown left zero Editor processes.
 - BS-014A was integrated into `main` by merge `9f5d4da44bad979849400d5f5e20b5431726d55e`. Source, Config, and Content remained byte-identical at their Git trees. The post-merge complete gate passed with UE 5.8.2 CL 56702186, Automation 4/4, Data Validation 3/3, and zero project cook omissions or warnings. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T112803Z-27816-2cd7815d` captured 27 refs and all 3 LFS objects on `E:`.
+- BS-015 candidate `3669500ed3724a3bea95767e1122c7ead8d1c192`, tree `8875040361271b98dcdd3c3a5ea2bffc5f903947`: two native log categories, bounded fixed-field `FBSLogContext`, and typed fail-closed `CoreVerboseDiagnostics` configuration are implemented with no gameplay, asset, network, or save changes. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 7/7, and Data Validation 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions with zero project omissions/warnings. Win64 Shipping compiled and contained none of 14 audited Automation test markers. The renderer/config audit remained 52/52, Git/LFS/static audits passed, and Content stayed byte-identical. Madalin Gavrila then supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all six Core tests green with 6 passed, 0 failed, and 0 skipped. Integration is pending.
 
 ## Deviations and open items
 
