@@ -49,7 +49,7 @@ Run after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B:
 
 Save restoration is not a BS-007B criterion before BS-020 creates the schema and fault harness. From BS-020 onward, every persistent gate adds its own restore and fault test.
 
-### Verified BS-007B candidate — August 31, 2026
+### Verified BS-007B result — August 31, 2026
 
 Candidate `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb` was cloned directly from the private GitHub remote into a new `E:` destination. The clone contained no generated state before verification. Git LFS materialized and hash-verified all three project maps, and both pointer and payload fsck passed.
 
@@ -60,6 +60,8 @@ A second pristine workspace was staged before first use and executed by the temp
 The first automated exact-engine observer incorrectly required `FEngineLoop::AppPreExit`, a marker not emitted by the `-game` path. The process itself exited 0 after an exact map/world load and normal shutdown. The retained second attempt audited the correct game-mode sequence: `RequestExitWithStatus(0, 0)`, `PreExit Game`, `Game engine shut down`, and `LogExit: Exiting`. This was an evidence-audit false negative, not a project failure.
 
 No new recovery orchestrator was retained: the verified canonical Git/LFS, `BS.cmd`, UAT, exact-engine, and backup paths are the recovery procedure. Failed or completed drill folders remain outside the live repository until the owner explicitly approves cleanup.
+
+Merge `099a8e6893d65b5e9a6debffe5c53269046f6018` was pushed to `main` without changing the accepted tree. Remote pointer/object checks passed for the Core map, independent generation `20260831T101014Z-4224-6b9beec4` captured 23 refs and all 3 LFS objects, and controlled lock `49932145` was released afterward. BS-007B and the M1 recovery gate are complete.
 
 ## Independent repository and Git LFS backup — BS-010A
 

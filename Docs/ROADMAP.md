@@ -79,11 +79,11 @@ Deliverables:
 | BS-013B | PC-only configuration plus test renderer/scalability baseline | project-owned maps, unused configuration removed, ADR, verifiable preset |
 | BS-007B | complete recovery drill | clone, LFS, build, test, cook, and open TestGym on a clean profile or PC |
 
-**Current M1B status:** BS-007B candidate `fd0284f` passed the online clean-clone/LFS/build/test/validation/cook/package/exact-map gate and the separate Windows-profile creator checkpoint. Integration, remote LFS confirmation, lock release, and the final repository backup are the remaining closure operations.
+**Current M1B status:** Complete. BS-007B passed online clean-clone/LFS/build/test/validation/cook/package/exact-map recovery and the separate Windows-profile creator checkpoint, then integrated to GitHub `main` with remote LFS, lock-release, and independent-backup verification.
 
 **Dependency correction:** BS-007A does not require TestGym or cook because they do not exist yet. BS-007B closes the complete gate after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B. Save restoration does not belong to BS-007B before BS-020 creates the schema and harness.
 
-**M1 gate:** project reconstructs from clone and documentation; Source Art has separate recovery; gameplay does not yet exist.
+**M1 gate:** PASS — the project reconstructs from clone and documentation, Source Art has separate verified recovery, and gameplay intentionally does not yet exist. BS-014 starts M2.
 
 ## M2 — Minimum core and observability
 
