@@ -134,7 +134,7 @@ PASS if the build has zero failures and all ten `BrokenStreets.Core` Automation 
 
 FAIL if compilation reports any introduced error/warning, Unreal asks to choose an engine or rebuild modules, a Core test is missing, or any test is red/yellow. Stop and send the complete Visual Studio Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
 
-Checkpoint A result: Pending creator execution for candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`.
+Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied successful Visual Studio output showing `1 succeeded, 0 failed`, plus Unreal Editor Session Frontend evidence showing all ten filtered Core tests green with 10 passed, 0 failed, and 0 skipped. The Automation Testing Log records `Success` for Commands Envelope, Compatibility Evaluation, Compatibility Policy, Feature Flags Policy, DefinitionId, InstanceId, Observability Categories, Observability Context, Results Policy, and Tags Policy. No engine-selection, module-rebuild, or crash dialog was reported. Integration remained pending when this evidence was recorded.
 
 ## Risks and rollback
 
@@ -156,7 +156,7 @@ Checkpoint A result: Pending creator execution for candidate `0e113a5eb8fa55be06
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| 2026-08-31 | `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | tree `0d204b9784a2d362f303d10843ed724667064744`; Source `a24007261a6d9139be7e8830badfc4afd9b85055`; unchanged Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 11/11; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 22 Shipping Automation markers audited with 0 found; local links 46/46; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T145854Z-35204-e331a983` captured 32 refs and all 3 LFS objects | Automated PASS; creator Build and Editor Automation 10/10 pending | Codex |
+| 2026-08-31 | `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | tree `0d204b9784a2d362f303d10843ed724667064744`; Source `a24007261a6d9139be7e8830badfc4afd9b85055`; unchanged Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 11/11; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 22 Shipping Automation markers audited with 0 found; local links 46/46; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T145854Z-35204-e331a983` captured 32 refs and all 3 LFS objects; creator Visual Studio Development Editor Build `1 succeeded, 0 failed`; creator Unreal Editor Automation 10/10 with 0 failed/skipped | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -168,7 +168,7 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-018.
 
-Automated candidate verification is complete. The task remains `Needs Owner Verification` until Madalin completes Checkpoint A. Runtime acceptance is tied to candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`; this evidence update changes documentation only. Network, persistence/fault, and performance scenarios are N/A because BS-017 adds no RPC, replicated state, persisted bytes, command executor, retry store, Tick, or representative workload. Renderer/config audit is N/A because Config is byte-identical to the accepted BS-016 baseline.
+The exact candidate passed automated and creator verification and is ready for integration. Runtime acceptance is tied to candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`; this evidence update changes documentation only. Network, persistence/fault, and performance scenarios are N/A because BS-017 adds no RPC, replicated state, persisted bytes, command executor, retry store, Tick, or representative workload. Renderer/config audit is N/A because Config is byte-identical to the accepted BS-016 baseline.
 
 Retained local evidence:
 
