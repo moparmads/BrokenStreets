@@ -34,6 +34,6 @@ Choose the name by ownership, not by a UI feature.
 
 | System | Document | Status | Last verified gate |
 |---|---|---|---|
-| — | — | no system designed or implemented yet | — |
+| Core | [Core.md](Core.md) | In Progress | BS-014 candidate `2449d3f` passed automated and creator acceptance; integration pending |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.

@@ -1,6 +1,6 @@
 # Broken Streets Canonical Roadmap
 
-**Updated:** August 30, 2026
+**Updated:** August 31, 2026
 **Engine:** Unreal Engine 5.8.2
 **Platform:** Windows PC, Steam
 **Topology:** solo or private co-op, one listen-server host plus at most three clients
@@ -99,6 +99,8 @@ Do not build a universal framework. A common primitive appears for one real cons
 | BS-019 | minimal authority and state debug overlay |
 | BS-020 | minimum save header, version, serializer, and fault harness |
 | BS-021 | profiling fixture and CPU/GPU/memory/network baseline |
+
+**Current M2 status:** BS-014 candidate `2449d3f` passed automated verification and creator compile/Editor Automation acceptance on `feature/BS-014-stable-ids-tags`; integration remains pending.
 
 Conditions:
 

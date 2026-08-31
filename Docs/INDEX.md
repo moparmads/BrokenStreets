@@ -18,10 +18,12 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Build/PLUGIN_AND_LICENSE_MANIFEST.md` | plugins/dependencies and their licenses | before any external integration |
 | `Docs/Systems/README.md` | catalog of existing system documents | before creating or changing a system |
 | `Docs/Systems/SYSTEM_TEMPLATE.md` | required system-design structure | when a system becomes `Ready` |
+| `Docs/Systems/Core.md` | typed identity and Gameplay Tags contracts owned by Core | any task that introduces IDs or tags |
 | `Docs/Decisions/README.md` | ADR rules and decision index | difficult-to-reverse cross-system decisions |
 | `Docs/Tasks/README.md` | task-packet states and rules | selecting and tracking a task |
 | `Docs/Tasks/TASK_TEMPLATE.md` | contract for a `BS-###` task | before implementation |
 | active `Docs/Tasks/BS-###-*.md` packet | outcome, authorized scope, and evidence for the current task | throughout the task |
+| `Docs/Tasks/BS-014-Stable-Identifiers-And-Gameplay-Tags.md` | active M2 identity and Gameplay Tags implementation contract | throughout BS-014 |
 | `Docs/Workflows/CODEX_TASK_WORKFLOW.md` | complete execution process | any code or asset change |
 | `Docs/Workflows/DEFINITION_OF_DONE.md` | universal gate and conditional verification | before handoff/merge |
 | `Docs/Workflows/USER_COMPILE_GUIDE.md` | exact creator compilation steps | after C++ changes |
