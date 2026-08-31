@@ -21,14 +21,14 @@ BS-007A ran under the same Windows profile and UE installation. It does not yet 
 
 ## Engine association on a new profile or PC
 
-`BrokenStreets.uproject` may contain an `EngineAssociation` GUID registered only locally. That GUID is not a portable path and must not be assumed to exist elsewhere.
+`BrokenStreets.uproject` tracks the Epic Launcher release association `5.8`, not a per-user registered-build GUID. It resolves only when the matching UE 5.8 Launcher release is installed on that PC.
 
 Safe recovery:
 
 1. install and verify exactly UE 5.8.2 and record its absolute path;
 2. build through that engine's `Engine/Build/BatchFiles/Build.bat` with the absolute `.uproject` path;
 3. open through the same engine's `Engine/Binaries/Win64/UnrealEditor.exe`, passing the `.uproject`;
-4. for Explorer/IDE integration, associate the project locally and regenerate files. Do not push an `EngineAssociation` rewrite caused only by recovery without an upgrade/toolchain task;
+4. for Explorer/IDE integration, keep the tracked `5.8` association and regenerate files. Do not push a different `EngineAssociation` caused only by recovery without an upgrade/toolchain task;
 5. BS-009 validates project generation without hidden Explorer dependence; BS-007B repeats it on another Windows profile or second PC.
 
 ## BS-007B — complete project recovery
