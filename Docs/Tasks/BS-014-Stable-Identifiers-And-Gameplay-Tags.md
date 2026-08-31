@@ -1,6 +1,6 @@
 # BS-014 — Stable Identifiers and Gameplay Tags Policy
 
-**Status:** Needs Owner Verification
+**Status:** In Progress
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-014-stable-ids-tags`
 **Base commit:** `56ad7c9f5f0188b949bd7c8b6ab0179fa60ed1c8`
@@ -132,6 +132,8 @@ PASS if the build has zero failures and Automation reports 3 passed, 0 failed, 0
 
 FAIL if compilation reports any error/warning introduced by this task, Unreal asks to rebuild modules, a test is missing, or any test is red/yellow. Stop and send the complete Visual Studio `Build` output or the `Automation Testing Log` plus one screenshot. Do not edit files or settings.
 
+Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied the successful Visual Studio build result and an Unreal Editor Session Frontend screenshot showing all three filtered Core tests green, with 3 passed, 0 failed, and 0 skipped. The Automation Testing Log records `Success` for DefinitionId, InstanceId, and Tags Policy. No module-rebuild or crash dialog was reported. Integration remained pending at the time this evidence was recorded.
+
 ## Risks and rollback
 
 - Base/rollback: `56ad7c9f5f0188b949bd7c8b6ab0179fa60ed1c8`.
@@ -151,7 +153,7 @@ FAIL if compilation reports any error/warning introduced by this task, Unreal as
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| 2026-08-31 | `2449d3ff0aad8500e27a0496add703ac64c5d35b` | tree `70f58a379a05964a34ae377027af0338f3792ded`; Source `0ca7358128a5f68cec8925858d23eaf7dfe72622`; Config `4c801f96e4de5e9812037c5b24124b194a093019`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 4/4; assets 3/3; Win64 Shipping Build PASS; Shipping test-marker audit PASS; links 50/50; Git/LFS/fsck and secret/generated-file audits PASS | Automated PASS; creator compile and Editor Automation pending | Codex |
+| 2026-08-31 | `2449d3ff0aad8500e27a0496add703ac64c5d35b` | tree `70f58a379a05964a34ae377027af0338f3792ded`; Source `0ca7358128a5f68cec8925858d23eaf7dfe72622`; Config `4c801f96e4de5e9812037c5b24124b194a093019`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 4/4; assets 3/3; Win64 Shipping Build PASS; Shipping test-marker audit PASS; links 50/50; Git/LFS/fsck and secret/generated-file audits PASS; creator Visual Studio Build PASS; creator Editor Automation 3/3 PASS | Automated and creator acceptance PASS; integration pending | Codex and Madalin Gavrila |
 
 Retained local evidence:
 
