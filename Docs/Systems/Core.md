@@ -1,9 +1,9 @@
 # Core
 
-**Status:** Implemented
+**Status:** Implemented; BS-017 In Progress
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-016 is complete
+**Active task:** BS-017 — typed results, errors, and command envelope
 **Last verified commit/gate:** merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 8/8 PASS
 
 ## 1. Purpose

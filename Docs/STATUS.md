@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-017-results-command-envelope`
 
 ## Summary
 
 - Last completed task: `BS-016` — build, content, and save compatibility handshake.
-- Active task: none; BS-016 is closed on `main`.
-- Next task: `BS-017` — typed results/errors and command envelope.
+- Active task: `BS-017` — typed results, errors, and command envelope; contract definition in progress.
+- Next task after the active work: `BS-018` — Asset Manager plus soft-reference and loading policy.
 
 ## What actually exists
 
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, two native log categories, bounded structured log context, one default-off diagnostics flag, and an in-progress build/content/save compatibility policy with no save or network consumer yet;
+- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, two native log categories, bounded structured log context, one default-off diagnostics flag, and the implemented build/content/save compatibility policy with no save or network consumer yet;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
@@ -78,6 +78,7 @@
 
 - BS-016 candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`, tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`: strict build/content/save compatibility policy and two tests are implemented. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 9/9, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping passed with 0/18 test markers; direct renderer/config audit passed 52/52; Git/LFS/static audits and independent generation `20260831T124836Z-39684-2d542d46` passed. Madalin Gavrila then supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all eight Core tests green with 8 passed, 0 failed, and 0 skipped.
 - BS-016 was integrated into `main` by merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b`, tree `ff167043fc0733fdb7665a9b6335a66a018489a6`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate, Build, Automation 9/9, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Local, tracking, and GitHub `main` matched; Git LFS fsck/status and reachable-object audits passed; independent generation `20260831T132329Z-27848-5a073e9e` captured 31 refs and all 3 LFS objects on `E:`.
+- BS-017 is active from clean base `180a9a83fd686a3414c821569db19df088265077`. Its task contract limits the work to plain Core command/correlation identifiers, an envelope, a bounded machine error code, and invariant result status; no runtime candidate exists yet.
 - The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.
