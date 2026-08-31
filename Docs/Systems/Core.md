@@ -1,9 +1,9 @@
 # Core
 
-**Status:** Implemented
+**Status:** In Progress
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-015 is complete
+**Active task:** BS-016 — build, content, and save compatibility handshake
 **Last verified commit/gate:** merge `ccbb92d0fc7a455a9995d529be29e248a22c2812`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 6/6 PASS
 
 ## 1. Purpose

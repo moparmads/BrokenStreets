@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-016-compatibility-handshake`
 
 ## Summary
 
 - Last completed task: `BS-015` — Core observability and feature flags.
-- Active task: none; BS-015 is closed on `main`.
-- Next task: `BS-016` — build, content, and save compatibility handshake.
+- Active task: `BS-016` — build, content, and save compatibility handshake.
+- Next task after the active work: `BS-017` — typed results/errors and command envelope.
 
 ## What actually exists
 

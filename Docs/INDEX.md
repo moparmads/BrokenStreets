@@ -25,6 +25,8 @@ This file routes readers through the project documentation. It contains no new d
 | active `Docs/Tasks/BS-###-*.md` packet | outcome, authorized scope, and evidence for the current task | throughout the task |
 | `Docs/Tasks/BS-014-Stable-Identifiers-And-Gameplay-Tags.md` | implemented M2 identity and Gameplay Tags contract plus evidence | when changing Core IDs/tags or reviewing BS-014 |
 | `Docs/Tasks/BS-014A-Portable-Unreal-Engine-Association.md` | implemented portable UE association correction and evidence | when changing the engine association or reviewing BS-014A |
+| `Docs/Tasks/BS-015-Core-Observability-And-Feature-Flags.md` | implemented Core observability and rollout-control contract plus evidence | when changing Core logs/flags or reviewing BS-015 |
+| active `Docs/Tasks/BS-016-Build-Content-Save-Compatibility.md` | build/content/save compatibility scope, defaults, and evidence | throughout BS-016 |
 | `Docs/Workflows/CODEX_TASK_WORKFLOW.md` | complete execution process | any code or asset change |
 | `Docs/Workflows/DEFINITION_OF_DONE.md` | universal gate and conditional verification | before handoff/merge |
 | `Docs/Workflows/USER_COMPILE_GUIDE.md` | exact creator compilation steps | after C++ changes |
