@@ -1,20 +1,20 @@
 # Project status
 
 **Updated:** August 31, 2026
-**Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Current milestone:** M2 — Minimum core and observability
+**Active branch:** `feature/BS-014-stable-ids-tags`
 
 ## Summary
 
-- Last completed task: `BS-007B` — complete project recovery drill.
-- No implementation task is currently active.
-- Next task: `BS-014` — typed and stable IDs plus Gameplay Tags policy.
+- Last completed task: `BS-007B` — complete project recovery drill and M1 gate.
+- Active task: `BS-014` — stable identifiers and Gameplay Tags policy.
+- Next task after the active gate: `BS-015` — logging categories, structured context, and feature flags.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`;
-- one deterministic C++ Automation smoke test on `main`;
+- one runtime module, `BrokenStreets`, with the BS-014 Core identity and Gameplay Tags candidate in progress on its feature branch;
+- four deterministic C++ Automation tests on the active branch: the existing project smoke plus DefinitionId, InstanceId, and Gameplay Tags policy coverage;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay code;
+- no Broken Streets gameplay system; BS-014 adds only Core value types and tag policy;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
