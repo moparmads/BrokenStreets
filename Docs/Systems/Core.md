@@ -4,11 +4,11 @@
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
 **Active task:** BS-017 — typed results, errors, and command envelope
-**Last verified commit/gate:** merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 8/8 PASS
+**Last verified commit/gate:** BS-017 working tree; pre-candidate Development Editor Build and Automation 11/11 PASS; exact candidate gate pending
 
 ## 1. Purpose
 
-Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 adds the pre-materialization compatibility boundary: exact build/content lanes, an inclusive readable save-schema range, strict configuration parsing, and stable rejection reasons. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, or profile/session version rules.
+Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 added the pre-materialization compatibility boundary. BS-017 adds distinct command/correlation identity, a minimal envelope, bounded machine error codes, and invariant result states. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, profile/session version rules, or ambiguous command outcomes.
 
 ## 2. Non-goals
 
@@ -16,8 +16,9 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Core does not allocate domain-specific IDs before their first owning consumer.
 - Core does not provide a universal registry, event bus, service locator, transaction engine, or global mutable singleton.
 - Core does not provide arbitrary structured fields, player/account context, telemetry transport, analytics, remote configuration, dynamic flag mutation, experiments, or Blueprint helper libraries.
-- BS-014 through BS-016 do not add Asset Manager, a serialized save header or file, migration execution, tag replication optimization, generic results/errors, or command/correlation envelopes.
+- BS-014 through BS-017 do not add Asset Manager, a serialized save header or file, migration execution, tag replication optimization, or a domain command consumer.
 - BS-016 does not override Unreal's native network version, approve a connection, materialize a profile, scan/hash content, or expose a player-facing recovery message.
+- BS-017 does not add a dispatcher, handler registry, generic payload, RPC, retry engine, deduplication store, journal, free-form error detail, or player-facing/localized message.
 - Product-wide exclusions remain in `Docs/NON_GOALS.md`.
 
 ## 3. Decisions and open questions
@@ -39,6 +40,13 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Reversible default: every version is canonical unsigned decimal in `1..4294967295`; zero, sign, whitespace, leading zero, punctuation, overflow, missing value, or an inverted save range invalidates the local policy or presented signature.
 - Reversible default: fail-closed evaluation order is invalid local policy, invalid presented signature, build mismatch, content mismatch, save too old, then save too new.
 - Initial schema lane `1` reserves the contract BS-020 may use; it does not claim that a save header, serializer, migration, or player profile already exists.
+- Reversible default: `FBSCommandId` and `FBSCorrelationId` are distinct C++ types over non-zero GUIDs with strict lowercase hyphenated external text.
+- Reversible default: one root envelope generates distinct command/correlation values; one child generates a new command ID while inheriting the root correlation ID.
+- Reversible default: retrying the same logical command reuses its command ID. Correlation groups related work and never provides idempotency, authority, or permission.
+- Reversible default: `FBSErrorCode` accepts exactly `<domain>.<reason>`, with two 1–64 character lowercase ASCII snake_case segments.
+- Reversible default: `FBSResult` is valid only as `Succeeded` without an error, `Rejected` with a valid error, or `Failed` with a valid error. Default/cleared state is `Invalid`.
+- `Rejected` is a deliberate terminal refusal by a future owner. `Failed` reports an execution failure but grants no automatic retry and makes no recovery/commit claim.
+- Machine error codes are bounded control-flow/diagnostic identifiers, never raw details, trusted input, or player-facing text. A future consumer owns localization mapping.
 - Open question deferred to BS-018: exact definition types, catalog sources, duplicate scanning, Asset Manager mapping, and production redirects.
 
 ## 4. Behaviors and examples
@@ -55,13 +63,16 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Policy `(build=3, content=4, current_save=5, minimum_readable_save=2)` accepts signatures `(3,4,2)` through `(3,4,5)`, rejects `(3,4,1)` as `save_schema_too_old`, and rejects `(3,4,6)` as `save_schema_too_new`.
 - The same policy rejects `(9,4,5)` as `build_version_mismatch` and `(3,9,5)` as `content_version_mismatch`. Multiple mismatches still return the first result in the fixed evaluation order.
 - A missing or malformed source-controlled compatibility value makes startup validation fail closed with one bounded Core error; valid defaults emit no routine success message.
+- `economy.insufficient_funds` is a valid machine error code. `Economy.InsufficientFunds`, `economy.insufficient-funds`, extra segments, whitespace, and overlong segments are invalid.
+- A root command and explicitly created child have different command IDs and the same correlation ID. Retrying the root reuses its original envelope rather than creating a child.
+- A success result has no error code; `Rejected(inventory.capacity_exceeded)` and `Failed(save.io_unavailable)` carry exactly one bounded code without free-form details.
 
 ## 5. Ownership and invariants
 
 | Dimension | Owner / rule |
 |---|---|
-| Storage owner | Value structs store canonical identity and compatibility values; log context stores ephemeral validated values; project config stores reviewed flag and compatibility defaults. Future domain records own their copies. |
-| Runtime mutation authority | Core validates/represents and reads immutable process configuration; the future domain owner decides when an ID is created/assigned, whether a flag may gate its reversible feature, and whether to call compatibility evaluation at its boundary. Network approves connections and Save approves/migrates/materializes profiles. |
+| Storage owner | Value structs store canonical identity, compatibility, command/result, and error-code values; log context stores ephemeral validated values; project config stores reviewed flag and compatibility defaults. Future domain records own their copies. |
+| Runtime mutation authority | Core validates/represents immutable metadata and reads immutable process configuration. A future domain owner decides when a command is created, validates/applies the intent, owns any deduplication/recovery state, and returns the result. Network approves connections and Save approves/migrates/materializes profiles. |
 | Persistent fragment owner | None through BS-016; future domains serialize identifiers in versioned fragments and Save owns the future header/schema registry. Feature flags and the local readable-version policy are configuration, not save state. |
 | Replication audience | Defined by the future consuming DTO or log caller; Core has no default gameplay or network audience. |
 
@@ -79,11 +90,17 @@ Invariants that may never be violated:
 - invalid/missing local configuration and invalid presented signatures always reject before state materialization;
 - build/content lanes match exactly, while the readable save-schema interval is inclusive and never inverted;
 - version changes are explicit source-controlled compatibility decisions, not automatic timestamps, Git hashes, or per-build churn;
+- command identity and correlation identity are distinct and cannot be implicitly converted from each other or raw GUIDs;
+- a command envelope contains exactly one valid command ID and one valid correlation ID; a child never reuses the parent's command ID;
+- a command ID identifies a logical command across retries; a correlation ID groups work and cannot substitute for idempotency, authorization, or transaction identity;
+- an error code is canonical bounded machine text and never contains free-form, private, localized, or untrusted details;
+- a valid success contains no error; a valid rejection/failure always contains one valid error; an invalid construction clears prior output;
+- result status and error code never prove that state changed, is safe to retry, was persisted, or was shown to a player;
 - Core has no dependency on gameplay systems, UI, online services, save orchestration, or Editor-only modules.
 
 ## 6. States and transitions
 
-IDs and compatibility values are immutable values, not state machines. They have two validation states: invalid/default and valid/canonical. `TryParse`, `TryCreate`, or future domain-owned generation may produce a valid value; failed validation resets output to invalid. A compatibility evaluation is a pure decision and changes neither input. A log context is invalid/default until `TryCreate` accepts its operation; optional ID assignment is validated independently. Feature flags and compatibility policy resolve from immutable project configuration on query and have no runtime transition API. No UI or Blueprint transition mutates these contracts.
+Core IDs, error codes, envelopes, compatibility values, and results are immutable values, not gameplay state machines. IDs/error codes/envelopes have invalid/default and valid/canonical states; failed parsing or construction resets output. A result has one invalid default state and three valid closed states created only through invariant factories. A child-envelope factory changes neither parent nor correlation. Compatibility evaluation is pure. Log context and immutable configuration retain their existing validation behavior. No UI or Blueprint transition mutates these contracts.
 
 ## 7. Data model and identity
 
@@ -101,6 +118,11 @@ IDs and compatibility values are immutable values, not state machines. They have
 - compatibility policy: `FBSCompatibilityPolicy` with exact non-zero build/content lanes and non-zero current/minimum-readable save schemas where minimum is not greater than current;
 - compatibility config: `[BrokenStreets.Compatibility]` keys `BuildCompatibilityVersion`, `ContentCompatibilityVersion`, `CurrentSaveSchemaVersion`, and `MinimumReadableSaveSchemaVersion`, all initialized to canonical decimal `1`;
 - compatibility result: closed `EBSCompatibilityResult` with stable lowercase names `compatible`, `invalid_policy`, `invalid_signature`, `build_version_mismatch`, `content_version_mismatch`, `save_schema_too_old`, and `save_schema_too_new`; unknown enum values map to bounded diagnostic name `unknown`;
+- command ID: `FBSCommandId`, non-zero GUID, canonical lowercase hyphenated text, logical-command/idempotency identity only;
+- correlation ID: distinct `FBSCorrelationId`, non-zero GUID with the same text grammar, causal grouping only;
+- command envelope: `FBSCommandEnvelope`, exactly one valid command ID plus one valid correlation ID, with explicit root/child construction and no payload or caller identity;
+- machine error: `FBSErrorCode`, exact `<domain>.<reason>` text with two bounded lowercase snake_case segments;
+- result: `FBSResult` plus closed `EBSResultStatus`; success has no error, rejection/failure have one error, and unknown status names map to `unknown`;
 - rename/deprecation/redirect policy: DefinitionId changes require an explicit domain migration map and duplicate audit; tag renames require `GameplayTagRedirects`; asset redirects never substitute for either rule.
 
 Never save `UObject` or Actor pointers, and never use Gameplay Tags as instance identity.
@@ -124,16 +146,22 @@ Never save `UObject` or Actor pointers, and never use Gameplay Tags as instance 
 | `FBSCompatibility::TryLoadCurrentPolicy` | module startup/future boundary owner | Core/config | exactly four project-owned keys | bool + valid policy or cleared invalid output | deterministic for one config snapshot |
 | `FBSCompatibility::Evaluate` | future Network/Save boundary | Core | valid local policy and presented signature | one closed specific `EBSCompatibilityResult` | pure and deterministic |
 | `FBSCompatibility::GetStableName` | diagnostics/future localization mapping | Core | closed result enum | fixed machine name or `unknown` | deterministic |
+| `FBSCommandId::Create/TryParse` | future typed command creator/boundary | Core validates form; future owner assigns meaning | non-zero generated GUID or exact canonical text | valid command ID or cleared output | same logical command reuses the same ID |
+| `FBSCorrelationId::Create/TryParse` | future coordinator/boundary | Core validates form; future coordinator groups work | non-zero generated GUID or exact canonical text | valid correlation ID or cleared output | grouping only; not idempotency |
+| `FBSCommandEnvelope::CreateRoot` | future typed command creator | Core value construction | none | valid root command/correlation metadata | new logical root |
+| `FBSCommandEnvelope::TryCreateChild` | future coordinator | Core validates parent | one valid parent envelope | new command ID, inherited correlation, or cleared output | child is a distinct logical command |
+| `FBSErrorCode::TryParse` | future domain result boundary | Core | exact bounded `<domain>.<reason>` | valid machine code or cleared output | deterministic |
+| `FBSResult::Succeeded/TryCreateRejected/TryCreateFailed` | future domain owner | Core enforces invariant; domain owns meaning | valid status-specific construction | valid result metadata or cleared output | no retry/commit behavior implied |
 
-Events notify; the owner mutates truth. Core emits no event and owns no network command through BS-016. A later domain may use a feature flag only around behavior that its own task, owner, fallback, and tests define. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
+Events notify; the owner mutates truth. Core emits no event, dispatches no command, and owns no network command through BS-017. Future typed domain commands may carry the envelope, but their owner still validates/applies/rejects them and owns deduplication/recovery. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
 
 ## 9. Multiplayer
 
-BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A future Network connection boundary will present version metadata, evaluate it server-side, and map a rejection to a player-safe message; this task neither defines nor transports that payload. Clients never gain mutation authority by possessing an ID, flag, or compatible signature. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Logs and local configuration do not replicate. Late join, reconnect, disconnect, four-player separation, latency, and bandwidth are N/A until a network consumer exists.
+BS-014 through BS-017 add no RPC, connection hook, or replicated object. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A valid envelope never authenticates the sender or bypasses identity, permission, range, state, rate-limit, payload, replay, or stale-revision checks. Clients never dictate a result. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Late join, reconnect, disconnect, four-player separation, latency, privacy, and bandwidth are N/A until a network consumer exists.
 
 ## 10. Persistence and migration
 
-- store: no gameplay/save store; BS-015/BS-016 add only project configuration metadata;
+- store: no gameplay/save store; BS-015/BS-016 add only project configuration metadata, while BS-017 adds ephemeral value contracts only;
 - serialized fragment/header `SchemaVersion`: N/A until BS-020; compatibility lane `1` is reserved but no bytes are persisted by BS-016;
 - the wrappers contain only serializable value data and support archive round-trip;
 - future schemas reject invalid values before state materialization;
@@ -143,6 +171,7 @@ BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later
 - log contexts are ephemeral and are not persisted as authoritative state; feature flags are never written into player/world saves.
 - a future profile header presents one build/content/save signature; Save rejects an invalid build/content lane or unsupported schema before materialization, then performs any approved migration under its own task;
 - increasing `CurrentSaveSchemaVersion` requires a real schema plus tests; increasing `MinimumReadableSaveSchemaVersion` drops support and therefore requires explicit migration/rollback evidence and player-facing recovery behavior.
+- command/correlation IDs, error codes, and results have no archive operator or persisted schema in BS-017. A future owning task must version their transport/store and define deduplication, receipt, fault, and recovery behavior.
 
 ## 11. Performance and simulation LOD
 
@@ -155,13 +184,16 @@ BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later
 - with the default flag disabled, startup emits no new routine message and does not format a context;
 - compatibility evaluation is constant time over four `uint32` policy values and three signature values, with no allocation or formatting;
 - compatibility configuration reads exactly four bounded values only at startup or another explicit compatibility boundary; valid startup emits no routine message;
+- command/envelope validity is constant time over at most two GUIDs; root/child creation generates at most two non-zero GUIDs plus a collision retry;
+- error-code validation performs one bounded scan over at most 129 characters; result construction is constant time with one bounded code copy;
+- command/results add no execution loop, queue, registry, Tick, thread, RPC, bandwidth, or retained global state;
 - simulation LOD is N/A, but every representation of one future entity preserves the same stable ID.
 
 ## 12. C++ / Blueprint / Editor surface
 
-- C++: `FBSDefinitionId`, `FBSInstanceId`, central native `BS` root tag, `LogBrokenStreets`, `LogBSCore`, `FBSLogContext`, `EBSFeatureFlag`, `FBSFeatureFlags`, `FBSCompatibilitySignature`, `FBSCompatibilityPolicy`, `EBSCompatibilityResult`, and `FBSCompatibility`;
+- C++: existing identity/tags/observability/feature-flag/compatibility contracts plus `FBSCommandId`, `FBSCorrelationId`, `FBSCommandEnvelope`, `FBSErrorCode`, `EBSResultStatus`, and `FBSResult`;
 - Data Assets/Tables/Curves/Tags: no assets; only the native root and project settings;
-- Blueprint: ID structs remain reflected for future properties; observability, feature flags, and compatibility are C++ only and expose no Blueprint construction/mutation library;
+- Blueprint: definition/instance ID structs remain reflected for future properties; observability, feature flags, compatibility, commands, and results are C++ only and expose no Blueprint construction/mutation library;
 - Editor setup: none; configuration is source controlled;
 - validation: strict ID/context/config/version parsers, future catalog duplicate validation in BS-018, native/config tag policy tests, default-off feature-flag tests, and exhaustive compatibility-result tests.
 
@@ -180,6 +212,10 @@ BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later
 - zero, malformed, noncanonical, missing, overflowing, or inverted compatibility configuration clears the local policy and makes startup report one bounded error without echoing raw values;
 - an invalid presented signature, exact build/content mismatch, or save schema outside the inclusive readable range returns a specific fail-closed result before any future profile state is materialized;
 - compatibility does not verify checksum, authenticity, stable-ID validity, content presence, revision, ProfileEpoch, receipts, or permissions; each future owner must still validate its own boundary.
+- malformed, zero, uppercase, braced, or noncanonical command/correlation IDs are rejected and clear prior output; an invalid parent cannot create a child;
+- command/correlation metadata never authenticates a caller, authorizes a mutation, establishes transaction identity, or proves that a previous attempt completed;
+- malformed, uppercase, whitespace-bearing, punctuated, extra-segment, or overlong error codes are rejected and clear prior output;
+- invalid result construction clears prior state. `Failed` never authorizes blind retry, and no result carries private/free-form text or a player-visible message.
 
 ## 14. Debug and observability
 
@@ -189,6 +225,7 @@ BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later
 - `CoreVerboseDiagnostics` defaults off and, when enabled, emits one structured module-startup message. No debug command, overlay, telemetry transport, or remote sink is added.
 - invalid compatibility configuration emits one fixed `LogBSCore` startup error with operation `compatibility_startup`; valid defaults emit no success spam. Presented values are not logged by Core.
 - stable compatibility result names are safe machine identifiers for future structured logs/localization mapping, not player-facing English text.
+- stable command result status names and error-code text are safe bounded machine identifiers only. Core emits no command/result log and provides no automatic localization or UI mapping.
 - Automation code is enclosed by `WITH_DEV_AUTOMATION_TESTS`; no test UI or developer dependency enters Shipping.
 
 ## 15. Automated tests
@@ -206,6 +243,8 @@ BS-014 through BS-016 add no RPC, connection hook, or replicated object. A later
 - stable feature-flag names/keys, strict boolean parsing, explicit default off, true/false resolution, and unknown fail-closed behavior.
 - canonical compatibility version parsing, maximum/zero/leading-zero/overflow/malformed bounds, output clearing, signature/policy invariants, current-signature generation, and exact project defaults;
 - compatible current/minimum/intermediate save schemas, invalid input, every mismatch result, deterministic precedence, and every stable machine name.
+- strict command/correlation GUID parsing, compile-time type separation, output clearing, generated uniqueness, explicit root/child correlation behavior, and invalid-parent rejection;
+- bounded error-code grammar/equality/hash/clearing, result construction invariants, status predicates, and stable/unknown status names.
 
 ### Functional/network
 
@@ -217,16 +256,18 @@ ID archive round-trip and pure compatibility decisions are covered. Save seriali
 
 ## 16. Exact manual acceptance
 
-Follow `Docs/Tasks/BS-016-Build-Content-Save-Compatibility.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all eight Core tests. PASS is 8 passed, 0 failed, 0 skipped with no engine-selection, module-rebuild, or crash dialog.
+Follow `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all ten Core tests. PASS is 10 passed, 0 failed, 0 skipped with no engine-selection, module-rebuild, or crash dialog.
 
 ## 17. Rollout, rollback, and compatibility
 
 - feature flag/default state: `CoreVerboseDiagnostics=False`; no gameplay state changes under either value;
 - compatibility defaults: build `1`, content `1`, current save `1`, minimum readable save `1`; no automatic version or hash changes;
 - BS-016 base: `0772b9dd8f323461661a5f042ed435481951743b`;
+- BS-017 base: `180a9a83fd686a3414c821569db19df088265077`;
 - rollback: revert the BS-016 candidate and rerun Build/Test/Validate/Cook before any Network/Save consumer merges; BS-014/BS-015 primitives remain intact;
 - no production save file, content catalog handshake, connection approval, or network payload exists yet;
 - if a gate fails, revert the BS-016 candidate; no gameplay fallback or migration is needed because no gameplay, profile, content, or network consumer depends on it before merge.
+- if BS-017 fails before a consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No content, config, save, network, or gameplay migration is required.
 
 ## 18. Evidence and history
 

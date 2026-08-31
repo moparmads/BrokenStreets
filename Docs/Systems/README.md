@@ -34,6 +34,6 @@ Choose the name by ownership, not by a UI feature.
 
 | System | Document | Status | Last verified gate |
 |---|---|---|---|
-| Core | [Core.md](Core.md) | In Progress | BS-017 contract active from clean base `180a9a8` |
+| Core | [Core.md](Core.md) | In Progress | BS-017 pre-candidate Build and Automation 11/11 passed |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.
