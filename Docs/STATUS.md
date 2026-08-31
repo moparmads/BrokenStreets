@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `feature/BS-020-save-envelope-fault-harness`
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-019` — minimal authority and state debug overlay.
-- Active task: `BS-020` — minimum save envelope, version, serializer, and fault harness; automated and creator gates PASS, integration pending.
+- Last completed task: `BS-020` — minimum save envelope, version, serializer, and fault harness.
+- Active task: none.
 - Next task after acceptance: `BS-021` — profiling fixture and CPU/GPU/memory/network baseline.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-019 Core/Items contracts on `main` and the verified BS-020 Save-envelope candidate on its feature branch;
-- twenty deterministic C++ Automation tests on the active branch: the project smoke, fifteen Core tests, and four BS-020 Save-envelope tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-020 Core/Items/Save contracts on `main`;
+- twenty deterministic C++ Automation tests on `main`: the project smoke, fifteen Core tests, and four BS-020 Save-envelope tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -85,12 +85,13 @@
 - BS-019 candidate `12e6f0ba5b79467e16f337dce12db2a7f35fe857`, tree `f8b781343b2da07c57c649e7ee3100134974104b`: the read-only local authority/state snapshot and overlay are off by default, register draw work only while enabled, use one local controller/pawn pair without scans or mutation, and compile out of Shipping. `Tools/BS.cmd All` passed Generate/Build, Automation 16/16 including Core 15/15, Data Validation 3/3, and Cook 514/521 with seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/16 Automation paths and 0/4 BS-019 debug markers found; renderer/config remained 52/52; default-off logs contained zero overlay entries; an explicit-on runtime check emitted exactly one bounded owner/authority/object-ID/state/net-mode record. Madalin Gavrila supplied a successful Visual Studio Development Editor build, Core Automation 15/15, and two-player PIE evidence showing authoritative listen-server roles and autonomous-proxy client roles.
 - BS-019 was integrated into `main` by merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`, tree `89deeb9851f92abc80f8b62f48f44f04e6d447df`. Source, Config, Content, and `.uproject` matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate/Build, Automation 16/16, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings; renderer/config remained 52/52. Independent generation `20260831T170058Z-27824-d9d07c06` captured 37 refs and all three LFS objects. The feature branch and `main` were synchronized with the private GitHub repository after explicit publication approval.
 - BS-020 candidate `51f0be9ebff63ba91c5b82fd20dc047b18cfe6fb`, tree `80dc0fccda0fc58ad9d45a4588dc1bf38ca0c614`: fixed 32-byte little-endian framing, a 64 MiB cap, CRC-32 integrity, BS-016 compatibility, strict output clearing, exact golden bytes, and an in-memory fault matrix are implemented without file I/O or semantic save data. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate/Build, Automation 20/20 including Save 4/4, and Data Validation 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions with zero project omissions/warnings. Win64 Shipping passed with 0/9 BS-020 test markers; renderer/config remained 52/52; Git/LFS/reachable-object, scope, links, English-prose, secrets, and independent generation `20260831T174520Z-35284-ae02616e` passed. Madalin Gavrila then supplied a successful Visual Studio `Development Editor | Win64` build (`1 succeeded, 0 failed`) and Unreal Editor evidence showing all four filtered Save tests completed with result `Success`.
+- BS-020 was integrated into `main` by merge `3bc0a3de8e900fcfa7e2de531fae4fee7dec5d40`, tree `fc25d9e944ac27f66cb8dc7d7708c5aeffd43aef`. Accepted Source, Config, and Content remained exact. Post-merge `Tools/BS.cmd All` passed Generate/Build, Automation 20/20, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Publication parity and the final independent generation are recorded after the evidence commit.
 - The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.
 - The external recovery drive is plaintext by creator choice; physical custody is required. Its first verified checkpoint is safely disconnected and stored separately.
 - The scheduled task pins Git/Git LFS from the current Codex runtime path because Task Scheduler does not inherit the interactive PATH. Relocation of that runtime requires a config update and another direct scheduled-task test.
-- Complete project recovery is verified by BS-007B. Save recovery begins separately after BS-020 defines the first schema and fault harness.
+- Complete project recovery is verified by BS-007B. BS-020 defines the first in-memory save envelope and fault harness; disk generations and automatic save fallback remain separate later work.
 
 ## Update criterion
 

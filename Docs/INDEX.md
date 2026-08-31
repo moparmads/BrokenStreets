@@ -32,7 +32,7 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md` | implemented typed result/error and command-envelope contract plus evidence | when changing command/result primitives or reviewing BS-017 |
 | `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md` | implemented Asset Manager, item-definition, soft-reference, loading, and audit contract plus evidence | when changing asset loading or reviewing BS-018 |
 | `Docs/Tasks/BS-019-Minimal-Authority-And-State-Debug-Overlay.md` | implemented Development authority/state snapshot and overlay contract plus evidence | when changing local authority diagnostics or reviewing BS-019 |
-| `Docs/Tasks/BS-020-Minimum-Save-Envelope-And-Fault-Harness.md` | active deterministic save envelope, compatibility, integrity, and fault-harness contract | while implementing or reviewing BS-020 |
+| `Docs/Tasks/BS-020-Minimum-Save-Envelope-And-Fault-Harness.md` | implemented deterministic save envelope, compatibility, integrity, and fault-harness contract plus evidence | when changing save framing or reviewing BS-020 |
 | `Docs/Workflows/CODEX_TASK_WORKFLOW.md` | complete execution process | any code or asset change |
 | `Docs/Workflows/DEFINITION_OF_DONE.md` | universal gate and conditional verification | before handoff/merge |
 | `Docs/Workflows/USER_COMPILE_GUIDE.md` | exact creator compilation steps | after C++ changes |

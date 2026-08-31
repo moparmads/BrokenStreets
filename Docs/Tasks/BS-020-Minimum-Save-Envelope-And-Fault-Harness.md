@@ -1,8 +1,8 @@
 # BS-020 — Minimum Save Envelope and Fault Harness
 
-**Status:** Ready to Integrate
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `feature/BS-020-save-envelope-fault-harness`
+**Branch:** `main`
 **Base commit:** `d312ad8ed760414e3d29c97c8f5fae7ed1098dc3`
 **Roadmap milestone:** M2 — Minimum core and observability
 **System docs:** `Docs/Systems/Save.md`, `Docs/Systems/Core.md`
@@ -168,6 +168,7 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied a Visual 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | 2026-08-31 | `51f0be9ebff63ba91c5b82fd20dc047b18cfe6fb` | tree `80dc0fccda0fc58ad9d45a4588dc1bf38ca0c614`; Source `b59f609d48434c5e564256a6368805d3cd7c2264`; unchanged Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `Tools/BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 20/20 including Save 4/4; assets 3/3; Cook 514/521 plus seven classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping PASS; 9 Shipping test/fault markers audited with 0 found; renderer/config 52/52; local links 51/51; Git/LFS/reachable-object, scope, generated-file, English-prose, and secret audits PASS; generation `20260831T174520Z-35284-ae02616e` captured 38 refs and all 3 LFS objects; creator Visual Studio build `1 succeeded, 0 failed`; creator Unreal Editor Save Automation 4/4 `Success` | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | merge `3bc0a3de8e900fcfa7e2de531fae4fee7dec5d40` | tree `fc25d9e944ac27f66cb8dc7d7708c5aeffd43aef`; accepted Source `b59f609d48434c5e564256a6368805d3cd7c2264`; unchanged Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | post-merge `Tools/BS.cmd All`: Generate/Build PASS, Automation 20/20, Data Validation 3/3, Cook 514/521 plus seven classified Engine-only omissions with zero project omissions/warnings; summary `Saved/Automation/BS-009/20260831T182257Z-15016-c74d873b/run.json` | PASS; integrated on `main`; publication and final recovery audit follow in the evidence commit | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
