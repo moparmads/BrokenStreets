@@ -1,14 +1,14 @@
 # Core
 
-**Status:** Implemented
+**Status:** Implemented; BS-018 candidate accepted, integration pending
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-018 is next
-**Last verified commit/gate:** BS-017 merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e`; accepted Source/Config/Content exact; post-merge Build, Automation 11/11, Data Validation 3/3, Cook, Git/LFS, GitHub parity, and independent backup PASS
+**Active task:** BS-018 — Asset Manager and soft-reference loading policy
+**Last verified commit/gate:** BS-018 candidate `dd6610071a664c13cce4761c1d8cee209213929b`; automated Build/Test/Validate/Cook, Shipping, static, and backup gates PASS; creator Development Editor Build and Editor Automation 13/13 PASS; integration pending
 
 ## 1. Purpose
 
-Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 added the pre-materialization compatibility boundary. BS-017 adds distinct command/correlation identity, a minimal envelope, bounded machine error codes, and invariant result states. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, profile/session version rules, or ambiguous command outcomes.
+Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 added the pre-materialization compatibility boundary. BS-017 added distinct command/correlation identity, a minimal envelope, bounded machine error codes, and invariant result states. BS-018 adds the shared bounded asynchronous Asset Manager gateway and unloaded metadata audit while Items owns the first concrete definition type. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, profile/session version rules, ambiguous command outcomes, or synchronous catalog-loading paths.
 
 ## 2. Non-goals
 
@@ -16,7 +16,7 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Core does not allocate domain-specific IDs before their first owning consumer.
 - Core does not provide a universal registry, event bus, service locator, transaction engine, or global mutable singleton.
 - Core does not provide arbitrary structured fields, player/account context, telemetry transport, analytics, remote configuration, dynamic flag mutation, experiments, or Blueprint helper libraries.
-- BS-014 through BS-017 do not add Asset Manager, a serialized save header or file, migration execution, tag replication optimization, or a domain command consumer.
+- BS-014 through BS-018 do not add a serialized save header or file, migration execution, tag replication optimization, or a domain command consumer. BS-018 uses stock Asset Manager facilities only and does not add a universal registry or custom manager subclass.
 - BS-016 does not override Unreal's native network version, approve a connection, materialize a profile, scan/hash content, or expose a player-facing recovery message.
 - BS-017 does not add a dispatcher, handler registry, generic payload, RPC, retry engine, deduplication store, journal, free-form error detail, or player-facing/localized message.
 - Product-wide exclusions remain in `Docs/NON_GOALS.md`.
@@ -47,7 +47,7 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Reversible default: `FBSResult` is valid only as `Succeeded` without an error, `Rejected` with a valid error, or `Failed` with a valid error. Default/cleared state is `Invalid`.
 - `Rejected` is a deliberate terminal refusal by a future owner. `Failed` reports an execution failure but grants no automatic retry and makes no recovery/commit claim.
 - Machine error codes are bounded control-flow/diagnostic identifiers, never raw details, trusted input, or player-facing text. A future consumer owns localization mapping.
-- Open question deferred to BS-018: exact definition types, catalog sources, duplicate scanning, Asset Manager mapping, and production redirects.
+- BS-018 resolves the first concrete mapping: Items owns native `item` Primary Data Assets under `/Game/BS/Definitions/Items`; stable DefinitionId supplies Primary Asset identity; `World` and `UI` are the only bundles; unloaded metadata audit rejects type, identity, duplicate, and path violations. Production redirects remain deferred until a real rename/deprecation exists.
 
 ## 4. Behaviors and examples
 
@@ -152,16 +152,19 @@ Never save `UObject` or Actor pointers, and never use Gameplay Tags as instance 
 | `FBSCommandEnvelope::TryCreateChild` | future coordinator | Core validates parent | one valid parent envelope | new command ID, inherited correlation, or cleared output | child is a distinct logical command |
 | `FBSErrorCode::TryParse` | future domain result boundary | Core | exact bounded `<domain>.<reason>` | valid machine code or cleared output | deterministic |
 | `FBSResult::Succeeded/TryCreateRejected/TryCreateFailed` | future domain owner | Core enforces invariant; domain owns meaning | valid status-specific construction | valid result metadata or cleared output | no retry/commit behavior implied |
+| `FBSItemDefinitionLoadRequest::TryCreate` | future item runtime consumer | Core validates; Items owns the definition | one canonical item ID and at most two unique `World`/`UI` bundles | normalized valid request or cleared output | no gameplay mutation |
+| `FBSAssetLoadingPolicy::RequestAsync/Release/FindLoaded` | future explicit lifetime owner | Core loading boundary over stock Asset Manager | valid registered item request or valid item ID | accepted async request, bounded result, explicit release, or already-loaded lookup | never proves gameplay authority and never loads synchronously |
+| `FBSItemCatalogAudit::AuditRegistered` | Automation/content gate | Core audit; Items owns catalog policy | registered unloaded item metadata | valid count or exact type/identity/duplicate/path issue | deterministic for one registry snapshot |
 
-Events notify; the owner mutates truth. Core emits no event, dispatches no command, and owns no network command through BS-017. Future typed domain commands may carry the envelope, but their owner still validates/applies/rejects them and owns deduplication/recovery. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
+Events notify; the owner mutates truth. Core emits no event, dispatches no command, and owns no network command through BS-018. An accepted async asset request changes only Asset Manager residency; it creates no item instance and grants no ownership or permission. Future typed domain commands may carry the envelope, but their owner still validates/applies/rejects them and owns deduplication/recovery. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
 
 ## 9. Multiplayer
 
-BS-014 through BS-017 add no RPC, connection hook, or replicated object. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A valid envelope never authenticates the sender or bypasses identity, permission, range, state, rate-limit, payload, replay, or stale-revision checks. Clients never dictate a result. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Late join, reconnect, disconnect, four-player separation, latency, privacy, and bandwidth are N/A until a network consumer exists.
+BS-014 through BS-018 add no RPC, connection hook, or replicated object. Each process may resolve the same immutable definition, but a loaded definition never proves an authoritative item instance, owner, permission, stock, or price. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A valid envelope never authenticates the sender or bypasses identity, permission, range, state, rate-limit, payload, replay, or stale-revision checks. Clients never dictate a result. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Late join, reconnect, disconnect, four-player separation, latency, privacy, and bandwidth are N/A until a network consumer exists.
 
 ## 10. Persistence and migration
 
-- store: no gameplay/save store; BS-015/BS-016 add only project configuration metadata, while BS-017 adds ephemeral value contracts only;
+- store: no gameplay/save store; BS-015/BS-016/BS-018 add only project configuration metadata, BS-017 adds ephemeral value contracts, and BS-018 loads immutable definitions without persisting residency;
 - serialized fragment/header `SchemaVersion`: N/A until BS-020; compatibility lane `1` is reserved but no bytes are persisted by BS-016;
 - the wrappers contain only serializable value data and support archive round-trip;
 - future schemas reject invalid values before state materialization;
@@ -187,15 +190,16 @@ BS-014 through BS-017 add no RPC, connection hook, or replicated object. A later
 - command/envelope validity is constant time over at most two GUIDs; root/child creation generates at most two non-zero GUIDs plus a collision retry;
 - error-code validation performs one bounded scan over at most 129 characters; result construction is constant time with one bounded code copy;
 - command/results add no execution loop, queue, registry, Tick, thread, RPC, bandwidth, or retained global state;
+- item catalog audit reads registered metadata without materializing definition objects; requests use asynchronous Primary Asset loading, at most two bundle names, and explicit release with no startup bulk load;
 - simulation LOD is N/A, but every representation of one future entity preserves the same stable ID.
 
 ## 12. C++ / Blueprint / Editor surface
 
-- C++: existing identity/tags/observability/feature-flag/compatibility contracts plus `FBSCommandId`, `FBSCorrelationId`, `FBSCommandEnvelope`, `FBSErrorCode`, `EBSResultStatus`, and `FBSResult`;
-- Data Assets/Tables/Curves/Tags: no assets; only the native root and project settings;
+- C++: existing identity/tags/observability/feature-flag/compatibility/command/result contracts plus `FBSItemDefinitionLoadRequest`, `FBSAssetLoadingPolicy`, and `FBSItemCatalogAudit`; Items owns `UBSItemDefinition`;
+- Data Assets/Tables/Curves/Tags: the native item definition type and Asset Manager scan rule exist, but BS-018 creates no production Data Asset;
 - Blueprint: definition/instance ID structs remain reflected for future properties; observability, feature flags, compatibility, commands, and results are C++ only and expose no Blueprint construction/mutation library;
 - Editor setup: none; configuration is source controlled;
-- validation: strict ID/context/config/version parsers, future catalog duplicate validation in BS-018, native/config tag policy tests, default-off feature-flag tests, and exhaustive compatibility-result tests.
+- validation: strict ID/context/config/version parsers, native/config tag policy, default-off feature flags, exhaustive compatibility/results, exact Asset Manager registration, soft bundle metadata, bounded async requests, and unloaded catalog duplicate/type/identity/path audit.
 
 ## 13. Failure, exploit, and recovery
 
@@ -245,6 +249,7 @@ BS-014 through BS-017 add no RPC, connection hook, or replicated object. A later
 - compatible current/minimum/intermediate save schemas, invalid input, every mismatch result, deterministic precedence, and every stable machine name.
 - strict command/correlation GUID parsing, compile-time type separation, output clearing, generated uniqueness, explicit root/child correlation behavior, and invalid-parent rejection;
 - bounded error-code grammar/equality/hash/clearing, result construction invariants, status predicates, and stable/unknown status names.
+- item Primary Asset identity and wrong-type rejection; exact soft-reference bundle metadata; request bounds/order/clearing; missing registration; exact Asset Manager configuration; and unloaded catalog type/identity/duplicate/path audit.
 
 ### Functional/network
 
@@ -256,7 +261,7 @@ ID archive round-trip and pure compatibility decisions are covered. Save seriali
 
 ## 16. Exact manual acceptance
 
-Follow `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all ten Core tests. PASS is 10 passed, 0 failed, 0 skipped with no engine-selection, module-rebuild, or crash dialog.
+Follow `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all thirteen Core tests. PASS is 13 passed, 0 failed, 0 skipped with no engine-selection, module-rebuild, or crash dialog.
 
 ## 17. Rollout, rollback, and compatibility
 
@@ -264,10 +269,12 @@ Follow `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md`: close Unreal E
 - compatibility defaults: build `1`, content `1`, current save `1`, minimum readable save `1`; no automatic version or hash changes;
 - BS-016 base: `0772b9dd8f323461661a5f042ed435481951743b`;
 - BS-017 base: `180a9a83fd686a3414c821569db19df088265077`;
+- BS-018 base: `1de51b14c74d44a8bfa7673349c9071f8dd42191`;
 - rollback: revert the BS-016 candidate and rerun Build/Test/Validate/Cook before any Network/Save consumer merges; BS-014/BS-015 primitives remain intact;
 - no production save file, content catalog handshake, connection approval, or network payload exists yet;
 - if a gate fails, revert the BS-016 candidate; no gameplay fallback or migration is needed because no gameplay, profile, content, or network consumer depends on it before merge.
 - if BS-017 fails before a consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No content, config, save, network, or gameplay migration is required.
+- if BS-018 fails before a production definition or consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No asset, save, network, or gameplay migration is required.
 
 ## 18. Evidence and history
 
@@ -281,3 +288,4 @@ Follow `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md`: close Unreal E
 | 2026-08-31 | BS-016 / merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 9/9, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, reachable-object audit, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-017 / `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b` | runner self-test 6/6; Generate/Build; Automation 11/11; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/22 test-marker audit; links 46/46; Git/LFS/static audits; independent backup; creator Development Editor Build and Editor Automation 10/10 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-017 / merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 11/11, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, reachable-object audit, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-018 / `dd6610071a664c13cce4761c1d8cee209213929b` | runner self-test 6/6; Generate/Build; Automation 14/14 including Core 13/13; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/28 test-marker audit; renderer/config 52/52; Git/LFS/static audits; independent backup; creator Development Editor Build and Editor Automation 13/13 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |

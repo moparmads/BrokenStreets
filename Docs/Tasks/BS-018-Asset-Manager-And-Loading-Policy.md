@@ -1,6 +1,6 @@
 # BS-018 — Asset Manager and Soft-Reference Loading Policy
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-018-asset-manager-loading-policy`
 **Base commit:** `1de51b14c74d44a8bfa7673349c9071f8dd42191`
@@ -139,7 +139,7 @@ PASS if the build has zero failures and all thirteen `BrokenStreets.Core` Automa
 
 FAIL if compilation reports any introduced error/warning, Unreal asks to choose an engine or rebuild modules, an expected Core test is missing, or any test is red/yellow. Stop and send the complete Visual Studio Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
 
-Checkpoint A result: Pending creator execution after automated candidate verification.
+Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied Visual Studio evidence showing `Build: 1 succeeded, 0 failed` for `Development Editor | Win64`, then Unreal Editor Session Frontend evidence showing all thirteen filtered `BrokenStreets.Core` tests green with 13 passed, 0 failed, and 0 skipped. The project opened in the pinned UE 5.8 installation without a module-rebuild or crash dialog, and the Editor and Visual Studio were closed normally after verification.
 
 ## Risks and rollback
 
@@ -161,7 +161,7 @@ Checkpoint A result: Pending creator execution after automated candidate verific
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `dd6610071a664c13cce4761c1d8cee209213929b` | tree `1866afb2ce2c0474a4fd0fa5ddad5be3f4d9282d`; Source `69f2fd100edbad247eb4c62f57092e0099ef99be`; Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 14/14 including 13 Core tests; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 28 Shipping Automation markers audited with 0 found; renderer/config audit 52/52; local links 52/52; Git/LFS/reachable-object, scope, generated-file, synchronous-loading, English-prose, and secret audits PASS; candidate generation `20260831T155220Z-18952-cf5fb607` captured 34 refs and all 3 LFS objects; creator Visual Studio Development Editor Build `1 succeeded, 0 failed`; creator Unreal Editor Automation 13/13 with 0 failed/skipped | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -172,3 +172,13 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - creator build and thirteen-Core-test steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-019.
+
+The exact candidate passed automated and creator verification and is ready for integration. Runtime acceptance is tied to candidate `dd6610071a664c13cce4761c1d8cee209213929b`; this evidence update changes documentation only. Network, persistence/fault, and representative performance scenarios are N/A because BS-018 adds no RPC, replicated state, persisted bytes, gameplay consumer, Tick, or production item asset.
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T155239Z-35772-b5d82800/run.json`, SHA-256 `FEB4EFEBCB4DD7ED143606F9814B12DE79371BF6C0BE69019CFA7838D54DC8CD`;
+- Automation report: `Saved/Automation/BS-009/20260831T155239Z-35772-b5d82800/Steps/04-Test/TestReport/index.json`, SHA-256 `AAA0B0A1FDDDB49178D972F810DFBE848E4192937227913FD9002ED1159F37A7`;
+- Shipping build: `Saved/Verification/BS-018/dd66100/ShippingBuild/UnrealBuildTool.log`, SHA-256 `48261AF4CFA036C474B93E1389C28C6035999293C40034E5A06376D744C066D3`;
+- Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `EEDCA6C1B14D5066593C904A48E9AF2A7C8DC9561ECBD0FF7280E5D71DFB1F90`;
+- candidate repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T155220Z-18952-cf5fb607`, with exact candidate HEAD, 34 refs, and all 3 LFS objects.

@@ -18,11 +18,12 @@ For logic that does not require a World:
 - bounded structured-log formatting and fail-closed feature-flag parsing.
 - build/content/save compatibility parsing, range invariants, decision precedence, and stable rejection reasons.
 - command/correlation identity, envelope invariants, bounded error-code grammar, and explicit result-state construction.
+- bounded item-load requests, deterministic bundle normalization, and unloaded catalog metadata audit.
 
 ### Engine automation
 
 - UObject/data behavior;
-- Asset Manager and definitions;
+- Asset Manager registration, stable definition identity, soft-reference bundles, and asynchronous loading policy;
 - settings, tags, and redirects;
 - schema and registry;
 - command validation;

@@ -1,10 +1,10 @@
 # Items
 
-**Status:** In Progress
+**Status:** Implemented; BS-018 candidate accepted, integration pending
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Items
 **Active task:** BS-018 — Asset Manager and soft-reference loading policy
-**Last verified commit/gate:** Design contract only; implementation pending
+**Last verified commit/gate:** BS-018 candidate `dd6610071a664c13cce4761c1d8cee209213929b`; automated Build/Test/Validate/Cook, Shipping, configuration, static, and backup gates PASS; creator Development Editor Build and Editor Automation 13/13 PASS; integration pending
 
 ## 1. Purpose
 
@@ -147,4 +147,4 @@ Follow `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md`: close Unreal Edi
 
 | Date | Task/commit | Build/test/trace | Result | Approved by |
 |---|---|---|---|---|
-| | | | | |
+| 2026-08-31 | BS-018 / `dd6610071a664c13cce4761c1d8cee209213929b` | runner self-test 6/6; Generate/Build; Automation 14/14 including Core 13/13; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/28 test-marker audit; renderer/config 52/52; unloaded-catalog/configuration, synchronous-loading, Git/LFS/static, and backup audits; creator Development Editor Build and Editor Automation 13/13 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |

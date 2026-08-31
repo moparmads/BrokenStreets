@@ -34,7 +34,7 @@ Choose the name by ownership, not by a UI feature.
 
 | System | Document | Status | Last verified gate |
 |---|---|---|---|
-| Core | [Core.md](Core.md) | Implemented | BS-017 is Done on `main`; BS-018 is next |
-| Items | [Items.md](Items.md) | In Progress | BS-018 design contract ready; implementation pending |
+| Core | [Core.md](Core.md) | Implemented | BS-018 candidate automated and creator gates PASS; integration pending |
+| Items | [Items.md](Items.md) | Implemented | BS-018 candidate automated and creator gates PASS; integration pending |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.
