@@ -101,7 +101,7 @@ Do not build a universal framework. A common primitive appears for one real cons
 | BS-020 | minimum save header, version, serializer, and fault harness |
 | BS-021 | profiling fixture and CPU/GPU/memory/network baseline |
 
-**Current M2 status:** BS-014, corrective task BS-014A, and BS-015 through BS-019 are Done on local `main`; BS-020 is next. GitHub synchronization for the BS-019 merge awaits explicit publication approval.
+**Current M2 status:** BS-014, corrective task BS-014A, and BS-015 through BS-019 are Done on `main`; BS-020 is next. The BS-019 feature and integration branches are synchronized with the private GitHub repository.
 
 Conditions:
 
