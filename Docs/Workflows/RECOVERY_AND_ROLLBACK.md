@@ -49,6 +49,18 @@ Run after BS-009, BS-010, BS-010A, BS-011, BS-012, BS-013, and BS-013B:
 
 Save restoration is not a BS-007B criterion before BS-020 creates the schema and fault harness. From BS-020 onward, every persistent gate adds its own restore and fault test.
 
+### Verified BS-007B candidate — August 31, 2026
+
+Candidate `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb` was cloned directly from the private GitHub remote into a new `E:` destination. The clone contained no generated state before verification. Git LFS materialized and hash-verified all three project maps, and both pointer and payload fsck passed.
+
+From the online clone, the explicit UE 5.8.2 CL 56702186 path passed Generate, Development Editor Build, Automation 1/1, Data Validation 3/3, and Cook with zero project omissions or warnings. An exact-Core Win64 Development Build/Cook/Stage/Package/Archive returned 0 and produced all required package files. `UnrealEditor.exe` then loaded and brought `/Game/BS/Maps/Test/L_TestGym_Core` up for play and completed a status-0 shutdown.
+
+A second pristine workspace was staged before first use and executed by the temporary local standard account `BSRecoveryTest`. The account used the absolute engine path and did not depend on or rewrite the original profile's engine association. It independently passed the complete runner; the retained Editor log loaded the exact Core map from `E:`, created its PIE world, used `C:/Users/BSRecoveryTest` for local temporary work, recorded `Alt-F4`, and shut down normally. Madalin confirmed the expected responsive Basic Level visually.
+
+The first automated exact-engine observer incorrectly required `FEngineLoop::AppPreExit`, a marker not emitted by the `-game` path. The process itself exited 0 after an exact map/world load and normal shutdown. The retained second attempt audited the correct game-mode sequence: `RequestExitWithStatus(0, 0)`, `PreExit Game`, `Game engine shut down`, and `LogExit: Exiting`. This was an evidence-audit false negative, not a project failure.
+
+No new recovery orchestrator was retained: the verified canonical Git/LFS, `BS.cmd`, UAT, exact-engine, and backup paths are the recovery procedure. Failed or completed drill folders remain outside the live repository until the owner explicitly approves cleanup.
+
 ## Independent repository and Git LFS backup — BS-010A
 
 GitHub is the collaboration remote, not the only disaster-recovery plan. Before the first important Unreal asset, BS-010A requires:

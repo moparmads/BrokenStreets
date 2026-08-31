@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-007B-complete-recovery`
 
 ## Summary
 
 - Last completed task: `BS-013B` — PC configuration and renderer baseline.
-- No implementation task is currently active.
-- Next task: `BS-007B` — complete recovery drill.
+- Active task: `BS-007B` — complete recovery drill.
+- Online and separate-profile recovery evidence passed; integration, remote LFS confirmation, lock release, and final backup remain.
 
 ## What actually exists
 
@@ -65,6 +65,7 @@
 - BS-013B provisional renderer evidence: three fresh packaged DX12/SM6 runs retained 3,000 post-warm-up frames each. Median-run frame mean/p50/p95/p99/max were 5.5224/5.3757/8.6581/9.1303/9.6906 ms. The worst limiting-pipeline p95 was render-thread 11.8720 ms, below the fixture-only 13.33 ms informational target; all runs had zero stable frames above 50 or 100 ms. The high-end, stationary, one-player greybox result is not a Manhattan or hardware promise. Versioned report: `Docs/Performance/Baselines/BS-PERF-002-P1.md`.
 - BS-013B creator acceptance passed on August 31, 2026. Visual Studio `Development Editor | Win64` compiled with `1 succeeded, 0 failed`. The first `Visual` attempt exposed a missing interactive Git PATH after its 52/52 audit; commit `5fc22aa14ebd4b9933d8add4697ba42add2e3fb8` fixed discovery and passed the exact command-path regression with Git deliberately absent from PATH. Madalin then inspected and traversed the exact package and closed it with `Alt+F4`. The launcher returned `0`; the 107,644-byte log confirms D3D12/SM6, hardware ray tracing off, exact-map play, and complete status-0 shutdown without a fatal/crash marker. Log SHA-256: `65FA652197620E6DB4D1E31BD94AE1D459CCC71BFB8BCA232FA7416CC653C2ED`.
 - BS-013B was integrated into `main` by merge commit `0ad6838713c5f8ecfd41800f4a1dc7d378b9bcca`. Its tree `82031eddfdc1074760d6dc534bbef5c84c9b1f9d` matched the accepted feature tree exactly; the post-merge renderer audit passed 52/52, the Git-resolution/CSV self-test passed with Git absent from PATH, and Git LFS fsck passed. Local and GitHub `main` matched. Recovery generation `20260830T213740Z-21976-658d5ff8` captured the exact merge, 21 refs, and all 3 LFS objects under `E:/BrokenStreets_RepositoryBackup` with origin refresh and bundle verification PASS.
+- BS-007B candidate `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb`, tree `dd954862f45c3d93642755f5a7d11771597f9e57`, passed a direct private-GitHub clone into `E:/BrokenStreets_RecoveryTests/BS-007B-Online-fd0284f-20260831T090236Z/Repository`. No generated state was inherited; all three LFS maps materialized with exact OID/SHA-256 matches and both fsck modes passed. The complete runner passed Generate, Build, Automation 1/1, Data Validation 3/3, and Cook 514/521 plus 7/7 classified Engine-only omissions with zero project omissions/warnings. Exact-Core UAT packaging returned 0 with 5/5 required files, and the exact UE 5.8.2 executable loaded/brought the Core world up and exited normally. A second pristine clone at `E:/BrokenStreets_RecoveryTests/BS-007B-Profile-fd0284f-20260831T090920Z/Repository` then passed the same complete runner under local standard account `BSRecoveryTest`; its Editor log loaded Core, created the PIE world, used that profile's temporary path, recorded `Alt-F4`, and shut down normally. Madalin supplied a photograph and confirmed the Basic Level was visible and responsive. Integration and recovery closure remain pending.
 
 ## Deviations and open items
 
