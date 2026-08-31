@@ -17,6 +17,7 @@ For logic that does not require a World:
 - deterministic selection and seeds.
 - bounded structured-log formatting and fail-closed feature-flag parsing.
 - build/content/save compatibility parsing, range invariants, decision precedence, and stable rejection reasons.
+- command/correlation identity, envelope invariants, bounded error-code grammar, and explicit result-state construction.
 
 ### Engine automation
 
