@@ -1,8 +1,8 @@
 # BS-014 — Stable Identifiers and Gameplay Tags Policy
 
-**Status:** In Progress
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `feature/BS-014-stable-ids-tags`
+**Branch:** `main`
 **Base commit:** `56ad7c9f5f0188b949bd7c8b6ab0179fa60ed1c8`
 **Roadmap milestone:** M2 — Minimum core and observability
 **System docs:** `Docs/Systems/Core.md`
@@ -154,6 +154,7 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied the succe
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | 2026-08-31 | `2449d3ff0aad8500e27a0496add703ac64c5d35b` | tree `70f58a379a05964a34ae377027af0338f3792ded`; Source `0ca7358128a5f68cec8925858d23eaf7dfe72622`; Config `4c801f96e4de5e9812037c5b24124b194a093019`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 4/4; assets 3/3; Win64 Shipping Build PASS; Shipping test-marker audit PASS; links 50/50; Git/LFS/fsck and secret/generated-file audits PASS; creator Visual Studio Build PASS; creator Editor Automation 3/3 PASS | Automated and creator acceptance PASS; integration pending | Codex and Madalin Gavrila |
+| 2026-08-31 | merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758` | tree `e9098732b35b6d5b7d672f69719899ce99e50b8b`; Source `0ca7358128a5f68cec8925858d23eaf7dfe72622`; Config `4c801f96e4de5e9812037c5b24124b194a093019`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | post-merge `BS.cmd All`: Generate/Build/Test/Validate PASS, Automation 4/4, assets 3/3, Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Git LFS fsck PASS; local and GitHub `main` exact; backup generation `20260831T110154Z-18636-061487c9` captured 25 refs and 3 LFS objects | PASS; integrated and recoverable | Codex |
 
 Retained local evidence:
 
@@ -170,3 +171,5 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - creator build and three-test steps with PASS/FAIL;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-015.
+
+BS-014 is complete. The accepted candidate was integrated by merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`, verified again on `main`, pushed to GitHub, and captured in the independent repository backup. BS-015 is next.

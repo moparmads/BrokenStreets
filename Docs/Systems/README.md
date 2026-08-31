@@ -34,6 +34,6 @@ Choose the name by ownership, not by a UI feature.
 
 | System | Document | Status | Last verified gate |
 |---|---|---|---|
-| Core | [Core.md](Core.md) | In Progress | BS-014 candidate `2449d3f` passed automated and creator acceptance; integration pending |
+| Core | [Core.md](Core.md) | Implemented | BS-014 merge `8b8e563`; post-merge gate and creator acceptance passed |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.

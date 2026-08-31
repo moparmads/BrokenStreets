@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `feature/BS-014-stable-ids-tags`
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-007B` — complete project recovery drill and M1 gate.
-- Active task: `BS-014` — stable identifiers and Gameplay Tags policy; automated and creator acceptance passed, with integration pending.
-- Next task after the active gate: `BS-015` — logging categories, structured context, and feature flags.
+- Last completed task: `BS-014` — stable identifiers and Gameplay Tags policy.
+- Active task: none; BS-014 is closed on `main`.
+- Next task: `BS-015` — logging categories, structured context, and feature flags.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the BS-014 Core identity and Gameplay Tags candidate in progress on its feature branch;
-- four deterministic C++ Automation tests on the active branch: the existing project smoke plus DefinitionId, InstanceId, and Gameplay Tags policy coverage;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 Core identity and Gameplay Tags contracts on `main`;
+- four deterministic C++ Automation tests on `main`: the existing project smoke plus DefinitionId, InstanceId, and Gameplay Tags policy coverage;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay system; BS-014 adds only Core value types and tag policy;
+- no Broken Streets gameplay system; the implemented Core layer currently contains only BS-014 value types and tag policy;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
@@ -67,7 +67,8 @@
 - BS-013B was integrated into `main` by merge commit `0ad6838713c5f8ecfd41800f4a1dc7d378b9bcca`. Its tree `82031eddfdc1074760d6dc534bbef5c84c9b1f9d` matched the accepted feature tree exactly; the post-merge renderer audit passed 52/52, the Git-resolution/CSV self-test passed with Git absent from PATH, and Git LFS fsck passed. Local and GitHub `main` matched. Recovery generation `20260830T213740Z-21976-658d5ff8` captured the exact merge, 21 refs, and all 3 LFS objects under `E:/BrokenStreets_RepositoryBackup` with origin refresh and bundle verification PASS.
 - BS-007B candidate `fd0284fae46d95b798eeedab2adfcb71ab6f5bdb`, tree `dd954862f45c3d93642755f5a7d11771597f9e57`, passed a direct private-GitHub clone into `E:/BrokenStreets_RecoveryTests/BS-007B-Online-fd0284f-20260831T090236Z/Repository`. No generated state was inherited; all three LFS maps materialized with exact OID/SHA-256 matches and both fsck modes passed. The complete runner passed Generate, Build, Automation 1/1, Data Validation 3/3, and Cook 514/521 plus 7/7 classified Engine-only omissions with zero project omissions/warnings. Exact-Core UAT packaging returned 0 with 5/5 required files, and the exact UE 5.8.2 executable loaded/brought the Core world up and exited normally. A second pristine clone at `E:/BrokenStreets_RecoveryTests/BS-007B-Profile-fd0284f-20260831T090920Z/Repository` then passed the same complete runner under local standard account `BSRecoveryTest`; its Editor log loaded Core, created the PIE world, used that profile's temporary path, recorded `Alt-F4`, and shut down normally. Madalin supplied a photograph and confirmed the Basic Level was visible and responsive.
 - BS-007B was integrated by merge `099a8e6893d65b5e9a6debffe5c53269046f6018`, tree `c386ee8b34d8d53b882b1204906d1c6726530520`. Local and GitHub `main` matched; the remote Core pointer and local payload matched OID/SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; both LFS fsck modes passed and no object was pending. Independent generation `20260831T101014Z-4224-6b9beec4` captured the clean merge, 23 refs, and all 3 LFS objects with remote refresh and bundle verification PASS. Lock `49932145` was released afterward and no Core lock remained.
-- BS-014 candidate `2449d3ff0aad8500e27a0496add703ac64c5d35b`, tree `70f58a379a05964a34ae377027af0338f3792ded`: runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Development Editor Build, Automation 4/4, and Data Validation 3/3; Cook produced 514/521 packages plus the same 7/7 classified Engine-only omissions with zero project omissions or warnings. Win64 Shipping compiled successfully, and its binary contains no BS-014 Automation test names/class markers. DefinitionId/InstanceId validation, duplicates, hashing, canonical text, archive round-trip/corrupt input, compile-time type separation, native `BS` root, and pinned tag settings all passed. Madalin Gavrila then confirmed a successful Visual Studio Development Editor build and all three filtered Core tests green in Unreal Editor: 3 passed, 0 failed, 0 skipped. Integration remains pending.
+- BS-014 candidate `2449d3ff0aad8500e27a0496add703ac64c5d35b`, tree `70f58a379a05964a34ae377027af0338f3792ded`: runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Development Editor Build, Automation 4/4, and Data Validation 3/3; Cook produced 514/521 packages plus the same 7/7 classified Engine-only omissions with zero project omissions or warnings. Win64 Shipping compiled successfully, and its binary contains no BS-014 Automation test names/class markers. DefinitionId/InstanceId validation, duplicates, hashing, canonical text, archive round-trip/corrupt input, compile-time type separation, native `BS` root, and pinned tag settings all passed. Madalin Gavrila then confirmed a successful Visual Studio Development Editor build and all three filtered Core tests green in Unreal Editor: 3 passed, 0 failed, 0 skipped.
+- BS-014 was integrated into `main` by merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`: Generate and Build passed; Automation passed 4/4; Data Validation passed 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions, with zero project omissions or warnings. Summary: `Saved/Automation/BS-009/20260831T105950Z-30072-4a458847/run.json`, SHA-256 `B1F2D514125DD27BABF83B7A3BC4A1D87522A410020AE5055F7B85007EB603CD`. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T110154Z-18636-061487c9` captured 25 refs and all 3 LFS objects on `E:`.
 
 ## Deviations and open items
 

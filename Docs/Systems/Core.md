@@ -1,10 +1,10 @@
 # Core
 
-**Status:** In Progress
+**Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** BS-014
-**Last verified commit/gate:** candidate `2449d3ff0aad8500e27a0496add703ac64c5d35b`; automated Build/Test/Validate/Cook and Shipping PASS; creator Build and Editor Automation 3/3 PASS; integration pending
+**Active task:** None; BS-014 is complete
+**Last verified commit/gate:** merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 3/3 PASS
 
 ## 1. Purpose
 
@@ -163,3 +163,4 @@ Follow `Docs/Tasks/BS-014-Stable-Identifiers-And-Gameplay-Tags.md`: close Unreal
 | Date | Task/commit | Build/test/trace | Result | Approved by |
 |---|---|---|---|---|
 | 2026-08-31 | BS-014 / `2449d3ff0aad8500e27a0496add703ac64c5d35b` | Development Editor Build; Automation 4/4; Data Validation 3/3; Cook; Shipping Build and marker audit; creator Development Editor Build and Editor Automation 3/3 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-014 / merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758` | Post-merge Generate, Development Editor Build, Automation 4/4, Data Validation 3/3, Cook, GitHub parity, Git LFS fsck, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
