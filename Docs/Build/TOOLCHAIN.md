@@ -81,15 +81,17 @@ Do not assume `GenerateProjectFiles.bat` exists in a Launcher-installed engine; 
 
 ### Portability to another profile or PC
 
-The `EngineAssociation` value in `.uproject` may be a GUID registered only on the current machine. On a new profile or PC:
+`BrokenStreets.uproject` tracks the Epic Launcher release association `5.8`. This standard key is portable across Windows profiles and PCs that have the matching UE 5.8 Launcher release installed; it does not depend on the original profile's registered-build GUID.
+
+On a new profile or PC:
 
 - install and verify exactly UE 5.8.2;
-- build and open through `Build.bat` and `UnrealEditor.exe` from that engine's absolute path;
-- associate the project locally with the exact version only for Explorer/IDE integration;
-- do not commit an association change caused only by recovery;
-- BS-009 pins and tests project generation independently from Explorer; BS-007B validates it on another profile or PC.
+- confirm Epic Launcher exposes the release as `UE_5.8`;
+- build and open through `Build.bat` and `UnrealEditor.exe` from that engine's absolute path if Explorer integration is not ready;
+- never select a different engine line or commit an association rewrite caused only by recovery;
+- BS-009 pins and tests project generation independently from Explorer; BS-007B validates the explicit-path recovery route on another profile or PC.
 
-BS-007B verified this path on August 31, 2026. A pristine clone was executed by the separate standard Windows account `BSRecoveryTest` through `Tools/BS.cmd All -EngineRoot F:\UE_5.8.2\UE_5.8`; Generate, Build, Automation, Data Validation, and Cook passed. The same profile opened the recovered Core TestGym by invoking the exact `UnrealEditor.exe` and absolute `.uproject` paths. The log used `C:/Users/BSRecoveryTest` for temporary work and no tracked `EngineAssociation` change was made. A separate profile therefore does not require right-click association before the canonical command-line gate.
+BS-007B verified the explicit-path route on August 31, 2026. BS-014A later replaced the nonportable per-user GUID with the standard Launcher association after the creator's normal double-click path repeatedly displayed the version picker. A source-built engine may still require an intentionally registered GUID, but that is a separate upgrade/toolchain decision.
 
 ## Live Coding
 

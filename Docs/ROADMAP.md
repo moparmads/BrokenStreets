@@ -92,6 +92,7 @@ Do not build a universal framework. A common primitive appears for one real cons
 | Task | Result |
 |---|---|
 | BS-014 | typed and stable IDs plus Gameplay Tags policy |
+| BS-014A | portable Epic Launcher UE 5.8 project association |
 | BS-015 | logging categories, structured context, and feature flags |
 | BS-016 | build, content, and save compatibility handshake |
 | BS-017 | typed results/errors and command envelope |
@@ -100,7 +101,7 @@ Do not build a universal framework. A common primitive appears for one real cons
 | BS-020 | minimum save header, version, serializer, and fault harness |
 | BS-021 | profiling fixture and CPU/GPU/memory/network baseline |
 
-**Current M2 status:** BS-014 is Done on `main` at merge `8b8e563`; BS-015 is next.
+**Current M2 status:** BS-014 is Done on `main`; corrective task BS-014A is active before BS-015.
 
 Conditions:
 

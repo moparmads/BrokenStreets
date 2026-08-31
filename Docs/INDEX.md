@@ -24,6 +24,7 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Tasks/TASK_TEMPLATE.md` | contract for a `BS-###` task | before implementation |
 | active `Docs/Tasks/BS-###-*.md` packet | outcome, authorized scope, and evidence for the current task | throughout the task |
 | `Docs/Tasks/BS-014-Stable-Identifiers-And-Gameplay-Tags.md` | implemented M2 identity and Gameplay Tags contract plus evidence | when changing Core IDs/tags or reviewing BS-014 |
+| `Docs/Tasks/BS-014A-Portable-Unreal-Engine-Association.md` | active portable UE association correction and evidence | throughout BS-014A |
 | `Docs/Workflows/CODEX_TASK_WORKFLOW.md` | complete execution process | any code or asset change |
 | `Docs/Workflows/DEFINITION_OF_DONE.md` | universal gate and conditional verification | before handoff/merge |
 | `Docs/Workflows/USER_COMPILE_GUIDE.md` | exact creator compilation steps | after C++ changes |

@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `fix/BS-014A-portable-engine-association`
 
 ## Summary
 
 - Last completed task: `BS-014` — stable identifiers and Gameplay Tags policy.
-- Active task: none; BS-014 is closed on `main`.
-- Next task: `BS-015` — logging categories, structured context, and feature flags.
+- Active task: `BS-014A` — replace the per-user engine GUID with the portable Epic Launcher UE 5.8 association.
+- Next task after the corrective gate: `BS-015` — logging categories, structured context, and feature flags.
 
 ## What actually exists
 
