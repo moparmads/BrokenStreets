@@ -62,4 +62,4 @@ Before code:
 | [BS-015](BS-015-Core-Observability-And-Feature-Flags.md) | Core observability and feature flags | Done | `main` |
 | [BS-016](BS-016-Build-Content-Save-Compatibility.md) | Build, content, and save compatibility handshake | Done | `main` |
 | [BS-017](BS-017-Typed-Results-And-Command-Envelope.md) | Typed results, errors, and command envelope | Done | `main` |
-| [BS-018](BS-018-Asset-Manager-And-Loading-Policy.md) | Asset Manager and soft-reference loading policy | Needs Owner Verification | `feature/BS-018-asset-manager-loading-policy` |
+| [BS-018](BS-018-Asset-Manager-And-Loading-Policy.md) | Asset Manager and soft-reference loading policy | Done | `main` |

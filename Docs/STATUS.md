@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `feature/BS-018-asset-manager-loading-policy` — accepted candidate; integration pending
+**Active branch:** `main`
 
 ## Summary
 
-- Last completed task: `BS-017` — typed results, errors, and command envelope.
-- Active task: `BS-018` — Asset Manager and soft-reference loading policy; automated and creator verification PASS, integration pending.
-- Next task after the active work: `BS-019` — minimal authority and state debug overlay.
+- Last completed task: `BS-018` — Asset Manager and soft-reference loading policy.
+- Active task: none.
+- Next task: `BS-019` — minimal authority and state debug overlay.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-017 Core contracts on `main`, plus the accepted BS-018 item-definition and asynchronous Asset Manager boundary on its feature branch;
-- fourteen deterministic C++ Automation tests on the active branch: the project smoke, ten accepted BS-014 through BS-017 Core tests, and three BS-018 asset-policy tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-018 Core/Items contracts on `main`;
+- fourteen deterministic C++ Automation tests on `main`: the project smoke, ten BS-014 through BS-017 Core tests, and three BS-018 asset-policy tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -80,7 +80,8 @@
 - BS-016 was integrated into `main` by merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b`, tree `ff167043fc0733fdb7665a9b6335a66a018489a6`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate, Build, Automation 9/9, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Local, tracking, and GitHub `main` matched; Git LFS fsck/status and reachable-object audits passed; independent generation `20260831T132329Z-27848-5a073e9e` captured 31 refs and all 3 LFS objects on `E:`.
 - BS-017 candidate `0e113a5eb8fa55be066e44e4acd37bcbb8c0fd3b`, tree `0d204b9784a2d362f303d10843ed724667064744`: distinct command/correlation IDs, a minimal root/child envelope, bounded error codes, and invariant result states are implemented with no gameplay, config, content, save, network, or dispatcher changes. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 11/11, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/22 test markers; links 46/46, Git/LFS/static audits, and independent generation `20260831T145854Z-35204-e331a983` passed. Madalin Gavrila then supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all ten Core tests green with 10 passed, 0 failed, and 0 skipped.
 - BS-017 was integrated into `main` by merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e`, tree `35cdf8ae8d0af1fd45242957cc80b2e6e0a584c2`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate, Build, Automation 11/11, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Local, tracking, and GitHub `main` matched; Git LFS fsck/status and reachable-object audits passed; independent generation `20260831T152133Z-26324-9c6327d7` captured 33 refs and all 3 LFS objects on `E:`.
-- BS-018 candidate `dd6610071a664c13cce4761c1d8cee209213929b`, tree `1866afb2ce2c0474a4fd0fa5ddad5be3f4d9282d`: native item Primary Data Asset identity, `World`/`UI` soft bundles, exact Asset Manager scan/cook settings, a bounded asynchronous load/release boundary, and unloaded catalog audit are implemented without production content or gameplay. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate/Build, Automation 14/14, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/28 test markers; renderer/config audit passed 52/52; Git/LFS/static audits and candidate generation `20260831T155220Z-18952-cf5fb607` passed. Madalin Gavrila supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all thirteen Core tests green with 13 passed, 0 failed, and 0 skipped. Integration is pending.
+- BS-018 candidate `dd6610071a664c13cce4761c1d8cee209213929b`, tree `1866afb2ce2c0474a4fd0fa5ddad5be3f4d9282d`: native item Primary Data Asset identity, `World`/`UI` soft bundles, exact Asset Manager scan/cook settings, a bounded asynchronous load/release boundary, and unloaded catalog audit are implemented without production content or gameplay. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate/Build, Automation 14/14, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/28 test markers; renderer/config audit passed 52/52; Git/LFS/static audits and candidate generation `20260831T155220Z-18952-cf5fb607` passed. Madalin Gavrila supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all thirteen Core tests green with 13 passed, 0 failed, and 0 skipped.
+- BS-018 was integrated into `main` by merge `a3b4bafd4199c542a44845f674df4670d04577a5`, tree `3d9417a1d2225f1d4c83d998a4f14381957338ce`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate/Build, Automation 14/14, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Renderer/config audit remained 52/52, and Git LFS fsck/status plus reachable-object audits passed.
 - The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.

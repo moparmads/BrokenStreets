@@ -19,7 +19,7 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Systems/README.md` | catalog of existing system documents | before creating or changing a system |
 | `Docs/Systems/SYSTEM_TEMPLATE.md` | required system-design structure | when a system becomes `Ready` |
 | `Docs/Systems/Core.md` | identity, tags, observability, flags, and compatibility contracts owned by Core | any task that introduces or consumes these shared primitives |
-| active `Docs/Systems/Items.md` | item-definition ownership, stable identity, soft references, and loading lifetime | throughout BS-018 and later item-definition work |
+| `Docs/Systems/Items.md` | implemented item-definition ownership, stable identity, soft references, and loading lifetime | when changing item definitions or their loading policy |
 | `Docs/Decisions/README.md` | ADR rules and decision index | difficult-to-reverse cross-system decisions |
 | `Docs/Tasks/README.md` | task-packet states and rules | selecting and tracking a task |
 | `Docs/Tasks/TASK_TEMPLATE.md` | contract for a `BS-###` task | before implementation |
@@ -29,7 +29,7 @@ This file routes readers through the project documentation. It contains no new d
 | `Docs/Tasks/BS-015-Core-Observability-And-Feature-Flags.md` | implemented Core observability and rollout-control contract plus evidence | when changing Core logs/flags or reviewing BS-015 |
 | `Docs/Tasks/BS-016-Build-Content-Save-Compatibility.md` | implemented build/content/save compatibility contract plus evidence | when changing compatibility policy or reviewing BS-016 |
 | `Docs/Tasks/BS-017-Typed-Results-And-Command-Envelope.md` | implemented typed result/error and command-envelope contract plus evidence | when changing command/result primitives or reviewing BS-017 |
-| active `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md` | Asset Manager, item-definition, soft-reference, loading, and audit contract | throughout BS-018 |
+| `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md` | implemented Asset Manager, item-definition, soft-reference, loading, and audit contract plus evidence | when changing asset loading or reviewing BS-018 |
 | `Docs/Workflows/CODEX_TASK_WORKFLOW.md` | complete execution process | any code or asset change |
 | `Docs/Workflows/DEFINITION_OF_DONE.md` | universal gate and conditional verification | before handoff/merge |
 | `Docs/Workflows/USER_COMPILE_GUIDE.md` | exact creator compilation steps | after C++ changes |
