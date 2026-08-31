@@ -64,3 +64,4 @@ Before code:
 | [BS-017](BS-017-Typed-Results-And-Command-Envelope.md) | Typed results, errors, and command envelope | Done | `main` |
 | [BS-018](BS-018-Asset-Manager-And-Loading-Policy.md) | Asset Manager and soft-reference loading policy | Done | `main` |
 | [BS-019](BS-019-Minimal-Authority-And-State-Debug-Overlay.md) | Minimal authority and state debug overlay | Done | `main` |
+| [BS-020](BS-020-Minimum-Save-Envelope-And-Fault-Harness.md) | Minimum save envelope and fault harness | Ready to Integrate | `feature/BS-020-save-envelope-fault-harness` |

@@ -3,7 +3,7 @@
 **Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-020 is next
+**Active task:** None; BS-020 consumes the compatibility contract in Save
 **Last verified commit/gate:** BS-019 merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`; accepted Source/Config/Content/`.uproject` exact; post-merge Build, Automation 16/16 including Core 15/15, Data Validation 3/3, Cook, renderer/config, and independent-backup gates PASS; private GitHub synchronization PASS
 
 ## 1. Purpose
@@ -42,7 +42,7 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Reversible default: a presented save schema is readable when `MinimumReadableSaveSchemaVersion <= SaveSchemaVersion <= CurrentSaveSchemaVersion`.
 - Reversible default: every version is canonical unsigned decimal in `1..4294967295`; zero, sign, whitespace, leading zero, punctuation, overflow, missing value, or an inverted save range invalidates the local policy or presented signature.
 - Reversible default: fail-closed evaluation order is invalid local policy, invalid presented signature, build mismatch, content mismatch, save too old, then save too new.
-- Initial schema lane `1` reserves the contract BS-020 may use; it does not claim that a save header, serializer, migration, or player profile already exists.
+- Initial schema lane `1` is consumed by the BS-020 in-memory save envelope. It does not claim that a save file, migration, store, recovery generation, or player profile exists.
 - Reversible default: `FBSCommandId` and `FBSCorrelationId` are distinct C++ types over non-zero GUIDs with strict lowercase hyphenated external text.
 - Reversible default: one root envelope generates distinct command/correlation values; one child generates a new command ID while inheriting the root correlation ID.
 - Reversible default: retrying the same logical command reuses its command ID. Correlation groups related work and never provides idempotency, authority, or permission.
@@ -170,14 +170,14 @@ BS-014 through BS-019 add no RPC, connection hook, or replicated object. Each pr
 ## 10. Persistence and migration
 
 - store: no gameplay/save store; BS-015/BS-016/BS-018 add only project configuration metadata, BS-017 adds ephemeral value contracts, and BS-018 loads immutable definitions without persisting residency;
-- serialized fragment/header `SchemaVersion`: N/A until BS-020; compatibility lane `1` is reserved but no bytes are persisted by BS-016;
+- serialized fragment/header `SchemaVersion`: BS-020 frames opaque in-memory payload bytes with compatibility lane `1`; no file or semantic domain fragment is persisted;
 - the wrappers contain only serializable value data and support archive round-trip;
 - future schemas reject invalid values before state materialization;
 - a DefinitionId migration is explicit, versioned, one-way, and duplicate-checked; an asset rename alone needs no identity migration;
 - an InstanceId is preserved through save/load and runtime promotion/demotion;
 - corrupt/stale/conflict handling belongs to the future owning schema and Save coordinator.
 - log contexts are ephemeral and are not persisted as authoritative state; feature flags are never written into player/world saves.
-- a future profile header presents one build/content/save signature; Save rejects an invalid build/content lane or unsupported schema before materialization, then performs any approved migration under its own task;
+- the BS-020 envelope presents one build/content/save signature; Save rejects corruption, an invalid build/content lane, or unsupported schema before exposing payload bytes, while semantic materialization and approved migration remain future work;
 - increasing `CurrentSaveSchemaVersion` requires a real schema plus tests; increasing `MinimumReadableSaveSchemaVersion` drops support and therefore requires explicit migration/rollback evidence and player-facing recovery behavior.
 - command/correlation IDs, error codes, and results have no archive operator or persisted schema in BS-017. A future owning task must version their transport/store and define deduplication, receipt, fault, and recovery behavior.
 
@@ -265,7 +265,7 @@ Creator acceptance uses the existing two-player `L_TestGym_Network` PIE fixture 
 
 ### Persistence/fault/performance
 
-ID archive round-trip and pure compatibility decisions are covered. Save serialization/migration, corruption/fault injection, networking, and performance scenarios are N/A until their owning tasks add real consumers.
+ID archive round-trip, pure compatibility decisions, and BS-020 in-memory save-envelope serialization/corruption injection are covered. Disk I/O, migration, recovery generations, semantic materialization, networking, and performance scenarios remain N/A until their owning tasks add real consumers.
 
 ## 16. Exact manual acceptance
 
@@ -285,6 +285,7 @@ Follow `Docs/Tasks/BS-019-Minimal-Authority-And-State-Debug-Overlay.md`: close U
 - if BS-017 fails before a consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No content, config, save, network, or gameplay migration is required.
 - if BS-018 fails before a production definition or consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No asset, save, network, or gameplay migration is required.
 - if BS-019 fails, revert its candidate and rerun Build/Test/Validate/Cook plus Shipping marker audit. No asset, config, save, network, or gameplay migration is required.
+- if BS-020 fails before a store or semantic payload exists, revert its candidate and rerun Build/Test/Validate/Cook plus Shipping marker audit. No file, player recovery, or migration is required.
 
 ## 18. Evidence and history
 
