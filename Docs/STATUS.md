@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** Recoverable foundation
-**Active branch:** `main`
+**Active branch:** `feature/BS-007B-complete-recovery`
 
 ## Summary
 
 - Last completed task: `BS-013B` — PC configuration and renderer baseline.
-- No implementation task is currently active.
-- Next task: `BS-007B` — complete recovery drill.
+- Active task: `BS-007B` — complete recovery drill.
+- The task contract is active; recovery evidence is not yet complete.
 
 ## What actually exists
 
