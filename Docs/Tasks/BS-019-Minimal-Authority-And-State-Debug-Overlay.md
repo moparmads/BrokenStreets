@@ -108,7 +108,34 @@ Files/assets created or modified manually: none.
 
 Do not touch: Project Settings, config files, Content, maps, Blueprints, plugins, or code.
 
-Detailed creator steps are finalized only after the automated candidate passes.
+1. Open `F:\BrokenStreets\BrokenStreets.sln` in Visual Studio.
+   Expected: the `BrokenStreets` solution finishes loading.
+2. Set `Solution Configurations` to `Development Editor` and `Solution Platforms` to `Win64`.
+   Expected: the top bar shows both exact values.
+3. In `Solution Explorer`, expand `Games`, right-click `BrokenStreets`, and click `Build`.
+   Expected: `Output` ends with `Build: 1 succeeded, 0 failed` or an up-to-date success with zero errors.
+4. Close Visual Studio if desired, then open `F:\BrokenStreets\BrokenStreets.uproject`.
+   Expected: Unreal Editor opens directly in UE 5.8 without an engine-selection, module-rebuild, or crash dialog.
+5. Click `Tools` > `Session Frontend`, open the `Automation` tab, and enter `BrokenStreets.Core` in the filter.
+   Expected: fifteen Core tests are listed, including `Debug.AuthorityState.Names` and `Debug.AuthorityState.Snapshot`.
+6. Select every filtered test and click `Start Tests`.
+   Expected: all fifteen tests are green, with 0 failed and 0 skipped.
+7. Open `/Game/BS/Maps/Test/L_TestGym_Network`, open Play options from the three-dot button beside the Play controls, choose two players, `Play As Listen Server`, `Run Under One Process`, and a new Editor window.
+   Expected: one listen-server view and one client view are available without changing project files.
+8. In the Editor command field or Output Log, enter `bs.Debug.AuthorityStateOverlay 1`, then start PIE.
+   Expected: both views show the bounded Broken Streets authority/state overlay.
+9. Inspect both views.
+   Expected: the host shows `net_mode=listen_server` with authoritative controller/pawn local roles; the client shows `net_mode=client` with autonomous-proxy controller/pawn local roles. Both views show world, state, and non-zero local diagnostic object IDs.
+10. Enter `bs.Debug.AuthorityStateOverlay 0` if desired, stop PIE, and close Unreal Editor without saving.
+    Expected: the overlay disappears when disabled and no Content, map, Blueprint, configuration, or project setting is modified.
+
+Checkpoint A
+
+PASS if the Visual Studio build has zero failures, all fifteen filtered Core tests pass with zero failures/skips, the two-player PIE views show the expected distinct authority states, and no engine-selection, rebuild, or crash dialog appears.
+
+FAIL if compilation reports any introduced error/warning, an expected test is missing or fails/skips, either overlay is missing, host/client net mode or roles are wrong, or Unreal presents an engine-selection, rebuild, or crash dialog. Stop and send the complete Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
+
+Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied Visual Studio evidence showing `Build: 1 succeeded, 0 failed` for `Development Editor | Win64`, Unreal Editor Session Frontend evidence showing all fifteen filtered `BrokenStreets.Core` tests green with 15 passed, 0 failed, and 0 skipped, and two-player PIE evidence from `L_TestGym_Network`. The listen-server view reported authoritative local controller and pawn roles, while the client view reported autonomous-proxy local controller and pawn roles; both displayed bounded state and non-zero local diagnostic object IDs. Unreal Editor was closed normally without saving project changes.
 
 ## Risks and rollback
 
@@ -126,7 +153,9 @@ Detailed creator steps are finalized only after the automated candidate passes.
 
 ## Verification evidence
 
-Pending candidate implementation and automated verification.
+| Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
+|---|---|---|---|---|---|
+| 2026-08-31 | `12e6f0ba5b79467e16f337dce12db2a7f35fe857` | tree `f8b781343b2da07c57c649e7ee3100134974104b`; Source `92457bc02ee9c61ca36049890677b7e5ebff8020`; unchanged Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb`; unchanged `.uproject` blob `81b3ab16e37113b3dde101f341110349cf238899` | Generate/Build PASS with zero warnings; Automation 16/16 total including Core 15/15; Data Validation 3/3; Cook 514/521 plus 7 classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping Build PASS; 16 Automation paths and 4 BS-019 debug markers audited with 0 found; renderer/config 52/52; default-off audit 0 overlay logs; explicit-on runtime check exactly 1 bounded structured enable log with owner, authority, object ID, state, and standalone net mode; Git/LFS/scope/static audits; candidate generations `20260831T163653Z-26548-d762bd94`, `20260831T164440Z-19924-8a9584ab`, and accepted checkpoint `20260831T165357Z-4564-956ff1bc`, each with 37 refs and all 3 LFS objects; creator Visual Studio Development Editor Build 1 succeeded/0 failed; creator Unreal Editor Automation 15/15; creator two-player listen-server/client PIE overlay PASS | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 
 ## Final handoff
 
@@ -135,3 +164,13 @@ Pending candidate implementation and automated verification.
 - creator build, Automation, and two-player PIE overlay steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-020.
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T163715Z-18348-32164e08/run.json`, SHA-256 `3B1C4D97AE00F68C5D44888D20156E0D70860E51FA37419636BD45AC72ED191D`;
+- Automation report: `Saved/Automation/BS-009/20260831T163715Z-18348-32164e08/Steps/04-Test/TestReport/index.json`, SHA-256 `0754E62ECAF79C48B1B6E9C7A5467D6460EA6B98B38245AD40AFC1775754699C`;
+- Shipping build: `Saved/Verification/BS-019/12e6f0b/ShippingBuild/UnrealBuildTool.log`, SHA-256 `B65C3503C2C1FA4BFB5932273F907C25A040CE3FFAB0F99B11CA7DA769F11691`;
+- Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `A08925B2E2F6B6A922EF55A1943945D68C32E41D0972E40D89211EB3956FD5B3`;
+- explicit-on runtime log: `Saved/Verification/BS-019/12e6f0b/RuntimeOverlay/Unreal.log`, SHA-256 `4295D18EFC39DD95B2F890981834EF0ABD9BA7850C31ED59F6B3576396CD0247`;
+- renderer/config audit: `Saved/Verification/BS-013B/20260831T164216Z-12432/renderer-audit.json`, SHA-256 `67699B53323F8320FF1D1B92C0926ED57EAF284C14D9C58AFC254E8E5CA6E8D2`;
+- accepted-checkpoint repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T165357Z-4564-956ff1bc`, with 37 refs and all 3 LFS objects.
