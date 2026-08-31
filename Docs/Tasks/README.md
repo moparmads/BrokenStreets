@@ -57,4 +57,4 @@ Before code:
 | [BS-013A](BS-013A-Source-Art-Backup.md) | Source Art 3-2-1 backup and verified restore | Done | `main` |
 | [BS-013B](BS-013B-PC-Renderer-Baseline.md) | PC configuration and renderer baseline | Done | `main` |
 | [BS-007B](BS-007B-Complete-Recovery.md) | Complete project recovery drill | Done | `main` |
-| [BS-014](BS-014-Stable-Identifiers-And-Gameplay-Tags.md) | Stable identifiers and Gameplay Tags policy | In Progress | `feature/BS-014-stable-ids-tags` |
+| [BS-014](BS-014-Stable-Identifiers-And-Gameplay-Tags.md) | Stable identifiers and Gameplay Tags policy | Needs Owner Verification | `feature/BS-014-stable-ids-tags` |

@@ -1,6 +1,6 @@
 # BS-014 — Stable Identifiers and Gameplay Tags Policy
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-014-stable-ids-tags`
 **Base commit:** `56ad7c9f5f0188b949bd7c8b6ab0179fa60ed1c8`
@@ -151,7 +151,13 @@ FAIL if compilation reports any error/warning introduced by this task, Unreal as
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `2449d3ff0aad8500e27a0496add703ac64c5d35b` | tree `70f58a379a05964a34ae377027af0338f3792ded`; Source `0ca7358128a5f68cec8925858d23eaf7dfe72622`; Config `4c801f96e4de5e9812037c5b24124b194a093019`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 4/4; assets 3/3; Win64 Shipping Build PASS; Shipping test-marker audit PASS; links 50/50; Git/LFS/fsck and secret/generated-file audits PASS | Automated PASS; creator compile and Editor Automation pending | Codex |
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T103708Z-20564-804c8203/run.json`, SHA-256 `0788983132A7657D746350E1DA03CE1F94AB7FB369DAA31E17066A0AEF8B305C`;
+- Automation report: `Saved/Automation/BS-009/20260831T103708Z-20564-804c8203/Steps/04-Test/TestReport/index.json`, SHA-256 `D65313EE77ECF837FE2C56F2F341037D163467266EF5CA6D3201027A3CAB0861`;
+- Shipping build: `Saved/Verification/BS-014/2449d3f/ShippingBuild/UnrealBuildTool.log`, SHA-256 `860C522C5978D9835C2A8C61C2B5D1AAFE8A5492B08B2C8C80B92193829417D0`.
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 

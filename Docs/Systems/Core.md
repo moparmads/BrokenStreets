@@ -1,10 +1,10 @@
 # Core
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
 **Active task:** BS-014
-**Last verified commit/gate:** none
+**Last verified commit/gate:** candidate `2449d3ff0aad8500e27a0496add703ac64c5d35b`; automated Build/Test/Validate/Cook and Shipping PASS; creator acceptance pending
 
 ## 1. Purpose
 
@@ -162,4 +162,4 @@ Follow `Docs/Tasks/BS-014-Stable-Identifiers-And-Gameplay-Tags.md`: close Unreal
 
 | Date | Task/commit | Build/test/trace | Result | Approved by |
 |---|---|---|---|---|
-| | BS-014 | | In Progress | |
+| 2026-08-31 | BS-014 / `2449d3ff0aad8500e27a0496add703ac64c5d35b` | Development Editor Build; Automation 4/4; Data Validation 3/3; Cook; Shipping Build and marker audit | Automated PASS; owner verification pending | Codex |
