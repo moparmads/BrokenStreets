@@ -3,7 +3,7 @@
 **Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-020 is next
+**Active task:** None; BS-020 consumes the compatibility contract in Save
 **Last verified commit/gate:** BS-019 merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`; accepted Source/Config/Content/`.uproject` exact; post-merge Build, Automation 16/16 including Core 15/15, Data Validation 3/3, Cook, renderer/config, and independent-backup gates PASS; private GitHub synchronization PASS
 
 ## 1. Purpose

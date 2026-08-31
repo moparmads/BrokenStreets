@@ -2,13 +2,13 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-020-save-envelope-fault-harness`
 
 ## Summary
 
 - Last completed task: `BS-019` — minimal authority and state debug overlay.
-- Active task: none.
-- Next task: `BS-020` — minimum save header, version, serializer, and fault harness.
+- Active task: `BS-020` — minimum save envelope, version, serializer, and fault harness.
+- Next task after acceptance: `BS-021` — profiling fixture and CPU/GPU/memory/network baseline.
 
 ## What actually exists
 
