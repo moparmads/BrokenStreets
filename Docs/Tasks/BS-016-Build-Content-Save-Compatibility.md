@@ -1,8 +1,8 @@
 # BS-016 — Build, Content, and Save Compatibility Handshake
 
-**Status:** Needs Owner Verification
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `feature/BS-016-compatibility-handshake`
+**Branch:** `main`
 **Base commit:** `0772b9dd8f323461661a5f042ed435481951743b`
 **Roadmap milestone:** M2 — Minimum core and observability
 **System docs:** `Docs/Systems/Core.md`
@@ -155,6 +155,7 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied the succe
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | 2026-08-31 | `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`; Source `f4e53de56377d0aa3066f733a426efbd68b25c08`; Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 9/9; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 18 Shipping Automation markers audited with 0 found; direct renderer/config audit 52/52; local links 45/45; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T124836Z-39684-2d542d46` captured 30 refs and all 3 LFS objects; creator Visual Studio Build and Editor Automation 8/8 PASS | Automated and creator acceptance PASS; integration pending | Codex and Madalin Gavrila |
+| 2026-08-31 | merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b` | tree `ff167043fc0733fdb7665a9b6335a66a018489a6`; Source `f4e53de56377d0aa3066f733a426efbd68b25c08`; Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | accepted Source/Config/Content matched exactly; post-merge Generate/Build/Automation 9/9/Data Validation 3/3/Cook PASS with 7 classified Engine-only omissions and zero project omissions/warnings; local/tracking/GitHub `main` exact; Git LFS fsck/status and Git reachable-object audit PASS; independent generation `20260831T132329Z-27848-5a073e9e` captured 31 refs and all 3 LFS objects | PASS; integrated and recoverable | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -166,7 +167,7 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-017.
 
-The exact candidate passed automated and creator verification and is ready for integration. Runtime/config acceptance remains tied to candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; later task/status evidence updates change documentation only.
+BS-016 is complete. The accepted candidate was integrated by merge `270badd0d1bca006199f7e6f21f3fe2e95e33e2b`, verified again on `main`, pushed to GitHub, and captured in the independent repository backup. Runtime/config acceptance remains tied to candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; later evidence/closure commits change documentation only. Networking, persistence/fault, and performance scenarios remain N/A because BS-016 adds no gameplay state, RPC, persisted bytes, Tick, or representative workload. BS-017 is next.
 
 Retained local evidence:
 
@@ -176,5 +177,8 @@ Retained local evidence:
 - Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `77687062DFDE1A2FF80F416BFFE62048B3587F1E1FECD7FFC92F1D608B27BB85`;
 - renderer/config audit: `Saved/Verification/BS-016/a516cbf/RendererAudit/renderer-audit.json`, SHA-256 `7E0FC03623FE1CE1F66D64EB3CF355FFD90A061B8AE3595933C4F582AA72A5A7`;
 - pre-verification repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T124836Z-39684-2d542d46`, with exact candidate HEAD, 30 refs, and all 3 LFS objects.
+- integration gate: `Saved/Automation/BS-009/20260831T132051Z-16284-6f734145/run.json`, SHA-256 `21D078AFC8C886B0119AD87E1EDE9A51AF28EF68DA0A1255A25D81D4D6E44254`;
+- integration Automation report: `Saved/Automation/BS-009/20260831T132051Z-16284-6f734145/Steps/04-Test/TestReport/index.json`, SHA-256 `A8EDD6DDC02827F405263BFD9935BCBA4EC7121E62C779320B1F361980AD7887`;
+- integration repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T132329Z-27848-5a073e9e`, with 31 refs and all 3 LFS objects; local completeness and bundle verification passed.
 
 The `BS-RendererBaseline.cmd Audit` wrapper twice encountered the known Codex-host Windows PowerShell command-availability instability and could not resolve the standard `Get-FileHash` command inside its nested script. The unchanged underlying audit script was then executed directly under Windows PowerShell and passed 52/52, producing the retained report above. No renderer tool or project runtime input was changed.
