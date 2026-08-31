@@ -282,6 +282,13 @@ bool FBrokenStreetsSaveEnvelopeCompatibilityTest::RunTest(const FString& Paramet
 		Envelope,
 		EBSSaveEnvelopeResult::InvalidPolicy);
 
+	const TArray<uint8> TruncatedEnvelope;
+	ExpectCompatibilityFailure(
+		TEXT("Structural validation precedes an invalid local policy"),
+		FBSCompatibilityPolicy(),
+		TruncatedEnvelope,
+		EBSSaveEnvelopeResult::HeaderTruncated);
+
 	SerializeCandidate(9, 4, 5, Envelope);
 	ExpectCompatibilityFailure(
 		TEXT("A build mismatch is rejected"),

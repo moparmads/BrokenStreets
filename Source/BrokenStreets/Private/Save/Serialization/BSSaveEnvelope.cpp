@@ -182,11 +182,6 @@ EBSSaveEnvelopeResult FBSSaveEnvelope::TryDeserialize(
 	OutHeader.Reset();
 	OutPayload.Reset();
 
-	if (!Policy.IsValid())
-	{
-		return EBSSaveEnvelopeResult::InvalidPolicy;
-	}
-
 	if (Bytes.Num() < static_cast<int32>(FBSSaveEnvelopeHeader::SerializedSize))
 	{
 		return EBSSaveEnvelopeResult::HeaderTruncated;
@@ -223,6 +218,11 @@ EBSSaveEnvelopeResult FBSSaveEnvelope::TryDeserialize(
 	if (CalculateEnvelopeChecksum(Bytes, PayloadSize) != SerializedChecksum)
 	{
 		return EBSSaveEnvelopeResult::ChecksumMismatch;
+	}
+
+	if (!Policy.IsValid())
+	{
+		return EBSSaveEnvelopeResult::InvalidPolicy;
 	}
 
 	FBSCompatibilitySignature Signature;
