@@ -13,8 +13,8 @@
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag contracts and BS-015 observability/feature-flag contracts on `main`;
-- seven deterministic C++ Automation tests on `main`: the project smoke, three BS-014 Core tests, and three BS-015 category/context/feature-flag tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag contracts and BS-015 observability/feature-flag contracts on `main`, plus the active BS-016 compatibility contract on its feature branch;
+- nine deterministic C++ Automation tests on the active branch: the project smoke, three BS-014 Core tests, three BS-015 category/context/feature-flag tests, and two BS-016 compatibility tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, two native log categories, bounded structured log context, and one default-off diagnostics flag;
+- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, two native log categories, bounded structured log context, one default-off diagnostics flag, and an in-progress build/content/save compatibility policy with no save or network consumer yet;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
