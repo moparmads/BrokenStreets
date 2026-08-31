@@ -1,10 +1,10 @@
 # Core
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
 **Active task:** BS-016 — build, content, and save compatibility handshake
-**Last verified commit/gate:** merge `ccbb92d0fc7a455a9995d529be29e248a22c2812`; post-merge Build/Test/Validate/Cook PASS; creator Build and Editor Automation 6/6 PASS
+**Last verified commit/gate:** BS-016 candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; automated Build/Test/Validate/Cook, Shipping, config/static, and backup gates PASS; creator Build and Editor Automation 8/8 pending
 
 ## 1. Purpose
 
@@ -236,3 +236,4 @@ Follow `Docs/Tasks/BS-016-Build-Content-Save-Compatibility.md`: close Unreal Edi
 | 2026-08-31 | BS-014 / merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758` | Post-merge Generate, Development Editor Build, Automation 4/4, Data Validation 3/3, Cook, GitHub parity, Git LFS fsck, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-015 / `3669500ed3724a3bea95767e1122c7ead8d1c192` | runner self-test 6/6; Generate/Build; Automation 7/7; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/14 test-marker audit; renderer/config 52/52; Git/LFS/static audits; creator Development Editor Build and Editor Automation 6/6 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-015 / merge `ccbb92d0fc7a455a9995d529be29e248a22c2812` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 7/7, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-016 / `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | runner self-test 6/6; Generate/Build; Automation 9/9; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/18 test-marker audit; renderer/config 52/52; Git/LFS/static audits; independent backup | Automated PASS; creator Build and Editor Automation 8/8 pending | Codex |

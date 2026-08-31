@@ -34,6 +34,6 @@ Choose the name by ownership, not by a UI feature.
 
 | System | Document | Status | Last verified gate |
 |---|---|---|---|
-| Core | [Core.md](Core.md) | In Progress | BS-015 merge `ccbb92d`; post-merge gate and creator acceptance passed; BS-016 active |
+| Core | [Core.md](Core.md) | Needs Owner Verification | BS-016 candidate `a516cbf`; automated gate passed, creator acceptance pending |
 
 When adding a system document, update this table and `Docs/STATUS.md` in the same task.

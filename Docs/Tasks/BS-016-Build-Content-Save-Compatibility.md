@@ -1,6 +1,6 @@
 # BS-016 — Build, Content, and Save Compatibility Handshake
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-016-compatibility-handshake`
 **Base commit:** `0772b9dd8f323461661a5f042ed435481951743b`
@@ -133,6 +133,8 @@ PASS if the build has zero failures and all eight `BrokenStreets.Core` Automatio
 
 FAIL if compilation reports any introduced error/warning, Unreal asks to choose an engine or rebuild modules, a Core test is missing, or any test is red/yellow. Stop and send the complete Visual Studio Build output or Automation Testing Log plus one screenshot. Do not edit files or settings.
 
+Checkpoint A result: Pending creator execution for candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`.
+
 ## Risks and rollback
 
 - Base/rollback: `0772b9dd8f323461661a5f042ed435481951743b`.
@@ -152,7 +154,7 @@ FAIL if compilation reports any introduced error/warning, Unreal asks to choose 
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea` | tree `e2e9a465552cdfff1ddf80ba25c8c6634cbd6358`; Source `f4e53de56377d0aa3066f733a426efbd68b25c08`; Config `104bc2810fbeefaa6b33a36d824c273400c11e33`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 9/9; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 18 Shipping Automation markers audited with 0 found; direct renderer/config audit 52/52; local links 45/45; Git/LFS/reachable-object, scope, generated-file, and secret audits PASS; independent candidate generation `20260831T124836Z-39684-2d542d46` captured 30 refs and all 3 LFS objects | Automated PASS; creator Build and Editor Automation 8/8 pending | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -163,3 +165,16 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - creator build and eight-Core-test steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-017.
+
+Automated candidate verification is complete. The task remains `Needs Owner Verification` until Madalin completes Checkpoint A. Runtime/config acceptance is tied to candidate `a516cbf7b777ec3b7ad5e128b70d9d0657b882ea`; this evidence update changes documentation only.
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T124853Z-36332-beb43c37/run.json`, SHA-256 `F24F861186240A676C4384301DE869C9BD247940DC3B9ABA342B30FFFDEE1BA1`;
+- Automation report: `Saved/Automation/BS-009/20260831T124853Z-36332-beb43c37/Steps/04-Test/TestReport/index.json`, SHA-256 `6243D6EEDFEB86516B71FF476C62B03CAEF382B67F9BD12EE184E17D9B9C102E`;
+- Shipping build: `Saved/Verification/BS-016/a516cbf/ShippingBuild/UnrealBuildTool.log`, SHA-256 `1577C5651E0D369293A67DB63713DC6D0A1D4DFCA1CB51A61B874A1BE7F35EC7`;
+- Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `77687062DFDE1A2FF80F416BFFE62048B3587F1E1FECD7FFC92F1D608B27BB85`;
+- renderer/config audit: `Saved/Verification/BS-016/a516cbf/RendererAudit/renderer-audit.json`, SHA-256 `7E0FC03623FE1CE1F66D64EB3CF355FFD90A061B8AE3595933C4F582AA72A5A7`;
+- pre-verification repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T124836Z-39684-2d542d46`, with exact candidate HEAD, 30 refs, and all 3 LFS objects.
+
+The `BS-RendererBaseline.cmd Audit` wrapper twice encountered the known Codex-host Windows PowerShell command-availability instability and could not resolve the standard `Get-FileHash` command inside its nested script. The unchanged underlying audit script was then executed directly under Windows PowerShell and passed 52/52, producing the retained report above. No renderer tool or project runtime input was changed.
