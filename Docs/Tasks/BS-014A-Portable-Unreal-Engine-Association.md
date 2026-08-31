@@ -1,8 +1,8 @@
 # BS-014A — Portable Unreal Engine Association
 
-**Status:** In Progress
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `fix/BS-014A-portable-engine-association`
+**Branch:** `main`
 **Base commit:** `416ef367b4854c9846d7c6408e14d3965d90c858`
 **Roadmap milestone:** M2 — Minimum core and observability, infrastructure correction
 
@@ -73,6 +73,7 @@ Manual acceptance result: PASS on August 31, 2026. With Madalin Gavrila's author
 |---|---|---|---|---|
 | 2026-08-31 | pre-change `main` `416ef367b4854c9846d7c6408e14d3965d90c858` | repeated creator version picker; selecting 5.8 opened the project; Epic manifest `UE_5.8`, version `5.8.2-56702186`, install `F:/UE_5.8.2/UE_5.8`; pre-change backup `20260831T110926Z-11592-72ea6520`, 25 refs and 3 LFS objects | Root cause confirmed; corrective candidate pending | Madalin Gavrila and Codex |
 | 2026-08-31 | candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d` | association exactly `5.8`; Doctor resolved Epic manifest UE 5.8.2 CL 56702186; `BS.cmd All` Generate/Build/Test/Validate PASS, Automation 4/4, assets 3/3, Cook 514/521 plus seven classified Engine-only omissions and zero project omissions/warnings; summary `Saved/Automation/BS-009/20260831T111306Z-11236-9b19c725/run.json`, SHA-256 `6E983BA8EF22E598C822E69A1629B2E48E57CC8B02054F204249205F6E0C6B72`; normal File Explorer launch opened the exact Unreal Editor directly and normal shutdown left zero processes | Automated and creator-workstation acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | merge `9f5d4da44bad979849400d5f5e20b5431726d55e`, tree `c4a705ae637538c6ec720cae16c0d14a2db63d5e` | post-merge `BS.cmd All`: UE 5.8.2 CL 56702186, Generate/Build/Test/Validate PASS, Automation 4/4, assets 3/3, Cook 514/521 plus seven classified Engine-only omissions and zero project omissions/warnings; summary `Saved/Automation/BS-009/20260831T112606Z-14616-9bc2d673/run.json`, SHA-256 `39F6D2CE7F4E3C3A820F32681F58975146739BB7E793CE53A58AB92B5A63F8B1`; Git LFS fsck PASS; local and GitHub `main` exact; backup generation `20260831T112803Z-27816-2cd7815d`, 27 refs and 3 LFS objects | PASS; integrated and recoverable | Codex |
 
 ## Final handoff
 
@@ -81,3 +82,5 @@ Manual acceptance result: PASS on August 31, 2026. With Madalin Gavrila's author
 - creator double-click PASS/FAIL;
 - merge, GitHub parity, and final backup generation;
 - rollback commit and next task BS-015.
+
+BS-014A is complete. The project now tracks the portable Epic Launcher association `5.8`, opens directly in the verified UE 5.8.2 installation, and no longer depends on the original per-user registered-build GUID. BS-015 is next.

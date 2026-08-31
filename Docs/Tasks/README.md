@@ -58,4 +58,4 @@ Before code:
 | [BS-013B](BS-013B-PC-Renderer-Baseline.md) | PC configuration and renderer baseline | Done | `main` |
 | [BS-007B](BS-007B-Complete-Recovery.md) | Complete project recovery drill | Done | `main` |
 | [BS-014](BS-014-Stable-Identifiers-And-Gameplay-Tags.md) | Stable identifiers and Gameplay Tags policy | Done | `main` |
-| [BS-014A](BS-014A-Portable-Unreal-Engine-Association.md) | Portable Unreal Engine association | In Progress | `fix/BS-014A-portable-engine-association` |
+| [BS-014A](BS-014A-Portable-Unreal-Engine-Association.md) | Portable Unreal Engine association | Done | `main` |
