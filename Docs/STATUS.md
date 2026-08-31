@@ -2,19 +2,19 @@
 
 **Updated:** August 31, 2026
 **Current milestone:** M2 — Minimum core and observability
-**Active branch:** `main`
+**Active branch:** `feature/BS-018-asset-manager-loading-policy`
 
 ## Summary
 
 - Last completed task: `BS-017` — typed results, errors, and command envelope.
-- Active task: none; `main` is clean and verified.
-- Next task: `BS-018` — Asset Manager plus soft-reference and loading policy.
+- Active task: `BS-018` — Asset Manager and soft-reference loading policy; contract ready, implementation in progress.
+- Next task after the active work: `BS-019` — minimal authority and state debug overlay.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 identity/tag, BS-015 observability/feature-flag, and BS-016 compatibility contracts on `main`, plus the active BS-017 command/result value contracts on its feature branch;
-- eleven deterministic C++ Automation tests on the active branch: the project smoke, eight accepted BS-014 through BS-016 Core tests, and two BS-017 command/result tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-017 Core contracts on `main`; BS-018 design work is active and has not yet changed runtime code;
+- eleven deterministic C++ Automation tests on `main`: the project smoke, eight BS-014 through BS-016 Core tests, and two BS-017 command/result tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
