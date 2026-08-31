@@ -1,6 +1,6 @@
 # BS-015 — Core Observability and Feature Flags
 
-**Status:** In Progress
+**Status:** Needs Owner Verification
 **Owner:** Madalin Gavrila
 **Branch:** `feature/BS-015-core-observability`
 **Base commit:** `0abb2d6e31fb8f57e11255a0cbbba5784b42725f`
@@ -149,7 +149,7 @@ FAIL if compilation reports any introduced error/warning, Unreal asks to choose 
 
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-31 | `3669500ed3724a3bea95767e1122c7ead8d1c192` | tree `8875040361271b98dcdd3c3a5ea2bffc5f903947`; Source `6e8d9e80dc7c880fec2ec3d0e9283f672e63feeb`; Config `13320563b45d56602e05babd1ae0e4e60574ef0e`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb` | runner self-test 6/6; `BS.cmd All` Generate/Build/Test/Validate PASS and Cook controlled skips; Automation 7/7; assets 3/3; Cook 514/521 plus 7 classified Engine-only omissions, zero project omissions/warnings; Win64 Shipping Build PASS; 14 Shipping Automation markers audited with 0 found; renderer/config audit 52/52; local links 44/44; Git/LFS/fsck, scope, generated-file, and secret audits PASS | Automated PASS; creator Development Editor build and Editor Automation 6/6 pending | Codex |
 
 Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts marks candidate evidence `INVALIDATED` until the relevant checks are rerun. A later evidence/docs-only commit may reference the unchanged tree.
 
@@ -160,3 +160,13 @@ Any later change to C++, Config, Content, `.uproject`, plugins, or build scripts
 - creator build and Core-test steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-016.
+
+The exact automated candidate is ready for creator verification. Runtime/config evidence remains tied to commit `3669500ed3724a3bea95767e1122c7ead8d1c192`; this later task/status evidence update changes documentation only. Networking, persistence/fault, and performance scenarios are N/A because BS-015 adds no gameplay state, RPC, save schema, Tick, or representative workload.
+
+Retained local evidence:
+
+- complete gate: `Saved/Automation/BS-009/20260831T115018Z-30008-e53d1701/run.json`, SHA-256 `C0B9BF0D2B4A0EE65AF160E1B59F2729056C10E953BF31CDE5BF06CC0286C7ED`;
+- Automation report: `Saved/Automation/BS-009/20260831T115018Z-30008-e53d1701/Steps/04-Test/TestReport/index.json`, SHA-256 `67755BE00231010C5FF62F47F9BA71DCB562442D29019B45FF293E7A944EF3D2`;
+- Shipping build: `Saved/Verification/BS-015/3669500/ShippingBuild/UnrealBuildTool.log`, SHA-256 `7EC2973D0709621511108BA9B12615EF1A196BF45A336B2F4523656A77490BD7`;
+- Shipping executable: `Binaries/Win64/BrokenStreets-Win64-Shipping.exe`, SHA-256 `F290F564A257E9E79D43FB0C4CCF3DB452C2403C74622950F778C1CA47AA0C1F`;
+- pre-verification repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T114957Z-41836-d2f1e573`, with 28 local refs and all 3 LFS objects. The generation passed local completeness and bundle verification; origin refresh warned because the candidate branch had not yet been pushed.

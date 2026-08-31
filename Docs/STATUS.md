@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-014A` — portable Epic Launcher UE 5.8 project association.
-- Active task: `BS-015` — Core observability and feature flags.
+- Active task: `BS-015` — Core observability and feature flags; automated candidate PASS, creator verification pending.
 - Next task after acceptance: `BS-016` — build, content, and save compatibility handshake.
 
 ## What actually exists
@@ -71,6 +71,7 @@
 - BS-014 was integrated into `main` by merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`: Generate and Build passed; Automation passed 4/4; Data Validation passed 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions, with zero project omissions or warnings. Summary: `Saved/Automation/BS-009/20260831T105950Z-30072-4a458847/run.json`, SHA-256 `B1F2D514125DD27BABF83B7A3BC4A1D87522A410020AE5055F7B85007EB603CD`. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T110154Z-18636-061487c9` captured 25 refs and all 3 LFS objects on `E:`.
 - BS-014A candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d`: `EngineAssociation` is the portable Launcher key `5.8`; Doctor resolved UE 5.8.2 CL 56702186 from the Epic manifest; Generate, Build, Automation 4/4, Data Validation 3/3, and Cook passed under the existing gate with only the seven classified Engine omissions and zero project omissions/warnings. A normal File Explorer launch opened the exact Unreal Editor directly without the recurring selector, rebuild prompt, or crash dialog, and normal `Alt+F4` shutdown left zero Editor processes.
 - BS-014A was integrated into `main` by merge `9f5d4da44bad979849400d5f5e20b5431726d55e`. Source, Config, and Content remained byte-identical at their Git trees. The post-merge complete gate passed with UE 5.8.2 CL 56702186, Automation 4/4, Data Validation 3/3, and zero project cook omissions or warnings. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T112803Z-27816-2cd7815d` captured 27 refs and all 3 LFS objects on `E:`.
+- BS-015 automated candidate `3669500ed3724a3bea95767e1122c7ead8d1c192`, tree `8875040361271b98dcdd3c3a5ea2bffc5f903947`: two native log categories, bounded fixed-field `FBSLogContext`, and typed fail-closed `CoreVerboseDiagnostics` configuration are implemented with no gameplay, asset, network, or save changes. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Build, Automation 7/7, and Data Validation 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions with zero project omissions/warnings. Win64 Shipping compiled and contained none of 14 audited Automation test markers. The renderer/config audit remained 52/52, Git/LFS/static audits passed, and Content stayed byte-identical. Creator Visual Studio and Editor Automation 6/6 acceptance is pending.
 
 ## Deviations and open items
 
