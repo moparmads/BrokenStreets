@@ -3,12 +3,12 @@
 **Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Core
-**Active task:** None; BS-019 is next
-**Last verified commit/gate:** BS-018 merge `a3b4bafd4199c542a44845f674df4670d04577a5`; accepted Source/Config/Content exact; post-merge Build, Automation 14/14, Data Validation 3/3, Cook, renderer/config, Git/LFS, and reachable-object gates PASS
+**Active task:** None; BS-020 is next
+**Last verified commit/gate:** BS-019 local merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`; accepted Source/Config/Content/`.uproject` exact; post-merge Build, Automation 16/16 including Core 15/15, Data Validation 3/3, Cook, renderer/config, and independent-backup gates PASS; GitHub synchronization awaits explicit publication approval
 
 ## 1. Purpose
 
-Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 added the pre-materialization compatibility boundary. BS-017 added distinct command/correlation identity, a minimal envelope, bounded machine error codes, and invariant result states. BS-018 adds the shared bounded asynchronous Asset Manager gateway and unloaded metadata audit while Items owns the first concrete definition type. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, profile/session version rules, ambiguous command outcomes, or synchronous catalog-loading paths.
+Core supplies small dependency-free contracts that every gameplay domain can use without becoming a gameplay owner. BS-014 introduced stable definition identity, unique instance identity, and the project Gameplay Tags policy. BS-015 added owned native log categories, bounded structured context, and a typed fail-closed feature-flag query. BS-016 added the pre-materialization compatibility boundary. BS-017 added distinct command/correlation identity, a minimal envelope, bounded machine error codes, and invariant result states. BS-018 added the shared bounded asynchronous Asset Manager gateway and unloaded metadata audit while Items owns the first concrete definition type. BS-019 adds a local, read-only Development authority/state snapshot and debug-canvas overlay. These primitives prevent later systems from inventing incompatible identifiers, log fields, mutable global switches, profile/session version rules, ambiguous command outcomes, synchronous catalog-loading paths, or misleading authority diagnostics.
 
 ## 2. Non-goals
 
@@ -16,7 +16,7 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Core does not allocate domain-specific IDs before their first owning consumer.
 - Core does not provide a universal registry, event bus, service locator, transaction engine, or global mutable singleton.
 - Core does not provide arbitrary structured fields, player/account context, telemetry transport, analytics, remote configuration, dynamic flag mutation, experiments, or Blueprint helper libraries.
-- BS-014 through BS-018 do not add a serialized save header or file, migration execution, tag replication optimization, or a domain command consumer. BS-018 uses stock Asset Manager facilities only and does not add a universal registry or custom manager subclass.
+- BS-014 through BS-019 do not add a serialized save header or file, migration execution, tag replication optimization, or a domain command consumer. BS-018 uses stock Asset Manager facilities only and does not add a universal registry or custom manager subclass. BS-019 observes only one local controller/pawn pair and adds no debug registry, production UI, input mapping, RPC, or gameplay mutation.
 - BS-016 does not override Unreal's native network version, approve a connection, materialize a profile, scan/hash content, or expose a player-facing recovery message.
 - BS-017 does not add a dispatcher, handler registry, generic payload, RPC, retry engine, deduplication store, journal, free-form error detail, or player-facing/localized message.
 - Product-wide exclusions remain in `Docs/NON_GOALS.md`.
@@ -33,6 +33,9 @@ Core supplies small dependency-free contracts that every gameplay domain can use
 - Reversible default: no free-form or private value can enter structured context. Message text still follows the audience/privacy policy of its caller.
 - Reversible default: `EBSFeatureFlag` is a closed reviewed enum backed by `[BrokenStreets.FeatureFlags]`; missing, malformed, or unknown values fail closed.
 - `CoreVerboseDiagnostics` is the first real flag, defaults to `False`, and controls only one structured primary-module startup diagnostic.
+- `bs.Debug.AuthorityStateOverlay` is the first local Development overlay control. It defaults off, registers draw work only while enabled, accepts Unreal's boolean console syntax, and is compiled out of Shipping with its renderer and state-change log.
+- BS-019 `object_id` is Unreal's bounded process-local diagnostic identity. It is never a StableId, save key, network identity, ownership claim, permission, or authority proof.
+- BS-019 renders through stock `UDebugDrawService` under the `Game` show flag and reads only the supplied local PlayerController, its current Pawn, and their World/roles/state; no Actor scan, Tick, timer, transport, or persistent registry exists.
 - Flag queries occur at startup or explicit low-frequency boundaries, never on Tick or in a hot loop. Runtime mutation and remote overrides are not supported.
 - Reversible default: `[BrokenStreets.Compatibility]` starts at build compatibility `1`, content compatibility `1`, current save schema `1`, and minimum readable save schema `1`.
 - Reversible default: build/content lanes match exactly; they change only for a reviewed incompatible contract change, never merely because a commit or executable is newer.
@@ -155,12 +158,14 @@ Never save `UObject` or Actor pointers, and never use Gameplay Tags as instance 
 | `FBSItemDefinitionLoadRequest::TryCreate` | future item runtime consumer | Core validates; Items owns the definition | one canonical item ID and at most two unique `World`/`UI` bundles | normalized valid request or cleared output | no gameplay mutation |
 | `FBSAssetLoadingPolicy::RequestAsync/Release/FindLoaded` | future explicit lifetime owner | Core loading boundary over stock Asset Manager | valid registered item request or valid item ID | accepted async request, bounded result, explicit release, or already-loaded lookup | never proves gameplay authority and never loads synchronously |
 | `FBSItemCatalogAudit::AuditRegistered` | Automation/content gate | Core audit; Items owns catalog policy | registered unloaded item metadata | valid count or exact type/identity/duplicate/path issue | deterministic for one registry snapshot |
+| `FBSAuthorityStateSnapshot::Capture/Create` | local Development viewport or deterministic test | Core debug boundary | one supplied local PlayerController/Pawn pair or explicit bounded values | normalized world/net-mode/roles/state/process-local IDs | read-only and deterministic for one input snapshot |
+| `FBSAuthorityStateDebugOverlay::Start/Stop` | primary module in non-Shipping builds | Core debug boundary | explicit local console value | draw delegate registered only while enabled | off by default; no Shipping symbol or command |
 
-Events notify; the owner mutates truth. Core emits no event, dispatches no command, and owns no network command through BS-018. An accepted async asset request changes only Asset Manager residency; it creates no item instance and grants no ownership or permission. Future typed domain commands may carry the envelope, but their owner still validates/applies/rejects them and owns deduplication/recovery. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
+Events notify; the owner mutates truth. Core emits no event, dispatches no command, and owns no network command through BS-019. An accepted async asset request changes only Asset Manager residency; it creates no item instance and grants no ownership or permission. The debug overlay observes local roles and never mutates or grants authority. Future typed domain commands may carry the envelope, but their owner still validates/applies/rejects them and owns deduplication/recovery. Network or Save may call compatibility evaluation, but each remains the owner of connection approval or profile migration/materialization.
 
 ## 9. Multiplayer
 
-BS-014 through BS-018 add no RPC, connection hook, or replicated object. Each process may resolve the same immutable definition, but a loaded definition never proves an authoritative item instance, owner, permission, stock, or price. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A valid envelope never authenticates the sender or bypasses identity, permission, range, state, rate-limit, payload, replay, or stale-revision checks. Clients never dictate a result. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Late join, reconnect, disconnect, four-player separation, latency, privacy, and bandwidth are N/A until a network consumer exists.
+BS-014 through BS-019 add no RPC, connection hook, or replicated object. Each process may resolve the same immutable definition, but a loaded definition never proves an authoritative item instance, owner, permission, stock, or price. BS-019 displays only the local Unreal net mode and actor roles; those observations do not authorize commands or replace server validation. A later authoritative domain creates/validates IDs on the server and includes only required values in owner/public/relevant DTOs. A valid envelope never authenticates the sender or bypasses identity, permission, range, state, rate-limit, payload, replay, or stale-revision checks. Clients never dictate a result. Gameplay Tag fast/dynamic replication remains off until a real consumer proves identical dictionaries and measures the benefit. Late join, reconnect, disconnect, four-player separation, latency, privacy, and bandwidth are N/A until a network consumer exists.
 
 ## 10. Persistence and migration
 
@@ -226,7 +231,9 @@ BS-014 through BS-018 add no RPC, connection hook, or replicated object. Each pr
 - `LogBrokenStreets` owns project lifecycle diagnostics; `LogBSCore` owns Core validation/configuration diagnostics. A future system adds its own category only with a real consumer.
 - `FBSLogContext` produces searchable single-line fields in a fixed order and intentionally has no arbitrary key/value API.
 - Canonical ID `ToString` values are safe structured identifiers, but future logs and free-form message text must still respect audience/privacy.
-- `CoreVerboseDiagnostics` defaults off and, when enabled, emits one structured module-startup message. No debug command, overlay, telemetry transport, or remote sink is added.
+- `CoreVerboseDiagnostics` defaults off and, when enabled, emits one structured module-startup message. It remains independent from the BS-019 local overlay.
+- `bs.Debug.AuthorityStateOverlay` defaults off and exists only outside Shipping. Enabling it registers one `Game` debug-canvas delegate, draws four bounded rows per local viewport, and emits one bounded enable log containing owner, authority, process-local object ID, state, and net mode. Disabling removes the delegate and emits one bounded disable log.
+- The overlay has no free-form player/account value, remote sink, telemetry transport, permanent Tick, timer, global Actor scan, or production UI asset.
 - invalid compatibility configuration emits one fixed `LogBSCore` startup error with operation `compatibility_startup`; valid defaults emit no success spam. Presented values are not logged by Core.
 - stable compatibility result names are safe machine identifiers for future structured logs/localization mapping, not player-facing English text.
 - stable command result status names and error-code text are safe bounded machine identifiers only. Core emits no command/result log and provides no automatic localization or UI mapping.
@@ -250,10 +257,11 @@ BS-014 through BS-018 add no RPC, connection hook, or replicated object. Each pr
 - strict command/correlation GUID parsing, compile-time type separation, output clearing, generated uniqueness, explicit root/child correlation behavior, and invalid-parent rejection;
 - bounded error-code grammar/equality/hash/clearing, result construction invariants, status predicates, and stable/unknown status names.
 - item Primary Asset identity and wrong-type rejection; exact soft-reference bundle metadata; request bounds/order/clearing; missing registration; exact Asset Manager configuration; and unloaded catalog type/identity/duplicate/path audit.
+- stable authority net-mode/role names, unknown-value fail-closed behavior, normalized/bounded local snapshots, exact owner/authority/object-ID/state formatting, and fixed overlay rows.
 
 ### Functional/network
 
-N/A. No World, Actor, gameplay behavior, RPC, or replicated consumer exists.
+Creator acceptance uses the existing two-player `L_TestGym_Network` PIE fixture only to prove that the local read-only overlay distinguishes listen-server authority from client autonomous-proxy roles. No custom replicated state, RPC, relevance rule, or authoritative gameplay consumer exists, so packaged multiplayer correctness remains N/A.
 
 ### Persistence/fault/performance
 
@@ -261,7 +269,7 @@ ID archive round-trip and pure compatibility decisions are covered. Save seriali
 
 ## 16. Exact manual acceptance
 
-Follow `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all thirteen Core tests. PASS is 13 passed, 0 failed, 0 skipped with no engine-selection, module-rebuild, or crash dialog.
+Follow `Docs/Tasks/BS-019-Minimal-Authority-And-State-Debug-Overlay.md`: close Unreal Editor, build `BrokenStreets | Development Editor | Win64` in Visual Studio, open the project, filter Session Frontend Automation by `BrokenStreets.Core`, and run all fifteen Core tests. Then use two-player listen-server PIE on `L_TestGym_Network`, enable `bs.Debug.AuthorityStateOverlay 1`, and confirm authoritative host roles plus autonomous-proxy client roles. PASS requires 15 Core tests passed with 0 failed/skipped, both bounded overlays, and no engine-selection, module-rebuild, or crash dialog.
 
 ## 17. Rollout, rollback, and compatibility
 
@@ -270,11 +278,13 @@ Follow `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md`: close Unreal Edi
 - BS-016 base: `0772b9dd8f323461661a5f042ed435481951743b`;
 - BS-017 base: `180a9a83fd686a3414c821569db19df088265077`;
 - BS-018 base: `1de51b14c74d44a8bfa7673349c9071f8dd42191`;
+- BS-019 base: `01d80424a2a567a42b80260f69e39b8ac219fab6`; the overlay defaults off, its control is local and reversible, and its entire command/renderer/test implementation is excluded from Shipping;
 - rollback: revert the BS-016 candidate and rerun Build/Test/Validate/Cook before any Network/Save consumer merges; BS-014/BS-015 primitives remain intact;
 - no production save file, content catalog handshake, connection approval, or network payload exists yet;
 - if a gate fails, revert the BS-016 candidate; no gameplay fallback or migration is needed because no gameplay, profile, content, or network consumer depends on it before merge.
 - if BS-017 fails before a consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No content, config, save, network, or gameplay migration is required.
 - if BS-018 fails before a production definition or consumer exists, revert its candidate and rerun Build/Test/Validate/Cook. No asset, save, network, or gameplay migration is required.
+- if BS-019 fails, revert its candidate and rerun Build/Test/Validate/Cook plus Shipping marker audit. No asset, config, save, network, or gameplay migration is required.
 
 ## 18. Evidence and history
 
@@ -290,3 +300,5 @@ Follow `Docs/Tasks/BS-018-Asset-Manager-And-Loading-Policy.md`: close Unreal Edi
 | 2026-08-31 | BS-017 / merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 11/11, Data Validation 3/3, Cook with zero project omissions/warnings, GitHub parity, Git LFS fsck/status, reachable-object audit, and independent backup | PASS; implemented on `main` | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-018 / `dd6610071a664c13cce4761c1d8cee209213929b` | runner self-test 6/6; Generate/Build; Automation 14/14 including Core 13/13; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build and 0/28 test-marker audit; renderer/config 52/52; Git/LFS/static audits; independent backup; creator Development Editor Build and Editor Automation 13/13 | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
 | 2026-08-31 | BS-018 / merge `a3b4bafd4199c542a44845f674df4670d04577a5` | accepted Source/Config/Content exact; post-merge Generate/Build, Automation 14/14, Data Validation 3/3, Cook with zero project omissions/warnings, renderer/config 52/52, Git/LFS, and reachable-object audits | PASS; implemented on `main` | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-019 / `12e6f0ba5b79467e16f337dce12db2a7f35fe857` | Generate/Build with zero warnings; Automation 16/16 including Core 15/15; Data Validation 3/3; Cook with zero project omissions/warnings; Shipping Build with 0/16 Automation paths and 0/4 BS-019 debug markers; renderer/config 52/52; default-off and explicit-on runtime log audits; Git/LFS/static audits; independent backup; creator Development Editor Build, Editor Automation 15/15, and two-player listen-server/client overlay | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | BS-019 / local merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1` | accepted Source/Config/Content/`.uproject` exact; post-merge Generate/Build, Automation 16/16 including Core 15/15, Data Validation 3/3, Cook with zero project omissions/warnings, renderer/config 52/52, and independent generation `20260831T170058Z-27824-d9d07c06` | PASS; implemented on local `main`, GitHub synchronization awaiting explicit publication approval | Madalin Gavrila and Codex |

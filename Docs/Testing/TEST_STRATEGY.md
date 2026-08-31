@@ -19,6 +19,7 @@ For logic that does not require a World:
 - build/content/save compatibility parsing, range invariants, decision precedence, and stable rejection reasons.
 - command/correlation identity, envelope invariants, bounded error-code grammar, and explicit result-state construction.
 - bounded item-load requests, deterministic bundle normalization, and unloaded catalog metadata audit.
+- authority/state net-mode and role naming, bounded local snapshot construction, and deterministic diagnostic formatting.
 
 ### Engine automation
 
@@ -27,6 +28,7 @@ For logic that does not require a World:
 - settings, tags, and redirects;
 - schema and registry;
 - command validation;
+- explicit-on Development debug-canvas rendering with default-off and Shipping-exclusion audits;
 - content and data validators.
 
 ### Functional map tests

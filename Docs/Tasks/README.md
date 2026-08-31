@@ -63,3 +63,4 @@ Before code:
 | [BS-016](BS-016-Build-Content-Save-Compatibility.md) | Build, content, and save compatibility handshake | Done | `main` |
 | [BS-017](BS-017-Typed-Results-And-Command-Envelope.md) | Typed results, errors, and command envelope | Done | `main` |
 | [BS-018](BS-018-Asset-Manager-And-Loading-Policy.md) | Asset Manager and soft-reference loading policy | Done | `main` |
+| [BS-019](BS-019-Minimal-Authority-And-State-Debug-Overlay.md) | Minimal authority and state debug overlay | Done | `main` |

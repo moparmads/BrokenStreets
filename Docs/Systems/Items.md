@@ -3,7 +3,7 @@
 **Status:** Implemented
 **Product owner:** Madalin Gavrila
 **Runtime system owner:** Items
-**Active task:** None; BS-019 is next
+**Active task:** None; BS-020 is the next project task
 **Last verified commit/gate:** BS-018 merge `a3b4bafd4199c542a44845f674df4670d04577a5`; accepted Source/Config/Content exact; post-merge Build, Automation 14/14, Data Validation 3/3, Cook, renderer/config, Git/LFS, and reachable-object gates PASS
 
 ## 1. Purpose

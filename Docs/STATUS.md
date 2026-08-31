@@ -6,15 +6,15 @@
 
 ## Summary
 
-- Last completed task: `BS-018` — Asset Manager and soft-reference loading policy.
+- Last completed task: `BS-019` — minimal authority and state debug overlay.
 - Active task: none.
-- Next task: `BS-019` — minimal authority and state debug overlay.
+- Next task: `BS-020` — minimum save header, version, serializer, and fault harness.
 
 ## What actually exists
 
 - Unreal Engine 5.8.2 Blank C++ project;
-- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-018 Core/Items contracts on `main`;
-- fourteen deterministic C++ Automation tests on `main`: the project smoke, ten BS-014 through BS-017 Core tests, and three BS-018 asset-policy tests;
+- one runtime module, `BrokenStreets`, with the implemented BS-014 through BS-019 Core/Items contracts on `main`;
+- sixteen deterministic C++ Automation tests on `main`: the project smoke, thirteen BS-014 through BS-018 Core tests, and two BS-019 authority/state debug tests;
 - three project-owned Unreal maps: `/Game/BS/Maps/Test/L_TestGym_Core`, `/Game/BS/Maps/Test/L_TestGym_Network`, and `/Game/BS/Maps/Benchmark/L_Benchmark_Street`; the network fixture adds four deterministic PlayerStarts and the benchmark fixture is a 14-actor greybox intersection;
 - local Windows PowerShell 5.1 runner through `Tools/BS.cmd` with engine/toolchain pinning, timeouts, process containment, logs, and JSON summary;
 - verified `Development Editor | Win64` build;
@@ -22,7 +22,7 @@
 - independent versioned Git/LFS backup tooling and a verified local backup on the separate `E:` physical disk;
 - immutable SHA-256 Source Art generations on `E:`, a daily 19:30 local backup task, and a marked external-drive workflow that publishes a combined repository/Git LFS/Source Art checkpoint only after both layers pass;
 - one verified complete offline checkpoint on the approved 1 TB LaCie USB drive and one isolated complete restore on `E:` without GitHub;
-- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, bounded diagnostics/flags, compatibility, command/result metadata, and a bounded asynchronous Asset Manager gateway; Items owns one native definition type, but no item instance, inventory, save, or network consumer exists yet;
+- no Broken Streets gameplay system; Core currently contains stable IDs, the tag policy, bounded diagnostics/flags, compatibility, command/result metadata, a bounded asynchronous Asset Manager gateway, and a Development-only local authority/state overlay; Items owns one native definition type, but no item instance, inventory, save, or network consumer exists yet;
 - no project-owned `.uasset` files; the only project-owned `.umap` files are the two TestGym fixtures and the Benchmark Street placeholder;
 - a verified local one-listen-host/three-client packaged loopback fixture, but no custom multiplayer, session, save, or gameplay system;
 - Editor, game, and server defaults now use the project-owned `/Game/BS/Maps/Test/L_TestGym_Core` map;
@@ -82,6 +82,8 @@
 - BS-017 was integrated into `main` by merge `22c2ee2fbf7901d6cab99e4efbda4eb93ecb653e`, tree `35cdf8ae8d0af1fd45242957cc80b2e6e0a584c2`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate, Build, Automation 11/11, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Local, tracking, and GitHub `main` matched; Git LFS fsck/status and reachable-object audits passed; independent generation `20260831T152133Z-26324-9c6327d7` captured 33 refs and all 3 LFS objects on `E:`.
 - BS-018 candidate `dd6610071a664c13cce4761c1d8cee209213929b`, tree `1866afb2ce2c0474a4fd0fa5ddad5be3f4d9282d`: native item Primary Data Asset identity, `World`/`UI` soft bundles, exact Asset Manager scan/cook settings, a bounded asynchronous load/release boundary, and unloaded catalog audit are implemented without production content or gameplay. Runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate/Build, Automation 14/14, Data Validation 3/3, and Cook 514/521 with the same seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/28 test markers; renderer/config audit passed 52/52; Git/LFS/static audits and candidate generation `20260831T155220Z-18952-cf5fb607` passed. Madalin Gavrila supplied a successful Visual Studio Development Editor build (`1 succeeded, 0 failed`) and Unreal Editor Automation evidence showing all thirteen Core tests green with 13 passed, 0 failed, and 0 skipped.
 - BS-018 was integrated into `main` by merge `a3b4bafd4199c542a44845f674df4670d04577a5`, tree `3d9417a1d2225f1d4c83d998a4f14381957338ce`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate/Build, Automation 14/14, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings. Renderer/config audit remained 52/52, and Git LFS fsck/status plus reachable-object audits passed.
+- BS-019 candidate `12e6f0ba5b79467e16f337dce12db2a7f35fe857`, tree `f8b781343b2da07c57c649e7ee3100134974104b`: the read-only local authority/state snapshot and overlay are off by default, register draw work only while enabled, use one local controller/pawn pair without scans or mutation, and compile out of Shipping. `Tools/BS.cmd All` passed Generate/Build, Automation 16/16 including Core 15/15, Data Validation 3/3, and Cook 514/521 with seven classified Engine-only omissions and zero project omissions/warnings. Win64 Shipping passed with 0/16 Automation paths and 0/4 BS-019 debug markers found; renderer/config remained 52/52; default-off logs contained zero overlay entries; an explicit-on runtime check emitted exactly one bounded owner/authority/object-ID/state/net-mode record. Madalin Gavrila supplied a successful Visual Studio Development Editor build, Core Automation 15/15, and two-player PIE evidence showing authoritative listen-server roles and autonomous-proxy client roles.
+- BS-019 was integrated into local `main` by merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`, tree `89deeb9851f92abc80f8b62f48f44f04e6d447df`. Source, Config, Content, and `.uproject` matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` passed Generate/Build, Automation 16/16, Data Validation 3/3, and Cook 514/521 plus the same seven classified Engine-only omissions with zero project omissions/warnings; renderer/config remained 52/52. Independent generation `20260831T170058Z-27824-d9d07c06` captured 37 refs and all three LFS objects. GitHub synchronization awaits explicit publication approval.
 - The BS-013B PC baseline is explicit and reversible. Hardware ray tracing remains disabled until representative-art evidence justifies an optional High/Ultra path; no final hardware promise exists.
 - `F:/BrokenStreets_SourceArt` is still empty. The empty-tree local/offline paths and synthetic non-empty paths are verified; the first real 3D source asset must be included in a normal local/offline checkpoint and quarterly DCC-open drill when it exists.
 - The earlier clean-clone `DirectoryWatcher` warning for a missing `Content/` path is obsolete because BS-011 created the first project-owned content path.

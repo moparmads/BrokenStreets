@@ -1,8 +1,8 @@
 # BS-019 — Minimal Authority and State Debug Overlay
 
-**Status:** In Progress
+**Status:** Done
 **Owner:** Madalin Gavrila
-**Branch:** `feature/BS-019-authority-state-overlay`
+**Branch:** `main`
 **Base commit:** `01d80424a2a567a42b80260f69e39b8ac219fab6`
 **Roadmap milestone:** M2 — Minimum core and observability
 **System docs:** `Docs/Systems/Core.md`
@@ -156,6 +156,7 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied Visual St
 | Date | Candidate commit | Runtime/content tree | Build/test/trace | Result | Executed by |
 |---|---|---|---|---|---|
 | 2026-08-31 | `12e6f0ba5b79467e16f337dce12db2a7f35fe857` | tree `f8b781343b2da07c57c649e7ee3100134974104b`; Source `92457bc02ee9c61ca36049890677b7e5ebff8020`; unchanged Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb`; unchanged `.uproject` blob `81b3ab16e37113b3dde101f341110349cf238899` | Generate/Build PASS with zero warnings; Automation 16/16 total including Core 15/15; Data Validation 3/3; Cook 514/521 plus 7 classified Engine-only omissions and zero project omissions/warnings; Win64 Shipping Build PASS; 16 Automation paths and 4 BS-019 debug markers audited with 0 found; renderer/config 52/52; default-off audit 0 overlay logs; explicit-on runtime check exactly 1 bounded structured enable log with owner, authority, object ID, state, and standalone net mode; Git/LFS/scope/static audits; candidate generations `20260831T163653Z-26548-d762bd94`, `20260831T164440Z-19924-8a9584ab`, and accepted checkpoint `20260831T165357Z-4564-956ff1bc`, each with 37 refs and all 3 LFS objects; creator Visual Studio Development Editor Build 1 succeeded/0 failed; creator Unreal Editor Automation 15/15; creator two-player listen-server/client PIE overlay PASS | Automated and creator acceptance PASS; integration pending | Madalin Gavrila and Codex |
+| 2026-08-31 | merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1` | tree `89deeb9851f92abc80f8b62f48f44f04e6d447df`; accepted Source `92457bc02ee9c61ca36049890677b7e5ebff8020`; unchanged Config `12d196629107bd334cdcc86e568d4525caa837ac`; unchanged Content `41343e24397b32d46f6f51c4fc5269c8005c6fdb`; unchanged `.uproject` blob `81b3ab16e37113b3dde101f341110349cf238899` | post-merge Generate/Build PASS; Automation 16/16 total including Core 15/15; Data Validation 3/3; Cook 514/521 plus 7 classified Engine-only omissions with zero project omissions/warnings; renderer/config 52/52; integration generation `20260831T170058Z-27824-d9d07c06` captured 37 refs and all 3 LFS objects | PASS; implemented on local `main`, GitHub synchronization awaiting explicit publication approval | Madalin Gavrila and Codex |
 
 ## Final handoff
 
@@ -164,6 +165,8 @@ Checkpoint A result: PASS on August 31, 2026. Madalin Gavrila supplied Visual St
 - creator build, Automation, and two-player PIE overlay steps with PASS/FAIL criteria;
 - skipped/N/A checks with reasons;
 - rollback commit and next task BS-020.
+
+BS-019 is Done on local `main` at merge `40fd9a9066f50cd7059f7b1aaa7c14bb908b39c1`. The accepted Source, Config, Content, and `.uproject` identities remained exact through integration, and the complete post-merge gate passed. The next task is BS-020. GitHub synchronization is an external publication step and is recorded separately when approved and completed.
 
 Retained local evidence:
 
@@ -174,3 +177,6 @@ Retained local evidence:
 - explicit-on runtime log: `Saved/Verification/BS-019/12e6f0b/RuntimeOverlay/Unreal.log`, SHA-256 `4295D18EFC39DD95B2F890981834EF0ABD9BA7850C31ED59F6B3576396CD0247`;
 - renderer/config audit: `Saved/Verification/BS-013B/20260831T164216Z-12432/renderer-audit.json`, SHA-256 `67699B53323F8320FF1D1B92C0926ED57EAF284C14D9C58AFC254E8E5CA6E8D2`;
 - accepted-checkpoint repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T165357Z-4564-956ff1bc`, with 37 refs and all 3 LFS objects.
+- post-merge complete gate: `Saved/Automation/BS-009/20260831T165917Z-32528-ba060479/run.json`, SHA-256 `CF9BE637C83967DC5D0F6F85BC58D43B6344770B7F1EE56EE731D3F775C641E9`;
+- post-merge Automation report: `Saved/Automation/BS-009/20260831T165917Z-32528-ba060479/Steps/04-Test/TestReport/index.json`, SHA-256 `8216B970604863B9FF0F10E96F24AE4F53B44AA4E63FD7198EE7F29C24BADCF0`;
+- post-merge repository generation: `E:/BrokenStreets_RepositoryBackup/Generations/20260831T170058Z-27824-d9d07c06`, with 37 refs and all 3 LFS objects.
