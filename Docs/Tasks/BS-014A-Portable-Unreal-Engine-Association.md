@@ -58,6 +58,8 @@ PASS: the project opens directly in UE 5.8.2 with no version picker, module rebu
 
 FAIL: any selector, rebuild prompt, wrong engine, or crash appears. Close the dialog without choosing another engine and send a screenshot.
 
+Manual acceptance result: PASS on August 31, 2026. With Madalin Gavrila's authorization, the selected `BrokenStreets.uproject` was opened through the normal File Explorer action. Windows launched `F:/UE_5.8.2/UE_5.8/Engine/Binaries/Win64/UnrealEditor.exe`, the `BrokenStreets - Unreal Editor` window opened directly on `L_TestGym_Core`, and no version picker, rebuild prompt, or crash dialog appeared. Unreal Editor then closed normally with `Alt+F4`, leaving zero Editor windows or processes.
+
 ## Risks and rollback
 
 - Base/rollback: `416ef367b4854c9846d7c6408e14d3965d90c858`.
@@ -70,6 +72,7 @@ FAIL: any selector, rebuild prompt, wrong engine, or crash appears. Close the di
 | Date | Commit/state | Evidence | Result | Executed by |
 |---|---|---|---|---|
 | 2026-08-31 | pre-change `main` `416ef367b4854c9846d7c6408e14d3965d90c858` | repeated creator version picker; selecting 5.8 opened the project; Epic manifest `UE_5.8`, version `5.8.2-56702186`, install `F:/UE_5.8.2/UE_5.8`; pre-change backup `20260831T110926Z-11592-72ea6520`, 25 refs and 3 LFS objects | Root cause confirmed; corrective candidate pending | Madalin Gavrila and Codex |
+| 2026-08-31 | candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d` | association exactly `5.8`; Doctor resolved Epic manifest UE 5.8.2 CL 56702186; `BS.cmd All` Generate/Build/Test/Validate PASS, Automation 4/4, assets 3/3, Cook 514/521 plus seven classified Engine-only omissions and zero project omissions/warnings; summary `Saved/Automation/BS-009/20260831T111306Z-11236-9b19c725/run.json`, SHA-256 `6E983BA8EF22E598C822E69A1629B2E48E57CC8B02054F204249205F6E0C6B72`; normal File Explorer launch opened the exact Unreal Editor directly and normal shutdown left zero processes | Automated and creator-workstation acceptance PASS; integration pending | Madalin Gavrila and Codex |
 
 ## Final handoff
 

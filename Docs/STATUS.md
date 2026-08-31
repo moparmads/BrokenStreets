@@ -7,7 +7,7 @@
 ## Summary
 
 - Last completed task: `BS-014` — stable identifiers and Gameplay Tags policy.
-- Active task: `BS-014A` — replace the per-user engine GUID with the portable Epic Launcher UE 5.8 association.
+- Active task: `BS-014A` — portable Epic Launcher UE 5.8 association; automated and creator-workstation acceptance passed, with integration pending.
 - Next task after the corrective gate: `BS-015` — logging categories, structured context, and feature flags.
 
 ## What actually exists
@@ -69,6 +69,7 @@
 - BS-007B was integrated by merge `099a8e6893d65b5e9a6debffe5c53269046f6018`, tree `c386ee8b34d8d53b882b1204906d1c6726530520`. Local and GitHub `main` matched; the remote Core pointer and local payload matched OID/SHA-256 `008fdcaef2fe3d4765ba95ccd8b7be03af445ff7083eeec5ba38f883e5f2730d`; both LFS fsck modes passed and no object was pending. Independent generation `20260831T101014Z-4224-6b9beec4` captured the clean merge, 23 refs, and all 3 LFS objects with remote refresh and bundle verification PASS. Lock `49932145` was released afterward and no Core lock remained.
 - BS-014 candidate `2449d3ff0aad8500e27a0496add703ac64c5d35b`, tree `70f58a379a05964a34ae377027af0338f3792ded`: runner self-test passed 6/6; `Tools/BS.cmd All` passed Generate, Development Editor Build, Automation 4/4, and Data Validation 3/3; Cook produced 514/521 packages plus the same 7/7 classified Engine-only omissions with zero project omissions or warnings. Win64 Shipping compiled successfully, and its binary contains no BS-014 Automation test names/class markers. DefinitionId/InstanceId validation, duplicates, hashing, canonical text, archive round-trip/corrupt input, compile-time type separation, native `BS` root, and pinned tag settings all passed. Madalin Gavrila then confirmed a successful Visual Studio Development Editor build and all three filtered Core tests green in Unreal Editor: 3 passed, 0 failed, 0 skipped.
 - BS-014 was integrated into `main` by merge `8b8e5632de92bd1e51bb36904aec0dc3aab70758`. Source, Config, and Content matched the accepted candidate exactly. Post-merge `Tools/BS.cmd All` returned `PASS_WITH_SKIPS`: Generate and Build passed; Automation passed 4/4; Data Validation passed 3/3; Cook produced 514/521 packages plus the same seven classified Engine-only omissions, with zero project omissions or warnings. Summary: `Saved/Automation/BS-009/20260831T105950Z-30072-4a458847/run.json`, SHA-256 `B1F2D514125DD27BABF83B7A3BC4A1D87522A410020AE5055F7B85007EB603CD`. Local and GitHub `main` matched, Git LFS fsck passed, and independent generation `20260831T110154Z-18636-061487c9` captured 25 refs and all 3 LFS objects on `E:`.
+- BS-014A candidate `5f5089ea890775b7de3a802a535eefb9c53e611b`, tree `17611e6604eb71c103b82d4def1173116395cd0d`: `EngineAssociation` is the portable Launcher key `5.8`; Doctor resolved UE 5.8.2 CL 56702186 from the Epic manifest; Generate, Build, Automation 4/4, Data Validation 3/3, and Cook passed under the existing gate with only the seven classified Engine omissions and zero project omissions/warnings. A normal File Explorer launch opened the exact Unreal Editor directly without the recurring selector, rebuild prompt, or crash dialog, and normal `Alt+F4` shutdown left zero Editor processes. Integration remains pending.
 
 ## Deviations and open items
 
